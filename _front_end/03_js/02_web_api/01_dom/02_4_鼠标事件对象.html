@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="height: 200vh">
+<div style="position: fixed;left: 0;top: 0">
+    <div>文档页面x坐标：<span id="span1"></span></div>
+    <div>文档页面y坐标：<span id="span2"></span></div>
+    <div>浏览器窗口x坐标：<span id="span3"></span></div>
+    <div>浏览器窗口y坐标：<span id="span4"></span></div>
+    <div>电脑屏幕x坐标：<span id="span5"></span></div>
+    <div>电脑屏幕y坐标：<span id="span6"></span></div>
+</div>
+<script>
+
+
+    document.addEventListener("mousemove", function (mouseEvent) {
+        let span1 = document.querySelector("#span1");
+        let span2 = document.querySelector("#span2");
+        let span3 = document.querySelector("#span3");
+        let span4 = document.querySelector("#span4");
+        let span5 = document.querySelector("#span5");
+        let span6 = document.querySelector("#span6");
+        span1.innerText = mouseEvent.pageX; //文档页面x坐标
+        span2.innerText = mouseEvent.pageY; //文档页面y坐标
+        span3.innerText = mouseEvent.clientX; //浏览器窗口x坐标
+        span4.innerText = mouseEvent.clientY; //浏览器窗口y坐标
+        span5.innerText = mouseEvent.screenX; //电脑屏幕x坐标
+        span6.innerText = mouseEvent.screenY; //电脑屏幕y坐标
+    })
+</script>
+</body>
+</html>

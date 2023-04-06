@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作元素</title>
+    <style>
+        div:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3">改变元素属性</div>
+
+<script>
+    //修改元素内容
+    let div1 = document.querySelector("#div1");
+    div1.innerText = "当前时间：" + new Date();  //写
+    console.log(div1.innerText) //读
+
+    let div2 = document.querySelector("#div2");
+    div2.innerHTML = "当前时间：<strong>" + new Date() + "</strong>";  //写
+    console.log(div2.innerHTML) //读
+
+
+    //设置元素属性
+    let div3 = document.querySelector("#div3");
+    div3.style.color = "red";
+</script>
+</body>
+</html>
