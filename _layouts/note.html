@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="{{ site.lang | default: 'zh-CN' }}" xmlns="http://www.w3.org/1999/html">
+{% include head.html %}
+<body style="margin: 0">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+    <title>{% if page.title %}{{ page.title }} - {% endif %} {{ site.title }}</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+    </svg>
+  </symbol>
+  <symbol id="svg-search" viewBox="0 0 24 24">
+    <title>Search</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-doc" viewBox="0 0 24 24">
+    <title>Document</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+      <polyline points="13 2 13 9 20 9"></polyline>
+    </svg>
+  </symbol>
+</svg>
+
+<!--页面-->
+<div class="main-page">
+  <!--左侧-->
+  <div class="left" id="left-sidebar">
+    <!--左侧顶部logo和标题-->
+    <div class="left-header">
+      <div>
+        <img src="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/images/hacker.png"
+             class="zoom">
+        <a href="/" class="zoom">
+          &nbsp{{ site.title }}
+        </a>
+      </div>
+    </div>
+
+    <nav aria-label="Main" id="site-nav" class="site-nav">
+      {% assign pages_top_size = site.html_pages
+      | where_exp:"item", "item.title != nil"
+      | where_exp:"item", "item.parent == nil"
+      | where_exp:"item", "item.nav_exclude != true"
+      | size %}
+      {% if pages_top_size > 0 %}
+      {% include nav.html pages=site.html_pages key=nil %}
+      {% endif %}
+      {%- if site.nav_external_links -%}
+      <ul class="nav-list">
+        {%- for node in site.nav_external_links -%}
+        <li class="nav-list-item external">
+          <a href="{{ node.url | absolute_url }}" class="nav-list-link external">
+            {{ node.title }}
+            {% unless node.hide_icon %}<svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>{% endunless %}
+          </a>
+        </li>
+        {%- endfor -%}
+      </ul>
+      {%- endif -%}
+      {% if site.just_the_docs.collections %}
+      {% assign collections_size = site.just_the_docs.collections | size %}
+      {% for collection_entry in site.just_the_docs.collections %}
+      {% assign collection_key = collection_entry[0] %}
+      {% assign collection_value = collection_entry[1] %}
+      {% assign collection = site[collection_key] %}
+      {% if collection_value.nav_exclude != true %}
+      {% if collections_size > 1 or pages_top_size > 0 %}
+      {% if collection_value.nav_fold == true %}
+      <ul class="nav-list nav-category-list">
+        <li class="nav-list-item{% if page.collection == collection_key %} active{% endif %}">
+          {%- if collection.size > 0 -%}
+          <a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a>
+          {%- endif -%}
+          <div class="nav-category">{{ collection_value.name }}</div>
+          {% include nav.html pages=collection key=collection_key %}
+        </li>
+      </ul>
+      {% else %}
+      <div class="nav-category">{{ collection_value.name }}</div>
+      {% include nav.html pages=collection key=collection_key %}
+      {% endif %}
+      {% else %}
+      {% include nav.html pages=collection key=collection_key %}
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </nav>
+    <div class="left-bottom">
+            <span id="busuanzi_container_site_pv">
+                本站总访问量<span id="busuanzi_value_site_pv" class="zoom views-counts"><i
+              class="fa fa-spinner"></i></span>次
+            </span>
+      <div>
+        &copy;{{ "now" | date: "%Y" }}<a href="#" id="weixing" class="zoom">陆国松</a>.
+        <a href="#" id="apply" class="zoom">打赏支持</a>
+        <img id="applyImg"
+             src="https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109241659148.jpg"
+             hidden>
+        <img id="weixingImg"
+             src="https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109241714054.jpg"
+             hidden>
+      </div>
+    </div>
+  </div>
+
+  <!--内容-->
+  <div class="middle">
+
+    <div class="middle-header">
+      <a href="#" id="menu-button-left" class="site-button-left site-button">
+        <svg viewBox="0 0 24 24" class="icon">
+          <use xlink:href="#svg-menu"></use>
+        </svg>
+      </a>
+
+      {% include header_custom.html %}
+      {% if site.aux_links %}
+      <nav aria-label="Auxiliary" class="aux-nav" style="flex: 1">
+        <ul class="aux-nav-list">
+          {% for link in site.aux_links %}
+          <li class="aux-nav-list-item">
+            <a href="{{ link.last }}" class="site-button"
+               {% if site.aux_links_new_tab %}
+               target="_blank" rel="noopener noreferrer"
+               {% endif %}
+            >
+              {{ link.first }}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endif %}
+
+      {% if site.back_to_top %}
+      <a href="#top" id="back-to-top" style="line-height: 3rem">{{ site.back_to_top_text }}</a>
+      {% endif %}
+
+      <a href="#" id="menu-button-right" class="site-button-right site-button">
+        <svg viewBox="0 0 24 24" class="icon">
+          <use xlink:href="#svg-menu"></use>
+        </svg>
+      </a>
+    </div>
+    <!--标题-->
+    <div class="middle-scroll">
+      <div id="top"></div>
+      <h1 class="middle-title">{{ page.title }}</h1>
+      <div class="middle-page">
+        <div>
+          本文：
+          {% assign count = page.content | strip_html | strip_newlines | remove: " " | size %}
+          {% if count > 10000 %}
+          {{ count | divided_by: 10000 }} 万 {{ count | modulo: 10000 }}
+          {% else %}
+          {{ count }}
+          {% endif %}字
+        </div>
+        <div class="update-time" id="update-time">
+          <div class="last-update-time" id="last-update-time">
+
+          </div>
+          <div class="update-time-history" id="update-time-history">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="middle-bread">
+        {% if page.has_children == true and page.has_toc != false %}
+        <hr>
+        {% include toc_heading_custom.html %}
+        <ul>
+          {% for child in include.toc_list %}
+          <li>
+            <a href="{{ child.url | relative_url }}">{{ child.title }}</a>{% if child.summary %} - {{
+            child.summary }}{% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div id="main-content" class="main-content middle-context" role="main">
+        {% if site.heading_anchors != false %}
+        {% include vendor/anchor_headings.html html=content beforeHeading="true" anchorBody="
+        <svg viewBox='0 0 16 16 ' aria-hidden='true'>
+          <use xlink:href=\"#svg-link\"></use>
+        </svg>
+        " anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
+        {% else %}
+        {{ content }}
+        {% endif %}
+
+        {% capture footer_custom %}
+        {%- include footer_custom.html -%}
+        {% endcapture %}
+        {% if footer_custom != "" or site.last_edit_timestamp or site.gh_edit_link %}
+        <hr>
+        <footer>
+          <!--评论区-->
+          <div id="gitalk-container"></div>
+
+          {% if site.last_edit_timestamp or site.gh_edit_link %}
+          <div class="d-flex mt-2">
+            {% if site.last_edit_timestamp and site.last_edit_time_format and page.last_modified_date %}
+            <p class="text-small text-grey-dk-000 mb-0 mr-2">
+              Page last modified: <span class="d-inline-block">{{ page.last_modified_date | date: site.last_edit_time_format }}</span>.
+            </p>
+            {% endif %}
+            {% if
+            site.gh_edit_link and
+            site.gh_edit_link_text and
+            site.gh_edit_repository and
+            site.gh_edit_branch and
+            site.gh_edit_view_mode
+            %}
+            <p class="text-small text-grey-dk-000 mb-0" style="text-indent: 0">
+              <a href="{{ site.gh_edit_repository }}/{{ site.gh_edit_view_mode }}/{{ site.gh_edit_branch }}{% if site.gh_edit_source %}/{{ site.gh_edit_source }}{% endif %}/{{ page.path }}"
+                 id="edit-this-page">{{ site.gh_edit_link_text }}</a>
+            </p>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          {{ footer_custom }}
+        </footer>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <!--右侧TOC-->
+  <div class="right toc js-toc" id="right-sidebar">
+
+  </div>
+</div>
+
+
+<script>
+  let gitalk = new Gitalk({
+    id: md5('{{ page.url }}'),
+    clientID: '0d8aaec11145d797cdfa',
+    clientSecret: '43cec67aeda473d51e3975f5f9ea4b2d60fb1cb3',
+    repo: 'notes-comment',
+    owner: 'luguosong',
+    admin: ['luguosong'],
+    title: 'commentGitTalk'
+  });
+  gitalk.render('gitalk-container');
+
+  tocbot.init({
+    // 在哪里显示目录。
+    tocSelector: '.js-toc',
+    // 在哪里抓取标题以建立目录。
+    contentSelector: '.middle-context',
+    // 在contentSelector元素中抓取哪些标题。
+    headingSelector: 'h1, h2, h3',
+    // 符合ignoreSelector的标题将被跳过。
+    ignoreSelector: '.js-toc-ignore',
+    // 对于内容中相对或绝对定位的容器内的标题
+    hasInnerContainers: false,
+    // 添加到链接的主类。
+    linkClass: 'toc-link',
+    // 额外的类添加到链接中。
+    extraLinkClasses: '',
+    // 类添加到活动链接中，该链接对应于页面上最上面的标题。
+    activeLinkClass: 'is-active-link',
+    // 用于添加到列表的主类。
+    listClass: 'toc-list',
+    // 额外的课程添加到列表中。
+    extraListClasses: '',
+    // 当一个列表应该被折叠时被添加的类。
+    isCollapsedClass: 'is-collapsed',
+    // 当一个列表应该能够被折叠但不一定被折叠时被添加的类。
+    collapsibleClass: 'is-collapsible',
+    // 类添加到列表项目。
+    listItemClass: 'toc-list-item',
+    // 添加到活动列表项目的类。
+    activeListItemClass: 'is-active-li',
+    // 多少个标题层不应该被折叠。
+    // 例如，数字6将显示所有内容，因为只有6个标题层，数字0将折叠所有内容。
+    // 当你滚动到其中的标题时，被隐藏的部分将打开和关闭。
+    collapseDepth: 1,
+    // 启用平滑滚动。
+    scrollSmooth: true,
+    // 平滑滚动持续时间。
+    scrollSmoothDuration: 420,
+    // Smooth scroll offset.
+    scrollSmoothOffset: 0,
+    // Callback for scroll end.
+    scrollEndCallback: function (e) {
+
+    },
+    // 标题和文档顶部之间的标题偏移（这是为了进行微小的调整）。
+    headingsOffset: 1,
+    //
+    throttleTimeout: 50,
+    // 要添加positionFixedClass的元素。
+    positionFixedSelector: null,
+    // 添加固定位置类，使侧边栏在向下滚动超过fixedSidebarOffset后固定。
+    positionFixedClass: 'is-position-fixed',
+    // fixedSidebarOffset可以是任何数字，但默认设置为自动，
+    // 在初始化时将fixedSidebarOffset设置为侧边栏元素从文档顶部的offsetTop。
+    fixedSidebarOffset: 'auto',
+    // includeHtml可以被设置为true，以包括标题节点的HTML标记，
+    // 而不是仅仅包括textContent。
+    includeHtml: false,
+    // onclick函数适用于toc中的所有链接，将以事件作为第一个参数被调用，
+    // 这可以用来停止、传播、防止默认或执行行动。
+    onClick: function (e) {
+      let nodes = e.target.parentNode.parentNode.childNodes;
+      for (let i = 0; i < nodes.length; i++) {
+        nodes[i].querySelector("a").classList.remove("is-active-link");
+        let ul = nodes[i].querySelector("ul");
+        if (ul !== null) {
+          ul.classList.add("is-collapsed");
+        }
+      }
+      e.target.classList.add("is-active-link");
+      let node = e.target.parentNode.querySelector("ul");
+      if (node !== null)
+        node.classList.remove("is-collapsed");
+    },
+    // orderedList可以被设置为false，以生成无序列表（ul）而不是有序列表（ol）。
+    orderedList: false,
+    // 如果有固定的文章滚动容器，设置计算标题的偏移量
+    scrollContainer: null,
+    // 如果 ToC DOM 已经由外部系统渲染，则阻止渲染
+    skipRendering: false,
+    // 更改标题标签的可选回调。 例如，它可用于在您认为太长的多行标题上缩减和放置省略号。
+    // 每次解析标题时调用。
+    // 期望返回一个字符串，修改label为display.function(string) => string
+    headingLabelCallback: false,
+    // ignore headings that are hidden in DOM
+    ignoreHiddenElements: false,
+    // Optional callback to modify properties of parsed headings.
+    // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
+    // Function has to return the same or modified obj.
+    // The heading will be excluded from TOC if nothing is returned.
+    // function (object, HTMLElement) => object | void
+    headingObjectCallback: null,
+    // 设置基本路径，如果您在 `head` 中使用 `base` 标签，这很有用。
+    basePath: '',
+    // 只在`toSelector`滚动时生效，保持toc滚动位置与内容同步。
+    disableTocScrollSync: true
+  });
+</script>
+
+<script>
+
+  const sitenav = document.getElementById("site-nav");
+
+  function setCookie(sName, sValue) {
+    sessionStorage.setItem(sName, escape(sValue));
+  }
+
+  function getCookie(sName) {
+    return sessionStorage.getItem(sName);
+  }
+
+  sitenav.scrollTop = getCookie("scrollTop");
+
+  window.onload = function AddImgClickEvent() {
+    const objs = document.getElementsByTagName("img");
+    const apply = document.getElementById("apply");
+    const applyImg = document.getElementById("applyImg");
+    const weixing = document.getElementById("weixing");
+    const weixingImg = document.getElementById("weixingImg");
+
+    for (let i = 0; i < objs.length; i++) {
+      new Viewer(objs[i]);
+      objs[i].style.cursor = "pointer";
+    }
+    ;
+
+    apply.onclick = function () {
+      applyImg.click();
+      return false;
+    };
+
+    weixing.onclick = function () {
+      weixingImg.click();
+      return false;
+    };
+
+    sitenav.onscroll = function () {
+      setCookie("scrollTop", sitenav.scrollTop);
+    }
+  };
+</script>
+
+<script>
+  const codes = document.getElementsByClassName("highlighter-rouge");
+  for (let i = 0; i < codes.length; i++) {
+    if (codes[i].tagName == "DIV") {
+      const eleTitle = document.createElement('p');
+      const s = codes[i].getAttribute("class").toString();
+      eleTitle.innerHTML = s.split(" ")[0].substring(9);
+      eleTitle.style.textAlign = 'right';
+      eleTitle.style.margin = 0;
+      eleTitle.style.color = '#999';
+      eleTitle.style.fontSize = '0.5em';
+      eleTitle.style.borderBottomWidth = '1px';
+      eleTitle.style.borderBottomStyle = 'solid';
+      eleTitle.style.borderBottomColor = '#5e5e5e';
+      codes[i].prepend(eleTitle);
+    }
+  }
+
+  function showEle(eleButton, ele, show) {
+    if (show) {
+      eleButton.style.backgroundImage = 'url("https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928471.png")';
+    } else {
+      eleButton.style.backgroundImage = 'url("https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928434.png")';
+    }
+    let next = ele.nextElementSibling;
+    while (next.tagName != "HE") {
+      if (show) {
+        next.style.display = 'block';
+      } else {
+        next.style.display = 'none';
+      }
+      next = next.nextElementSibling;
+    }
+  }
+
+  function showState(ele) {
+    return ele.nextElementSibling.style.display;
+  }
+
+  const hiddens = document.getElementsByTagName('hb');
+  for (let i = 0; i < hiddens.length; i++) {
+    const eleButton = document.createElement('button');
+    eleButton.style.display = 'inline-block';
+    eleButton.style.width = '25px';
+    eleButton.style.height = '25px';
+    eleButton.style.padding = '0';
+    eleButton.style.backgroundSize = 'cover';
+    eleButton.style.backgroundColor = 'transparent';
+    eleButton.style.border = 'none';
+    eleButton.onclick = function () {
+      if (showState(hiddens[i]) == 'none') {
+        showEle(eleButton, hiddens[i], true);
+      } else {
+        showEle(eleButton, hiddens[i], false);
+      }
+    };
+    showEle(eleButton, hiddens[i], false);
+    hiddens[i].before(eleButton);
+  }
+</script>
+
+<!--侧边栏的显示与隐藏-->
+<script>
+  const menuButtonLeft = document.getElementById('menu-button-left');
+  const leftSidebar = document.getElementById('left-sidebar');
+
+  menuButtonLeft.addEventListener('click', () => {
+    leftSidebar.classList.toggle('visible');
+  })
+
+  const menuButtonRight = document.getElementById('menu-button-right');
+  const rightSidebar = document.getElementById('right-sidebar');
+
+  menuButtonRight.addEventListener('click', () => {
+    rightSidebar.classList.toggle('visible');
+  })
+</script>
+
+<!--更新时间-->
+<script>
+
+  function padString(str, size) {
+    if (str.length < size) {
+      return str.padEnd(size);
+    } else {
+      return str;
+    }
+  }
+
+  if ("{{site.github.owner_name}}" != "") {
+    fetch("https://api.github.com/repos/{{site.github.owner_name}}/{{site.github.repository_name}}/commits?path={{page.path}}")
+      .then(response => response.json())
+      .then(data => {
+        if (data.length !== 0) {
+          const lastCommitDate = data[0].commit.author.date;
+          const date = new Date(Date.parse(lastCommitDate));
+          let updateTime = document.querySelector("#update-time");
+          updateTime.style.display = "block";
+          let lastTime = document.querySelector("#last-update-time");
+          let month = date.getMonth() + 1;
+          lastTime.innerHTML = "更新时间：" + date.getFullYear() + "年" + (month < 10 ? '0' + month : month) + "月" + date.getDate() + "日&nbsp;&nbsp;by&nbsp;&nbsp;" + data[0].commit.author.name;
+          let history = document.querySelector("#update-time-history");
+          for (let i = 1; i < data.length; i++) {
+            let element = document.createElement("div");
+            element.classList.add("update-time-record");
+
+            let time = document.createElement("div");
+            const date1 = new Date(Date.parse(data[i].commit.author.date));
+            let month1 = date1.getMonth() + 1;
+            time.innerHTML = date1.getFullYear() + "年" + (month1 < 10 ? '0' + month1 : month1) + "月" + (date1.getDate() < 10 ? '0' + date1.getDate() : date1.getDate()) + "日&nbsp;&nbsp;by&nbsp;&nbsp;";
+            let name = document.createElement("div");
+            name.innerHTML = padString(data[i].commit.author.name, 18);
+
+            element.append(time);
+            element.append(name);
+            history.append(element);
+          }
+        }
+      });
+  }
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+{% if site.ga_tracking != nil %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_tracking }}" async></script>
+<script async>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.ga_tracking }}'{% unless site.ga_tracking_anonymize_ip == nil %}, { 'anonymize_ip': true }{% endunless %});
+</script>
+{% endif %}
+
+<!--网站统计-->
+<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<!--toc目录-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
+
+<!--博客评论功能-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/css/gitalk/gitalk.css">
+<script src="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/js/gitalk/gitalk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/js/md5.js"></script>
+<!--支持LaTeX显示-->
+{% if page.latex %}
+<script async>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async>
+</script>
+{% endif %}
+
+<!--图片查看-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/css/viewerjs/viewer.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/js/viewerjs/viewer.js" async></script>
+
