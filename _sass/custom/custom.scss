@@ -1323,3 +1323,26 @@ p.note-title > p:first-child, blockquote.note-title > p:first-child {
   text-transform: none;
   padding-bottom: 0.5rem;
 }
+
+
+.search-input {
+  padding: $sp-2 $gutter-spacing-sm $sp-2 #{$gutter-spacing + $sp-5};
+  font-size: 14px;
+  background-color: $body-background-color;
+  transition: padding-left linear #{$transition-duration * 0.5};
+}
+
+.search-input-wrap {
+  width: 100%;
+  max-width: none;
+}
+
+.search-active .search-input-wrap {
+  width: 100%;
+  max-width: none;
+}
+
+.search-results {
+  width: 100%;
+}
+
