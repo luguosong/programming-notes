@@ -62,11 +62,11 @@
         <a href="/" class="zoom">
           &nbsp{{ site.title }}
         </a>
-        <a id="menu-button"></a>
+        <a id="menu-button" style="display: none"></a>
       </div>
     </div>
 
-    <nav aria-label="Main" id="site-nav" class="site-nav">
+    <nav  aria-label="Main" id="site-nav" style="flex: 1">
       {% assign pages_top_size = site.html_pages
       | where_exp:"item", "item.title != nil"
       | where_exp:"item", "item.parent == nil"
