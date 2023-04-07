@@ -1033,9 +1033,11 @@ body {
 //左侧面板
 .left {
   min-width: 18rem;
+  max-width: 20rem;
   display: flex;
   flex-direction: column;
   border-right: 1px dotted #44434d;
+  overflow: auto;
 }
 
 .left.visible {
@@ -1099,6 +1101,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 //访问量

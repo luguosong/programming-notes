@@ -1,6 +1,6 @@
 ---
 layout: note
-title: Home
+title: 主页
 nav_order: 10
 ---
 

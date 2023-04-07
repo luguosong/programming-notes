@@ -80,11 +80,11 @@
       {% endif %}
     </nav>
     <div class="left-bottom">
-            <span id="busuanzi_container_site_pv">
-                本站总访问量<span id="busuanzi_value_site_pv" class="zoom views-counts"><i
-              class="fa fa-spinner"></i></span>次
-            </span>
-      <div>
+      <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv" class="zoom views-counts"><i
+        class="fa fa-spinner"></i></span>次
+      </span>
+      <div style="margin-top: 2px">
         &copy;{{ "now" | date: "%Y" }}<a href="#" id="weixing" class="zoom">陆国松</a>.
         <a href="#" id="apply" class="zoom">打赏支持</a>
         <img id="applyImg"
@@ -93,6 +93,13 @@
         <img id="weixingImg"
              src="https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109241714054.jpg"
              hidden>
+      </div>
+      <div style="margin-top: 2px">
+        <img style="height: 1rem" src="https://img.shields.io/github/last-commit/guosonglu/programming-learning/note?style=plastic">
+        <img src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
+      </div>
+      <div style="margin-top: 2px">
+        <img style="height: 1rem" src="https://img.shields.io/github/repo-size/guosonglu/programming-learning?label=size&style=plastic">
       </div>
     </div>
   </div>
@@ -107,24 +114,16 @@
         </svg>
       </a>
 
-      {% include header_custom.html %}
-      {% if site.aux_links %}
-      <nav aria-label="Auxiliary" class="aux-nav" style="flex: 1">
-        <ul class="aux-nav-list">
-          {% for link in site.aux_links %}
-          <li class="aux-nav-list-item">
-            <a href="{{ link.last }}" class="site-button"
-               {% if site.aux_links_new_tab %}
-               target="_blank" rel="noopener noreferrer"
-               {% endif %}
-            >
-              {{ link.first }}
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </nav>
-      {% endif %}
+
+      {% capture search_placeholder %}{% include search_placeholder_custom.html %}{% endcapture %}
+
+      <div class="search" style="flex: 1;padding: 0">
+        <div class="search-input-wrap">
+          <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="{{ search_placeholder | strip_html | strip }}" aria-label="{{ search_placeholder | strip_html| strip }}" autocomplete="off">
+          <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+        </div>
+        <div id="search-results" class="search-results"></div>
+      </div>
 
       {% if site.back_to_top %}
       <a href="#top" id="back-to-top" style="line-height: 3rem">{{ site.back_to_top_text }}</a>
