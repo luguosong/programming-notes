@@ -50,6 +50,8 @@
   </symbol>
 </svg>
 
+{% include icons/icons.html %}
+
 <!--页面-->
 <div class="main-page">
   <!--左侧-->
@@ -66,7 +68,7 @@
       </div>
     </div>
 
-    <nav  aria-label="Main" id="site-nav" style="flex: 1">
+    <nav aria-label="Main" id="site-nav" style="flex: 1">
       {% assign pages_top_size = site.html_pages
       | where_exp:"item", "item.title != nil"
       | where_exp:"item", "item.parent == nil"
@@ -81,7 +83,11 @@
         <li class="nav-list-item external">
           <a href="{{ node.url | absolute_url }}" class="nav-list-link external">
             {{ node.title }}
-            {% unless node.hide_icon %}<svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title"><use xlink:href="#svg-external-link"></use></svg>{% endunless %}
+            {% unless node.hide_icon %}
+            <svg viewBox="0 0 24 24" aria-labelledby="svg-external-link-title">
+              <use xlink:href="#svg-external-link"></use>
+            </svg>
+            {% endunless %}
           </a>
         </li>
         {%- endfor -%}
@@ -99,7 +105,11 @@
       <ul class="nav-list nav-category-list">
         <li class="nav-list-item{% if page.collection == collection_key %} active{% endif %}">
           {%- if collection.size > 0 -%}
-          <a href="#" class="nav-list-expander"><svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg></a>
+          <a href="#" class="nav-list-expander">
+            <svg viewBox="0 0 24 24">
+              <use xlink:href="#svg-arrow-right"></use>
+            </svg>
+          </a>
           {%- endif -%}
           <div class="nav-category">{{ collection_value.name }}</div>
           {% include nav.html pages=collection key=collection_key %}
@@ -178,6 +188,7 @@
       <div id="top"></div>
       <h1 class="middle-title">{{ page.title }}</h1>
       <div class="middle-page">
+        <!--字数统计-->
         <div>
           本文：
           {% assign count = page.content | strip_html | strip_newlines | remove: " " | size %}
@@ -187,6 +198,7 @@
           {{ count }}
           {% endif %}字
         </div>
+        <!--git提交更新时间-->
         <div class="update-time" id="update-time">
           <div class="last-update-time" id="last-update-time">
 
@@ -195,32 +207,47 @@
 
           </div>
         </div>
+        <!--面包屑-->
+        {% unless page.url == "/" %}
+        {% if page.parent %}
+        <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+          <ol class="breadcrumb-nav-list">
+            {% if page.grand_parent %}
+            <li class="breadcrumb-nav-list-item"><a href="{{ first_level_url }}">{{ page.grand_parent }}</a></li>
+            <li class="breadcrumb-nav-list-item"><a href="{{ second_level_url }}">{{ page.parent }}</a></li>
+            {% else %}
+            <li class="breadcrumb-nav-list-item"><a href="{{ first_level_url }}">{{ page.parent }}</a></li>
+            {% endif %}
+            <li class="breadcrumb-nav-list-item"><span>{{ page.title }}</span></li>
+          </ol>
+        </nav>
+        {% endif %}
+        {% endunless %}
       </div>
 
-      <div class="middle-bread">
-        {% if page.has_children == true and page.has_toc != false %}
+
+      <div id="main-content" class="main-content middle-context" role="main">
+
+        {% if page.has_children == true %}
         <hr>
-        {% include toc_heading_custom.html %}
+        <h2 class="text-delta">目录</h2>
         <ul>
-          {% for child in include.toc_list %}
+          {% for child in toc_list %}
           <li>
-            <a href="{{ child.url | relative_url }}">{{ child.title }}</a>{% if child.summary %} - {{
-            child.summary }}{% endif %}
+            <a href="{{ child.url | relative_url }}">{{ child.title }}</a>{% if child.summary %} - {{ child.summary }}{%
+            endif %}
           </li>
           {% endfor %}
         </ul>
+
         {% endif %}
-      </div>
-      <div id="main-content" class="main-content middle-context" role="main">
+
         {% if site.heading_anchors != false %}
-        {% include vendor/anchor_headings.html html=content beforeHeading="true" anchorBody="
-        <svg viewBox='0 0 16 16 ' aria-hidden='true'>
-          <use xlink:href=\"#svg-link\"></use>
-        </svg>
-        " anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
+        {% include vendor/anchor_headings.html html=content beforeHeading="true" anchorBody="<svg viewBox=\'0 0 16 16\' aria-hidden=\'true\'><use xlink:href=\'#svg-link\'></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
         {% else %}
         {{ content }}
         {% endif %}
+
 
         {% capture footer_custom %}
         {%- include footer_custom.html -%}
@@ -246,8 +273,9 @@
             site.gh_edit_view_mode
             %}
             <p class="text-small text-grey-dk-000 mb-0" style="text-indent: 0">
-              <a href="{{ site.gh_edit_repository }}/{{ site.gh_edit_view_mode }}/{{ site.gh_edit_branch }}{% if site.gh_edit_source %}/{{ site.gh_edit_source }}{% endif %}/{{ page.path }}"
-                 id="edit-this-page">{{ site.gh_edit_link_text }}</a>
+              <a
+                href="{{ site.gh_edit_repository }}/{{ site.gh_edit_view_mode }}/{{ site.gh_edit_branch }}{% if site.gh_edit_source %}/{{ site.gh_edit_source }}{% endif %}/{{ page.path }}"
+                id="edit-this-page">{{ site.gh_edit_link_text }}</a>
             </p>
             {% endif %}
           </div>
@@ -268,45 +296,45 @@
 
 <script>
   let gitalk = new Gitalk({
-    id: md5('{{ page.url }}'),
-    clientID: '0d8aaec11145d797cdfa',
-    clientSecret: '43cec67aeda473d51e3975f5f9ea4b2d60fb1cb3',
-    repo: 'notes-comment',
-    owner: 'luguosong',
-    admin: ['luguosong'],
-    title: 'commentGitTalk'
-  });
-  gitalk.render('gitalk-container');
+    id: md5("{{ page.url }}"),
+    clientID: "0d8aaec11145d797cdfa",
+    clientSecret: "43cec67aeda473d51e3975f5f9ea4b2d60fb1cb3",
+    repo: "notes-comment",
+    owner: "luguosong",
+    admin: ["luguosong"],
+    title: "commentGitTalk",
+  })
+  gitalk.render("gitalk-container")
 
   tocbot.init({
     // 在哪里显示目录。
-    tocSelector: '.js-toc',
+    tocSelector: ".js-toc",
     // 在哪里抓取标题以建立目录。
-    contentSelector: '.middle-context',
+    contentSelector: ".middle-context",
     // 在contentSelector元素中抓取哪些标题。
-    headingSelector: 'h1, h2, h3',
+    headingSelector: "h1, h2, h3",
     // 符合ignoreSelector的标题将被跳过。
-    ignoreSelector: '.js-toc-ignore',
+    ignoreSelector: ".js-toc-ignore",
     // 对于内容中相对或绝对定位的容器内的标题
     hasInnerContainers: false,
     // 添加到链接的主类。
-    linkClass: 'toc-link',
+    linkClass: "toc-link",
     // 额外的类添加到链接中。
-    extraLinkClasses: '',
+    extraLinkClasses: "",
     // 类添加到活动链接中，该链接对应于页面上最上面的标题。
-    activeLinkClass: 'is-active-link',
+    activeLinkClass: "is-active-link",
     // 用于添加到列表的主类。
-    listClass: 'toc-list',
+    listClass: "toc-list",
     // 额外的课程添加到列表中。
-    extraListClasses: '',
+    extraListClasses: "",
     // 当一个列表应该被折叠时被添加的类。
-    isCollapsedClass: 'is-collapsed',
+    isCollapsedClass: "is-collapsed",
     // 当一个列表应该能够被折叠但不一定被折叠时被添加的类。
-    collapsibleClass: 'is-collapsible',
+    collapsibleClass: "is-collapsible",
     // 类添加到列表项目。
-    listItemClass: 'toc-list-item',
+    listItemClass: "toc-list-item",
     // 添加到活动列表项目的类。
-    activeListItemClass: 'is-active-li',
+    activeListItemClass: "is-active-li",
     // 多少个标题层不应该被折叠。
     // 例如，数字6将显示所有内容，因为只有6个标题层，数字0将折叠所有内容。
     // 当你滚动到其中的标题时，被隐藏的部分将打开和关闭。
@@ -318,7 +346,7 @@
     // Smooth scroll offset.
     scrollSmoothOffset: 0,
     // Callback for scroll end.
-    scrollEndCallback: function (e) {
+    scrollEndCallback: function(e) {
 
     },
     // 标题和文档顶部之间的标题偏移（这是为了进行微小的调整）。
@@ -328,28 +356,28 @@
     // 要添加positionFixedClass的元素。
     positionFixedSelector: null,
     // 添加固定位置类，使侧边栏在向下滚动超过fixedSidebarOffset后固定。
-    positionFixedClass: 'is-position-fixed',
+    positionFixedClass: "is-position-fixed",
     // fixedSidebarOffset可以是任何数字，但默认设置为自动，
     // 在初始化时将fixedSidebarOffset设置为侧边栏元素从文档顶部的offsetTop。
-    fixedSidebarOffset: 'auto',
+    fixedSidebarOffset: "auto",
     // includeHtml可以被设置为true，以包括标题节点的HTML标记，
     // 而不是仅仅包括textContent。
     includeHtml: false,
     // onclick函数适用于toc中的所有链接，将以事件作为第一个参数被调用，
     // 这可以用来停止、传播、防止默认或执行行动。
-    onClick: function (e) {
-      let nodes = e.target.parentNode.parentNode.childNodes;
+    onClick: function(e) {
+      let nodes = e.target.parentNode.parentNode.childNodes
       for (let i = 0; i < nodes.length; i++) {
-        nodes[i].querySelector("a").classList.remove("is-active-link");
-        let ul = nodes[i].querySelector("ul");
+        nodes[i].querySelector("a").classList.remove("is-active-link")
+        let ul = nodes[i].querySelector("ul")
         if (ul !== null) {
-          ul.classList.add("is-collapsed");
+          ul.classList.add("is-collapsed")
         }
       }
-      e.target.classList.add("is-active-link");
-      let node = e.target.parentNode.querySelector("ul");
+      e.target.classList.add("is-active-link")
+      let node = e.target.parentNode.querySelector("ul")
       if (node !== null)
-        node.classList.remove("is-collapsed");
+        node.classList.remove("is-collapsed")
     },
     // orderedList可以被设置为false，以生成无序列表（ul）而不是有序列表（ol）。
     orderedList: false,
@@ -370,130 +398,137 @@
     // function (object, HTMLElement) => object | void
     headingObjectCallback: null,
     // 设置基本路径，如果您在 `head` 中使用 `base` 标签，这很有用。
-    basePath: '',
+    basePath: "",
     // 只在`toSelector`滚动时生效，保持toc滚动位置与内容同步。
-    disableTocScrollSync: true
-  });
+    disableTocScrollSync: true,
+  })
 </script>
 
 <script>
 
-  const sitenav = document.getElementById("site-nav");
+  const sitenav = document.getElementById("site-nav")
 
   function setCookie(sName, sValue) {
-    sessionStorage.setItem(sName, escape(sValue));
+    sessionStorage.setItem(sName, escape(sValue))
   }
 
   function getCookie(sName) {
-    return sessionStorage.getItem(sName);
+    return sessionStorage.getItem(sName)
   }
 
-  sitenav.scrollTop = getCookie("scrollTop");
+  sitenav.scrollTop = getCookie("scrollTop")
 
   window.onload = function AddImgClickEvent() {
-    const objs = document.getElementsByTagName("img");
-    const apply = document.getElementById("apply");
-    const applyImg = document.getElementById("applyImg");
-    const weixing = document.getElementById("weixing");
-    const weixingImg = document.getElementById("weixingImg");
+    const objs = document.getElementsByTagName("img")
+    const apply = document.getElementById("apply")
+    const applyImg = document.getElementById("applyImg")
+    const weixing = document.getElementById("weixing")
+    const weixingImg = document.getElementById("weixingImg")
 
     for (let i = 0; i < objs.length; i++) {
-      new Viewer(objs[i]);
-      objs[i].style.cursor = "pointer";
+      new Viewer(objs[i])
+      objs[i].style.cursor = "pointer"
     }
-    ;
 
-    apply.onclick = function () {
-      applyImg.click();
-      return false;
-    };
 
-    weixing.onclick = function () {
-      weixingImg.click();
-      return false;
-    };
-
-    sitenav.onscroll = function () {
-      setCookie("scrollTop", sitenav.scrollTop);
+    apply.onclick = function() {
+      applyImg.click()
+      return false
     }
-  };
+
+    weixing.onclick = function() {
+      weixingImg.click()
+      return false
+    }
+
+    sitenav.onscroll = function() {
+      setCookie("scrollTop", sitenav.scrollTop)
+    }
+  }
 </script>
 
 <script>
-  const codes = document.getElementsByClassName("highlighter-rouge");
+  const codes = document.getElementsByClassName("highlighter-rouge")
   for (let i = 0; i < codes.length; i++) {
     if (codes[i].tagName == "DIV") {
-      const eleTitle = document.createElement('p');
-      const s = codes[i].getAttribute("class").toString();
-      eleTitle.innerHTML = s.split(" ")[0].substring(9);
-      eleTitle.style.textAlign = 'right';
-      eleTitle.style.margin = 0;
-      eleTitle.style.color = '#999';
-      eleTitle.style.fontSize = '0.5em';
-      eleTitle.style.borderBottomWidth = '1px';
-      eleTitle.style.borderBottomStyle = 'solid';
-      eleTitle.style.borderBottomColor = '#5e5e5e';
-      codes[i].prepend(eleTitle);
+      const eleTitle = document.createElement("p")
+      const s = codes[i].getAttribute("class").toString()
+      eleTitle.innerHTML = s.split(" ")[0].substring(9)
+      eleTitle.style.textAlign = "right"
+      eleTitle.style.margin = 0
+      eleTitle.style.color = "#999"
+      eleTitle.style.fontSize = "0.5em"
+      eleTitle.style.borderBottomWidth = "1px"
+      eleTitle.style.borderBottomStyle = "solid"
+      eleTitle.style.borderBottomColor = "#5e5e5e"
+      eleTitle.style.marginRight = "48px"
+      eleTitle.style.height = "44.4px"
+      eleTitle.style.lineHeight = "44.4px"
+      eleTitle.style.borderRightWidth = "1px"
+      eleTitle.style.borderRightStyle = "solid"
+      eleTitle.style.borderRightColor = "#5e5e5e"
+      eleTitle.style.paddingRight = "10px"
+      codes[i].prepend(eleTitle)
     }
   }
 
   function showEle(eleButton, ele, show) {
     if (show) {
-      eleButton.style.backgroundImage = 'url("https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928471.png")';
+      eleButton.style.backgroundImage = "url(\"https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928471.png\")"
     } else {
-      eleButton.style.backgroundImage = 'url("https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928434.png")';
+      eleButton.style.backgroundImage = "url(\"https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928434.png\")"
     }
-    let next = ele.nextElementSibling;
+    let next = ele.nextElementSibling
     while (next.tagName != "HE") {
       if (show) {
-        next.style.display = 'block';
+        next.style.display = "block"
       } else {
-        next.style.display = 'none';
+        next.style.display = "none"
       }
-      next = next.nextElementSibling;
+      next = next.nextElementSibling
     }
   }
 
   function showState(ele) {
-    return ele.nextElementSibling.style.display;
+    return ele.nextElementSibling.style.display
   }
 
-  const hiddens = document.getElementsByTagName('hb');
+  const hiddens = document.getElementsByTagName("hb")
   for (let i = 0; i < hiddens.length; i++) {
-    const eleButton = document.createElement('button');
-    eleButton.style.display = 'inline-block';
-    eleButton.style.width = '25px';
-    eleButton.style.height = '25px';
-    eleButton.style.padding = '0';
-    eleButton.style.backgroundSize = 'cover';
-    eleButton.style.backgroundColor = 'transparent';
-    eleButton.style.border = 'none';
-    eleButton.onclick = function () {
-      if (showState(hiddens[i]) == 'none') {
-        showEle(eleButton, hiddens[i], true);
+    const eleButton = document.createElement("button")
+    eleButton.style.display = "inline-block"
+    eleButton.style.width = "25px"
+    eleButton.style.height = "25px"
+    eleButton.style.padding = "0"
+    eleButton.style.backgroundSize = "cover"
+    eleButton.style.backgroundColor = "transparent"
+    eleButton.style.border = "none"
+    eleButton.onclick = function() {
+      if (showState(hiddens[i]) == "none") {
+        showEle(eleButton, hiddens[i], true)
       } else {
-        showEle(eleButton, hiddens[i], false);
+        showEle(eleButton, hiddens[i], false)
       }
-    };
-    showEle(eleButton, hiddens[i], false);
-    hiddens[i].before(eleButton);
+    }
+    showEle(eleButton, hiddens[i], false)
+    hiddens[i].before(eleButton)
   }
 </script>
 
 <!--侧边栏的显示与隐藏-->
 <script>
-  const menuButtonLeft = document.getElementById('menu-button-left');
-  const leftSidebar = document.getElementById('left-sidebar');
+  const menuButtonLeft = document.getElementById("menu-button-left")
+  const leftSidebar = document.getElementById("left-sidebar")
 
-  menuButtonLeft.addEventListener('click', () => {
-    leftSidebar.classList.toggle('visible');
+  menuButtonLeft.addEventListener("click", () => {
+    leftSidebar.classList.toggle("visible")
   })
 
-  const menuButtonRight = document.getElementById('menu-button-right');
-  const rightSidebar = document.getElementById('right-sidebar');
+  const menuButtonRight = document.getElementById("menu-button-right")
+  const rightSidebar = document.getElementById("right-sidebar")
 
-  menuButtonRight.addEventListener('click', () => {
-    rightSidebar.classList.toggle('visible');
+  menuButtonRight.addEventListener("click", () => {
+    rightSidebar.classList.toggle("visible")
   })
 </script>
 
@@ -502,9 +537,9 @@
 
   function padString(str, size) {
     if (str.length < size) {
-      return str.padEnd(size);
+      return str.padEnd(size)
     } else {
-      return str;
+      return str
     }
   }
 
@@ -513,31 +548,31 @@
       .then(response => response.json())
       .then(data => {
         if (data.length !== 0) {
-          const lastCommitDate = data[0].commit.author.date;
-          const date = new Date(Date.parse(lastCommitDate));
-          let updateTime = document.querySelector("#update-time");
-          updateTime.style.display = "block";
-          let lastTime = document.querySelector("#last-update-time");
-          let month = date.getMonth() + 1;
-          lastTime.innerHTML = "更新时间：" + date.getFullYear() + "年" + (month < 10 ? '0' + month : month) + "月" + date.getDate() + "日&nbsp;&nbsp;by&nbsp;&nbsp;" + data[0].commit.author.name;
-          let history = document.querySelector("#update-time-history");
+          const lastCommitDate = data[0].commit.author.date
+          const date = new Date(Date.parse(lastCommitDate))
+          let updateTime = document.querySelector("#update-time")
+          updateTime.style.display = "block"
+          let lastTime = document.querySelector("#last-update-time")
+          let month = date.getMonth() + 1
+          lastTime.innerHTML = "更新时间：" + date.getFullYear() + "年" + (month < 10 ? "0" + month : month) + "月" + date.getDate() + "日&nbsp;&nbsp;by&nbsp;&nbsp;" + data[0].commit.author.name
+          let history = document.querySelector("#update-time-history")
           for (let i = 1; i < data.length; i++) {
-            let element = document.createElement("div");
-            element.classList.add("update-time-record");
+            let element = document.createElement("div")
+            element.classList.add("update-time-record")
 
-            let time = document.createElement("div");
-            const date1 = new Date(Date.parse(data[i].commit.author.date));
-            let month1 = date1.getMonth() + 1;
-            time.innerHTML = date1.getFullYear() + "年" + (month1 < 10 ? '0' + month1 : month1) + "月" + (date1.getDate() < 10 ? '0' + date1.getDate() : date1.getDate()) + "日&nbsp;&nbsp;by&nbsp;&nbsp;";
-            let name = document.createElement("div");
-            name.innerHTML = padString(data[i].commit.author.name, 18);
+            let time = document.createElement("div")
+            const date1 = new Date(Date.parse(data[i].commit.author.date))
+            let month1 = date1.getMonth() + 1
+            time.innerHTML = date1.getFullYear() + "年" + (month1 < 10 ? "0" + month1 : month1) + "月" + (date1.getDate() < 10 ? "0" + date1.getDate() : date1.getDate()) + "日&nbsp;&nbsp;by&nbsp;&nbsp;"
+            let name = document.createElement("div")
+            name.innerHTML = padString(data[i].commit.author.name, 18)
 
-            element.append(time);
-            element.append(name);
-            history.append(element);
+            element.append(time)
+            element.append(name)
+            history.append(element)
           }
         }
-      });
+      })
   }
 </script>
 

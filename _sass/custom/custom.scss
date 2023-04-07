@@ -1014,6 +1014,10 @@
   display: inline-block;
 }
 
+body {
+  line-height: 1;
+}
+
 //页面
 .main-page {
   display: flex;
@@ -1156,7 +1160,6 @@
   overflow-y: auto;
   background-color: #27262b;
   z-index: 9999;
-  padding: 1rem;
   box-shadow: 1px 1px 4px 1px rgba(255, 255, 255, 0.8);
 }
 
@@ -1252,8 +1255,7 @@
 
     + table,
     + .table-wrapper,
-    + .code-example,
-    + .highlighter-rouge {
+    + .code-example {
       margin-top: 1em;
     }
 
@@ -1305,3 +1307,7 @@
   padding: 4px 1rem;
 }
 
+.breadcrumb-nav {
+  margin-top: 0;
+  margin-left: 1rem;
+}
