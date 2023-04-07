@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: note
 title: DOM
 nav_order: 10
 parent: WebApi

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: note
 title: 弹性盒子布局
 nav_order: 120
 parent: CSS

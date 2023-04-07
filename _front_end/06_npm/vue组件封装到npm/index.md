@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: note
 title: vue组件封装到npm
 nav_order: 50
 parent: npm

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: note
 title: 缩进和行内对其
 nav_order: 10
 parent: 文本属性

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: note
 title: 对象
 nav_order: 40
 parent: JavaScript编程语言

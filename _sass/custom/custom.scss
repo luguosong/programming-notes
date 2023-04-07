@@ -1312,3 +1312,9 @@ body {
   margin-top: 0;
   margin-left: 1rem;
 }
+
+p.note-title > p:first-child, blockquote.note-title > p:first-child {
+  font-size: 1rem;
+  text-transform: none;
+  padding-bottom: 0.5rem;
+}

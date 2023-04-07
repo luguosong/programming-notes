@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: note
 title: 基础知识
 nav_order: 20
 parent: JavaScript编程语言

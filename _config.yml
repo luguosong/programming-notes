@@ -145,16 +145,16 @@ callouts:
   highlight:
     color: yellow
   important:
-    title: Important
+    title: 重点
     color: blue
   new:
     title: New
     color: green
   note:
-    title: Note
+    title: 笔记
     color: purple
   warning:
-    title: Warning
+    title: 警告
     color: red
 
 # Google Analytics Tracking (optional)
