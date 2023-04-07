@@ -96,9 +96,10 @@
       </div>
       <div style="margin-top: 2px">
         <img style="height: 1rem" src="https://img.shields.io/github/last-commit/guosonglu/programming-learning/note?style=plastic">
-        <img src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
+        <img style="height: 1rem" src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
       </div>
       <div style="margin-top: 2px">
+        <img style="height: 1rem" src="https://img.shields.io/github/languages/code-size/guosonglu/programming-learning?label=code">
         <img style="height: 1rem" src="https://img.shields.io/github/repo-size/guosonglu/programming-learning?label=size&style=plastic">
       </div>
     </div>
@@ -136,7 +137,7 @@
       </a>
     </div>
     <!--标题-->
-    <div class="middle-scroll">
+    <div class="middle-scroll" id="middle-scroll">
       <div id="top"></div>
       <h1 class="middle-title">{{ page.title }}</h1>
       <div class="middle-page">
@@ -336,6 +337,78 @@
   })
 </script>
 
+<!--页面滚动目录动态变化-->
+<script>
+
+  function updateActiveItem() {
+    // 获取包含页面内容的div元素
+    const contentDiv = document.querySelector('#middle-scroll');
+
+    // 获取所有标题元素
+    const headings = document.querySelectorAll('h1, h2, h3');
+
+    // 获取tocbot生成的目录元素
+    const toc = document.querySelector('#right-sidebar');
+
+    // 获取窗口的高度
+    const containerHeight = window.innerHeight;
+
+    // 获取标题的高度
+    const titleHeight = document.querySelector('h1').offsetHeight;
+
+    // 获取当前滚动位置与标题元素位置的差值最小的标题元素
+    let activeHeading = null;
+    let minDistance = Number.MAX_VALUE;
+    for (const heading of headings) {
+      const distance = Math.abs(heading.offsetTop - contentDiv.scrollTop - (containerHeight - titleHeight) / 2);
+      if (distance < minDistance) {
+        activeHeading = heading;
+        minDistance = distance;
+      }
+    }
+
+    // 更新目录的当前活动项
+    if (activeHeading) {
+      const e = toc.querySelector(`a[href="#${activeHeading.id}"]`);
+      if (e) {
+        let nodes = e.parentNode.parentNode.childNodes;
+        for (let i = 0; i < nodes.length; i++) {
+          nodes[i].querySelector("a").classList.remove("is-active-link");
+          let ul = nodes[i].querySelector("ul");
+          if (ul !== null) {
+            ul.classList.add("is-collapsed");
+          }
+        }
+        e.classList.add("is-active-link");
+        let node = e.parentNode.querySelector("ul");
+        if (node !== null) {
+          node.classList.remove("is-collapsed");
+        }
+      }
+    }
+  }
+
+  // 监听div元素的滚动事件
+  document.querySelector('#middle-scroll').addEventListener('scroll', updateActiveItem);
+
+  // 在页面加载时更新目录的当前活动项
+  updateActiveItem();
+</script>
+
+<!--地址栏锚点定位效果-->
+<script>
+  // 获取 URL 的哈希值
+  var hash = decodeURIComponent(window.location.hash);
+
+  // 如果哈希值不为空，则滚动到相应的元素
+  if (hash !== '') {
+    var element = document.getElementById(hash.slice(1));
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+</script>
+
 <script>
 
   const sitenav = document.getElementById("site-nav")
@@ -507,6 +580,8 @@
       })
   }
 </script>
+
+
 
 
 </body>

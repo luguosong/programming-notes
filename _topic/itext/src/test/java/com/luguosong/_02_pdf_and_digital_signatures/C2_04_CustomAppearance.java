@@ -45,7 +45,7 @@ public class C2_04_CustomAppearance {
         PdfSigner signer = new PdfSigner(reader, Files.newOutputStream(Paths.get(DEST+"hello_signed.pdf")), new StampingProperties());
 
         PdfSignatureAppearance appearance = signer.getSignatureAppearance()
-                .setReason("自定义外观示例")
+                .setReason("myReason")
                 .setLocation("lgs");
 
         signer.setFieldName(SIGNAME);

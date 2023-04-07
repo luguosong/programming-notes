@@ -1275,7 +1275,7 @@ body {
   margin-top: 3rem;
   overflow: auto;
   border-left: 1px dotted #44434d;
-  overflow: auto;
+  height: calc(100vh - 3rem);
 }
 
 .right.visible {
@@ -1303,6 +1303,8 @@ body {
 
 .is-active-link {
   color: #2b7df3 !important;
+  text-decoration: underline;
+  font-weight: normal;
   transform: scale(1.05, 1.05);
 }
 
