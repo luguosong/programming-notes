@@ -30,3 +30,5 @@ nav_order: 10
 - 网站中的静态资源（图片、js、css）使用[jsdelivr](https://www.jsdelivr.com/github)加速
 - 网站使用[cloudflare](https://dash.cloudflare.com/)做CDN加速
 - Html页面头部添加 `<meta http-equiv="Cache-Control" content="max-age=7200" />`，防止每次刷新页面都反复获取静态文件
+
+
