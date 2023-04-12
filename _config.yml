@@ -18,6 +18,8 @@ title: 陆国松的编程笔记
 description: 一个Java程序员的学习笔记
 url: "https://www.luguosong.com" # the base hostname & protocol for your site, e.g. http://example.com
 repository: guosonglu/programming-learning # for github-metadata
+root: /programming-learning/
+
 
 permalink: pretty
 
