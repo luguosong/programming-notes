@@ -2,7 +2,7 @@
 layout: note
 title: PDF和数字签名
 nav_order: 20
-parent: iText 7
+parent: iText 7 PDF文件的数字签名
 ---
 
 # 签名Hello World
@@ -97,3 +97,5 @@ PDF规范允许将以下元数据添加到签名字典中：
 {% highlight java %}
 {% include_relative C2_08_SignatureTypes.java %}
 {% endhighlight %}
+
+# 
