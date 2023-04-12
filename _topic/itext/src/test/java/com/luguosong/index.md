@@ -14,4 +14,3 @@ has_children: true
 - [Itext7官方文档](https://kb.itextpdf.com/home/it7kb)
 - [数字签名Itext7示例(这个是最新的develop版)](https://itextpdf.com/resources/books/addendum-digital-signatures-pdf-documents)
 - [数字签名Itext7代码github仓库](https://github.com/itext/i7js-signatures/tree/master)
-
