@@ -20,6 +20,8 @@ import java.security.Security;
 
 /**
  * 自定义外观
+ * 在图层0上添加一个灰色的矩形作为签名背景，同时在图层2上添加签名者的信息。
+ * 这样，签名就会更加个性化，而不是使用默认的外观。
  *
  * @author luguosong
  */
@@ -34,6 +36,7 @@ public class C2_04_CustomAppearance {
      * 签名域name
      */
     public static final String SIGNAME = "Signature1";
+
     public static void main(String[] args) throws IOException, GeneralSecurityException {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
@@ -47,6 +50,7 @@ public class C2_04_CustomAppearance {
         PdfSignatureAppearance appearance = signer.getSignatureAppearance()
                 .setReason("myReason")
                 .setLocation("lgs");
+
 
         signer.setFieldName(SIGNAME);
 

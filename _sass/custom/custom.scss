@@ -1191,11 +1191,6 @@ body {
     margin: auto;
   }
 
-  p {
-    margin-bottom: 0;
-    //text-indent: 2em;
-  }
-
   ul {
     list-style-type: none;
 
@@ -1269,9 +1264,11 @@ body {
   }
 }
 
+
+
 //右侧toc
 .right {
-  min-width: 18rem;
+  max-width: 20rem;
   margin-top: 3rem;
   overflow: auto;
   border-left: 1px dotted #44434d;
@@ -1290,11 +1287,6 @@ body {
   .right.visible {
     display: flex;
   }
-}
-
-//toc样式
-.toc-list {
-
 }
 
 .toc-link::before {
@@ -1346,3 +1338,11 @@ p.note-title > p:first-child, blockquote.note-title > p:first-child {
   width: 100%;
 }
 
+.main-content {
+  line-height: 1;
+}
+
+code {
+  font-size: 0.85rem;
+  font-family: "Source Code Pro", "ZCOOL KuaiLe";
+}

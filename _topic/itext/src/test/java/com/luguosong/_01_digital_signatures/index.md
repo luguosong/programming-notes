@@ -18,52 +18,9 @@ parent: iText 7
 
 ## Java默认MessageDigest
 
-```java
-/**
- * 类名：C1_01_DigestDefault
- * 描述：信息摘要默认实现
- */
-public class C1_01_DigestDefault {
-    /**
-     * 方法名：showTest
-     * 描述：展示测试
-     * @param algorithm 算法
-     * @throws RuntimeException 运行时异常
-     */
-    public void showTest(String algorithm) {
-        try {
-            // 获取信息摘要实例
-            MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-            // 对字符串进行摘要
-            byte[] digest = messageDigest.digest("hello world".getBytes("UTF-8"));
-            // 输出摘要结果
-            System.out.println("摘要使用 " + algorithm + ": " + digest.length);
-            System.out.println("摘要: " + new BigInteger(1, digest).toString(16));
-            // 验证摘要结果
-            System.out.println("摘要验证 " + Arrays.equals(digest, messageDigest.digest("hello world".getBytes())));
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    /**
-     * 方法名：testDigest
-     * 描述：测试信息摘要
-     */
-    @Test
-    public void testDigest() {
-        showTest("MD5");
-        showTest("SHA-1");
-        showTest("SHA-224");
-        showTest("SHA-256");
-        showTest("SHA-384");
-        showTest("SHA-512");
-        showTest("RIPEMD128");
-        showTest("RIPEMD160");
-        showTest("RIPEMD256");
-    }
-}
-```
+{% highlight java %}
+{% include_relative C1_01_DigestDefault.java %}
+{% endhighlight %}
 
 输出结果：
 
@@ -93,48 +50,9 @@ RIPEMD256 MessageDigest not available
 
 ## BC库作为密码提供者
 
-```java
-public class C1_02_DigestBC {
-    /**
-     * 方法名：showTest
-     * 描述：展示测试
-     * @param algorithm 算法
-     * @throws RuntimeException 运行时异常
-     */
-    public void showTest(String algorithm) {
-        try {
-            // 获取信息摘要实例,使用BC库作为密码提供者
-            MessageDigest messageDigest = MessageDigest.getInstance(algorithm,new BouncyCastleProvider());
-            // 对字符串进行摘要
-            byte[] digest = messageDigest.digest("hello world".getBytes("UTF-8"));
-            // 输出摘要结果
-            System.out.println("摘要使用 " + algorithm + ": " + digest.length);
-            System.out.println("摘要: " + new BigInteger(1, digest).toString(16));
-            // 验证摘要结果
-            System.out.println("摘要验证 " + Arrays.equals(digest, messageDigest.digest("hello world".getBytes())));
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    /**
-     * 方法名：testDigest
-     * 描述：测试信息摘要
-     */
-    @Test
-    public void testDigest() {
-        showTest("MD5");
-        showTest("SHA-1");
-        showTest("SHA-224");
-        showTest("SHA-256");
-        showTest("SHA-384");
-        showTest("SHA-512");
-        showTest("RIPEMD128");
-        showTest("RIPEMD160");
-        showTest("RIPEMD256");
-    }
-}
-```
+{% highlight java %}
+{% include_relative C1_02_DigestBC.java %}
+{% endhighlight %}
 
 输出结果：
 
@@ -210,104 +128,9 @@ keytool -genkey -alias demo -keyalg RSA -keysize 2048 -keystore ks
 > - SHA1withRSA
 > - SHA256withRSA
 
-```java
-/**
- * @author luguosong
- */
-public class C1_03_EncryptDecrypt {
-
-    /**
-     * 公钥
-     */
-    private PublicKey publicKey;
-
-    /**
-     * 私钥
-     */
-    private Key privateKey;
-
-    /**
-     * 密码器
-     */
-    private Cipher cipher;
-
-    /**
-     * 签名器
-     */
-    private Signature signature;
-
-    /**
-     * 初始化方法
-     * 从密钥库中加载公钥和私钥，初始化密码器和签名器。
-     */
-    @BeforeEach
-    public void init() {
-        try {
-            // 从密钥库中加载公钥和私钥
-            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-            ks.load(C1_03_EncryptDecrypt.class.getClassLoader().getResourceAsStream("01_digital_signatures/ks"), "12345678".toCharArray());
-            publicKey = ks.getCertificate("demo").getPublicKey();
-            privateKey = ks.getKey("demo", "12345678".toCharArray());
-            // 初始化密码器
-            cipher = Cipher.getInstance("RSA");
-            // 初始化签名器
-            signature = Signature.getInstance("SHA256withRSA");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * 加密和解密方法
-     * 本方法演示了非对称加解密的过程，包括加密和解密。
-     * 加密使用公钥，解密使用私钥。
-     */
-    @Test
-    public void encryptionAndDecryption() {
-        try {
-            //加密
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            byte[] encrypt = cipher.doFinal("hello world".getBytes());
-            System.out.println("加密结果：" + new BigInteger(1, encrypt).toString(16));
-
-            //解密
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            byte[] decrypt = cipher.doFinal(encrypt);
-            System.out.println("解密结果：" + new String(decrypt));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * 签名和验签方法
-     * 本方法演示了签名和验签的过程，包括签名和验签。
-     * 签名使用私钥，验签使用公钥。
-     * 签名的过程是先对数据进行哈希，然后使用私钥对哈希值进行加密，得到签名。
-     * 验签的过程是先对数据进行哈希，然后使用公钥对签名进行解密，得到哈希值，然后比较两个哈希值是否相等。
-     */
-    @Test
-    public void signingAndVerifyingSignatures() {
-        try {
-            String data = "hello world";
-
-            //签名
-            signature.initSign((PrivateKey) privateKey);
-            signature.update(data.getBytes());
-            byte[] sign = signature.sign();
-            System.out.println("签名结果：" + new BigInteger(1, sign).toString(16));
-
-            //验签
-            signature.initVerify(publicKey);
-            signature.update(data.getBytes());
-            boolean verify = signature.verify(sign);
-            System.out.println("验签结果：" + verify);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-}
-```
+{% highlight java %}
+{% include_relative C1_03_EncryptDecrypt.java %}
+{% endhighlight %}
 
 
   

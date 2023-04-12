@@ -14,6 +14,7 @@ import java.security.Security;
 
 /**
  * 使用临时文件签署文件
+ * 一般用于签署大文件
  * @author luguosong
  */
 public class C2_02_SignHelloWorldWithTempFile {

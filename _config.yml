@@ -161,7 +161,7 @@ color_scheme: dark
 callouts_level: loud # or quiet
 callouts:
   highlight:
-    color: yellow
+    color: purple
   important:
     title: 重点
     color: blue
@@ -170,7 +170,7 @@ callouts:
     color: green
   note:
     title: 笔记
-    color: purple
+    color: yellow
   warning:
     title: 警告
     color: red

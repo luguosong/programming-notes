@@ -65,7 +65,6 @@ public class C2_03_CreateFileWithEmptyField {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     /**

@@ -12,8 +12,6 @@
     <!--左侧顶部logo和标题-->
     <div class="left-header">
       <div>
-        <img src="https://cdn.jsdelivr.net/gh/guosonglu/code-notes@master/assets/images/hacker.png"
-             class="zoom">
         <a href="/" class="zoom">
           &nbsp{{ site.title }}
         </a>
@@ -453,30 +451,6 @@
 </script>
 
 <script>
-  const codes = document.getElementsByClassName("highlighter-rouge")
-  for (let i = 0; i < codes.length; i++) {
-    if (codes[i].tagName == "DIV") {
-      const eleTitle = document.createElement("p")
-      const s = codes[i].getAttribute("class").toString()
-      eleTitle.innerHTML = s.split(" ")[0].substring(9)
-      eleTitle.style.textAlign = "right"
-      eleTitle.style.margin = 0
-      eleTitle.style.color = "#999"
-      eleTitle.style.fontSize = "0.5em"
-      eleTitle.style.borderBottomWidth = "1px"
-      eleTitle.style.borderBottomStyle = "solid"
-      eleTitle.style.borderBottomColor = "#5e5e5e"
-      eleTitle.style.marginRight = "48px"
-      eleTitle.style.height = "44.4px"
-      eleTitle.style.lineHeight = "44.4px"
-      eleTitle.style.borderRightWidth = "1px"
-      eleTitle.style.borderRightStyle = "solid"
-      eleTitle.style.borderRightColor = "#5e5e5e"
-      eleTitle.style.paddingRight = "10px"
-      codes[i].prepend(eleTitle)
-    }
-  }
-
   function showEle(eleButton, ele, show) {
     if (show) {
       eleButton.style.backgroundImage = "url(\"https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928471.png\")"

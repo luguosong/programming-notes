@@ -59,5 +59,4 @@ public class C2_01_SignHelloWorld {
         sign(outFolder + "hello_signed3.pdf", PdfSigner.CryptoStandard.CADES, DigestAlgorithms.SHA256);
         sign(outFolder + "hello_signed4.pdf", PdfSigner.CryptoStandard.CADES, DigestAlgorithms.RIPEMD160);
     }
-
 }
