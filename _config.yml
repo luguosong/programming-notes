@@ -199,3 +199,17 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
+
+
+collections:
+  front_end:
+    output: true
+  topic:
+    output: true
+
+just_the_docs:
+  collections:
+    front_end:
+      name: 前端开发
+    topic:
+      name: 专项研究
