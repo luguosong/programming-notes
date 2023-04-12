@@ -130,8 +130,8 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
 nav_external_links:
-  - title: Code on GitHub
-    url: https://github.com/guosonglu/programming-learning
+  - title: 国内地址（速度快，但更新落后）
+    url: https://luguosong.gitee.io
 
 # Footer content
 # appears at the bottom of every page's main content
