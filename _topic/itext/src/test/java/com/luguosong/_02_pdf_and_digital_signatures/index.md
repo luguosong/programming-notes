@@ -105,9 +105,32 @@ PDF规范允许将以下元数据添加到签名字典中：
 > 
 > 例如：出版商无法同时将他的合同发送给两个作者进行批准，然后在合并签署的文档（与打包在文件夹中不同）。其中一名作者必须首先签署合同，然后由另一名作者签署。
 
-Alice采用`CERTIFIED_FORM_FILLING`认证签名，bob和carol采用`NOT_CERTIFIED`批准签名：
+Alice采用`CERTIFIED_FORM_FILLING`认证签名，Bob和Carol采用`NOT_CERTIFIED`批准签名：
 
 ![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413093238.png)
 
+Alice和Bob采用`NOT_CERTIFIED`批准签名，Carol采用`CERTIFIED_FORM_FILLING`认证签名：
+
 ![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413102607.png)
 
+Alice和Bob采用`NOT_CERTIFIED`批准签名，Carol采用`CERTIFIED_NO_CHANGES_ALLOWED`认证签名：
+
+![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413131955.png)
+
+Alice采用`CERTIFIED_FORM_FILLING`认证签名，Bob采用`NOT_CERTIFIED`批准签名，Carol采用`CERTIFIED_FORM_FILLING`认证签名：
+
+![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413133745.png)
+
+
+代码如下：
+
+{% highlight java %}
+{% include_relative C2_09_SequentialSignatures.java %}
+{% endhighlight %}
+
+```
+测试
+aaa
+
+aaaa
+```

@@ -1325,3 +1325,11 @@ code {
   font-size: 0.85rem;
   font-family: "Source Code Pro", "ZCOOL KuaiLe";
 }
+
+//行内代码块高亮显示
+code.language-plaintext {
+  /* styles go here */
+  color: #759fc2;
+  padding: 0 0.2rem;
+  margin: 0 0.2rem;
+}
