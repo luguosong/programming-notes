@@ -1317,8 +1317,26 @@ p.note-title > p:first-child, blockquote.note-title > p:first-child {
   padding-bottom: 0.5rem;
 }
 
+.main-content {
+  line-height: 1;
+}
+
 .search {
-  height: 100%;
+  position: relative !important;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0;
+  transition: none;
+}
+
+.search-input-wrap {
+  position: absolute;
+  width: 100%;
+  max-width: $search-results-width;
+  height: 100% !important;
+  border-radius: 0;
+  box-shadow: none;
+  transition: width ease $transition-duration;
 }
 
 .search-input {
@@ -1328,22 +1346,59 @@ p.note-title > p:first-child, blockquote.note-title > p:first-child {
   transition: padding-left linear #{$transition-duration * 0.5};
 }
 
-.search-input-wrap {
-  width: 100%;
-  max-width: none;
-}
-
-.search-active .search-input-wrap {
-  width: 100%;
-  max-width: none;
+.search-label {
+  padding-left: $gutter-spacing;
+  transition: padding-left linear #{$transition-duration * 0.5};
 }
 
 .search-results {
-  width: 100%;
+  top: 100%;
+  width: $search-results-width;
+  max-height: calc(100vh - 200%) !important;
 }
 
-.main-content {
-  line-height: 1;
+.search-results-list {
+  @include fs-3;
+}
+
+.search-result-title {
+  display: inline-block;
+  width: 40%;
+  padding-right: $sp-2;
+  vertical-align: top;
+}
+
+.search-result-previews {
+  display: inline-block;
+  width: 60%;
+  padding-left: $sp-2;
+  margin-left: 0;
+  vertical-align: top;
+}
+
+.search-active {
+  .search-input-wrap {
+    width: $search-results-width;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 3px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .search-input {
+    padding-left: 2.3rem;
+  }
+
+  .search-label {
+    padding-left: 0.6rem;
+  }
+
+  .main {
+    position: fixed;
+    right: 0;
+    left: 0;
+  }
+
+  .main-header {
+    padding-top: 0;
+  }
 }
 
 code {
