@@ -113,7 +113,7 @@
         </svg>
       </a>
 
-
+      {% if site.search_enabled != false %}
       {% capture search_placeholder %}{% include search_placeholder_custom.html %}{% endcapture %}
 
       <div class="search" style="flex: 1;padding: 0">
@@ -123,9 +123,10 @@
         </div>
         <div id="search-results" class="search-results"></div>
       </div>
+      {% endif %}
 
       {% if site.back_to_top %}
-      <a href="#top" id="back-to-top" style="line-height: 3rem">{{ site.back_to_top_text }}</a>
+      <a href="#top" id="back-to-top" style="line-height: 3rem;flex:1;text-align: right">{{ site.back_to_top_text }}</a>
       {% endif %}
 
       <a href="#" id="menu-button-right" class="site-button-right site-button">
