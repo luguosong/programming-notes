@@ -128,9 +128,4 @@ Alice采用`CERTIFIED_FORM_FILLING`认证签名，Bob采用`NOT_CERTIFIED`批准
 {% include_relative C2_09_SequentialSignatures.java %}
 {% endhighlight %}
 
-```
-测试
-aaa
 
-aaaa
-```

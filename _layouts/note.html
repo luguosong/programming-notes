@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <nav aria-label="Main" id="site-nav" style="flex: 1">
+    <nav aria-label="Main" id="site-nav" style="flex: 1;overflow: auto">
       {% assign pages_top_size = site.html_pages
       | where_exp:"item", "item.title != nil"
       | where_exp:"item", "item.parent == nil"
@@ -92,14 +92,7 @@
              src="https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109241714054.jpg"
              hidden>
       </div>
-      <div style="margin-top: 2px">
-        <img style="height: 1rem" src="https://img.shields.io/github/last-commit/guosonglu/programming-learning/note?style=plastic">
-        <img style="height: 1rem" src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
-      </div>
-      <div style="margin-top: 2px">
-        <img style="height: 1rem" src="https://img.shields.io/github/languages/code-size/guosonglu/programming-learning?label=code">
-        <img style="height: 1rem" src="https://img.shields.io/github/repo-size/guosonglu/programming-learning?label=size&style=plastic">
-      </div>
+
     </div>
   </div>
 
@@ -220,9 +213,30 @@
     </div>
   </div>
   <!--右侧TOC-->
-  <div class="right toc js-toc" id="right-sidebar">
+  <dit class="right" id="right-sidebar">
+    <div class="right-head">
+      <a href="https://www.luguosong.com/" style="text-decoration: none">
+        <img src="https://img.shields.io/badge/-github%20pages-blue?style=flat&logo=github">
+      </a>
+      <a href="https://luguosong.gitee.io/" style="text-decoration: none">
+        <img src="https://img.shields.io/badge/-gitee%20pages-red?style=flat&logo=gitee">
+      </a>
+    </div>
+    <div class="toc js-toc">
 
-  </div>
+    </div>
+    <div class="right-bottom">
+      <div style="margin-top: 2px;text-align: center">
+        <img style="height: 1rem" src="https://img.shields.io/github/last-commit/guosonglu/programming-learning/note?style=plastic">
+        <img style="height: 1rem" src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
+      </div>
+      <div style="margin-top: 2px;text-align: center">
+        <img style="height: 1rem" src="https://img.shields.io/github/languages/code-size/guosonglu/programming-learning?label=code">
+        <img style="height: 1rem" src="https://img.shields.io/github/repo-size/guosonglu/programming-learning?label=size&style=plastic">
+      </div>
+    </div>
+  </dit>
+
 </div>
 
 
