@@ -109,5 +109,5 @@ Alice采用`CERTIFIED_FORM_FILLING`认证签名，bob和carol采用`NOT_CERTIFIE
 
 ![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413093238.png)
 
-
+![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413102607.png)
 

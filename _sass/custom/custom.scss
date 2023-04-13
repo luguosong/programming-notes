@@ -1317,6 +1317,9 @@ p.note-title > p:first-child, blockquote.note-title > p:first-child {
   padding-bottom: 0.5rem;
 }
 
+.search {
+  height: 100%;
+}
 
 .search-input {
   padding: $sp-2 $gutter-spacing-sm $sp-2 #{$gutter-spacing + $sp-5};
