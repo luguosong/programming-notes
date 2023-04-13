@@ -130,7 +130,7 @@ nav_sort: case_sensitive # Capital letters sorted before lowercase
 
 # External navigation links
 nav_external_links:
-  - title: 国内地址（速度快，但更新落后）
+  - title: 国内地址（速度快）
     url: https://luguosong.gitee.io
 
 # Footer content
@@ -214,3 +214,10 @@ just_the_docs:
       name: 前端开发
     topic:
       name: 专项研究
+
+
+sass:
+  sass_dir: _sass
+  style: compressed
+  cache: false
+  debug_info: false

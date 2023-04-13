@@ -104,3 +104,10 @@ PDF规范允许将以下元数据添加到签名字典中：
 > 签名必须按顺序逐个应用，`无法并行签名`。
 > 
 > 例如：出版商无法同时将他的合同发送给两个作者进行批准，然后在合并签署的文档（与打包在文件夹中不同）。其中一名作者必须首先签署合同，然后由另一名作者签署。
+
+Alice采用`CERTIFIED_FORM_FILLING`认证签名，bob和carol采用`NOT_CERTIFIED`批准签名：
+
+![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413093238.png)
+
+
+

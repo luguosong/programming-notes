@@ -16,7 +16,9 @@ public class KeyStoreUtil {
 
     static {
         try {
+            // 获取密钥库
             ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            // 读取密钥库文件
             ks.load(C1_03_EncryptDecrypt.class.getClassLoader().getResourceAsStream("01_digital_signatures/ks"), "12345678".toCharArray());
             alias = ks.aliases().nextElement();
         } catch (Exception e) {
