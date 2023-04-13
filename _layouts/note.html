@@ -111,8 +111,14 @@
 
       <div class="search" style="flex: 1;padding: 0">
         <div class="search-input-wrap">
-          <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="{{ search_placeholder | strip_html | strip }}" aria-label="{{ search_placeholder | strip_html| strip }}" autocomplete="off">
-          <label for="search-input" class="search-label"><svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg></label>
+          <input type="text" id="search-input" class="search-input" tabindex="0"
+                 placeholder="{{ search_placeholder | strip_html | strip }}"
+                 aria-label="{{ search_placeholder | strip_html| strip }}" autocomplete="off">
+          <label for="search-input" class="search-label">
+            <svg viewBox="0 0 24 24" class="search-icon">
+              <use xlink:href="#svg-search"></use>
+            </svg>
+          </label>
         </div>
         <div id="search-results" class="search-results"></div>
       </div>
@@ -216,10 +222,10 @@
   <dit class="right" id="right-sidebar">
     <div class="right-head">
       <a href="https://www.luguosong.com/" style="text-decoration: none">
-        <img src="https://img.shields.io/badge/-github%20pages-blue?style=flat&logo=github">
+        <img class="unImgView" src="https://img.shields.io/badge/-github%20pages-blue?style=flat&logo=github">
       </a>
       <a href="https://luguosong.gitee.io/" style="text-decoration: none">
-        <img src="https://img.shields.io/badge/-gitee%20pages-red?style=flat&logo=gitee">
+        <img class="unImgView" src="https://img.shields.io/badge/-gitee%20pages-red?style=flat&logo=gitee">
       </a>
     </div>
     <div class="toc js-toc">
@@ -227,12 +233,16 @@
     </div>
     <div class="right-bottom">
       <div style="margin-top: 2px;text-align: center">
-        <img style="height: 1rem" src="https://img.shields.io/github/last-commit/guosonglu/programming-learning/note?style=plastic">
-        <img style="height: 1rem" src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
+        <img style="height: 1rem" class="unImgView"
+             src="https://img.shields.io/github/last-commit/guosonglu/programming-learning/note?style=plastic">
+        <img style="height: 1rem" class="unImgView"
+             src="https://img.shields.io/github/commit-activity/m/guosonglu/programming-learning/note?label=commit&style=plastic">
       </div>
       <div style="margin-top: 2px;text-align: center">
-        <img style="height: 1rem" src="https://img.shields.io/github/languages/code-size/guosonglu/programming-learning?label=code">
-        <img style="height: 1rem" src="https://img.shields.io/github/repo-size/guosonglu/programming-learning?label=size&style=plastic">
+        <img style="height: 1rem" class="unImgView"
+             src="https://img.shields.io/github/languages/code-size/guosonglu/programming-learning?label=code">
+        <img style="height: 1rem" class="unImgView"
+             src="https://img.shields.io/github/repo-size/guosonglu/programming-learning?label=size&style=plastic">
       </div>
     </div>
   </dit>
@@ -355,73 +365,74 @@
 
   function updateActiveItem() {
     // 获取包含页面内容的div元素
-    const contentDiv = document.querySelector('#middle-scroll');
+    const contentDiv = document.querySelector("#middle-scroll")
 
     // 获取所有标题元素
-    const headings = document.querySelectorAll('h1, h2, h3');
+    const headings = document.querySelectorAll("h1, h2, h3")
 
     // 获取tocbot生成的目录元素
-    const toc = document.querySelector('#right-sidebar');
+    const toc = document.querySelector("#right-sidebar")
 
     // 获取窗口的高度
-    const containerHeight = window.innerHeight;
+    const containerHeight = window.innerHeight
 
     // 获取标题的高度
-    const titleHeight = document.querySelector('h1').offsetHeight;
+    const titleHeight = document.querySelector("h1").offsetHeight
 
     // 获取当前滚动位置与标题元素位置的差值最小的标题元素
-    let activeHeading = null;
-    let minDistance = Number.MAX_VALUE;
+    let activeHeading = null
+    let minDistance = Number.MAX_VALUE
     for (const heading of headings) {
-      const distance = Math.abs(heading.offsetTop - contentDiv.scrollTop - (containerHeight - titleHeight) / 2);
+      const distance = Math.abs(heading.offsetTop - contentDiv.scrollTop - (containerHeight - titleHeight) / 2)
       if (distance < minDistance) {
-        activeHeading = heading;
-        minDistance = distance;
+        activeHeading = heading
+        minDistance = distance
       }
     }
 
     // 更新目录的当前活动项
     if (activeHeading) {
-      const e = toc.querySelector(`a[href="#${activeHeading.id}"]`);
+      const e = toc.querySelector(`a[href="#${activeHeading.id}"]`)
       if (e) {
-        let nodes = e.parentNode.parentNode.childNodes;
+        let nodes = e.parentNode.parentNode.childNodes
         for (let i = 0; i < nodes.length; i++) {
-          nodes[i].querySelector("a").classList.remove("is-active-link");
-          let ul = nodes[i].querySelector("ul");
+          nodes[i].querySelector("a").classList.remove("is-active-link")
+          let ul = nodes[i].querySelector("ul")
           if (ul !== null) {
-            ul.classList.add("is-collapsed");
+            ul.classList.add("is-collapsed")
           }
         }
-        e.classList.add("is-active-link");
-        let node = e.parentNode.querySelector("ul");
+        e.classList.add("is-active-link")
+        let node = e.parentNode.querySelector("ul")
         if (node !== null) {
-          node.classList.remove("is-collapsed");
+          node.classList.remove("is-collapsed")
         }
       }
     }
   }
 
   // 监听div元素的滚动事件
-  document.querySelector('#middle-scroll').addEventListener('scroll', updateActiveItem);
+  document.querySelector("#middle-scroll").addEventListener("scroll", updateActiveItem)
 
   // 在页面加载时更新目录的当前活动项
-  updateActiveItem();
+  updateActiveItem()
 </script>
 
 <!--地址栏锚点定位效果-->
 <script>
   // 获取 URL 的哈希值
-  var hash = decodeURIComponent(window.location.hash);
+  var hash = decodeURIComponent(window.location.hash)
 
   // 如果哈希值不为空，则滚动到相应的元素
-  if (hash !== '') {
-    var element = document.getElementById(hash.slice(1));
+  if (hash !== "") {
+    var element = document.getElementById(hash.slice(1))
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" })
     }
   }
 </script>
 
+<!--图片查看-->
 <script>
 
   const sitenav = document.getElementById("site-nav")
@@ -444,7 +455,9 @@
     const weixingImg = document.getElementById("weixingImg")
 
     for (let i = 0; i < objs.length; i++) {
-      new Viewer(objs[i])
+      if (!objs[i].classList.contains("unImgView")) {
+        new Viewer(objs[i])
+      }
       objs[i].style.cursor = "pointer"
     }
 
@@ -462,50 +475,6 @@
     sitenav.onscroll = function() {
       setCookie("scrollTop", sitenav.scrollTop)
     }
-  }
-</script>
-
-<script>
-  function showEle(eleButton, ele, show) {
-    if (show) {
-      eleButton.style.backgroundImage = "url(\"https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928471.png\")"
-    } else {
-      eleButton.style.backgroundImage = "url(\"https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/202109291928434.png\")"
-    }
-    let next = ele.nextElementSibling
-    while (next.tagName != "HE") {
-      if (show) {
-        next.style.display = "block"
-      } else {
-        next.style.display = "none"
-      }
-      next = next.nextElementSibling
-    }
-  }
-
-  function showState(ele) {
-    return ele.nextElementSibling.style.display
-  }
-
-  const hiddens = document.getElementsByTagName("hb")
-  for (let i = 0; i < hiddens.length; i++) {
-    const eleButton = document.createElement("button")
-    eleButton.style.display = "inline-block"
-    eleButton.style.width = "25px"
-    eleButton.style.height = "25px"
-    eleButton.style.padding = "0"
-    eleButton.style.backgroundSize = "cover"
-    eleButton.style.backgroundColor = "transparent"
-    eleButton.style.border = "none"
-    eleButton.onclick = function() {
-      if (showState(hiddens[i]) == "none") {
-        showEle(eleButton, hiddens[i], true)
-      } else {
-        showEle(eleButton, hiddens[i], false)
-      }
-    }
-    showEle(eleButton, hiddens[i], false)
-    hiddens[i].before(eleButton)
   }
 </script>
 
