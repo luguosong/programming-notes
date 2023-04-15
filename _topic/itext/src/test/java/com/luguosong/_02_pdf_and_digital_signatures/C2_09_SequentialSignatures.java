@@ -31,7 +31,7 @@ import java.security.Security;
 public class C2_09_SequentialSignatures {
     public static final String DEST = "_topic/itext/src/test/resources/02_pdf_and_digital_signatures/09_SequentialSignatures/";
 
-    public static final String SRC = DEST + "empty_document.pdf";
+    public static final String SRC = DEST + "empty_signature_form_field.pdf";
 
     private static BouncyCastleProvider provider = new BouncyCastleProvider();
 
