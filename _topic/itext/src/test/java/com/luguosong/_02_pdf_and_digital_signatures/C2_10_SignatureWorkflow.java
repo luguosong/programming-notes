@@ -266,8 +266,6 @@ public class C2_10_SignatureWorkflow {
         String daveFilledCertifiedFile = DEST + "step6_signed_by_alice_bob_carol_and_dave.pdf";
         fillOutAndSign(DAVE, carolSignedFile, "sig4",
                 "approved_dave", "Read and Approved by Dave", daveFilledCertifiedFile);
-
-
     }
 
 }

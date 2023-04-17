@@ -168,3 +168,21 @@ Alice将是该文档的作者。她将首先使用 `认证签名`进行签署，
 {% include_relative C2_10_SignatureWorkflow.java %}
 {% endhighlight %}
 
+## 签署后锁定字段和文件
+
+`com.itextpdf.forms.PdfSigFieldLock.LockAction`表示签名对应的签名字段时应该锁定的字段:
+
+- `ALL`:文档中的所有字段
+- `INCLUDE`:/Fields 数组中指定的所有字段
+- `EXCLUDE`:/Fields 数组中指定的字段除外的所有字段
+
+`com.itextpdf.forms.PdfSigFieldLock.LockPermissions`表示签名字段被签名时授予文档的不同级别的访问权限：
+
+- `NO_CHANGES_ALLOWED`：不允许对文档进行任何更改；对文档的任何更改都会使签名无效，
+- `FORM_FILLING`：允许的更改是填写表格、实例化页面模板和签名；其他更改使签名无效
+- `FORM_FILLING_AND_ANNOTATION`：允许的更改与之前相同，以及注释创建、删除和修改；其他更改会使签名无效。
+
+{% highlight java %}
+{% include_relative C2_11_LockFields.java %}
+{% endhighlight %}
+
