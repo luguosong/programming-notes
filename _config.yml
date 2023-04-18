@@ -206,6 +206,8 @@ compress_html:
 
 
 collections:
+  java:
+    output: true
   front_end:
     output: true
   topic:
@@ -213,6 +215,8 @@ collections:
 
 just_the_docs:
   collections:
+    java:
+      name: JAVA
     front_end:
       name: 前端开发
     topic:
