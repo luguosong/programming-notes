@@ -50,6 +50,12 @@ exclude:
   # theme test code
   - fixtures/
   # 自定义
+  - vendor/bundle
+  - node_modules
+  - .sass-cache
+  - vendor/cache
+  - .jekyll-cache
+  - .jekyll-metadata
   - .idea/
   - .git/
   - "*.txt"
@@ -61,16 +67,10 @@ exclude:
   - "*.cer"
   - "*.p12"
   - "*.pdf"
-  - vendor/bundle
-  - node_modules
-  - .sass-cache
-  - vendor/cache
-  - .jekyll-cache
-  - .jekyll-metadata
-  - target/
-  - HELP.md
+  - "*.gif"
+  - "*.cmd"
+  - "*mvnw"
   - "*.sample"
-  - exclude
 
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "/assets/images/just-the-docs.png"
