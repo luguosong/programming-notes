@@ -20,5 +20,9 @@ public class Log4jConfig {
             logger.error("error信息" + i);
             logger.fatal("fatal信息" + i);
         }
+
+        int a = 1 / 0;
+
+        1+1
     }
 }
