@@ -1354,3 +1354,8 @@ p.new-title>p:first-child, blockquote.new-title>p:first-child{
   text-transform: none;
   padding-bottom: 0.5rem;
 }
+
+.main-content ol>li::before {
+  color: #1296db;
+  content: counter(step-counter)". ";
+}
