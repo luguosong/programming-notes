@@ -1196,34 +1196,35 @@ body {
       &::before {
         position: relative;
         margin-left: -1.4rem;
-        margin-right: 0.5rem;
+        vertical-align: middle;
+        margin-right: 0.2rem;
         content: url("../../assets/images/li.svg");
       }
     }
   }
 
   h1::before {
-    content: "/";
+    content: "Ⅰ. ";
   }
 
   h2::before {
-    content: "//";
+    content: "Ⅱ. ";
   }
 
   h3::before {
-    content: "///";
+    content: "Ⅲ. ";
   }
 
   h4::before {
-    content: "////";
+    content: "Ⅳ. ";
   }
 
   h5::before {
-    content: "/////";
+    content: "Ⅴ. ";
   }
 
   h6::before {
-    content: "//////";
+    content: "Ⅵ. ";
   }
 
   h1,
