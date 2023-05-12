@@ -2,6 +2,7 @@
 layout: note
 title: PDF和数字签名
 nav_order: 20
+has_children: true
 parent: iText 7 PDF文件的数字签名
 ---
 # 签名Hello World
@@ -14,7 +15,7 @@ parent: iText 7 PDF文件的数字签名
 
 ![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230406143257.png)
 
-```java
+``` java
 PdfSigner pdfSigner = new PdfSigner(pdfReader,
                     // 创建输出流，用于将签署后的PDF文档写入文件
                     Files.newOutputStream(Paths.get("_topic/itext/src/test/resources/02_pdf_and_digital_signatures/02_SignHelloWorldWithTempFile/hello_signed_with_temp.pdf")),

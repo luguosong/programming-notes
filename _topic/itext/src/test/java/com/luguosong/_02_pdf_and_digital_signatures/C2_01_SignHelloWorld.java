@@ -3,8 +3,6 @@ package com.luguosong._02_pdf_and_digital_signatures;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.StampingProperties;
-
-
 import com.itextpdf.signatures.*;
 import com.luguosong.util.KeyStoreUtil;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
