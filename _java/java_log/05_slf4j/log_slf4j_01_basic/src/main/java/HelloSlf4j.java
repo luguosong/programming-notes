@@ -10,13 +10,13 @@ public class HelloSlf4j {
     public static void main(String[] args) {
         Logger logger = LoggerFactory.getLogger(HelloSlf4j.class);
 
-        logger.error("error信息");
-        logger.warn("warn信息");
-        logger.info("info信息");
-        logger.debug("debug信息");
-        logger.trace("trace信息");
+        logger.error("error错误信息");
+        logger.warn("warn警告信息");
+        logger.info("info关键信息");
+        logger.debug("debug详细信息");
+        logger.trace("trace追踪信息");
 
-        // 通过占位符输出变量
+        // 通过占位符{}输出变量
         logger.info("学生姓名{}，年龄{}","张三",18);
 
         //异常信息打印
