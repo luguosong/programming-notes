@@ -24,10 +24,10 @@
 
 <hr>
 {% include toc_heading_custom.html %}
-<ul>
+<ol>
 {% for child in sorted_pages %}
   <li>
     <a href="{{ child.url | relative_url }}">{{ child.title }}</a>{% if child.summary %} - {{ child.summary }}{% endif %}
   </li>
 {% endfor %}
-</ul>
+</ol>
