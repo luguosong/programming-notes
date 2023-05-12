@@ -162,18 +162,8 @@
 
       <div id="main-content" class="main-content middle-context" role="main">
 
-        {% if page.has_children == true %}
-        <hr>
-        <h2 class="text-delta">目录</h2>
-        <ol>
-          {% for child in toc_list %}
-          <li>
-            <a href="{{ child.url | relative_url }}">{{ child.title }}</a>{% if child.summary %} - {{ child.summary }}{%
-            endif %}
-          </li>
-          {% endfor %}
-        </ol>
-
+        {% if page.has_children == true and page.has_toc != false %}
+        {%- include components/children_nav.html -%}
         {% endif %}
 
         {{ content }}
