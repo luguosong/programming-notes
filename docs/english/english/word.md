@@ -2,7 +2,7 @@
 layout: note
 title: 单词
 nav_order: 10
-parent: 英语
+parent: 其它
 create_time: 2023/5/9
 ---
 

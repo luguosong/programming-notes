@@ -2,7 +2,7 @@
 layout: note
 title: 语法
 nav_order: 20
-parent: 英语
+parent: 其它
 create_time: 2023/5/9
 ---
 
@@ -29,4 +29,3 @@ create_time: 2023/5/9
 7. Will you be attending the party tonight? （你今晚会去参加聚会吗？）
 8. Should we go to the park or the museum? （我们应该去公园还是博物馆？）
 9. Would you like some more tea? （你想再来点茶吗？）
-10. Are you going to the concert tomorrow? （你�
