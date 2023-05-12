@@ -165,14 +165,14 @@
         {% if page.has_children == true %}
         <hr>
         <h2 class="text-delta">目录</h2>
-        <ul>
+        <ol>
           {% for child in toc_list %}
           <li>
             <a href="{{ child.url | relative_url }}">{{ child.title }}</a>{% if child.summary %} - {{ child.summary }}{%
             endif %}
           </li>
           {% endfor %}
-        </ul>
+        </ol>
 
         {% endif %}
 

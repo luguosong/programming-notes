@@ -1196,9 +1196,11 @@ body {
       &::before {
         position: relative;
         margin-left: -1.4rem;
-        vertical-align: middle;
+        //vertical-align: middle;
+        line-height: 1.5rem;
         margin-right: 0.2rem;
-        content: url("../../assets/images/li.svg");
+        content: "→";
+        color: #1296db;
       }
     }
   }
