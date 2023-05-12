@@ -15,7 +15,7 @@ nav_order: 10
     - [github pages](https://docs.github.com/cn/pages)
     - [jekyll](https://jekyllrb.com/)
     - [liquid](https://github.com/Shopify/liquid/wiki)[中文文档](https://liquid.bootcss.com/)
-    - jekyll主题：[just-the-docs](https://github.com/pmarsceill/just-the-docs)
+    - jekyll主题：[just-the-docs](https://github.com/pmarsceill/just-the-docs) [在线预览](https://just-the-docs.github.io/just-the-docs/)
     - 博客评论功能：[Gitalk](https://github.com/gitalk/gitalk)
     - 页面目录：[tocbot](https://github.com/tscanlin/tocbot)
     - 网站图片：[github图床](https://github.com/guosonglu/images)+[jsdelivr加速](https://www.jsdelivr.com/github)+[PicGo工具](https://github.com/Molunerfinn/PicGo)
@@ -29,4 +29,3 @@ nav_order: 10
 
 - 网站中的静态资源（图片、js、css）使用[jsdelivr](https://www.jsdelivr.com/github)加速
 - 网站使用[cloudflare](https://dash.cloudflare.com/)做CDN加速
-- Html页面头部添加 `<meta http-equiv="Cache-Control" content="max-age=7200" />`，防止每次刷新页面都反复获取静态文件
