@@ -1263,7 +1263,6 @@ body {
 }
 
 
-
 //右侧toc
 .right {
   max-width: 20rem;
@@ -1280,7 +1279,7 @@ body {
   height: 5rem;
 }
 
-.right-bottom{
+.right-bottom {
   border-top: 1px dotted #44434d;
   padding: 1rem 0;
 }
@@ -1325,7 +1324,6 @@ body {
 }
 
 
-
 .main-content {
   line-height: 1;
 }
@@ -1336,7 +1334,7 @@ code {
 }
 
 
-:not(pre,figure)>code{
+:not(pre,figure) > code {
   /* styles go here */
   color: #449cc7;
   padding: 0;
@@ -1350,15 +1348,20 @@ code {
 }
 
 p.note-title > p:first-child, blockquote.note-title > p:first-child,
-p.warning-title>p:first-child, blockquote.warning-title>p:first-child,
-p.important-title>p:first-child, blockquote.important-title>p:first-child,
-p.new-title>p:first-child, blockquote.new-title>p:first-child{
+p.warning-title > p:first-child, blockquote.warning-title > p:first-child,
+p.important-title > p:first-child, blockquote.important-title > p:first-child,
+p.new-title > p:first-child, blockquote.new-title > p:first-child {
   font-size: 1rem;
   text-transform: none;
   padding-bottom: 0.5rem;
 }
 
-.main-content ol>li::before {
+.main-content ol > li::before {
   color: #1296db;
-  content: counter(step-counter)". ";
+  content: counter(step-counter) ". ";
+}
+
+.nav-list .nav-list-item .nav-list-link {
+  line-height: 1.5rem;
+  min-height: 2rem;
 }
