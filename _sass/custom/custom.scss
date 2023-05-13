@@ -1360,14 +1360,3 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
   color: #1296db;
   content: counter(step-counter) ". ";
 }
-
-.nav-list .nav-list-item .nav-list-link {
-  line-height: 1.5rem;
-  min-height: 2rem;
-}
-
-.nav-list .nav-list-item .nav-list-expander{
-  width: 2rem;
-  height: 2rem;
-  padding: 0.5rem;
-}
