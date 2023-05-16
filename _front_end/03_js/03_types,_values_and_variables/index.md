@@ -9,7 +9,7 @@ create_time: 2023/5/3
 # 数值
 
 {% highlight js %}
-{% include_relative Numbers.js %}
+{% include_relative numbers.js %}
 {% endhighlight %}
 
 # 文本
@@ -23,7 +23,7 @@ create_time: 2023/5/3
 > 字符串是不可修改的。像`replace()`这样的方法都返回新字符串
 
 {% highlight js %}
-{% include_relative Text.js  %}
+{% include_relative text.js  %}
 {% endhighlight %}
 
 # 布尔值
