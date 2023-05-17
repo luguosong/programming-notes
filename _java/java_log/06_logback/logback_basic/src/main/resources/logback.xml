@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <!--配置控制台appender-->
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <!--
+            表示对于日志输出目标的配置
+            默认：System.out 表示以黑色字体输出日志
+            设置：System.err 表示以红色字体输出日志
+        -->
+        <target>
+            System.err
+        </target>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- 格式引用通用属性配置 -->
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 配置文件的appender 普通文件-->
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <!-- 引入文件位置 -->
+        <file>${logDir}/logback.log</file>
+        <!-- 设置输出格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 配置文件的appender html文件 -->
+    <appender name="htmlFileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>${logDir}/logback.html</file>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <!--可以在生成的html文件中添加<meta charset="UTF-8">解决中文乱码问题-->
+            <layout class="ch.qos.logback.classic.html.HTMLLayout">
+                <pattern>${pattern1}</pattern>
+            </layout>
+        </encoder>
+    </appender>
+
+    <!-- 配置文件的appender 可拆分归档的文件 -->
+    <appender name="roll" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 输入格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!-- 引入文件位置 -->
+        <file>${logDir}/roll_logback.log</file>
+
+        <!-- 指定拆分规则 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+
+            <!-- 按照时间和压缩格式声明文件名 压缩格式gz -->
+            <fileNamePattern>${logDir}/roll.%d{yyyy-MM-dd}.log%i.log</fileNamePattern>
+
+            <!-- 按照文件大小来进行拆分 -->
+            <maxFileSize>1KB</maxFileSize>
+
+        </rollingPolicy>
+
+    </appender>
+
+    <!--配置日志记录器-->
+    <root level="ALL">
+        <!--这里可以配置多个appender-->
+        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
+        <appender-ref ref="htmlFileAppender"/>
+        <appender-ref ref="roll"/>
+    </root>
+
+    <!--
+
+       我们在此可以先做日志输出格式相关的配置
+       %-10level  级别 案例为设置10个字符，左对齐
+       %d{yyyy-MM-dd HH:mm:ss.SSS} 日期
+       %c  当前类全限定名
+       %M  当前执行日志的方法
+       %L  行号
+       %thread 线程名称
+       %m或者%msg    信息
+       %n  换行
+
+       以property的形式将日志输出格式配置成为文件的通用的属性
+       那么下面我们配置的输出方式中，就可以重复的引用该配置（以下的配置，对于输出格式就不用配置多次了）
+
+   -->
+    <property name="pattern" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L %thread %m ---日志配置文件测试 %n"/>
+    <property name="pattern1" value="[%-5level]%d{yyyy-MM-dd HH:mm:ss.SSS}%c%M%L%thread%m%n"/>
+
+    <!-- 配置文件的输出路径 -->
+    <property name="logDir" value="_java/java_log/06_logback/logback_basic/src/main/resources"/>
+</configuration>
