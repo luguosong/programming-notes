@@ -14,6 +14,16 @@
             <!-- 格式引用通用属性配置 -->
             <pattern>${pattern}</pattern>
         </encoder>
+        <!-- 配置过滤器 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!-- 设置日志的输出级别 -->
+            <level>ERROR</level>
+            <!-- 高于level中设置的级别，则打印日志 -->
+            <onMatch>ACCEPT</onMatch>
+            <!-- 低于level中设置的级别，则屏蔽日志 -->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
     </appender>
 
     <!-- 配置文件的appender 普通文件-->
@@ -39,7 +49,6 @@
 
     <!-- 配置文件的appender 可拆分归档的文件 -->
     <appender name="roll" class="ch.qos.logback.core.rolling.RollingFileAppender">
-
         <!-- 输入格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${pattern}</pattern>
@@ -49,15 +58,11 @@
 
         <!-- 指定拆分规则 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-
             <!-- 按照时间和压缩格式声明文件名 压缩格式gz -->
             <fileNamePattern>${logDir}/roll.%d{yyyy-MM-dd}.log%i.log</fileNamePattern>
-
             <!-- 按照文件大小来进行拆分 -->
             <maxFileSize>1KB</maxFileSize>
-
         </rollingPolicy>
-
     </appender>
 
     <!--配置日志记录器-->
@@ -70,7 +75,6 @@
     </root>
 
     <!--
-
        我们在此可以先做日志输出格式相关的配置
        %-10level  级别 案例为设置10个字符，左对齐
        %d{yyyy-MM-dd HH:mm:ss.SSS} 日期
@@ -83,7 +87,6 @@
 
        以property的形式将日志输出格式配置成为文件的通用的属性
        那么下面我们配置的输出方式中，就可以重复的引用该配置（以下的配置，对于输出格式就不用配置多次了）
-
    -->
     <property name="pattern" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L %thread %m ---日志配置文件测试 %n"/>
     <property name="pattern1" value="[%-5level]%d{yyyy-MM-dd HH:mm:ss.SSS}%c%M%L%thread%m%n"/>
