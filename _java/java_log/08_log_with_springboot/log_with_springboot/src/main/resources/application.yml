@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: error
+  pattern:
+    console: ' %-5level - %msg%n'
+  file:
+    path: 'src/main/resources'

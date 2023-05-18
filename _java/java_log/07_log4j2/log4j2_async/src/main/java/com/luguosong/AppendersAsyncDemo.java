@@ -1,17 +1,17 @@
 package com.luguosong;
 
-import ch.qos.logback.classic.LoggerContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author luguosong
  */
-public class LogBackDemo {
+public class AppendersAsyncDemo {
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger(LogBackDemo.class);
+        // 获取日志记录器对象
+        Logger logger = LoggerFactory.getLogger(AppendersAsyncDemo.class);
 
-        //日志记录
+        // 模拟日志记录输出
         for (int i = 0; i < 100; i++) {
             logger.error("error错误信息");
             logger.warn("warn警告信息");
@@ -20,13 +20,9 @@ public class LogBackDemo {
             logger.trace("trace追踪信息");
         }
 
-        //模拟业务逻辑
+        //模拟程序执行
         for (int i = 0; i < 100; i++) {
-            System.out.println("-----------------------");
+            System.out.println("------------------");
         }
-
-        //防止异步日志未写完控制台就关闭了
-        LoggerContext factory = (LoggerContext) LoggerFactory.getILoggerFactory();
-        factory.stop();
     }
 }

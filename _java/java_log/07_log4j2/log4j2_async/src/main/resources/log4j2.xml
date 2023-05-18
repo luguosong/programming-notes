@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <Appenders>
+        <!-- 配置控制台输出 -->
+        <Console name="consoleAppender" target="SYSTEM_OUT"/>
+
+        <!--异步日志方式一:AsyncAppender方式-->
+        <Async name="myAsync">
+            <!--将控制台输出做异步的操作-->
+            <AppenderRef ref="consoleAppender"/>
+        </Async>
+    </Appenders>
+
+    <!-- 配置logger -->
+    <Loggers>
+        <!--异步日志方式一:AsyncAppender方式-->
+        <Logger name="com.luguosong.AppendersAsyncDemo" level="error" additivity="false">
+            <AppenderRef ref="myAsync"/>
+        </Logger>
+
+        <!--异步日志方式三:AsyncLogger混合异步-->
+        <!--includeLocation表示是否记录行号-->
+        <AsyncLogger name="com.luguosong.AsyncLoggerDemo" level="warn" includeLocation="false" additivity="false">
+            <AppenderRef ref="consoleAppender"/>
+        </AsyncLogger>
+    </Loggers>
+</Configuration>

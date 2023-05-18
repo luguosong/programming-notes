@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--debug属性表示开启log4j2自生的日志输出-->
+<Configuration status="debug">
+
+    <properties>
+        <property name="logDir">_java/java_log/07_log4j2/log4j2_basic/src/main/resources</property>
+    </properties>
+
+    <!-- 配置appender -->
+    <Appenders>
+        <!-- 配置consoleAppender -->
+        <Console name="consoleAppender" target="SYSTEM_OUT"/>
+
+        <!-- 配置文件输出-->
+        <File name="fileAppender" fileName="${logDir}//log4j2.log">
+            <!-- 配置文件输出格式 -->
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %m%n"/>
+        </File>
+
+        <!-- 配置文件输出，按照时间进行拆分 -->
+        <RollingFile name="rollingFile" fileName="${logDir}/rollog.log"
+                     filePattern="${logDir}/$${date:yyyy-MM-dd}/rollog-%d{yyyy-MM-dd-HH-mm}-%i.log">
+            <!-- 日志消息格式 -->
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %m%n"/>
+            <Policies>
+                <!-- 在系统启动时，触发拆分规则，产生一个日志文件 -->
+                <OnStartupTriggeringPolicy/>
+                <!-- 按照文件的大小进行拆分 -->
+                <SizeBasedTriggeringPolicy size="10KB"/>
+                <!-- 按照时间节点进行拆分 拆分规则就是filePattern-->
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <!-- 在同一目录下，文件的个数限制，如果超出了设置的数值，则根据时间进行覆盖，新的覆盖旧的规则-->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+
+    <!-- 配置logger -->
+    <Loggers>
+        <!-- 配置rootlogger -->
+        <Root level="trace">
+            <AppenderRef ref="consoleAppender"/>
+            <AppenderRef ref="fileAppender"/>
+            <AppenderRef ref="rollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
