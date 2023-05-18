@@ -1,7 +1,7 @@
 ---
 layout: note
 title: SLF4J
-nav_order: 40
+nav_order: 50
 parent: Java日志框架
 create_time: 2023/5/5
 ---
