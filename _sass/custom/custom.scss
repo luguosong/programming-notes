@@ -1185,6 +1185,7 @@ body {
     clear: both;
     display: block;
     margin: auto;
+    background-color: #e6e5e5;
   }
 
   ul {
@@ -1359,4 +1360,14 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
 .main-content ol > li::before {
   color: #1296db;
   content: counter(step-counter) ". ";
+}
+
+//图片查看时的背景
+.viewer-container img {
+  background-color: #e6e5e5;
+}
+
+.highlight .cm, .highlight .c1 {
+  color: #77AD5E;
+  font-weight: lighter;
 }
