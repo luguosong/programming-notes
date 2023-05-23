@@ -5,108 +5,67 @@ nav_order: 100
 create_time: 2023/4/23
 ---
 
-# 计算机组成原理
+# 基础知识
 
-# 操作系统
+- 算法与数据结构
+- 计算机组成原理
+- 操作系统
+- 计算机网络
 
-# 计算机网络
+# Java基础
 
-# JavaSE
-
-- 基础知识
-- 数组
-- 面向对象编程
-- 接口
-- 异常处理
-- IO流
-- 反射
-- 泛型
-- 多线程
+- JavaSE
+- JDBC
 - JVM
 
-# 数据结构与算法
+# 前端技术
 
-## 数据结构
+- HTML
+- CSS
+- Javascript
+- Jquery
+- Ajax
+- ES6
+- Vue
 
-## 算法
-
-# 设计模式
-
-# JavaEE
+# 后端技术
 
 - Servlet
-- JSP
-- JSTL
-- JPA
-- Bean Validation API
-- EJB
-- JMS
-- JTA
-- JAX-RS
-- WebSocket
+- Filter
+- Listener
+- Cookie
+- Session
+- 文件上传下载
+- Thymeleaf
 
-# Spring
+# 经典框架
 
-- Spring Framework
+- Spring
+- SpringMVC
 - Mybatis
 - Mybatis Plus
+
+# 微服务
+
 - Spring Boot
-- Spring Security
+- SpringCloud
+- RabbitMQ
+- 分布式事务
+- Mycat
+- Zookeeper
+- Dubbo
 
-# 分布式系统
+# 专项技术
 
-- 分布式系统
-- 微服务
-  - Spring Cloud
-    - 服务注册与发现（如 Eureka, Consul, Nacos）
-    - 服务网关（如 Zuul, Spring Cloud Gateway）
-    - 负载均衡（如 Ribbon, Nginx）
-    - 服务容错与限流（如 Hystrix, Resilience4j）
-    - 配置中心（如 Spring Cloud Config, Apollo）
-    - 日志与监控（如 ELK, Prometheus, Grafana）
-    - 链路追踪（如 Zipkin, Jaeger）
-
-# 数据库
-
-- 关系型数据库
-- NoSQL 数据库
-
-# 专项知识
-
-- 编码和字符集
+- Mysql
+- Redis
+- XML
+- Tomcat
+- Nginx
+- Http协议
+- Maven
+- Linux
 - Git
-- 测试
-- Http详解
-- 容器化与虚拟化
-- 持续集成与持续部署
-- 密码学
-- itext7 pdf签章
-
-## 日志管理
-
-- jul
-- log4j
-- jcl
-- slf4j
-- logback
-- log4j2
-
-## Maven
-
-# 前端
-
-## Html
-
-## css
-
-## js
-
-## Vue
-
-# Linux运维
-
-- 基础知识
-- 基本命令
-- shell编程
-- 系统管理与配置
-- 网络服务
+- Docker
+- 设计模式
+- JUC
