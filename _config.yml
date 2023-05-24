@@ -71,6 +71,7 @@ exclude:
   - "*.cmd"
   - "*mvnw"
   - "*.sample"
+  - "**/node_modules/*"
 
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "/assets/images/just-the-docs.png"
@@ -171,13 +172,13 @@ callouts:
     color: purple
   important:
     title: 重点
-    color: blue
+    color: yellow
   new:
     title: New
     color: green
   note:
     title: 笔记
-    color: yellow
+    color: blue
   warning:
     title: 警告
     color: red
