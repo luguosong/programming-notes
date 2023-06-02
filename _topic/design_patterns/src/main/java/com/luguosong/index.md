@@ -7,14 +7,19 @@ has_toc: false
 create_time: 2023/5/5
 ---
 
-- 创建型模式
-    1. Abstract Factory（抽象工厂）
-    2. Builder（生成器）
-    3. Factory Method（工厂方法）
-    4. Prototype（原型）
-    5. Singleton（单件）
 
-- 结构型模式
+
+# 结构
+
+- `创建型模式`：将对象的创建和使用分离，实现解耦
+    1. Simple Factory（简单工厂）
+    2. Abstract Factory（抽象工厂）
+    3. Builder（生成器）
+    4. Factory Method（工厂方法）
+    5. Prototype（原型）
+    6. Singleton（单件）
+
+- `结构型模式`：类或对象组合或组装在一起形成更大的结构
     1. Adapter（适配器）
     2. Bridge（桥接）
     3. Composite（组合）
@@ -23,7 +28,7 @@ create_time: 2023/5/5
     6. Flyweight（享元）
     7. Proxy（代理）
 
-- 行为型模式
+- `行为型模式`:类或对象之间的交互
     1. Chain of Responsibility（职责链）
     2. Command（命令）
     3. Interpreter（解释器）
