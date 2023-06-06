@@ -8,7 +8,7 @@ create_time: 2023/5/30
 
 # 类之间的关系
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/diagrams/design-pattern/uml-simple.svg)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/design-pattern/uml-simple.svg)
 
 # 面向对象的 S.O.L.I.D 原则
 

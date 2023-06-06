@@ -42,7 +42,7 @@ latex: true
 
 # 冯诺依曼结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230504183705.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230504183705.png)
 
 - `运算器`：算术逻辑单元（Arithmetic and Logic Unit，ALU
 - `控制器`：控制单元（Control Unit，CU）
@@ -61,7 +61,7 @@ latex: true
 
 # 现代计算机硬件框架结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230504214726.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230504214726.png)
 
 - 硬件
   - 主机

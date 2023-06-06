@@ -7,11 +7,11 @@ parent: iText 7 PDF文件的数字签名
 
 # Hello World PDF
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230328092531.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230328092531.png)
 
 # 带有签名的pdf文件
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230328101924.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230328101924.png)
 
 
 # Hash摘要

@@ -13,7 +13,7 @@ create_time: 2023/5/31
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230531142302.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230531142302.png)
 
 1. `产品（Product）`将会对接口进行声明。对于所有由创建者及其子类构建的对象，这些接口都是通用的。
 2. `具体产品（Concrete Products）`是产品接口的不同实现。
@@ -36,4 +36,4 @@ create_time: 2023/5/31
 
 ## Iterable和Iterator
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/diagrams/design-pattern/creational/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95-Iterable%E7%A4%BA%E4%BE%8B.svg)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/design-pattern/creational/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95-Iterable%E7%A4%BA%E4%BE%8B.svg)

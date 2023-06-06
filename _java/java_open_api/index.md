@@ -36,7 +36,7 @@ create_time: 2023/4/18
 {: .warning-title}
 > springfox已经很久没更新了
 > 
-> ![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230418182319.png)
+> ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230418182319.png)
 
 # springdoc
 
@@ -63,7 +63,7 @@ maven依赖`springdoc-openapi-starter-webmvc-ui`:
 
 启动spring boot项目，既可以通过`http://localhost:port/swagger-ui.html`访问swagger-ui页面。
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230419143429.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230419143429.png)
 
 提供xml文档：`http://localhost:port/v3/api-docs`
 

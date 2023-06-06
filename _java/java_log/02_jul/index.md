@@ -16,7 +16,7 @@ Jul已经成为`Java SE的一部分`，因此不需要任何外部库或框架�
 
 Jul框架的核心组件包括`Logger`、`Handler`、`Formatter`和`Filter`。
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230419090143.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230419090143.png)
 
 {: .note}
 > `Logger`用于记录日志

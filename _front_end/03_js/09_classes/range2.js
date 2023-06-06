@@ -10,6 +10,9 @@ function Range(from, to) {
 // 所有的Range对象都继承自这个对象。
 // 注意，属性名必须为"prototype"才能起作用。
 Range.prototype = {
+
+  constructor: Range, // 显式设置构造函数反向引用🥕
+
   // 如果x在范围内，返回true，否则返回false。
   // 该方法适用于文本范围、日期范围和数值范围。
   includes: function(x) {

@@ -22,7 +22,7 @@ create_time: 2023/5/26
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230526094426.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230526094426.png)
 
 1. `上下文（Context）`维护指向具体策略的引用，且仅通过策略接口与该对象进行交流。
 2. `策略（Strategy）`接口是所有具体策略的通用接口，它声明了一个上下文用于执行策略的方法。

@@ -14,9 +14,9 @@ create_time: 2023/5/18
 
 `数组`是一种`顺序存储`的线性表，所有元素的`内存地址是连续的`。
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/628b6f699aa49ffcc9d3c75806457c4a1a66ffe025bb651d9f8e78b4242249b9-4.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/628b6f699aa49ffcc9d3c75806457c4a1a66ffe025bb651d9f8e78b4242249b9-4.png)
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/7b17543e4e39ae894bba0b2b6f8431b40d3df04556df06a3b974146d9e5c7d0d-5.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/7b17543e4e39ae894bba0b2b6f8431b40d3df04556df06a3b974146d9e5c7d0d-5.png)
 
 {: .warning-title}
 > 数组存在的问题

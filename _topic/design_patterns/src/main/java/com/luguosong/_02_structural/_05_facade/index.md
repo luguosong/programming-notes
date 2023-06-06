@@ -18,7 +18,7 @@ create_time: 2023/5/5
 - 客户端必须要了解子系统的工作原理和各个类之间的协作关系，才能够使用子系统。子系统越复杂，其使用越困难。
 - 子系统中的变化会影响到直接使用它的客户端，需要对客户端进行修改。
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/diagrams/design-pattern/structural/%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F.svg)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/design-pattern/structural/%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F.svg)
 
 {% highlight java %}
 {% include_relative WithoutFacadeExample.java %}
@@ -26,7 +26,7 @@ create_time: 2023/5/5
 
 # 外观结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230526092405.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230526092405.png)
 
 1. `外观（Facade）`提供了一种访问特定子系统功能的便捷方式，
    其了解如何重定向客户端请求，知晓如何操作一切活动部件。

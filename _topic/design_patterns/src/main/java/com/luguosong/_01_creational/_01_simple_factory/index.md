@@ -14,7 +14,7 @@ create_time: 2023/5/30
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230530224000.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230530224000.png)
 
 - `Factory（具体工厂角色）`：负责实现创建所有产品实例的内部逻辑。在工厂类中提供了`静态的`
   工厂方法factoryMethod（），它的返回类型为抽象产品类型Product。

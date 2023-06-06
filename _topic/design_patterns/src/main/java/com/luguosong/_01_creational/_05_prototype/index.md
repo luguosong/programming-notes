@@ -13,7 +13,7 @@ create_time: 2023/5/31
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230531184852.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230531184852.png)
 
 1. `抽象原型（Prototype）`接口将对克隆方法进行声明。在绝大多数情况下，其中只会有一个名为 clone 克隆 的方法。
 2. `具体原型（Concrete Prototype）`类将实现克隆方法。除了将原始对象的数据复制到克隆体中之外，该方法有时还需处理克隆过程中的极端情况，例如克隆关联对象和梳理递归依赖等等。

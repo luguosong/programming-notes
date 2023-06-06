@@ -13,7 +13,7 @@ create_time: 2023/5/31
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230531095557.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230531095557.png)
 
 1. `单例（Singleton）`类声明了一个名为getInstance获取实例的静态方法来返回其所属类的一个相同实例。单例的`构造函数`
    必须对客户端（Client）代码`隐藏`。 调用

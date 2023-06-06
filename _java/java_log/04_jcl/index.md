@@ -64,4 +64,4 @@ create_time: 2023/4/26
 
 jcl会按顺序加载`Log4JLogger`,`Jdk14Logger`,`Jdk13LumberjackLogger`,`SimpleLog(JCL自带的)`,有就使用，没有就去找下一个
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230505111637.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230505111637.png)

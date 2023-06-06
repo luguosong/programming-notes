@@ -15,11 +15,11 @@ create_time: 2023/5/26
 
 - 不使用装饰想对某个方法进行拓展，会导致扩展功能类爆炸式增长
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/diagrams/design-pattern/structural/%E4%B8%8D%E4%BD%BF%E7%94%A8%E8%A3%85%E9%A5%B0.svg)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/design-pattern/structural/%E4%B8%8D%E4%BD%BF%E7%94%A8%E8%A3%85%E9%A5%B0.svg)
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230526141458.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230526141458.png)
 
 1. `部件（Component）`声明封装器和被封装对象的公用接口。
 2. `具体部件（Concrete Component）`类是被封装对象所属的类。它定义了基础行为，但装饰类可以改变这些行为。

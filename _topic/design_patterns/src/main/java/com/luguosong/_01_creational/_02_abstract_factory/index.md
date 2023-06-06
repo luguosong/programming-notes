@@ -11,11 +11,11 @@ create_time: 2023/5/31
 
 能创建一系列相关的对象，而无需指定其具体类。
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230531152711.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230531152711.png)
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230531150945.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230531150945.png)
 
 1. `抽象产品（Abstract Product）`为每种产品声明接口，在抽象产品中声明了产品所具有的业务方法。
 2. `具体产品（Concrete Product）`定义具体工厂生产的具体产品对象，实现在抽象产品接口中声明的业务方法。

@@ -42,7 +42,7 @@ create_time: 2023/4/25
 
 # 保留字
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230505154522.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230505154522.png)
 
 JavaScript也保留或限制对某些关键字的使用，这些关键字当前`并未被语言所用`，但将
 来某个版本有可能会用到

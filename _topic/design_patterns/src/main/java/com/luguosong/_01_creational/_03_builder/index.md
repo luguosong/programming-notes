@@ -15,7 +15,7 @@ create_time: 2023/5/31
 
 # 结构
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230601090305.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230601090305.png)
 
 1. `生成器（Builder）`接口声明在所有类型生成器中通用的产品构造步骤。
 2. `具体生成器（Concrete Builders）`提供构造过程的不同实现。具体生成器也可以构造不遵循通用接口的产品。

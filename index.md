@@ -18,7 +18,7 @@ nav_order: 10
     - jekyll主题：[just-the-docs](https://github.com/pmarsceill/just-the-docs) [更新日志](https://just-the-docs.github.io/just-the-docs/CHANGELOG/)
     - 博客评论功能：[Gitalk](https://github.com/gitalk/gitalk)
     - 页面目录：[tocbot](https://github.com/tscanlin/tocbot)
-    - 网站图片：[github图床](https://github.com/guosonglu/images)+[jsdelivr加速](https://www.jsdelivr.com/github)+[PicGo工具](https://github.com/Molunerfinn/PicGo)
+    - 网站图片：[github图床](https://github.com/luguosong/images)+[jsdelivr加速](https://www.jsdelivr.com/github)+[PicGo工具](https://github.com/Molunerfinn/PicGo)
     - 图片查看：[Viewer.js](https://github.com/fengyuanchen/viewerjs)
     - 数学公式排版：[LaTeX](https://www.latex-project.org/)[MathJax](http://docs.mathjax.org/en/latest/)
     - 流程图： [mermaid](https://mermaid-js.github.io/mermaid/#/)

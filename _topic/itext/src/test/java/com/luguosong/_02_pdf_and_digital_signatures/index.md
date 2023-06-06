@@ -13,7 +13,7 @@ parent: iText 7 PDF文件的数字签名
 
 # 签署大型PDF文件
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230406143257.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230406143257.png)
 
 ``` java
 PdfSigner pdfSigner = new PdfSigner(pdfReader,
@@ -85,7 +85,7 @@ PDF规范允许将以下元数据添加到签名字典中：
 
 ## 普通签名和认证签名
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230411142621.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230411142621.png)
 
 `证书级别`是 `Certification Signature`中的一个重要概念。它用于定义签名者为文档添加的权限范围。在 `iText 7`中，setCertificationLevel方法允许我们设置文档的证书级别。
 
@@ -110,19 +110,19 @@ PDF规范允许将以下元数据添加到签名字典中：
 
 Alice采用 `CERTIFIED_FORM_FILLING`认证签名，Bob和Carol采用 `NOT_CERTIFIED`批准签名：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413093238.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230413093238.png)
 
 Alice和Bob采用 `NOT_CERTIFIED`批准签名，Carol采用 `CERTIFIED_FORM_FILLING`认证签名：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413102607.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230413102607.png)
 
 Alice和Bob采用 `NOT_CERTIFIED`批准签名，Carol采用 `CERTIFIED_NO_CHANGES_ALLOWED`认证签名：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413131955.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230413131955.png)
 
 Alice采用 `CERTIFIED_FORM_FILLING`认证签名，Bob采用 `NOT_CERTIFIED`批准签名，Carol采用 `CERTIFIED_FORM_FILLING`认证签名：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413133745.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230413133745.png)
 
 代码如下：
 
@@ -136,31 +136,31 @@ Alice将是该文档的作者。她将首先使用 `认证签名`进行签署，
 
 - 创建一个带有文本域和签名域的pdf：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230413165722.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230413165722.png)
 
 - Alice使用 `CERTIFIED_FORM_FILLING`等级进行认证签署：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230414163342.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230414163342.png)
 
 - Bob添加文本，对文本进行了Alice允许的修改
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230414175453.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230414175453.png)
 
 - Bob进行批准签名
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230414180437.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230414180437.png)
 
 - Carol添加文本
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230414180259.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230414180259.png)
 
 - Carole进行批准签名
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230414180551.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230414180551.png)
 
 - Dave添加文本并进行批准签名
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230414182603.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230414182603.png)
 
 {: .warning}
 > 不管是添加文本还是签名，都需要在`new StampingProperties().useAppendMode()`模式下进行，以免破坏Alice的签名

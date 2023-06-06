@@ -16,7 +16,7 @@ create_time: 2023/5/9
 
 下图展示了内部被多次签署的PDF的外观：
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230509165650.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230509165650.png)
 
 在标有`Rev1`的线条以上的部分是文档的`修订版本1`。
 
@@ -31,6 +31,6 @@ create_time: 2023/5/9
 
 下图是一个带有三个空签名字段的表单
 
-![](https://cdn.jsdelivr.net/gh/guosonglu/images@master/blog-img/20230510091955.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230510091955.png)
 
 
