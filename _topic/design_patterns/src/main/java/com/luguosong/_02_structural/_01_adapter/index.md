@@ -24,3 +24,13 @@ create_time: 2023/6/6
 5. `客户端`代码只需通过接口与适配器交互即可，无需与具体的适配器类耦合。因此，你可以向程序中添加新类型的适配器而无需修改已有代码。这在服务类的接口被更改或替换时很有用：你无需修改客户端代码就可以创建新的适配器类。
 
 # 示例
+
+{% highlight java %}
+{% include_relative AdapterExample.java %}
+{% endhighlight %}
+
+# 类适配器
+
+{% highlight java %}
+{% include_relative AdapterByClassExample.java %}
+{% endhighlight %}
