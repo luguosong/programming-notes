@@ -5,8 +5,20 @@
 
 {% include icons/icons.html %}
 
+<img
+  id="cutscene1"
+  class="cutscene"
+  src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/old-black-background-grunge-texture-dark-wallpaper-blackboard-chalkboard-room-wall%20(1).jpg"
+  style="height: 100%;width: 100%;z-index: 1">
+
+<img
+  id="cutscene2"
+  class="cutscene"
+  src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif"
+  style="z-index: 2;max-width: 90%;min-width: 50%">
+
 <!--页面-->
-<div class="main-page">
+<div id="main-page" class="main-page" style="visibility:hidden">
   <!--左侧-->
   <div class="left" id="left-sidebar">
     <!--左侧顶部logo和标题-->
@@ -238,6 +250,41 @@
 
 </div>
 
+<!--主页过场动画-->
+<script>
+  var mainPage = document.getElementById("main-page")
+  var cutscene1 = document.getElementById("cutscene1")
+  var cutscene2 = document.getElementById("cutscene2")
+  var currentPagePath = window.location.pathname
+  if (currentPagePath === "/") {
+    window.addEventListener("load", function() {
+      mainPage.style.visibility = "hidden" // 隐藏主页内容
+      cutscene1.style.display = "block" // 显示图片
+      cutscene2.style.display = "block" // 显示图片
+      setTimeout(function() {
+        cutscene1.classList.add("fade-out1") // 添加淡出类
+        cutscene2.classList.add("fade-out2") // 添加淡出类
+        mainPage.style.visibility = "visible" // 显示主页内容
+      }, 1000)
+    })
+  } else {
+    mainPage.style.visibility = "visible" // 显示主页内容
+  }
+
+  cutscene1.addEventListener("transitionend", function() {
+    let computedStyle = window.getComputedStyle(cutscene1)
+    if (computedStyle.opacity === "0") {
+      cutscene1.style.display = "none"
+    }
+  })
+
+  cutscene2.addEventListener("transitionend", function() {
+    let computedStyle = window.getComputedStyle(cutscene2)
+    if (computedStyle.opacity === "0") {
+      cutscene2.style.display = "none"
+    }
+  })
+</script>
 
 <script>
   let gitalk = new Gitalk({
