@@ -84,7 +84,7 @@
       </span>
       <div style="margin-top: 2px">
         &copy;{{ "now" | date: "%Y" }}<a href="#" id="weixing" class="zoom">陆国松</a>.
-        <a href="#" id="apply" class="zoom">打赏支持</a>
+        <a href="#" id="apply" class="zoom">💖支持</a>
         <img id="applyImg"
              src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230506100600.png"
              hidden>
@@ -421,6 +421,7 @@
 </script>
 
 <!--图片查看-->
+{% if page.viewerjs != false %}
 <script>
 
   const sitenav = document.getElementById("site-nav")
@@ -448,6 +449,8 @@
       }
       objs[i].style.cursor = "pointer"
       objs[i].alt = "图片无法加载"
+      objs[i].loading="lazy"
+      objs[i].title="点击查看大图"
     }
 
 
@@ -466,6 +469,7 @@
     }
   }
 </script>
+{% endif %}
 
 <!--侧边栏的显示与隐藏-->
 <script>
