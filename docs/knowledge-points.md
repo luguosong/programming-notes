@@ -2,6 +2,7 @@
 layout: note
 title: 知识点整理
 nav_order: 100
+viewerjs: false
 create_time: 2023/4/23
 ---
 
@@ -49,8 +50,10 @@ create_time: 2023/4/23
 - JavaSE
     - [《Java核心技术》](https://book.douban.com/subject/35920145/)
     - [《On Java 中文版 基础卷》](https://book.douban.com/subject/35751619/) [《On Java 中文版 进阶卷》](https://book.douban.com/subject/35751623/)
+    [![](https://github-readme-stats.vercel.app/api/pin/?username=BruceEckel&repo=OnJava8-Examples&theme=github_dark&show_owner=true)](https://github.com/BruceEckel/OnJava8-Examples)
     - [Effective Java](https://book.douban.com/subject/30412517/)
     - [guava库](https://github.com/google/guava)
+    [![](https://github-readme-stats.vercel.app/api/pin/?username=google&repo=guava&theme=github_dark&show_owner=true)](https://github.com/google/guava)
     - [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
     - [《Java 性能权威指南》](https://book.douban.com/subject/35867531/)
 - JVM
