@@ -1150,23 +1150,6 @@ body {
   display: none;
 }
 
-.update-time-history {
-  visibility: hidden;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  transform: translateY(100%);
-  max-height: 30vh;
-  overflow-y: auto;
-  background-color: #27262b;
-  z-index: 9999;
-  box-shadow: 1px 1px 4px 1px rgba(255, 255, 255, 0.8);
-}
-
-.update-time:hover .update-time-history {
-  visibility: visible;
-}
-
 .update-time-record {
   display: flex;
 }
@@ -1185,7 +1168,6 @@ body {
     max-height: 50vh;
     clear: both;
     display: block;
-    background-color: #e6e5e5;
     color: #5ca2c4;
   }
 
@@ -1240,7 +1222,7 @@ body {
     position: relative;
     margin-top: 1em;
     margin-bottom: 0.25em;
-    font-family: 'Indie Flower', 'Long Cang', 'Source Code Pro', 'ZCOOL KuaiLe';
+    font-family: 'Source Code Pro', 'ZCOOL KuaiLe';
     color: #91c2e7;
     font-style: italic;
     background-clip: padding-box, border-box;
@@ -1361,11 +1343,6 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
 .main-content ol > li::before {
   color: #1296db;
   content: counter(step-counter) ". ";
-}
-
-//图片查看时的背景
-.viewer-container img {
-  background-color: #e6e5e5;
 }
 
 .highlight .cm, .highlight .c1 {

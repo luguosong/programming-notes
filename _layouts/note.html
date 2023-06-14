@@ -86,10 +86,10 @@
         &copy;{{ "now" | date: "%Y" }}<a href="#" id="weixing" class="zoom">陆国松</a>.
         <a href="#" id="apply" class="zoom">💖支持</a>
         <img id="applyImg"
-             src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230506100600.png"
+             src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421968-%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.jpg"
              hidden>
         <img id="weixingImg"
-             src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230506100917.png"
+             src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421795-%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
              hidden>
       </div>
     </div>
@@ -148,15 +148,6 @@
           {{ count }}
           {% endif %}字
         </div>
-        <!--git提交更新时间-->
-        <div class="update-time" id="update-time">
-          <div class="last-update-time" id="last-update-time">
-
-          </div>
-          <div class="update-time-history" id="update-time-history">
-
-          </div>
-        </div>
       </div>
 
 
@@ -166,8 +157,9 @@
         {%- include components/children_nav.html -%}
         {% endif %}
 
-        {{ content }}
-
+        {{ content | replace: "<img src", "<img class='lazyload'
+                                                src='https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141614312-%E5%8A%A0%E8%BD%BD%E4%B8%AD.gif'
+                                                data-src" }}
 
         {% capture footer_custom %}
         {%- include footer_custom.html -%}
@@ -445,12 +437,17 @@
 
     for (let i = 0; i < objs.length; i++) {
       if (!objs[i].classList.contains("unImgView")) {
-        new Viewer(objs[i])
+        new Viewer(objs[i],
+          {
+            navbar: false,
+            title: false,
+            toolbar: false,
+          })
       }
       objs[i].style.cursor = "pointer"
-      objs[i].alt = "图片无法加载"
-      objs[i].loading="lazy"
-      objs[i].title="点击查看大图"
+      objs[i].alt = "图片"
+      objs[i].loading = "lazy"
+      objs[i].title = "点击查看大图"
     }
 
 
@@ -486,50 +483,6 @@
   menuButtonRight.addEventListener("click", () => {
     rightSidebar.classList.toggle("visible")
   })
-</script>
-
-<!--更新时间-->
-<script>
-
-  function padString(str, size) {
-    if (str.length < size) {
-      return str.padEnd(size)
-    } else {
-      return str
-    }
-  }
-
-  if ("{{site.github.owner_name}}" != "") {
-    fetch("https://api.github.com/repos/{{site.github.owner_name}}/{{site.github.repository_name}}/commits?path={{page.path}}")
-      .then(response => response.json())
-      .then(data => {
-        if (data.length !== 0) {
-          const lastCommitDate = data[0].commit.author.date
-          const date = new Date(Date.parse(lastCommitDate))
-          let updateTime = document.querySelector("#update-time")
-          updateTime.style.display = "block"
-          let lastTime = document.querySelector("#last-update-time")
-          let month = date.getMonth() + 1
-          lastTime.innerHTML = "更新时间：" + date.getFullYear() + "年" + (month < 10 ? "0" + month : month) + "月" + date.getDate() + "日&nbsp;&nbsp;by&nbsp;&nbsp;" + data[0].commit.author.name
-          let history = document.querySelector("#update-time-history")
-          for (let i = 1; i < data.length; i++) {
-            let element = document.createElement("div")
-            element.classList.add("update-time-record")
-
-            let time = document.createElement("div")
-            const date1 = new Date(Date.parse(data[i].commit.author.date))
-            let month1 = date1.getMonth() + 1
-            time.innerHTML = date1.getFullYear() + "年" + (month1 < 10 ? "0" + month1 : month1) + "月" + (date1.getDate() < 10 ? "0" + date1.getDate() : date1.getDate()) + "日&nbsp;&nbsp;by&nbsp;&nbsp;"
-            let name = document.createElement("div")
-            name.innerHTML = padString(data[i].commit.author.name, 18)
-
-            element.append(time)
-            element.append(name)
-            history.append(element)
-          }
-        }
-      })
-  }
 </script>
 
 </body>

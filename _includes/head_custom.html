@@ -42,5 +42,14 @@
 {% endif %}
 
 <!--图片查看-->
-<link rel="stylesheet" href="/assets/css/viewerjs/viewer.css">
-<script type="text/javascript" src="/assets/js/viewerjs/viewer.js" async></script>
+<!--{% if page.viewerjs != false %}-->
+<!--<link rel="stylesheet" href="/assets/css/viewerjs/viewer.css">-->
+<!--<script type="text/javascript" src="/assets/js/viewerjs/viewer.js" async></script>-->
+<!--{% endif %}-->
+{% if page.viewerjs != false %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.3/viewer.js" async></script>
+{% endif %}
+
+<!--图片懒加载-->
+<script src="{{ '/assets/js/lazysizes/lazysizes.min.js' | relative_url }}" async=""></script>
