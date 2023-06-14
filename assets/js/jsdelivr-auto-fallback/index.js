@@ -13,7 +13,7 @@
   const starTime = Date.now();
   const TIMEOUT = 2000;
   const STORE_KEY = 'jsdelivr-auto-fallback';
-  const TEST_PATH = '/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?';
+  const TEST_PATH = '/gh/luguosong/images@master/jsdelivr-auto-fallback/test.css?';
   const shouldReplace = (text) => text && text.includes(PREFIX + SOURCE);
   const replace = (text) => text.replace(PREFIX + SOURCE, PREFIX + fastNode);
   const setTimeout = window.setTimeout;
@@ -78,6 +78,7 @@
     }
   };
 
+  //  检查可用性
   const checkAvailable = (url, callback) => {
     let timeoutId;
     const newNode = document.createElement('link');
