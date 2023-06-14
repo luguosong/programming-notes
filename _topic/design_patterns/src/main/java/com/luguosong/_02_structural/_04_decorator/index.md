@@ -32,3 +32,10 @@ create_time: 2023/5/26
 {% highlight java %}
 {% include_relative DecoratorExample.java %}
 {% endhighlight %}
+
+# 使用场景
+
+## java.io.BufferedWriter
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230607155316.png)
+

@@ -34,3 +34,9 @@ create_time: 2023/6/6
 {% highlight java %}
 {% include_relative AdapterByClassExample.java %}
 {% endhighlight %}
+
+# 使用场景
+
+## sun.nio.cs.StreamDecoder
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20230607102901.png)

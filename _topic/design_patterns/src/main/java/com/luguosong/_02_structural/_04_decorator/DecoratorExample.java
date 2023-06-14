@@ -9,8 +9,8 @@ public class DecoratorExample {
         ConcreteComponent component = new ConcreteComponent();
 
         //对具体组件进行装饰
-        ConcreteDecoratorA decoratorA = new ConcreteDecoratorA(component);
-        ConcreteDecoratorB decoratorB = new ConcreteDecoratorB(decoratorA);
+        Decorator decoratorA = new ConcreteDecoratorA(component);
+        Decorator decoratorB = new ConcreteDecoratorB(decoratorA);
 
         //执行操作
         decoratorB.operation();
