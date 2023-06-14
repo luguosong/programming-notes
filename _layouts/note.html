@@ -85,11 +85,11 @@
       <div style="margin-top: 2px">
         &copy;{{ "now" | date: "%Y" }}<a href="#" id="weixing" class="zoom">陆国松</a>.
         <a href="#" id="apply" class="zoom">💖支持</a>
-        <img id="applyImg"
-             src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421968-%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.jpg"
+        <img id="applyImg" class='lazyload' src="#"
+             data-src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421968-%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.jpg"
              hidden>
-        <img id="weixingImg"
-             src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421795-%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
+        <img id="weixingImg" class='lazyload' src="#"
+             data-src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421795-%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
              hidden>
       </div>
     </div>
@@ -158,7 +158,7 @@
         {% endif %}
 
         {{ content | replace: "<img src", "<img class='lazyload'
-                                                src='https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141614312-%E5%8A%A0%E8%BD%BD%E4%B8%AD.gif'
+                                                src='https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/loading.gif'
                                                 data-src" }}
 
         {% capture footer_custom %}
@@ -214,15 +214,15 @@
     </div>
     <div class="right-bottom">
       <div style="margin-top: 2px;text-align: center">
-        <img style="height: 1rem" class="unImgView"
+        <img style="height: 1rem" class="unImgView lazyload"
              src="https://img.shields.io/github/last-commit/luguosong/programming-study/note?style=plastic">
-        <img style="height: 1rem" class="unImgView"
+        <img style="height: 1rem" class="unImgView lazyload"
              src="https://img.shields.io/github/commit-activity/m/luguosong/programming-study/note?label=commit&style=plastic">
       </div>
       <div style="margin-top: 2px;text-align: center">
-        <img style="height: 1rem" class="unImgView"
+        <img style="height: 1rem" class="unImgView lazyload"
              src="https://img.shields.io/github/languages/code-size/luguosong/programming-study?label=code">
-        <img style="height: 1rem" class="unImgView"
+        <img style="height: 1rem" class="unImgView lazyload"
              src="https://img.shields.io/github/repo-size/luguosong/programming-study?label=size&style=plastic">
       </div>
     </div>
@@ -452,11 +452,13 @@
 
 
     apply.onclick = function() {
+      applyImg.src=applyImg.getAttribute("data-src")
       applyImg.click()
       return false
     }
 
     weixing.onclick = function() {
+      weixingImg.src=weixingImg.getAttribute("data-src")
       weixingImg.click()
       return false
     }

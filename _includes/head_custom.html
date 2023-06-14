@@ -1,3 +1,6 @@
+<!-- cdn.jsdelivr.net 是否可用， 如果不可用时，会自动把所有 js, css, image 的地址切换到其他可用的域名。-->
+<script src="{{ '/assets/js/jsdelivr-auto-fallback/index.js' | relative_url }}" async=""></script>
+
 {% if site.ga_tracking != nil %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_tracking }}" async></script>
 <script async>
