@@ -1,6 +1,6 @@
 ---
 layout: note
-title: 设计原则
+title: 设计模式概述
 nav_order: 0
 parent: 设计模式
 create_time: 2023/5/30
