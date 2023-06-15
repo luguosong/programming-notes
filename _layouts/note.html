@@ -437,12 +437,7 @@
 
     for (let i = 0; i < objs.length; i++) {
       if (!objs[i].classList.contains("unImgView")) {
-        new Viewer(objs[i],
-          {
-            navbar: false,
-            title: false,
-            toolbar: false,
-          })
+        new Viewer(objs[i])
       }
       objs[i].style.cursor = "pointer"
       objs[i].alt = "图片"
