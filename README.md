@@ -74,9 +74,9 @@
 
 - [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 
-## Java日志
+## Java日志✅
 
-- [Java日志框架视频教程-动力节点💯](https://www.bilibili.com/video/BV1Mb4y1Z74W/?spm_id_from=333.337.search-card.all.click&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
+- [Java日志框架视频教程-动力节点](https://www.bilibili.com/video/BV1Mb4y1Z74W/?spm_id_from=333.337.search-card.all.click&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
 
 # 前端技术
 
