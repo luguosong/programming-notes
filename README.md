@@ -1,7 +1,6 @@
 <p align="center">
     <h1 align="center">编程学习笔记</h1>
     <p align="center"><strong><a href="https://www.luguosong.com/">在线查看!</a></strong></p>
-    <br><br><br>
 </p>
 
 ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/225813708-98b745f2-7d22-48cf-9150-083f1b00d6c9.gif)
@@ -64,10 +63,10 @@
 
 - [《Java核心技术》](https://book.douban.com/subject/35920145/)
 - [《On Java 中文版 基础卷》](https://book.douban.com/subject/35751619/) [《On Java 中文版 进阶卷》](https://book.douban.com/subject/35751623/)
-  [![](https://github-readme-stats.vercel.app/api/pin/?username=BruceEckel&repo=OnJava8-Examples&theme=github_dark&show_owner=true)](https://github.com/BruceEckel/OnJava8-Examples)
+  - [![](https://github-readme-stats.vercel.app/api/pin/?username=BruceEckel&repo=OnJava8-Examples&theme=github_dark&show_owner=true)](https://github.com/BruceEckel/OnJava8-Examples)
 - [Effective Java](https://book.douban.com/subject/30412517/)
 - [guava库](https://github.com/google/guava)
-  [![](https://github-readme-stats.vercel.app/api/pin/?username=google&repo=guava&theme=github_dark&show_owner=true)](https://github.com/google/guava)
+  - [![](https://github-readme-stats.vercel.app/api/pin/?username=google&repo=guava&theme=github_dark&show_owner=true)](https://github.com/google/guava)
 - [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
 - [《Java 性能权威指南》](https://book.douban.com/subject/35867531/)
 
