@@ -33,12 +33,12 @@
 - [leetcode](https://leetcode.cn/)
 - [数据结构与算法分析](https://book.douban.com/subject/26745780/)
 
-## 计算机组成原理
+## 计算机组成原理🕐
 
 - 深入理解计算机系统
-    - [《深入理解计算机系统》🕐](https://book.douban.com/subject/26912767/)
-    - [2015 CMU 15-213 CSAPP 深入理解计算机系统 课程视频🕐](https://www.bilibili.com/video/BV1iW411d7hd/?vd_source=f0bf6f13ef9720c412e23224083e2d8a)
-    - [深入理解计算机系统B站中文课🕐](https://www.bilibili.com/video/BV1cD4y1D7uR/?spm_id_from=333.999.0.0&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
+    - [《深入理解计算机系统》](https://book.douban.com/subject/26912767/)
+    - [2015 CMU 15-213 CSAPP 深入理解计算机系统 课程视频](https://www.bilibili.com/video/BV1iW411d7hd/?vd_source=f0bf6f13ef9720c412e23224083e2d8a)
+    - [深入理解计算机系统B站中文课](https://www.bilibili.com/video/BV1cD4y1D7uR/?spm_id_from=333.999.0.0&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
     - [课件](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html)
 - [《计算机组成与设计》](https://book.douban.com/subject/30443432/)
 - [《数字设计和计算机体系结构》](https://book.douban.com/subject/26824111/)
@@ -76,7 +76,7 @@
 
 ## Java日志
 
-[Java日志框架视频教程-动力节点](https://www.bilibili.com/video/BV1Mb4y1Z74W/?spm_id_from=333.337.search-card.all.click&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
+- [Java日志框架视频教程-动力节点💯](https://www.bilibili.com/video/BV1Mb4y1Z74W/?spm_id_from=333.337.search-card.all.click&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
 
 # 前端技术
 
@@ -249,7 +249,7 @@ c++:
 
 ## Docker
 
-## 设计模式
+## 设计模式🕐
 
 - [设计模式：可复用面向对象软件的基础](https://book.douban.com/subject/34262305/)
 - [refactoring guru](https://refactoringguru.cn/design-patterns)
