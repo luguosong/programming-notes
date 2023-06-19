@@ -35,7 +35,6 @@
 }
 
 body {
-  line-height: 1.1rem;
   padding: 0;
 }
 
@@ -264,6 +263,19 @@ body {
       margin-top: 0;
     }
   }
+
+  li {
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  ul {
+    margin-top: 0;
+  }
+
+  p {
+    line-height: 1.2;
+  }
 }
 
 
@@ -327,13 +339,9 @@ body {
   margin-left: 1rem;
 }
 
-
-.main-content {
-  line-height: 1.1rem;
-}
-
 code {
-  font-size: 0.85rem;
+  //font-size: 0.85rem;
+  line-height: 1;
   font-family: "Source Code Pro", "LXGW WenKai", sans-serif, "ZCOOL KuaiLe";
 }
 
@@ -358,6 +366,10 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
   font-size: 1rem;
   text-transform: none;
   padding-bottom: 0.5rem;
+}
+
+.main-content {
+  line-height: 1;
 }
 
 .main-content ol > li::before {
