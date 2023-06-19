@@ -1,5 +1,6 @@
 @import url('https://fonts.loli.net/css2?family=Source+Code+Pro:ital,wght@1,500&display=swap');
 @import url('https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap');
+@import url('https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/lxgwwenkai-bold.css');
 
 ::-webkit-scrollbar {
   width: 14px;
@@ -34,7 +35,7 @@
 }
 
 body {
-  line-height: 1;
+  line-height: 1.1rem;
   padding: 0;
 }
 
@@ -44,7 +45,7 @@ body {
   height: 100vh;
   width: 100%;
   background-color: #27262b;
-  font-family: 'Source Code Pro', 'ZCOOL KuaiLe';
+  font-family: 'Source Code Pro', 'LXGW WenKai', sans-serif, 'ZCOOL KuaiLe';
   color: #d8d7d4;
   overflow: auto;
 }
@@ -57,6 +58,7 @@ body {
   flex-direction: column;
   border-right: 1px dotted #44434d;
   overflow: auto;
+  font-family: "Source Code Pro", "ZCOOL KuaiLe", "LXGW WenKai", sans-serif;
 }
 
 .left.visible {
@@ -209,27 +211,27 @@ body {
   }
 
   h1::before {
-    content: "Ⅰ. ";
+    content: "ʜ₁₋";
   }
 
   h2::before {
-    content: "Ⅱ. ";
+    content: "ʜ₂₋";
   }
 
   h3::before {
-    content: "Ⅲ. ";
+    content: "ʜ₃₋";
   }
 
   h4::before {
-    content: "Ⅳ. ";
+    content: "ʜ₄₋";
   }
 
   h5::before {
-    content: "Ⅴ. ";
+    content: "ʜ₅₋";
   }
 
   h6::before {
-    content: "Ⅵ. ";
+    content: "ʜ₆₋";
   }
 
   h1,
@@ -241,7 +243,7 @@ body {
     position: relative;
     margin-top: 1em;
     margin-bottom: 0.25em;
-    font-family: 'Source Code Pro', 'ZCOOL KuaiLe';
+    font-family: 'Source Code Pro', 'ZCOOL KuaiLe', 'LXGW WenKai', sans-serif;
     color: #91c2e7;
     font-style: italic;
     background-clip: padding-box, border-box;
@@ -328,12 +330,12 @@ body {
 
 
 .main-content {
-  line-height: 1;
+  line-height: 1.1rem;
 }
 
 code {
   font-size: 0.85rem;
-  font-family: "Source Code Pro", "ZCOOL KuaiLe";
+  font-family: "Source Code Pro", "LXGW WenKai", sans-serif, "ZCOOL KuaiLe";
 }
 
 

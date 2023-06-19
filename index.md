@@ -5,7 +5,7 @@ nav_order: 10
 ---
 
 
-{: .new}
+{: .note}
 除非准备好致力于终身学习，否则不要进入这个行业。有时，编程似乎是一份高薪、可靠的工作，
 但能确保这一点的唯一方法，就是始终让自己更有价值。 ——————Bruce Eckel
 
@@ -29,3 +29,18 @@ nav_order: 10
 
 - 网站中的静态资源（图片、js、css）使用[jsdelivr](https://www.jsdelivr.com/github)加速
 - 网站使用[cloudflare](https://dash.cloudflare.com/)做CDN加速
+- [图片懒加载](https://github.com/aFarkas/lazysizes)
+
+# 网站字体
+
+- [Source Code Pro](https://fonts.google.com/specimen/Source+Code+Pro)
+    - 引用地址：`https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@1,500&display=swap`
+    - 加速地址：`https://fonts.loli.net/css2?family=Source+Code+Pro:ital,wght@1,500&display=swap`
+- [霞鹜文楷](https://github.com/lxgw/LxgwWenKai)
+    - [在网站上使用这款字体](https://github.com/chawyehsu/lxgw-wenkai-webfont)
+    - 引用地址：`https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css`
+    - 加速地址：`https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css`
+    - 加粗字体：`https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/lxgwwenkai-bold.css`
+- [ZCOOL KuaiLe](https://fonts.google.com/specimen/ZCOOL+KuaiLe)
+    - 引用地址：`https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap`
+    - 加速地址：`https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap`
