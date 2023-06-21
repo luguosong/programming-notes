@@ -28,7 +28,7 @@ create_time: 2023/5/5
     6. Flyweight（享元）
     7. Proxy（代理）
 
-- `行为型模式`:类或对象之间的交互
+- `行为型模式`:类或对象之间的交互,程序运行时复杂的流程控制
     1. Chain of Responsibility（职责链）
     2. Command（命令）
     3. Interpreter（解释器）

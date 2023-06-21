@@ -89,3 +89,8 @@ You Ain’t Gonna Need It
 你不会需要它
 
 不要去设计当前用不到的代码，不要去编写当前用不到的功能
+
+# 设计模式结构概述
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/design-pattern/overview.svg)
+
