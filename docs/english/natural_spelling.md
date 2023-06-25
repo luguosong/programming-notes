@@ -2,7 +2,7 @@
 layout: note
 title: 自然拼读
 nav_order: 50
-parent: 其它
+parent: 英语
 create_time: 2023/5/9
 ---
 
