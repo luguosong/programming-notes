@@ -413,4 +413,26 @@ export default {
 
 # 动态组件
 
+Home子组件：
 
+{% highlight vue %}
+{% include_relative src/views/05-dynamic-components/Archive.vue %}
+{% endhighlight %}
+
+Posts子组件：
+
+{% highlight vue %}
+{% include_relative src/views/05-dynamic-components/Posts.vue %}
+{% endhighlight %}
+
+Archive子组件：
+
+{% highlight vue %}
+{% include_relative src/views/05-dynamic-components/Archive.vue %}
+{% endhighlight %}
+
+父组件：
+
+{% highlight vue %}
+{% include_relative src/views/05-dynamic-components/Father.vue %}
+{% endhighlight %}

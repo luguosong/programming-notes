@@ -15,8 +15,12 @@
       </div>
       <div>
         <router-link to="/listening-to-events">监听事件</router-link>
-      </div>      <div>
+      </div>
+      <div>
         <router-link to="/slots">插槽</router-link>
+      </div>
+      <div>
+        <router-link to="/dynamic-components">动态组件</router-link>
       </div>
     </el-aside>
     <el-main>

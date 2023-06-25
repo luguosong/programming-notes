@@ -15,22 +15,28 @@ const router = createRouter({
       component: () => import("../views/01-defining-and-using/Father.vue"),
     },
     {
-      // 组件的创建和使用
+      // 属性
       path: "/passing-props",
       name: "passing-props",
       component: () => import("../views/02-passing-props/Father.vue"),
     },
     {
-      // 组件的创建和使用
+      // 事件
       path: "/listening-to-events",
       name: "listening-to-events",
       component: () => import("../views/03-listening-to-events/Father.vue"),
     },
     {
-      // 组件的创建和使用
+      // 插槽
       path: "/slots",
       name: "slots",
       component: () => import("../views/04-slots/Father.vue"),
+    },
+    {
+      // 动态组件
+      path: "/dynamic-components",
+      name: "dynamic-components",
+      component: () => import("../views/05-dynamic-components/Father.vue"),
     },
   ],
 })
