@@ -2,6 +2,7 @@
 @import url('https://fonts.loli.net/css2?family=ZCOOL+KuaiLe&display=swap');
 @import url('https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/lxgwwenkai-bold.css');
 
+
 ::-webkit-scrollbar {
   width: 14px;
   height: 14px;
@@ -181,6 +182,7 @@ body {
 .middle-context {
   padding: 1rem 2rem;
   flex: 1;
+  counter-reset: section;
 
   img {
     max-width: 60%;
@@ -208,28 +210,73 @@ body {
     }
   }
 
-  h1::before {
-    content: "ʜ₁₋";
+  /* 标题样式 */
+  h1 {
+    counter-increment: section;
+    counter-reset: subsection;
   }
 
-  h2::before {
-    content: "ʜ₂₋";
+  h2 {
+    counter-reset: subsubsection;
+    counter-increment: subsection;
   }
 
-  h3::before {
-    content: "ʜ₃₋";
+  h3 {
+    counter-increment: subsubsection;
+    counter-reset: subparagraph;
   }
 
-  h4::before {
-    content: "ʜ₄₋";
+  h4 {
+    counter-increment: subparagraph;
+    counter-reset: subsubparagraph;
   }
 
-  h5::before {
-    content: "ʜ₅₋";
+  h5 {
+    counter-increment: subsubparagraph;
+    counter-reset: subsubsubparagraph;
   }
 
-  h6::before {
-    content: "ʜ₆₋";
+  h6 {
+    counter-increment: subsubsubparagraph;
+  }
+
+  /* 标题编号样式 */
+  h1:before {
+    content: counter(section) " ";
+    font-size: 1.4rem;
+    font-weight: normal;
+    font-family: 'LXGW WenKai',  sans-serif;
+  }
+
+  h2:before {
+    content: counter(section) "." counter(subsection) " ";
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: 'LXGW WenKai',  sans-serif;
+  }
+
+  h3:before {
+    content: counter(section) "." counter(subsection) "." counter(subsubsection) " ";
+    font-size: 0.8rem;
+    font-weight: normal;
+    font-family: 'LXGW WenKai',  sans-serif;
+  }
+
+  h4:before {
+    content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) " ";
+    font-size: 0.5rem;
+    font-weight: lighter;
+    font-family: 'LXGW WenKai',  sans-serif;
+  }
+
+  h5:before {
+    content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) "." counter(subsubparagraph) " ";
+    font-family: 'LXGW WenKai',  sans-serif;
+  }
+
+  h6:before {
+    content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) "." counter(subsubparagraph) "." counter(subsubsubparagraph) " ";
+    font-family: 'LXGW WenKai',  sans-serif;
   }
 
   h1,
