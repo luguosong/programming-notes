@@ -245,38 +245,38 @@ body {
     content: counter(section) " ";
     font-size: 1.4rem;
     font-weight: normal;
-    font-family: 'LXGW WenKai',  sans-serif;
+    font-family: 'LXGW WenKai', sans-serif;
   }
 
   h2:before {
     content: counter(section) "." counter(subsection) " ";
     font-size: 1rem;
     font-weight: normal;
-    font-family: 'LXGW WenKai',  sans-serif;
+    font-family: 'LXGW WenKai', sans-serif;
   }
 
   h3:before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection) " ";
     font-size: 0.8rem;
     font-weight: normal;
-    font-family: 'LXGW WenKai',  sans-serif;
+    font-family: 'LXGW WenKai', sans-serif;
   }
 
   h4:before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) " ";
     font-size: 0.5rem;
     font-weight: lighter;
-    font-family: 'LXGW WenKai',  sans-serif;
+    font-family: 'LXGW WenKai', sans-serif;
   }
 
   h5:before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) "." counter(subsubparagraph) " ";
-    font-family: 'LXGW WenKai',  sans-serif;
+    font-family: 'LXGW WenKai', sans-serif;
   }
 
   h6:before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) "." counter(subsubparagraph) "." counter(subsubsubparagraph) " ";
-    font-family: 'LXGW WenKai',  sans-serif;
+    font-family: 'LXGW WenKai', sans-serif;
   }
 
   h1,
@@ -387,9 +387,9 @@ body {
 }
 
 code {
-  //font-size: 0.85rem;
-  line-height: 1;
-  font-family: "Source Code Pro", "LXGW WenKai", sans-serif, "ZCOOL KuaiLe";
+  font-size: 0.95rem;
+  line-height: 1.2;
+  font-family: "Source Code Pro", "ZCOOL KuaiLe", "LXGW WenKai", sans-serif;
 }
 
 
@@ -427,6 +427,10 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
 .highlight .cm, .highlight .c1 {
   color: #77AD5E;
   font-weight: lighter;
+}
+
+.highlight .c {
+  color: #839a62;
 }
 
 //@字符颜色
