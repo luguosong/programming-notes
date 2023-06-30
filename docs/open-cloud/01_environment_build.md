@@ -52,3 +52,13 @@ create_time: 2023/5/9
 
 # 安装JobRunner
 
+1. 下载WebTools压缩包解压
+2. 下载JobRunner exe 解压到WebTools目录下的`exe/vc15_amd64dll`目录
+   ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306261606840-%E8%A7%A3%E5%8E%8Bjobrunner%E5%8E%8B%E7%BC%A9%E5%8C%85.png)
+3. 下载`Kernel`、`Drawings`、`Visualize`、`Publish`、`Ifc`压缩包，并将其中的`exe目录`覆盖WebTools下的`exe目录`
+4. 运行命令启动
+
+```shell
+JobRunner --token=df1dceb8e2d6f6b0894363b085801e36 --host=127.0.0.1 --port=8080 --name=basic_runner --waitTimeOut=10000 --rootUrl=/ --cachePath=E:\OpenClould\cache
+```
+
