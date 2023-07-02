@@ -358,13 +358,13 @@ echo "world" >> /tmp/a.txt
 
 `用户`可以有一个`主组`和多个`附属组`，用户创建时，会自动创建一个和用户名相同的`主组`。
 
-## 用户组位置
+## 查询用户组
 
 用户组会保存到`/etc/group`文件中，每一行代表一个用户组，每一行的格式如下:
 
-```shell
-用户组名:密码占位符:用户组id:用户列表
-```
+
+`用户组名`:`密码占位符`:`用户组id`:`用户列表`
+
 
 ## 添加用户组-groupadd
 
@@ -374,4 +374,41 @@ echo "world" >> /tmp/a.txt
 
 # 添加用户组，并指定编号
 groupadd -g 1000 test
+```
+
+## 修改用户组名-groupmod
+
+```shell
+# groupmod [选项] 用户组名
+# -n,--new-name 新的用户组名
+# -g,--gid 新的用户组id
+
+# 修改用户组名
+groupmod -n test1 test
+
+# 修改用户组id
+groupmod -g 1001 test
+```
+
+## 删除用户组-groupdel
+
+```shell
+# groupdel 用户组名
+
+# 删除用户组
+groupdel test
+```
+
+## 添加用户
+
+```shell
+# useradd [选项] 用户名
+# -g,--gid 指定用户组id
+# -s,--shell 指定用户可以使用的shell，默认是 /bin/bash
+# -d,--home 指定用户家目录,默认为 /home/用户名
+# -G,--groups 指定附属组id
+# -u,--uid 指定用户id
+# -c,--comment 指定用户描述信息
+
+
 ```
