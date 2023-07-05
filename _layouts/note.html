@@ -85,10 +85,10 @@
       <div style="margin-top: 2px">
         &copy;{{ "now" | date: "%Y" }}<a href="#" id="weixing" class="zoom">陆国松</a>.
         <a href="#" id="apply" class="zoom">💖支持</a>
-        <img id="applyImg" class='lazyload' src="#"
+        <img id="applyImg" class="lazyload" src="#"
              data-src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421968-%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.jpg"
              hidden>
-        <img id="weixingImg" class='lazyload' src="#"
+        <img id="weixingImg" class="lazyload" src="#"
              data-src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202306141421795-%E5%BE%AE%E4%BF%A1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
              hidden>
       </div>
@@ -157,9 +157,7 @@
         {%- include components/children_nav.html -%}
         {% endif %}
 
-        {{ content | replace: "<img src", "<img class='lazyload'
-                                                src='https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/loading.gif'
-                                                data-src" }}
+        {{ content | replace: '<img src', '<img class="lazyload" src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/loading.gif" data-src' }}
 
         {% capture footer_custom %}
         {%- include footer_custom.html -%}
@@ -348,7 +346,7 @@
     const contentDiv = document.querySelector("#middle-scroll")
 
     // 获取所有标题元素
-    const headings = document.querySelectorAll("h1, h2, h3")
+    const headings = document.querySelectorAll("h1, h2, h3 , h4")
 
     // 获取tocbot生成的目录元素
     const toc = document.querySelector("#right-sidebar")
@@ -363,7 +361,7 @@
     let activeHeading = null
     let minDistance = Number.MAX_VALUE
     for (const heading of headings) {
-      const distance = Math.abs(heading.offsetTop - contentDiv.scrollTop - (containerHeight - titleHeight) / 2)
+      const distance = Math.abs(heading.offsetTop - contentDiv.scrollTop)
       if (distance < minDistance) {
         activeHeading = heading
         minDistance = distance
@@ -382,10 +380,35 @@
             ul.classList.add("is-collapsed")
           }
         }
+        let childNodes = e.parentNode.parentNode.parentNode.parentNode.childNodes
+        for (let i = 0; i < childNodes.length; i++) {
+          if(childNodes[i].nodeName==="LI") {
+            let element = childNodes[i].querySelector("a")
+            if (element) {
+              element.classList.remove("is-active-link")
+            }
+            let element1 = childNodes[i].querySelector("ul")
+            if (element1) {
+              element1.classList.add("is-collapsed")
+            }
+          }
+        }
+
         e.classList.add("is-active-link")
         let node = e.parentNode.querySelector("ul")
         if (node !== null) {
           node.classList.remove("is-collapsed")
+        }
+        let parentNode = e.parentNode.parentNode.parentNode
+        if (parentNode.nodeName==="LI"){
+          let element1 = parentNode.querySelector("a")
+          if (element1){
+            element1.classList.add("is-active-link")
+          }
+          let element2 = parentNode.querySelector("ul")
+          if (element2){
+            element2.classList.remove("is-collapsed")
+          }
         }
       }
     }
@@ -394,8 +417,6 @@
   // 监听div元素的滚动事件
   document.querySelector("#middle-scroll").addEventListener("scroll", updateActiveItem)
 
-  // 在页面加载时更新目录的当前活动项
-  updateActiveItem()
 </script>
 
 <!--地址栏锚点定位效果-->
@@ -408,6 +429,7 @@
     var element = document.getElementById(hash.slice(1))
     if (element) {
       element.scrollIntoView()
+      document.querySelector("#middle-scroll").dispatchEvent(new Event("scroll"))
     }
   }
 </script>
@@ -447,13 +469,13 @@
 
 
     apply.onclick = function() {
-      applyImg.src=applyImg.getAttribute("data-src")
+      applyImg.src = applyImg.getAttribute("data-src")
       applyImg.click()
       return false
     }
 
     weixing.onclick = function() {
-      weixingImg.src=weixingImg.getAttribute("data-src")
+      weixingImg.src = weixingImg.getAttribute("data-src")
       weixingImg.click()
       return false
     }
