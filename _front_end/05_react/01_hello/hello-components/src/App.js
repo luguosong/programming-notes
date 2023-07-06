@@ -3,6 +3,11 @@ import FunctionalComponents from "./FunctionalComponents"; //引入函数式组�
 import TemplateSyntax from "./TemplateSyntax";
 import Events from "./Events";
 import Ref from "./Ref";
+import Status from "./Status";
+import ListRender from "./ListRender";
+import ConditionalRender from "./ConditionalRender";
+import DangerouslySetInnerHTML from "./DangerouslySetInnerHTML";
+import Properties from "./Properties";
 
 /*
 * 继承React.Component类，表示创建一个组件类
@@ -28,6 +33,16 @@ class App extends React.Component {
                 <Events/>
                 {/*ref*/}
                 <Ref/>
+                {/*状态*/}
+                <Status/>
+                {/*列表渲染*/}
+                <ListRender/>
+                {/*条件渲染*/}
+                <ConditionalRender/>
+                {/*富文本展示*/}
+                <DangerouslySetInnerHTML/>
+                {/*属性传递*/}
+                <Properties/>
             </div>
         );
     }

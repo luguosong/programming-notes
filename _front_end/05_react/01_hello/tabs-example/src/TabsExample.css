@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    background-color: white;
+}
+
+ul li {
+    flex: 1;
+    text-align: center;
+}
+
+ul li:hover{
+    cursor: pointer;
+    background-color: beige;
+}
+
+.active {
+    color: red;
+    background-color: aliceblue;
+}

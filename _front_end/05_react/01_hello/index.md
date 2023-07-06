@@ -99,6 +99,10 @@ npm start
 
 `JSX（JavaScript XML）`是一种 JavaScript 的语法扩展，用于在 React 应用中描述用户界面的结构和外观。它允许您在 JavaScript 代码中编写类似 HTML 的标记语法，以声明性地创建组件的结构。
 
+# 案例预览
+
+[预览](../hello-components/build/index.html)
+
 # 组件开发
 
 创建根组件：
@@ -146,4 +150,77 @@ npm start
 
 {% highlight js %}
 {% include_relative hello-components/src/Ref.js %}
+{% endhighlight %}
+
+# 状态
+
+通过`state`关键字定义状态，通过`setState`方法修改状态。
+
+{% highlight js %}
+{% include_relative hello-components/src/Status.js %}
+{% endhighlight %}
+
+# 列表渲染
+
+{% highlight js %}
+{% include_relative hello-components/src/ListRender.js %}
+{% endhighlight %}
+
+# 条件渲染
+
+{% highlight js %}
+{% include_relative hello-components/src/ConditionalRender.js %}
+{% endhighlight %}
+
+# 富文本展示
+
+{% highlight js %}
+{% include_relative hello-components/src/DangerouslySetInnerHTML.js %}
+{% endhighlight %}
+
+# 📖选项卡综合案例
+
+`TabsExample.js`涉及以下知识点：
+
+- 列表渲染
+- 条件渲染
+- 状态
+- 数组遍历：map
+
+{% highlight js %}
+{% include_relative tabs-example/src/TabsExample.js %}
+{% endhighlight %}
+
+Tab样式：
+
+{% highlight css %}
+{% include_relative tabs-example/src/TabsExample.css %}
+{% endhighlight %}
+
+`Cinema.js`涉及知识点：
+
+- axios发送请求
+- filter过滤
+- 状态渲染和更新
+- 列表渲染
+
+{% highlight js %}
+{% include_relative tabs-example/src/Cinema.js %}
+{% endhighlight %}
+
+Cinema样式：
+
+{% highlight js %}
+{% include_relative tabs-example/src/Cinema.css %}
+{% endhighlight %}
+
+# 属性
+
+用于组件之间的数据传递。
+
+{: .warning}
+> 属性是只读的，不能修改。
+
+{% highlight js %}
+{% include_relative hello-components/src/Properties.js %}
 {% endhighlight %}
