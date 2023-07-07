@@ -36,4 +36,5 @@ create_time: 2023/6/13
     - 软件安装RPM、SRPM与YUM
     - X Window设置介绍
     - Linux内核编译与管理
-- 其它
+- Linux网络管理
+    - 网络配置与管理

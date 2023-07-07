@@ -6,6 +6,18 @@ parent: linux
 create_time: 2023/6/29
 ---
 
+# 图形界面和命令行界面
+
+```shell
+# 设置默认命令行界面启动
+systemctl set-default multi-user.target
+
+# 设置默认图形界面启动
+systemctl set-default graphical.target
+```
+
+- `切换命令行界面`:Ctrl + Alt + F2
+
 # 文件和目录操作
 
 ## 目录创建-mkdir
@@ -362,9 +374,9 @@ echo "world" >> /tmp/a.txt
 
 用户组会保存到`/etc/group`文件中，每一行代表一个用户组，每一行的格式如下:
 
+`用户组名`:`密码占位符`:`用户组id`:`用户列表（作为附属组的用户）`
 
-`用户组名`:`密码占位符`:`用户组id`:`用户列表`
-
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307031637766-Linux%E7%94%A8%E6%88%B7%E7%BB%84%E4%BF%A1%E6%81%AF%E6%96%87%E4%BB%B6.png)
 
 ## 添加用户组-groupadd
 
@@ -399,16 +411,354 @@ groupmod -g 1001 test
 groupdel test
 ```
 
-## 添加用户
+## 查询用户信息
+
+Linux中用户信息会保存在`/etc/passwd`文件中，每一行代表一个用户，每一行的格式如下:
+
+`用户名`:`密码占位符`:`用户id`:`用户组id`:`用户描述信息`:`用户家目录`:`用户使用的shell`
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307031636021-Linux%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E6%96%87%E4%BB%B6.png)
+
+查询指定用户信息：
+
+```shell
+# id 用户名
+# 查询结果：
+# uid=用户编号
+# gid=所属主组的编号
+# groups=用户主组以及附属组信息，第一个是主组，后面的是附属组
+
+# 查询用户信息
+id testUser
+```
+
+## 添加用户-useradd
 
 ```shell
 # useradd [选项] 用户名
 # -g,--gid 指定用户组id
+# -G,--groups 指定附属组id
 # -s,--shell 指定用户可以使用的shell，默认是 /bin/bash
 # -d,--home 指定用户家目录,默认为 /home/用户名
-# -G,--groups 指定附属组id
 # -u,--uid 指定用户id
 # -c,--comment 指定用户描述信息
+# -n,--no-create-home 不创建用以用户名为名的用户组
 
+# 添加用户
+useradd testUser1
 
+# 创建用户，并指定用户组
+useradd -g 1000 testUser2
+
+# 创建用户只能被软件使用，不能用于登录操作系统
+useradd -s /sbin/nologin testUser2
 ```
+
+## 为用户添加密码-passwd
+
+```shell
+# passwd 用户名
+
+# 为用户设置密码
+passwd testUser1
+
+# 修改当前用户密码
+passwd
+```
+
+## 用户切换-su
+
+```shell
+# su [-] 用户名
+
+# 切换到testUser1用户
+su testUser1
+
+# 切换用户的同时切换用户的Home目录
+su - testUser1
+```
+
+## 修改用户信息-usermod
+
+```shell
+# usermod [选项] 用户名
+# -g,--gid 指定用户组id
+# -l,--login 指定新的用户名
+# -s,--shell 修改用户可以使用的shell，默认是 /bin/bash
+# -L,--lock 锁定用户，禁止用户登录
+# -U,--unlock 解锁用户，允许用户登录
+
+# 修改用户组
+usermod -g 1001 testUser1
+
+# 锁定用户
+usermod -L testUser1
+
+# 解锁用户
+usermod -U testUser1
+```
+
+## 删除用户-userdel
+
+```shell
+# userdel [选项] 用户名
+# -r,--remove 删除用户的同时删除用户的家目录
+
+# 删除用户
+userdel testUser1
+
+# 删除用户的同时删除用户的家目录
+userdel -r testUser1
+```
+
+# 权限管理
+
+## 权限分类
+
+- 读权限(read,r)
+  - 文件：读取文件内容
+  - 目录：列出目录中的文件列表
+- 写权限(write,w)
+  - 文件：修改文件内容
+  - 目录：在目录中创建、`⭐删除`、重命名文件
+- 执行权限(execute,x)
+  - 文件：执行文件
+  - 目录：进入目录
+
+## 用户分类
+
+- 文件所有者(属主、user、u)
+- 文件所属组(属组、group、g)
+- 其他用户(o)
+- root用户：拥有所有权限，权限设置对于root用户无效
+
+## 权限查看
+
+```shell
+# 观察文件权限
+ls -l 文件名
+
+# 或者
+ll 文件名
+```
+
+查询结果说明：
+
+- 第一列：文件的类型+权限
+  - 第一个字符：文件类型
+    - `-`：普通文件
+    - `d`：目录
+    - `l`：软链接文件(快捷方式)
+    - `b`：块设备文件
+    - `c`：字符设备文件
+    - `s`：套接字文件
+    - `p`：管道文件
+  - 第二到第四个字符：文件所有者权限
+  - 第五到第七个字符：文件所属组权限
+  - 第八到第十个字符：其他用户权限
+- 第二列：文件的硬链接数，文件的节点数
+- 第三列：文件所属用户
+- 第四列：文件所属组
+- 第五列：文件大小
+- 第六列：文件最后修改时间
+- 第七列：文件名
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307051505695-%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E8%A7%82%E5%AF%9F.png)
+
+如下图所示，对于root目录，并没有对其它用户开放任何权限，因此其它用户无法访问`/root`目录。对于root用户也没有开放写权限，但权限设置对于root用户无效，因此root用户依旧可以读写`/root`下的文件:
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307051509052-root%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90.png)
+
+## 权限设置
+
+```shell
+# chmod [选项] 权限 文件名
+# -R,--recursive 递归修改文件权限,针对文件夹
+
+# 给文件所有者增加执行权限
+chmod u+x 文件名
+
+# 给文件所属组增加执行权限
+chmod g+x 文件名
+
+# 给文件所属组增加执行权限
+chmod g=rw 文件名
+```
+
+```shell
+# 通过数字进行权限设置
+# 可读：4
+# 可写：2
+# 可执行：1
+
+# 给文件所有者增加读写权限
+chmod 600 文件名
+
+# 给文件所有者增加读写权限，给文件所属组增加读权限，给其他用户增加读权限
+chmod 777 文件名
+```
+
+{: .warning}
+> 当权限设置为3时，是不合理的。3表示1+3，即可写和可执行权限。但文件没有可读权限，显然是矛盾的。
+> 
+> 同理，1、2也是不合理的
+
+## 文件拥有者和文件所属组
+
+Linux中，每个用户都有一个`用户名`和`主组`。
+
+当用户创建文件时，文件的拥有者就是创建文件的用户，文件的所属组就是创建文件的用户的主组。
+
+```shell
+# 更改文件拥有者
+# chown 新的文件拥有者名称 文件名
+# -R,--recursive 递归修改文件拥有者,针对文件夹
+chown testUser1 test.txt
+
+# 同时更改文件拥有者和文件所属组
+chown testUser1:testGroup1 test.txt
+```
+
+```shell
+# 更改文件所属组
+# chgrp 新的文件所属组名称 文件名
+# -R,--recursive 递归修改文件所属组,针对文件夹
+chgrp testGroup1 test.txt
+```
+
+{: .warning-title}
+> 当用户名不存在时，会提示错误
+> 
+> ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307051810349-%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%8B%A5%E6%9C%89%E8%80%85%E4%BD%86%E6%8B%A5%E6%9C%89%E8%80%85%E4%B8%8D%E5%AD%98%E5%9C%A8.png)
+
+# 管道-|
+
+管道符`|`可以将一个命令的输出作为另一个命令的输入。
+
+
+```shell
+# 过滤功能
+
+# 查询根目录下包含y的文件
+ls / | grep y
+
+# 检索系统中已安装的文件，只筛选mariadb相关信息
+rpm -qa | grep mariadb
+```
+
+```shell
+# 统计功能
+
+# 统计根目录下文件的个数
+ls / | wc -l
+```
+
+```shell
+# xargs命令
+# 解决管道符不支持的命令
+
+# 将查询到的文件名作为参数传递给ls命令
+# 管道符原本是不支持ls命令的，但是通过xargs命令可以实现
+find /etc -name "*.conf" | xargs ls -l
+```
+
+# NetworkManager网络管理器
+
+`CentOS7`中默认使用`NetworkManager`网络管理器，`NetworkManager`网络管理器的配置文件存放在`/etc/NetworkManager`目录下。
+
+
+# network网络管理器
+
+CentOS7中可以使用`network`网络管理器来管理网络，`network`网络管理器的配置文件存放在`/etc/sysconfig/network-scripts`目录下。
+
+## 启动和停止服务
+
+```shell
+# 启动服务
+systemctl start network
+
+# 停止服务
+systemctl stop network
+
+# 查看服务状态
+systemctl status network
+
+# 重启服务
+systemctl restart network
+
+# 开机启动
+systemctl enable network
+
+# 禁止开机启动
+systemctl disable network
+
+# 查看服务是否开机启动
+systemctl is-enabled network
+```
+
+## 获取网络信息-ifconfig
+
+```shell
+# ifconfig [网络设备名] [选项]
+
+# 查询所有网络设备信息
+ifconfigs
+```
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307031839312-Linux%20Ip%E4%BF%A1%E6%81%AF.png)
+
+网卡类型：
+
+- eth0: 有线网卡
+- ens33: 有线网卡
+- wlan0: 无线网卡
+- lo: 本地回环网卡
+- virbr0: 虚拟网卡
+
+ip信息说明：
+
+- inet: ip地址
+- netmask: 子网掩码
+- broadcast: 广播地址
+
+## 网络配置文件
+
+`Red Hat系`网络配置文件存放在`/etc/sysconfig/network-scripts`目录下，文件名格式为`ifcfg-网络设备名`。
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307031857663-%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.png)
+
+配置文件参数说明：
+
+- TYPE: 网卡类型
+- BOOTPROTO: 启动协议，none表示不启动，dhcp表示动态获取ip，static表示静态ip
+- NAME: 网卡名称
+- DEVICE: 网卡设备名
+- ONBOOT: 是否开机启动
+- UUID: 网卡唯一标识
+
+# 远程连接
+
+## 远程要素
+
+- 客户端和服务端网路畅通
+- 服务器端开启sshd服务
+
+## sshd服务端配置
+
+```shell
+# 安装sshd服务
+yum install -y openssh-server
+
+# 启动sshd服务
+systemctl start sshd
+
+# 开机启动sshd服务
+systemctl enable sshd
+```
+
+## ssh客户端
+
+- SecureCRT
+- Xshell
+- Putty
+- MobaXterm
