@@ -20,7 +20,7 @@ url: "https://www.luguosong.com" # the base hostname & protocol for your site, e
 repository: luguosong/programming-notes # for github-metadata
 
 
-permalink: pretty
+#permalink: pretty
 
 exclude:
   # from https://github.com/jekyll/jekyll/blob/master/lib/site_template/_config.yml:
