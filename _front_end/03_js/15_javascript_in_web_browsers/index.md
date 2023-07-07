@@ -22,7 +22,7 @@ create_time: 2023/5/12
 
 JavaScript代码可以出现在HTML文件的`<script>`与`</script>`标签之间，也就是嵌入`HTML`中。
 
-[代码效果](../digital_clock.html)
+[代码效果](digital_clock.html)
 
 {% highlight html %}
 {% include_relative digital_clock.html %}

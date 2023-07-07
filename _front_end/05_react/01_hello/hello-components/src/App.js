@@ -8,6 +8,7 @@ import ListRender from "./ListRender";
 import ConditionalRender from "./ConditionalRender";
 import DangerouslySetInnerHTML from "./DangerouslySetInnerHTML";
 import Properties from "./Properties";
+import ParentChildCommunication from "./ParentChildCommunication";
 
 /*
 * 继承React.Component类，表示创建一个组件类
@@ -43,6 +44,8 @@ class App extends React.Component {
                 <DangerouslySetInnerHTML/>
                 {/*属性传递*/}
                 <Properties/>
+                {/*父子通讯*/}
+                <ParentChildCommunication/>
             </div>
         );
     }
