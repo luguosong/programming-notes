@@ -406,6 +406,11 @@ code {
   line-height: 1rem;
 }
 
+//Viewerjs图片预览图片背景
+.viewer-container img {
+  background: url(/assets/images/checker.png) repeat;
+}
+
 p.note-title > p:first-child, blockquote.note-title > p:first-child,
 p.warning-title > p:first-child, blockquote.warning-title > p:first-child,
 p.important-title > p:first-child, blockquote.important-title > p:first-child,

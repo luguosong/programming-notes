@@ -465,9 +465,10 @@
       objs[i].alt = "图片"
       objs[i].loading = "lazy"
       objs[i].title = "点击查看大图"
+      objs[i].style.background="url(/assets/images/checker.png) repeat"
     }
 
-
+    // 为图片添加点击事件
     apply.onclick = function() {
       applyImg.src = applyImg.getAttribute("data-src")
       applyImg.click()
