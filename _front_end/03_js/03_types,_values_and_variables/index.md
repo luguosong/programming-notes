@@ -6,38 +6,62 @@ parent: JavaScript
 create_time: 2023/5/3
 ---
 
+# 数据类型分类
+
+- 原始类型
+  - 数值
+  - 字符串
+  - 布尔值
+  - Symbol(符号)
+  - null
+  - undefined
+- 对象类型
+  - 对象
+  - 数组
+  - 函数
+  - 类
+
+
 # 数值
 
-{% highlight js %}
-{% include_relative numbers.js %}
-{% endhighlight %}
+## 分类
 
-# 文本
+- 整数字面量
+- 浮点数字面量
 
-{: .note}
-> JavaScript使用Unicode字符集的`UTF-16`编码
->
-> 字符串是16位值的不可修改的有序序列，其中每个值都表示一个Unicode字符。
+## 运算
 
-{: .warning}
-> 字符串是不可修改的。像`replace()`这样的方法都返回新字符串
+- 运算符
+  - `+`
+  - `-`
+  - `*`
+  - `/`
+  - `%`
+  - `**`:ES2016增加的取幂
+- Math对象
+  - [MDN中文文档](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math)
+  - [菜鸟教程](https://www.runoob.com/jsref/jsref-obj-math.html)
 
-{% highlight js %}
-{% include_relative text.js  %}
-{% endhighlight %}
+## Infinity
 
-# 布尔值
+在 JavaScript 中，`Infinity`是一个全局属性，表示正无穷大的数值。它的初始值是 `Number.POSITIVE_INFINITY`。`Infinity` 大于任何值。
 
-# null 和 undefined
+在 JavaScript 中，超出 `1.797693134862315E+308` 的数值即为 `Infinity`，小于 `-1.797693134862316E+308` 的数值为 `-Infinity`。
 
-# 符号
+比较 JS 中的无穷值很容易: `Infinity === Infinity` 为 true。特殊的函数 `Number.isFinite()` 确定提供的参数是否是一个有限的数字。
 
-# 不可修改的原始值与可修改的对象引用
+## NaN
 
+在 JavaScript 中，NaN 是一个全局属性，表示“非数字”（Not-a-Number）。它表示一个不是合法数字的值。全局 NaN 属性与 Number.NaN 属性相同。
 
+有五种不同类型的操作会返回 NaN：
+- 数字转换失败（例如，显式的转换，如 parseInt("blabla")、Number(undefined)，或隐式的转换，如 Math.abs(undefined)）。
+- 数学运算结果不是实数（例如，Math.sqrt(-1)）。
+- 不确定形式（例如，0 * Infinity、1 ** Infinity、Infinity / Infinity、Infinity - Infinity）。
+- 操作数为 NaN 的方法或表达式（例如，7 ** NaN、7 * "blabla"）——这意味着 NaN 是具有传染性的。
+- 其他需要将无效值表示为数字的情况（例如，无效日期 new Date("blabla").getTime()、"".charCodeAt(1)）。
 
-# 类型转换
+要判断一个值是否为 NaN，可以使用 `Number.isNaN()` 或 `isNaN()` 函数。由于 NaN 是唯一一个与自身不相等的值，因此也可以通过自我比较来判断：如果 `x !== x `为真，则说明 x 是 NaN。
 
-# 变量声明与赋值
-
+## 舍入错误
 

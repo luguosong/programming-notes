@@ -36,4 +36,15 @@ create_time: 2023/7/13
 
 # 把CSS应用到HTML上
 
+## link标签
 
+```html
+<link rel="stylesheet" type="text/css" href="style.css" media="all">
+```
+
+- `rel`: 定义当前文档与被链接文档之间的关系，这里是`stylesheet`，表示被链接的文档是一个样式表文件
+- `type`: 定义被链接文档的MIME类型，这里是`text/css`，表示被链接的文档是一个CSS文件
+- `href`: 定义被链接文档的位置，这里是`style.css`，表示被链接的文档是`style.css`文件
+- `media`: 定义了被链接文档的目标媒体类型，这里是`all`，表示被链接的文档适用于所有媒体类型
+
+ 

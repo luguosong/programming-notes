@@ -6,6 +6,12 @@ parent: JavaScript
 create_time: 2023/4/25
 ---
 
+# 特点
+
+- 是一门动态、解释型语言
+- 从Scheme借鉴了一类（first class）函数
+- 从Self借鉴了基于原型（prototype）的继承
+
 # JavaScript语言和宿主环境
 
 - `语言本身`：可以操作数值、文本，数组、 集合、映射等，但`不包含任何输入和输出功能`
