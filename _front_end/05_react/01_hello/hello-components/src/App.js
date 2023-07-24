@@ -9,6 +9,10 @@ import ConditionalRender from "./ConditionalRender";
 import DangerouslySetInnerHTML from "./DangerouslySetInnerHTML";
 import Properties from "./Properties";
 import ParentChildCommunication from "./ParentChildCommunication";
+import ContextStatusManagement from "./ContextStatusManagement";
+import Slot from "./Slot";
+import LifeCycle from "./LifeCycle";
+import SwiperExample from "./SwiperExample";
 
 /*
 * 继承React.Component类，表示创建一个组件类
@@ -46,6 +50,14 @@ class App extends React.Component {
                 <Properties/>
                 {/*父子通讯*/}
                 <ParentChildCommunication/>
+                {/*Context管理状态*/}
+                <ContextStatusManagement/>
+                {/*插槽*/}
+                <Slot/>
+                {/*生命周期*/}
+                <LifeCycle/>
+                {/*轮播示例*/}
+                <SwiperExample/>
             </div>
         );
     }

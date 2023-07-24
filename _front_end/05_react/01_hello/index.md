@@ -91,7 +91,7 @@ npm start
 {% include_relative hello/public/index.html %}
 {% endhighlight %}
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello/src/index.js %}
 {% endhighlight %}
 
@@ -99,33 +99,29 @@ npm start
 
 `JSX（JavaScript XML）`是一种 JavaScript 的语法扩展，用于在 React 应用中描述用户界面的结构和外观。它允许您在 JavaScript 代码中编写类似 HTML 的标记语法，以声明性地创建组件的结构。
 
-# 案例预览
-
-[预览](hello-components/build/index.html)
-
 # 组件开发
 
 创建根组件：
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/App.js %}
 {% endhighlight %}
 
 在`index.js`中引入根组件：
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/index.js %}
 {% endhighlight %}
 
 # 函数式组件
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/FunctionalComponents.js %}
 {% endhighlight %}
 
 # 模板语法和样式绑定
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/TemplateSyntax.js %}
 {% endhighlight %}
 
@@ -142,13 +138,13 @@ npm start
 > 
 > React并不会真正的将事件绑定到节点上，而是采用事件代理的模式
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/Events.js %}
 {% endhighlight %}
 
 # 引用
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/Ref.js %}
 {% endhighlight %}
 
@@ -156,25 +152,25 @@ npm start
 
 通过`state`关键字定义状态，通过`setState`方法修改状态。
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/Status.js %}
 {% endhighlight %}
 
 # 列表渲染
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/ListRender.js %}
 {% endhighlight %}
 
 # 条件渲染
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/ConditionalRender.js %}
 {% endhighlight %}
 
 # 富文本展示
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/DangerouslySetInnerHTML.js %}
 {% endhighlight %}
 
@@ -187,7 +183,7 @@ npm start
 - 状态
 - 数组遍历：map
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative tabs-example/src/TabsExample.js %}
 {% endhighlight %}
 
@@ -204,13 +200,13 @@ Tab样式：
 - 状态渲染和更新
 - 列表渲染
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative tabs-example/src/Cinema.js %}
 {% endhighlight %}
 
 Cinema样式：
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative tabs-example/src/Cinema.css %}
 {% endhighlight %}
 
@@ -221,7 +217,7 @@ Cinema样式：
 {: .warning}
 > 属性是只读的，不能修改。
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/Properties.js %}
 {% endhighlight %}
 
@@ -234,7 +230,7 @@ Cinema样式：
 
 ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307071035851-%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF.png)
 
-{% highlight js %}
+{% highlight react %}
 {% include_relative hello-components/src/ParentChildCommunication.js %}
 {% endhighlight %}
 
@@ -245,3 +241,64 @@ Cinema样式：
   - 子组件中不存储状态，所有状态都存储在父组件中。
 - 非受控组件
   - 子组件的状态不受父组件控制，子组件自己管理状态。
+
+# 通过Context进行状态管理
+
+父组件：
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307091916994.png)
+
+子组件1：
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307091916029.png)
+
+子组件2：
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307091917420.png)
+
+# 插槽
+
+{% highlight react %}
+{% include_relative hello-components/src/Slot.js %}
+{% endhighlight %}
+
+# 生命周期
+
+{% highlight react %}
+{% include_relative hello-components/src/LifeCycle.js %}
+{% endhighlight %}
+
+# 性能优化-PureComponent
+
+使用`PureComponent`代替`Component`，可以减少不必要的渲染。
+
+可以替代之前生命周期中使用`shouldComponentUpdate`方法。进行手动判断。
+
+# 反向代理解决跨域问题
+
+- `正向代理`：代理服务器代理客户端，向目标服务器发送请求，目标服务器不知道真实的客户端是谁。正向代理的作用是可以访问原本无法访问的资源，如谷歌，也可以做缓存和认证等功能。正向代理的例子有VPN、Shadowsocks等。
+- `反向代理`：代理服务器代理服务端，接收客户端的请求并转发给内部网络上的特定服务器，客户端不知道真实的服务端是谁。反向代理的作用是保证内网的安全，阻止web攻击，以及实现负载均衡等功能。反向代理的例子有Nginx、Apache等。
+
+实现步骤：
+
+- 第一步，安装http-proxy-middleware：
+
+```shell
+npm install http-proxy-middleware
+```
+
+- 第二步，在src目录下创建`setupProxy.js`,并编写如下代码：
+
+```js
+const { createProxyMiddleware } = require("http-proxy-middleware")
+
+module.exports=function(app) {
+  app.use(
+    "/api",
+    createProxyMiddleware({
+      target: "http://localhost:6000",
+      changeOrigin:true,
+    })      
+  )
+}
+```
