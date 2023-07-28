@@ -476,6 +476,7 @@ docker run \
 -v /opt/data/mysql-master/data:/var/lib/mysql \
 -v /opt/data/mysql-master/conf:/etc/mysql \
 -v /opt/data/mysql-master/logs:/logs \
+-v /opt/data/mysql-master/mysql-files:/var/lib/mysql-files \
 -p 3307:3306 \
 -e MYSQL_ROOT_PASSWORD=12345678 \
 --name mysql-master \
@@ -506,10 +507,10 @@ slave-skip-errors=1062
 
 ```shell
 # 创建用户
-CREATE USER 'repl'@'%' IDENTIFIED BY '12345678';
+CREATE USER 'slave'@'%' IDENTIFIED BY '12345678';
 
 # 授权
-GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO 'repl'@'%';
+GRANT REPLICATION SLAVE,REPLICATION CLIENT ON *.* TO 'slave'@'%';
 ```
 
 - 启动从库
@@ -521,6 +522,7 @@ docker run \
 -v /opt/data/mysql-slave/data:/var/lib/mysql \
 -v /opt/data/mysql-slave/conf:/etc/mysql \
 -v /opt/data/mysql-slave/logs:/logs \
+-v /opt/data/mysql-slave/mysql-files:/var/lib/mysql-files \
 -p 3308:3306 \
 -e MYSQL_ROOT_PASSWORD=12345678 \
 --name mysql-slave \
@@ -580,7 +582,7 @@ master_connect_retry=30;
 查询从库中查询主从同步状态：
 
 ```shell
-show slave status;
+show slave status\G;
 ```
 
 ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307261828980-%E4%BB%8E%E5%BA%93%E5%BC%80%E5%90%AF%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%89%8D%E7%8A%B6%E6%80%81.png)
@@ -594,7 +596,7 @@ start slave;
 查询从库中查询主从同步状态：
 
 ```shell
-show slave status;
+show slave status\G;
 ```
 
 ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307261829961-%E4%BB%8E%E8%A1%A8%E5%BC%80%E5%90%AF%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%90%8E%E7%8A%B6%E6%80%81.png)
@@ -606,6 +608,115 @@ show slave status;
 分区方式：
 - 哈希取余分区
 - 一致性哈希算法分区
+- 哈希槽分区
+
+创建6个redis容器：
+
+```shell
+# 拉取镜像
+docker pull redis
+
+# 启动第一个redis容器
+docker run \
+-d --privileged=true \
+--net host \
+-v /opt/data/redis-cluster/7001/data:/data \
+--name redis-cluster-7001 \
+redis \
+--cluster-enabled yes \
+--appendonly yes \
+--port 7001
+
+# 启动第二个redis容器
+docker run \
+-d --privileged=true \
+--net host \
+-v /opt/data/redis-cluster/7002/data:/data \
+--name redis-cluster-7002 \
+redis \
+--cluster-enabled yes \
+--appendonly yes \
+--port 7002
+
+# 启动第三个redis容器
+docker run \
+-d --privileged=true \
+--net host \
+-v /opt/data/redis-cluster/7003/data:/data \
+--name redis-cluster-7003 \
+redis \
+--cluster-enabled yes \
+--appendonly yes \
+--port 7003
+
+# 启动第二个redis容器
+docker run \
+-d --privileged=true \
+--net host \
+-v /opt/data/redis-cluster/7004/data:/data \
+--name redis-cluster-7004 \
+redis \
+--cluster-enabled yes \
+--appendonly yes \
+--port 7004
+
+# 启动第二个redis容器
+docker run \
+-d --privileged=true \
+--net host \
+-v /opt/data/redis-cluster/7005/data:/data \
+--name redis-cluster-7005 \
+redis \
+--cluster-enabled yes \
+--appendonly yes \
+--port 7005
+
+# 启动第二个redis容器
+docker run \
+-d --privileged=true \
+--net host \
+-v /opt/data/redis-cluster/7006/data:/data \
+--name redis-cluster-7006 \
+redis \
+--cluster-enabled yes \
+--appendonly yes \
+--port 7006
+```
+
+进入其中一个容器，创建集群：
+
+```shell
+# 进入容器
+docker exec -it redis-cluster-7001 /bin/bash
+
+# 创建集群
+redis-cli --cluster create 宿主机ip:7001 宿主机ip:7002 宿主机ip:7003 宿主机ip:7004 宿主机ip:7005 宿主机ip:7006 --cluster-replicas 1
+```
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307271838522-%E9%9B%86%E7%BE%A4%E5%88%9B%E5%BB%BA.png)
+
+查看集群状态：
+
+```shell
+# 连接到其中一个redis
+redis-cli -p 7001
+```
+
+```shell
+# 查看集群状态
+cluster info
+```
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307271850293-redis%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81.png)
+
+```shell
+# 查看集群节点,可以查看主从映射关系
+cluster nodes
+```
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307281410641-%E4%B8%BB%E4%BB%8E%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB.png)
+
+
 
 # DockerFile解析
 
