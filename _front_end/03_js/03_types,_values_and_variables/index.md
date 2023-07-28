@@ -65,3 +65,18 @@ create_time: 2023/5/3
 
 ## 舍入错误
 
+{% highlight js %}
+{% include_relative rounding_error.html %}
+{% endhighlight %}
+
+## BigInt
+
+BigInt 是 JavaScript 中的一个新的数字类型，可以用任意精度表示整数。使用 BigInt，即使超出 Number 的安全整数范围限制，也可以安全地存储和操作大整数。要创建一个BigInt，将`n`作为后缀添加到任何整数文字字面量。例如，`123` 变成 `123n`
+
+## 日期和时间
+
+时间戳用于表示1970年1月1日起至今的毫秒数
+
+{% highlight js %}
+{% include_relative date_and_time.html %}
+{% endhighlight %}

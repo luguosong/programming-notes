@@ -1,9 +1,6 @@
 <script>
-  let x = 0.3 - 0.2;
-  let y = 0.2 - 0.1;
-
-  console.log(x === y);
-  console.log(x === 0.1); // false,因为x不等于精确的0.1
-  console.log(y === 0.1); // true，虽然y不等于精确的0.1，但js在比较时会进行舍入。
-
-</
+  /*
+  * toFixed用于将一个数值转换为指定小数位数的字符串表示形式。
+  * */
+  console.log((0.2 - 0.1).toFixed(20)) //0.10000000000000000555
+</script>
