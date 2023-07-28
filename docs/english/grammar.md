@@ -6,26 +6,30 @@ parent: 英语
 create_time: 2023/5/9
 ---
 
-# 简单句句型
+# 用来介绍某物和寻问某物的所属。
 
-- 主 + 谓
-- 主 + 谓 + 宾
-- 主 + 谓 + 宾 + 宾
-- 主 + 谓 + 宾 + 宾补
-- 主 + 系 + 表
+- This is your pen. （这是你的笔。）表示介绍
+- Is this your pen? （这是你的笔吗？）表示寻问
 
-# 一般疑问句
+# 寻问某物归属的简略回答。
 
-功能：询问
+- Yes, it is (my pen). （是的，是我的。）表示肯定
+- No, it isn't (my pen). （不，不是我的。）表示否定
 
-构成：`be动词`置于句前
+# 这是......
 
-1. Are you feeling okay? （你感觉还好吗？）
-2. Do you like pizza? （你喜欢比萨吗？）
-3. Is it raining outside? （外面在下雨吗？）
-4. Can I borrow your pen? （我能借用你的笔吗？）
-5. Did you finish your homework? （你完成作业了吗？）
-6. Have you seen the latest episode of that TV show? （你看了那个电视节目的最新一集了吗？）
-7. Will you be attending the party tonight? （你今晚会去参加聚会吗？）
-8. Should we go to the park or the museum? （我们应该去公园还是博物馆？）
-9. Would you like some more tea? （你想再来点茶吗？）
+- This is my pen. （这是一支笔。）表示介绍
+- Here is my pen. （这是我的笔。）表示指示
+
+# 给名词编码
+
+名词+数词
+
+- Number 5.
+  - 5号
+- Book 1
+  - 1册书
+- Room 2
+  - 2号房间
+
+# She is 
