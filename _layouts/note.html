@@ -157,7 +157,9 @@
         {%- include components/children_nav.html -%}
         {% endif %}
 
-        {{ content | replace: '<img src', '<img class="lazyload" src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/loading.gif" data-src' }}
+        {{ content | replace: '<img src', '<img class="lazyload"
+                                                src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/loading.gif"
+                                                data-src' }}
 
         {% capture footer_custom %}
         {%- include footer_custom.html -%}
@@ -382,7 +384,7 @@
         }
         let childNodes = e.parentNode.parentNode.parentNode.parentNode.childNodes
         for (let i = 0; i < childNodes.length; i++) {
-          if(childNodes[i].nodeName==="LI") {
+          if (childNodes[i].nodeName === "LI") {
             let element = childNodes[i].querySelector("a")
             if (element) {
               element.classList.remove("is-active-link")
@@ -400,13 +402,13 @@
           node.classList.remove("is-collapsed")
         }
         let parentNode = e.parentNode.parentNode.parentNode
-        if (parentNode.nodeName==="LI"){
+        if (parentNode.nodeName === "LI") {
           let element1 = parentNode.querySelector("a")
-          if (element1){
+          if (element1) {
             element1.classList.add("is-active-link")
           }
           let element2 = parentNode.querySelector("ul")
-          if (element2){
+          if (element2) {
             element2.classList.remove("is-collapsed")
           }
         }
@@ -465,7 +467,7 @@
       objs[i].alt = "图片"
       objs[i].loading = "lazy"
       objs[i].title = "点击查看大图"
-      objs[i].style.background="url(/assets/images/checker.png) repeat"
+      objs[i].style.background = "url(/assets/images/checker.png) repeat"
     }
 
     // 为图片添加点击事件
@@ -503,6 +505,39 @@
   menuButtonRight.addEventListener("click", () => {
     rightSidebar.classList.toggle("visible")
   })
+</script>
+
+<script>
+  function resizeAllIframes() {
+    var iframes = document.getElementsByTagName("iframe")
+    for (var i = 0; i < iframes.length; i++) {
+      setIframeStyles(iframes[i])
+      resizeIframe(iframes[i])
+    }
+  }
+
+  function setIframeStyles(iframe) {
+    if (iframe) {
+      iframe.style.backgroundColor = "white"
+      iframe.style.border = "0"
+    }
+  }
+
+  function resizeIframe(iframe) {
+    if (iframe) {
+      iframe.style.height = calcPageHeight(iframe.contentWindow.document) + "px"
+      iframe.style.width = "100%"
+    }
+  }
+
+  function calcPageHeight(doc) {
+    const cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+    const sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+    return Math.max(cHeight, sHeight)
+  }
+
+  // 调整所有iframe的高度
+  window.addEventListener("load", resizeAllIframes)
 </script>
 
 </body>
