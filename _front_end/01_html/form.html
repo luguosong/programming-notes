@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>表单标签</title>
+</head>
+<body>
+<h1>表单标签</h1>
+<!--
+action: 表单提交的地址
+method: 表单提交的方式
+  get: 通过url地址栏传递数据，数据量小，不安全
+  post: 通过请求体传递数据，数据量大，安全
+target: 表单提交后的打开方式
+-->
+<form action="https://www.baidu.com/s" method="get" target="_blank">
+  <!--<fieldset> 元素用于对表单中的控制元素进行分组（也包括 label 元素）。-->
+  <fieldset>
+    <!-- <legend> 元素用于表示其父元素 <fieldset> 的内容标题。-->
+    <legend>主要信息</legend>
+    <!--文本输入框-->
+    <label for="input1">搜索内容：</label>
+    <input id="input1" type="text" name="wd" value="前端开发" maxlength="10">
+    <br>
+
+    <!--密码输入框-->
+    <label for="mima">密码：</label>
+    <input id="mima" type="password" name="pwd" maxlength="10">
+    <br>
+
+    <!--单选框-->
+    单选框：
+    <input id="nan" type="radio" name="gender" value="1" checked> <label for="nan">男</label>
+    <input id="nv" type="radio" name="gender" value="2"> <label for="nv">女</label>
+    <br>
+
+    <!--多选框-->
+    多选框：
+    <input type="checkbox" id="basketball" name="hobby" value="1" checked>
+    <label for="basketball">篮球</label>
+    <input type="checkbox" id="football" name="hobby" value="2">
+    <label for="football">足球</label>
+    <input type="checkbox" id="table-tennis" name="hobby" value="3">
+    <label for="table-tennis">乒乓球</label>
+    <input type="checkbox" id="disabled-hobby" name="hobby" value="3" disabled>
+    <label for="disabled-hobby">禁用</label>
+  </fieldset>
+  <br>
+  <fieldset>
+    <legend>附加信息</legend>
+    <!--隐藏域-->
+    <label>隐藏域：
+      <input type="hidden" name="id" value="1">
+    </label>
+    <br>
+
+    <!--文本域-->
+    <label>文本域：
+      <textarea name="content" cols="30" rows="10">这是文本域的内容</textarea>
+    </label>
+    <br>
+
+    <!--下拉列表-->
+    <label>下拉列表：
+      <select name="city">
+        <option value="1">北京</option>
+        <option value="2">上海</option>
+        <option value="3">广州</option>
+        <option value="4">深圳</option>
+      </select>
+    </label>
+    <br>
+  </fieldset>
+
+  <input type="reset" value="重置">
+  <input type="button" value="普通按钮">
+  <input type="submit" value="百度搜索">
+</form>
+</body>
+</html>
