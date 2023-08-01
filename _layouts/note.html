@@ -511,22 +511,13 @@
   function resizeAllIframes() {
     var iframes = document.getElementsByTagName("iframe")
     for (var i = 0; i < iframes.length; i++) {
-      setIframeStyles(iframes[i])
       resizeIframe(iframes[i])
-    }
-  }
-
-  function setIframeStyles(iframe) {
-    if (iframe) {
-      iframe.style.backgroundColor = "white"
-      iframe.style.border = "0"
     }
   }
 
   function resizeIframe(iframe) {
     if (iframe) {
       iframe.style.height = calcPageHeight(iframe.contentWindow.document) + "px"
-      iframe.style.width = "100%"
     }
   }
 
@@ -537,7 +528,7 @@
   }
 
   // 调整所有iframe的高度
-  window.addEventListener("load", resizeAllIframes)
+  window.onload = resizeAllIframes;
 </script>
 
 </body>
