@@ -109,5 +109,119 @@ create_time: 2023/4/11
 
 # 字符实体
 
+{% highlight html %}
+{% include_relative entity.html %}
+{% endhighlight %}
+
+<iframe src="entity.html"></iframe>
+
+# meta原信息
+
+{% highlight html %}
+{% include_relative meta.html %}
+{% endhighlight %}
+
+# H5-布局标签
+
+- `header`: 头部
+- `footer`: 底部
+- `nav`: 导航
+- `article`: 文章
+- `section`: 区块
+- `aside`: 侧边栏
+- `main`: 主要内容,WHATWG没有定义,但是W3C定义了
+- `hgroup`: 标题组,W3G将其删除
+
+{% highlight html %}
+{% include_relative h5_layout.html %}
+{% endhighlight %}
+
+<iframe src="h5_layout.html"></iframe>
+
+# H5-状态标签
+
+{% highlight html %}
+{% include_relative h5_meter.html %}
+{% endhighlight %}
+
+<iframe src="h5_meter.html"></iframe>
+
+# H5-搜索框关键字提示
+
+{% highlight html %}
+{% include_relative h5_datalist.html %}
+{% endhighlight %}
+
+<iframe src="h5_datalist.html"></iframe>
+
+# H5-详细信息展现元素
+
+{% highlight html %}
+{% include_relative h5_details.html %}
+{% endhighlight %}
+
+<iframe src="h5_details.html"></iframe>
 
 
+# H5-文本标签
+
+{% highlight html %}
+{% include_relative h5_text.html %}
+{% endhighlight %}
+
+<iframe src="h5_text.html"></iframe>
+
+# H5-表单相关
+
+- `placeholder`: 提示文字
+- `required`: 必填项
+- `autofocus`: 自动聚焦
+- `autocomplete`: 自动填充
+- `pattern`: 正则表达式
+
+{% highlight html %}
+{% include_relative h5_form.html %}
+{% endhighlight %}
+
+<iframe src="h5_form.html"></iframe>
+
+# H5-视频标签
+
+{% highlight html %}
+{% include_relative h5_video.html %}
+{% endhighlight %}
+
+<iframe src="h5_video.html"></iframe>
+
+# H5-音频标签
+
+{% highlight html %}
+{% include_relative h5_audio.html %}
+{% endhighlight %}
+
+<iframe src="h5_audio.html"></iframe>
+
+# H5兼容性问题
+
+引入[html5shiv.js](https://github.com/aFarkas/html5shiv)
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Your Page Title</title>
+  <!--设置IE总是使用最新的文档模式进行渲染-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--优先使用webkit内核进行渲染-->
+  <meta name="renderer" content="webkit">
+  <!-- 添加有条件的 IE 版本检查并加载 html5shiv.js -->
+  <!--[if lt IE 9]>
+    <script src="path/to/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+<!-- Your content goes here -->
+</body>
+</html>
+```
