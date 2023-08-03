@@ -13,6 +13,10 @@ create_time: 2023/7/20
 
 # React router 5 示例
 
-{% highlight react %}
+{% highlight js %}
 {% include_relative router5-example/src/Basic.js %}
 {% endhighlight %}
+
+# React router 6 示例
+
+

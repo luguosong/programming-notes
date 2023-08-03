@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter, NavLink, Redirect, Route, Switch, useHistory,withRouter} from "react-router-dom";
+import {HashRouter, NavLink, Redirect, Route, Switch, useHistory, withRouter} from "react-router-dom";
 
 function Basic(props) {
 
@@ -39,9 +39,10 @@ function Basic(props) {
                 <NavLink to={{pathname: "/basic/page1/111"}} activeClassName="myActive">声明式导航 </NavLink>
                 <NavLink to={{pathname: "/basic/page11", state: {name: "张三"}}}
                          activeClassName="myActive">声明式导航-state传参 </NavLink>
-                <button onClick={() => handlePage2(222)}> 编程式导航-props.history.push </button>
-                <button onClick={() => handlePage3(333)}>编程式导航-useHistory </button>
+                <button onClick={() => handlePage2(222)}> 编程式导航-props.history.push</button>
+                <button onClick={() => handlePage3(333)}>编程式导航-useHistory</button>
                 <NavLink to="/basic/auth"> 路由拦截认证</NavLink>
+                <NavLink to="/basic/withRouter"> withRouter测试</NavLink>
 
 
                 {/*Switch只渲染匹配到的第一个组件，匹配到后就跳出*/}
@@ -56,9 +57,14 @@ function Basic(props) {
 
                     {/*路由拦截*/}
                     <Route path="/basic/auth" render={() => {
-                        return isAuth() ? <LoginSuccess/> : <Redirect to="/basic/login" />
+                        return isAuth() ? <LoginSuccess/> : <Redirect to="/basic/login"/>
                     }}/>
                     <Route path="/basic/login" component={Login}/>
+
+                    {/*展示使用withRouter*/}
+                    <Route path="/basic/withRouter" render={() => {
+                        return <WithRouter1/>
+                    }}/>
 
                     {/*路由重定向*/}
                     {/*👻注意：from默认是模糊匹配，加上exact可以转为精准匹配*/}
@@ -67,8 +73,6 @@ function Basic(props) {
                     {/*配置404路由*/}
                     <Route component={NotFound}/>
                 </Switch>
-
-
             </HashRouter>
         </div>
     );
@@ -149,10 +153,11 @@ function Login(props) {
     return (
         <div>
             <h2>登录页面</h2>
-            <button onClick={()=>{
-                localStorage.setItem("token","xxxxxx")
+            <button onClick={() => {
+                localStorage.setItem("token", "xxxxxx")
                 props.history.push("/basic/auth")
-            }}>登录</button>
+            }}>登录
+            </button>
         </div>
     );
 }
@@ -163,12 +168,33 @@ function LoginSuccess(props) {
     return (
         <div>
             <h2>登录成功页面</h2>
-            <button onClick={()=>{
+            <button onClick={() => {
                 localStorage.removeItem("token")
                 history.push("/basic/auth")
-            }}>退出登录</button>
+            }}>退出登录
+            </button>
         </div>
     );
 }
+
+/**
+ * 测试withRouter
+ * @param props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function Page4(props) {
+    console.log(props)
+    return (
+        <div>
+            <h2>Page4</h2>
+        </div>
+    );
+}
+
+/*
+* 这样WithRouter1的props就会有history、location、match属性
+* */
+const WithRouter1 = withRouter(Page4);
 
 export default Basic;
