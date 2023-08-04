@@ -15,11 +15,17 @@
   //除了加号以外，其他运算符在运算时，都会将字符串转为数字
   console.log("6" / "2") // 3
   console.log("6" * 2) // 12
+
+  //将字符串转换成数字型
+  console.log(+"123")
 </script>
 
 <!--显示转换-->
 <script>
-
+  //字符串转换成数字
+  console.log(Number("11.1") + Number("12")) // 23.1
+  console.log(parseInt("11.1") + parseInt("12px")) // 23
+  console.log(parseFloat("11.1") + parseFloat("12")) // 23.1
 </script>
 </body>
 </html>

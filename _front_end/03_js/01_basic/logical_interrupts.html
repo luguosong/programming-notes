@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>逻辑终端</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function add(a, b) {
+    // 使用逻辑中断做参数检查
+    a = a || 0
+    b = b || 0
+    return a + b
+  }
+
+  console.log(add(1, 2))
+  console.log(add())
+</script>
+</body>
+</html>

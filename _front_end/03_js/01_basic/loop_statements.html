@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>循环语句</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  console.log("**********while语句**********")
+  let i = 1
+  while (i <= 5) {
+    console.log(i);
+    i++;
+  }
+
+  console.log("**********do...while语句**********")
+  let j = 1
+  do {
+    console.log(j);
+    j++;
+  } while (j <= 5);
+
+  console.log("**********for语句**********")
+  for (let i = 1; i <= 5; i++) {
+    console.log(i);
+  }
+
+  console.log("**********continue退出循环**********")
+  let k = 1
+  while (k <= 5) {
+    if (k === 3) {
+      k++;
+      console.log("continue退出循环")
+      continue;
+    }
+    console.log(k);
+    k++;
+  }
+
+  console.log("**********break退出循环**********")
+  let l = 1
+  while (l <= 5) {
+    if (l === 3) {
+      console.log("break退出循环")
+      break;
+    }
+    console.log(l);
+    l++;
+  }
+</script>
+</body>
+</html>

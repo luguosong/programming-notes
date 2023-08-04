@@ -6,6 +6,18 @@ console.log = function(message, color) {
 
   if (color === undefined) color = "#666"
 
+  if (typeof message === "number") {
+    color = "#9980ff"
+  }
+
+  if (typeof message === "boolean") {
+    color = "#4181c6"
+  }
+
+  if (typeof message === "undefined") {
+    color = "#da5656"
+  }
+
   // 创建一个新的div元素来容纳输出内容
   const logDiv = document.createElement("div")
   logDiv.textContent = message + " "
@@ -19,5 +31,5 @@ console.log = function(message, color) {
 }
 
 window.onerror = function(message, source, lineno, colno, error) {
-  console.log("Error:" + message, "red")
+  console.log(message, "red")
 }

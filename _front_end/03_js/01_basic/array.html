@@ -9,13 +9,42 @@
 <script>
   // 声明数组
   let arr1 = []
-  let arr2 = ["张三", "李四", "王五"]
+  let arr2 = ["张三", "李四", "王五", 1, 2, 3] //一个数组中可以存放不同数据类型
+  console.log("数组声明：" + arr2) //数组长度：4
 
-  // 使用数组
-  console.log(arr2[1]) //李四
+  /*
+  * 增
+  * */
+  arr2.push(222, 333) //数组末尾添加元素,返回数组长度
+  console.log("push后的数组：" + arr2)
+  arr2.unshift(444, 555) //数组开头添加元素,返回数组长度
+  console.log("unshift后的数组：" + arr2)
 
-  //获取数组长度
-  console.log("数组长度:" + arr2.length) //3
+  /*
+  * 删
+  * */
+  arr2.pop() //数组末尾删除元素,返回删除的元素
+  arr2.pop() //数组末尾删除元素,返回删除的元素
+  console.log("pop后的数组：" + arr2)
+  arr2.shift() //数组开头删除元素,返回删除的元素
+  arr2.shift() //数组开头删除元素,返回删除的元素
+  console.log("shift后的数组：" + arr2)
+  arr2.splice(3, 3) //从索引3开始删除3个元素
+  console.log("splice后的数组：" + arr2)
+
+  /*
+  * 改
+  * */
+  arr2[2] = "赵六" //数组修改
+  console.log("修改后的数组：" + arr2)
+
+  /*
+  * 查
+  * */
+  console.log("获取数组中第二个元素:" + arr2[1]) //李四
+  console.log("获取数组长度:" + arr2.length) //3
+
+
 </script>
 </body>
 </html>

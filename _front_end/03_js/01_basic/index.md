@@ -188,4 +188,79 @@ JavaScript也保留或限制对某些关键字的使用，这些关键字当前`
 
 <iframe src="data_type_conversion.html"></iframe>
 
+# 运算符
 
+- 赋值运算符
+  - `=`
+  - `+=`
+  - `-=`
+  - `*=`
+  - `/=`
+  - `%=`
+- 一元运算符
+  - `++`: 自增
+  - `--`: 自减
+- 比较运算符
+  - `==` : 左右两边值是否相等
+  - `===`: 左右两边值和类型是否相等
+  - `!=` : 左右两边值是否不等
+  - `!==`: 左右两边值和类型是否不等
+  - `>`  : 左边值是否大于右边值
+  - `>=` : 左边值是否大于等于右边值
+  - `<`  : 左边值是否小于右边值
+  - `<=` : 左边值是否小于等于右边值
+- 逻辑运算符
+  - `&&` : 逻辑与
+  - `||` : 逻辑或
+  - `!`  : 逻辑非
+
+# 运算符优先级
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202308041607740-js%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7.png)
+
+# 语句
+
+## 表达式和语句
+
+`表达式`：可以被求值的代码，JavaScript引擎会将其计算出一个结果。
+
+`语句`：语句是一段可以执行的代码
+
+## 分支语句
+
+{% highlight html %}
+{% include_relative branching_statements.html %}
+{% endhighlight %}
+
+<iframe src="branching_statements.html"></iframe>
+
+## 循环语句
+
+{% highlight html %}
+{% include_relative loop_statements.html %}
+{% endhighlight %}
+
+<iframe src="loop_statements.html"></iframe>
+
+# 函数
+
+## 函数基础
+
+{: .note-title}
+> 函数
+> 
+> 可以重复使用的代码块
+
+{% highlight html %}
+{% include_relative function.html %}
+{% endhighlight %}
+
+<iframe src="function.html"></iframe>
+
+## 逻辑中断做参数检查
+
+{% highlight html %}
+{% include_relative logical_interrupts.html %}
+{% endhighlight %}
+
+<iframe src="logical_interrupts.html"></iframe>

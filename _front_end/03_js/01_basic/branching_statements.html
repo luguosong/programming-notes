@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>分支语句</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  console.log("**********if语句**********")
+  const a = 1
+  if (a > 0) {
+    console.log("a大于0")
+  } else if (a < 0) {
+    console.log("a小于0")
+  } else {
+    console.log("a等于0")
+  }
+
+  console.log("**********switch语句**********")
+  const b = 1
+  switch (b) {
+    case 1:
+      console.log("b等于1")
+      break
+    case 2:
+      console.log("b等于2")
+      break
+    default:
+      console.log("b不等于1也不等于2")
+  }
+
+  console.log("**********三元运算符**********")
+  const c = 1
+  const d = c > 0 ? "c大于0" : "c小于等于0"
+  console.log(d)
+</script>
+</body>
+</html>
