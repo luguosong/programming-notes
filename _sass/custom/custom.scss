@@ -464,3 +464,10 @@ iframe {
   width: 100%;
   border: 0
 }
+
+/*
+修复评论字体看不见
+*/
+.gt-container .gt-header-textarea {
+  color: black;
+}
