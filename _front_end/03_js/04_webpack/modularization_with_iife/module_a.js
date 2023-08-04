@@ -1,4 +1,4 @@
-;(function() {
+(function() {
   let name = "module_a.js"
 
   function method1() {
