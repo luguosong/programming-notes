@@ -6,9 +6,9 @@ create_time: 2023/7/25
 
 # 简介
 
-Docker是一个开源的`容器化平台`，它可以帮助您在不同的环境中轻松地`构建`、`打包`、`部署`和`运行`应用程序。
+Docker是一个开源的 `容器化平台`，它可以帮助您在不同的环境中轻松地 `构建`、`打包`、`部署`和 `运行`应用程序。
 
-Docker使用容器来封装`应用程序`及其`依赖项`，并提供了一种轻量级的虚拟化技术，使得应用程序可以在任何地方运行，而无需担心环境差异和依赖项冲突等问题。
+Docker使用容器来封装 `应用程序`及其 `依赖项`，并提供了一种轻量级的虚拟化技术，使得应用程序可以在任何地方运行，而无需担心环境差异和依赖项冲突等问题。
 
 Docker的核心组件包括Docker引擎、Docker Hub和Docker Compose等。
 
@@ -172,7 +172,7 @@ docker rmi -f $(docker images -q)
 ## 虚悬镜像
 
 `虚悬镜像（Dangling Image）`
-是指仓库名和标签均为none的镜像。一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的。出现虚悬镜像的原因一般是在`docker pull **:latest`
+是指仓库名和标签均为none的镜像。一般来说，虚悬镜像已经失去了存在的价值，是可以随意删除的。出现虚悬镜像的原因一般是在 `docker pull **:latest`
 时产生，或者在构建新镜像的时候，为这个镜像打了一个已经存在的tag，此时Docker会移除旧镜像上的tag,将这个tag用在新的镜像上，此时旧镜像就变成了悬虚镜像。构建新镜像报错时，也会生成一个悬虚镜像。
 
 ```shell
@@ -239,8 +239,9 @@ docker attach 容器ID或容器名称
 ```
 
 {: .warning-title}
+
 > exec和attach的区别
-> 
+>
 > - exec进入容器后，是在容器中打开新的终端，并且可以启动新的进程，退出容器后，容器继续运行
 > - attach进入容器后，不会启动新的进程，退出容器后，容器停止运行
 
@@ -389,7 +390,6 @@ docker tag 旧镜像名称:版本号 私有库ip:私有库端口/新镜像名称
 docker push 私有库ip:私有库端口/新镜像名称:版本号
 ```
 
-
 # 常规安装简介
 
 ## 总体步骤
@@ -429,7 +429,7 @@ docker run \
 mysql
 ```
 
-解决中文乱码问题，在`/opt/data/mysql/conf`目录下创建`my.cnf`文件，内容如下：
+解决中文乱码问题，在 `/opt/data/mysql/conf`目录下创建 `my.cnf`文件，内容如下：
 
 ```
 [client]
@@ -442,8 +442,9 @@ collation-server=utf8_general_ci
 ## redis
 
 配置文件修改：
-- 注释`bind 127.0.0.1`,允许远程访问
-- 设置`daemonize no`,因为该配置和`docker run`中的`-d`冲突
+
+- 注释 `bind 127.0.0.1`,允许远程访问
+- 设置 `daemonize no`,因为该配置和 `docker run`中的 `-d`冲突
 
 ```shell
 # 拉取镜像
@@ -483,7 +484,7 @@ docker run \
 mysql
 ```
 
-在目录`/opt/data/mysql-master/conf`下创建`my.cnf`文件，内容如下：
+在目录 `/opt/data/mysql-master/conf`下创建 `my.cnf`文件，内容如下：
 
 ```
 [mysqld]
@@ -529,7 +530,7 @@ docker run \
 mysql
 ```
 
-在目录`/opt/data/mysql-slave/conf`下创建`my.cnf`文件，内容如下：
+在目录 `/opt/data/mysql-slave/conf`下创建 `my.cnf`文件，内容如下：
 
 ```
 [mysqld]
@@ -606,6 +607,7 @@ show slave status\G;
 ## redis集群
 
 分区方式：
+
 - 哈希取余分区
 - 一致性哈希算法分区
 - 哈希槽分区
@@ -716,7 +718,47 @@ cluster nodes
 
 ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307281410641-%E4%B8%BB%E4%BB%8E%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB.png)
 
+上图主从关系：
 
+| 主库   | 从库   |
+|------|------|
+| 7001 | 7005 |
+| 7002 | 7006 |
+| 7003 | 7004 |
+
+
+以集群方式连接redis并添加数据：
+
+```shell
+# 连接到集群
+# -c 表示集群模式⭐
+redis-cli -c -p 7001
+
+# 数据存储
+set k1 v1
+
+# 执行结果显示保存到了7003
+# -> Redirected to slot [12706] located at 192.168.40.130:7003
+# OK
+```
+
+集群查询：
+
+```shell
+redis-cli --cluster check 宿主机ip:端口
+```
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202307281559922-%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E4%BF%A1%E6%81%AF.png)
+
+模拟7001宕机，对应的7004会上位变成主库。当7001恢复会变成从库：
+
+```shell
+# 模拟7001宕机
+docker stop redis-cluster-7001
+
+# 观察集群状态
+cluster nodes
+```
 
 # DockerFile解析
 
