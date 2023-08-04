@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数据类型</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<!--Number类型-->
+<script>
+
+  let n = 123
+  n = 12.345
+
+  //Infinity 代表数学概念中的 无穷大 ∞。是一个比任何数字都大的特殊值。
+  console.log(`1 / 0 = ` + 1 / 0) // 1 / 0 = Infinity
+
+  // NaN 代表一个计算错误。它是一个不正确的或者一个未定义的数学操作所得到的结果
+  console.log("not a number" / 2) // NaN
+  //NaN具有粘性
+  console.log(NaN + 1) // NaN
+
+
+  console.log(1234567890123456789012345678901234567890n) //BigInt 类型
+</script>
+
+<!--String类型-->
+<script>
+  //单引号
+  let str = "Hello"
+
+  //双引号
+  let str2 = "Single quotes are ok too"
+
+  //模板字符串
+  let phrase = `can embed another ${str}`
+</script>
+
+<!--Boolean类型-->
+<script>
+  let nameFieldChecked = true
+  let isGreater = 4 > 1
+</script>
+
+<!--null值-->
+<script>
+  //代表“无”、“空”或“值未知”的特殊值。
+  let age = null
+</script>
+
+<!--undefined 值-->
+<script>
+  let age1
+  console.log(age1)
+</script>
+</body>
+</html>

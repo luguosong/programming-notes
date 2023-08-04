@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>严格模式</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  //开启严格模式
+  "use strict";
+
+  // 开启严格模式后，变量必须先声明再使用
+  num = 1; //❌报错：未解析的变量或类型 num
+  console.log(num);
+
+</script>
+</body>
+</html>

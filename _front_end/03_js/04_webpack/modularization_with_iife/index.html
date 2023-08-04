@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用IIFE进行模块化</title>
+
+</head>
+<body>
+<script src="./module_a.js"></script>
+<script src="./module_b.js"></script>
+
+<script>
+  moduleA.method1()
+  moduleB.method1()
+
+  console.log(moduleA.name) //undefined
+</script>
+</body>
+</html>
