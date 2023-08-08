@@ -436,6 +436,35 @@
   }
 </script>
 
+<script>
+  function resizeAllIframes() {
+    var iframes = document.getElementsByTagName("iframe")
+    for (var i = 0; i < iframes.length; i++) {
+      resizeIframe(iframes[i])
+    }
+  }
+
+  function resizeIframe(iframe) {
+    if (iframe) {
+      iframe.style.height = calcPageHeight(iframe.contentWindow.document) + "px"
+    }
+  }
+
+  function calcPageHeight(doc) {
+    const cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
+    const sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
+    return Math.max(cHeight, sHeight)
+  }
+
+
+  window.addEventListener("load", function() {
+    /*
+   * 设置iframe高度
+   * */
+    resizeAllIframes()
+  })
+</script>
+
 <!--图片查看-->
 {% if page.viewerjs != false %}
 <script>
@@ -452,7 +481,7 @@
 
   sitenav.scrollTop = getCookie("scrollTop")
 
-  window.onload = function AddImgClickEvent() {
+  window.addEventListener("load", function() {
     const objs = document.getElementsByTagName("img")
     const apply = document.getElementById("apply")
     const applyImg = document.getElementById("applyImg")
@@ -486,7 +515,7 @@
     sitenav.onscroll = function() {
       setCookie("scrollTop", sitenav.scrollTop)
     }
-  }
+  })
 </script>
 {% endif %}
 
@@ -507,29 +536,6 @@
   })
 </script>
 
-<script>
-  function resizeAllIframes() {
-    var iframes = document.getElementsByTagName("iframe")
-    for (var i = 0; i < iframes.length; i++) {
-      resizeIframe(iframes[i])
-    }
-  }
-
-  function resizeIframe(iframe) {
-    if (iframe) {
-      iframe.style.height = calcPageHeight(iframe.contentWindow.document) + "px"
-    }
-  }
-
-  function calcPageHeight(doc) {
-    const cHeight = Math.max(doc.body.clientHeight, doc.documentElement.clientHeight)
-    const sHeight = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight)
-    return Math.max(cHeight, sHeight)
-  }
-
-  // 调整所有iframe的高度
-  window.onload = resizeAllIframes;
-</script>
 
 </body>
 </html>
