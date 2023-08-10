@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件</title>
+</head>
+<body>
+<button id="btn1">按钮1</button>
+<button id="btn2">按钮2</button>
+
+<script>
+  const btn1 = document.querySelector("#btn1")
+  // DOM L2，新版本写法
+  // 这种写法的好处是，回调函数不会被覆盖
+  btn1.addEventListener("click", function() {
+    alert("按钮1被点击了")
+  })
+</script>
+
+<!--老版本写法-->
+<script>
+  const btn2 = document.querySelector("#btn2")
+  //DOM L0,老版本的写法
+  btn2.onclick = function() {
+    alert("按钮2被点击了")
+  }
+</script>
+</body>
+</html>

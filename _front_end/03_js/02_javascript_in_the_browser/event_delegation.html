@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件委托</title>
+</head>
+<body>
+<div id="father">
+  <div class="child">子元素1</div>
+  <div class="child">子元素2</div>
+  <div class="child">子元素3</div>
+  <div class="child">子元素4</div>
+  <div class="child">子元素5</div>
+  <div class="child">子元素6</div>
+  <div>不被监听的子元素</div>
+  <div>不被监听的子元素</div>
+  <div>不被监听的子元素</div>
+</div>
+
+<script>
+  const father = document.querySelector("#father")
+
+  // 事件委托,将子元素身上的事件交给父元素处理
+  father.addEventListener("click", function(e) {
+    // ⭐️e.target可以获得点击的元素
+    // 判断点击的是不是子元素
+    if (e.target.classList.contains("child")) {
+      alert(`${e.target.innerText}被点击了`)
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>arguments对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function fun1() {
+    document.writeln(`<h2>arguments对象</h2>`)
+    console.log("fun1的参数个数为：" + arguments.length)
+    for (let i = 0; i < arguments.length; i++) {
+      console.log("第" + (i + 1) + "个参数为：" + arguments[i])
+    }
+  }
+
+  fun1(1, 2, 3, 4, 5)
+  fun1("a", "b", "c")
+  fun1("a", "b", "c", 1, 2, 3)
+</script>
+</body>
+</html>

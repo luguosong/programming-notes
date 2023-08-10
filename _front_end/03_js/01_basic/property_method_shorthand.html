@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>对象中属性和方法简写</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  const name = "张三"
+  const age = 18
+
+  //非简写形式
+  const obj1 = {
+    name: name,
+    age: age,
+    sayHi: function() {
+      console.log("你好")
+    },
+  }
+
+  //简写形式
+  const obj2 = {
+    name,
+    age,
+    sayHi() {
+      console.log("你好")
+    },
+  }
+
+  console.log(obj2.name)
+  console.log(obj2.age)
+  obj2.sayHi()
+</script>
+</body>
+</html>

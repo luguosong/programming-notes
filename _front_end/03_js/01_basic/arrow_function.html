@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>箭头函数</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  const obj1 = {
+    fun1: function() {
+      console.log("普通匿名函数执行")
+      // ⭐普通匿名函数中的this指向的是调用该函数的对象
+      console.log(this) // obj1调用了fun1，因此普通匿名函数中的this指向obj1
+    },
+  }
+
+  obj1.fun1()
+
+
+  const obj2 = {
+    fun1: () => {
+      console.log("箭头函数执行")
+      // ⭐箭头函数中的this指向的是定义该函数的对象的作用域
+      console.log(this) // obj2所在作用域为window，因此箭头函数中的this指向window
+    },
+  }
+
+  obj2.fun1()
+</script>
+</body>
+</html>

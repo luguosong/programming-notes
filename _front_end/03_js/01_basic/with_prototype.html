@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用原型对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  //定义一个构造函数
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  /*
+  * 注意：千万不要只要箭头函数，因为箭头函数中的this并不指向实例对象
+  * */
+  Person.prototype.sayName = function() {
+    //原型中的this也指向实例对象
+    console.log("我的名字是：" + this.name)
+  }
+
+  //创建一个对象
+  const p1 = new Person("孙悟空", 18)
+  const p2 = new Person("猪八戒", 28)
+  p1.sayName()
+  p2.sayName()
+  /*
+  * 使用原型对象，相同的方法只在堆中创建了一次，节省内存
+  * */
+  console.log(p1.sayName === p2.sayName)
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>剩余参数</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function fun1(a, b, ...other) {
+    document.writeln(`<h2>剩余参数</h2>`)
+    console.log("a=" + a)
+    console.log("b=" + b)
+    // 遍历剩余参数
+    other.forEach(function(item, index) {
+      console.log("第" + (index + 1) + "个剩余参数：" + item)
+    })
+  }
+
+  fun1(1, 2, 3, 4, 5)
+  fun1("a", "b", "c")
+  fun1("a", "b", "c", 1, 2, 3)
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>日期对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  console.log("得到当前时间：" + new Date())
+  console.log("指定时间：" + new Date("2019-1-1 12:12:12"))
+  const date1 = new Date()
+  console.log(`格式化日期对象方式一：${date1.getFullYear()}年${date1.getMonth() + 1}月${date1.getDate()}日 ${date1.getHours()}:${date1.getMinutes()}:${date1.getSeconds()}`)
+  console.log(`格式化日期对象方式二：${date1.toLocaleString()}`)
+  console.log("获取时间戳方式一：" + new Date().getTime())
+  console.log("获取时间戳方式二：" + Date.now())
+  console.log("获取时间戳方式三：" + +new Date())
+</script>
+</body>
+</html>

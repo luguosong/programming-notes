@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>原型对象中的constructor属性</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  //原型对象中的constructor属性又指向了构造函数本身
+  console.log(Person.prototype.constructor === Person) //true
+</script>
+</body>
+</html>

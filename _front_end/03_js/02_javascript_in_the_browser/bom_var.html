@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>var声明变量</title>
+</head>
+<body>
+<script>
+  var name = "张三"
+  // var声明的变量会变为window的一个属性
+  console.log(window.name)
+
+  function test() {
+    console.log("test方法被执行")
+  }
+  // 声明的函数会变为window的一个方法
+  window.test()
+</script>
+</body>
+</html>

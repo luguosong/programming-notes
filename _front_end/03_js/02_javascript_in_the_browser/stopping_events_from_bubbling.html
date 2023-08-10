@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>阻止事件冒泡</title>
+  <style>
+      .father {
+          width: 200px;
+          height: 200px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          background-color: #ba9e63;
+      }
+
+      .child {
+          width: 100px;
+          height: 100px;
+          background-color: #c9c9c9;
+      }
+  </style>
+</head>
+<body>
+<h2>阻止事件冒泡</h2>
+<div id="father1" class="father">
+  父盒子
+  <div id="child1" class="child">子盒子</div>
+</div>
+
+<script>
+  const father1 = document.querySelector("#father1")
+  const child1 = document.querySelector("#child1")
+
+  father1.addEventListener("click", function() {
+    alert("父盒子被点击了")
+  })
+
+  child1.addEventListener("click", function(e) {
+    alert("子盒子被点击了")
+    // ⭐阻止事件冒泡
+    e.stopPropagation()
+  })
+</script>
+</body>
+</html>

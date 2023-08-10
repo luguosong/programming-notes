@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>立即执行函数</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  let num = 5;
+
+  // 定义方式一：(匿名函数)(实参)
+  (function(a, b) {
+    // 在函数内部，num是局部变量，不会影响到外部的num
+    // 并且外部也无法修改函数内部的num
+    let num = 10
+
+    console.log(`方式一，匿名函数被执行！参数为${a},${b}`)
+  })(1, 2);
+
+  //定义方式二：(匿名函数(实参))
+  (function(a, b) {
+    console.log(`方式二，匿名函数被执行！参数为${a},${b}`)
+  }(3, 4))
+</script>
+</body>
+</html>

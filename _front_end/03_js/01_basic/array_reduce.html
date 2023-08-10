@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>reduce累计计算</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  const arr = [1, 2, 3, 4, 5]
+  // 参数二表示初始值
+  const sum = arr.reduce((pre, cur) => {
+    return pre + cur
+  }, 0)
+  console.log(sum) // 15
+</script>
+</body>
+</html>

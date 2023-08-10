@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>阻止默认行为</title>
+</head>
+<body>
+<form action="">
+  <input type="text" name="username" id="username">
+  <input type="submit" value="提交">
+</form>
+<script>
+  var form = document.querySelector("form")
+  form.addEventListener("submit", function(event) {
+    if (form.username.value === "") {
+      // 通过调用 event.preventDefault() 方法可以阻止默认行为，比如阻止表单提交
+      event.preventDefault()
+      alert("用户名不能为空")
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>对象遍历</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  let obj1 = {
+    // 定义属性
+    attr1: "属性值1",
+    attr2: "属性值2",
+    attr3: "属性值3",
+  }
+
+  // 遍历对象
+  for (let key in obj1) {
+    // 打印属性名和属性值
+    console.log(`${key}:${obj1[key]}`)
+  }
+</script>
+</body>
+</html>

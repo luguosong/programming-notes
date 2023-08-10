@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>事件流</title>
+  <style>
+      .father {
+          width: 200px;
+          height: 200px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          background-color: #ba9e63;
+      }
+
+      .child {
+          width: 100px;
+          height: 100px;
+          background-color: #c9c9c9;
+      }
+  </style>
+</head>
+<body>
+<h2>冒泡</h2>
+点击子盒子，先执行子盒子的事件，再执行父盒子的事件
+<div id="father1" class="father">
+  父盒子
+  <div id="child1" class="child">子盒子</div>
+</div>
+
+<h2>捕获</h2>
+点击子盒子，先执行父盒子的事件，再执行子盒子的事件
+<div id="father2" class="father">
+  父盒子
+  <div id="child2" class="child">子盒子</div>
+</div>
+
+<!--事件冒泡-->
+<script>
+  const father1 = document.querySelector("#father1")
+  const child1 = document.querySelector("#child1")
+
+  father1.addEventListener("click", function() {
+    alert("父盒子被点击了")
+  })
+
+  child1.addEventListener("click", function() {
+    alert("子盒子被点击了")
+  })
+</script>
+
+<!--事件捕获-->
+<script>
+  const father2 = document.querySelector("#father2")
+  const child2 = document.querySelector("#child2")
+
+  father2.addEventListener("click", function() {
+    alert("父盒子被点击了")
+  }, true)
+
+  child2.addEventListener("click", function() {
+    alert("子盒子被点击了")
+  }, true)
+</script>
+</body>
+</html>

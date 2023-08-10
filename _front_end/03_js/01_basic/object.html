@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  let obj1 = {
+    // 定义属性
+    attr1: "属性值",
+    // 另一种方式定义属性
+    'attr-name':"属性值2",
+    // 定义方法
+    fun1: function() {
+      console.log("方法被执行！")
+    },
+  }
+
+  console.log(obj1.attr1) //属性访问
+  console.log(obj1['attr-name']) //属性访问
+  obj1.fun1() //方法调用
+</script>
+</body>
+</html>

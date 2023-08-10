@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>获取元素</title>
+</head>
+<body>
+<div id="div1" class="box">我是第一个div</div>
+<div class="box">我是第二个div</div>
+<script>
+  // 根据标签名获取元素
+  const box = document.querySelector("div")
+  console.log(box)
+
+  // 根据类名获取元素
+  const box2 = document.querySelector(".box") //只选择满足条件的第一个元素
+  console.log(box2)
+
+  // 选择多个元素对象
+  const box3 = document.querySelectorAll(".box")
+  console.log(box3)
+</script>
+
+<!--一些老方法获取元素-->
+<script>
+  const div1 = document.getElementById("div1")
+  console.log(div1)
+
+  const div2 = document.getElementsByTagName("div")
+  console.log(div2)
+
+  const div3 = document.getElementsByClassName("box")
+  console.log(div3)
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>修改元素</title>
+</head>
+<body>
+<div id="box1">原始数据</div>
+<div id="box2">原始数据</div>
+<script>
+  //修改内容
+  document.querySelector("#box1").innerText = "使用innerText修改元素内容"
+  document.querySelector("#box2").innerHTML = `<ins>使用innerHTML修改元素内容</ins>`
+
+  //修改属性
+  document.querySelector("#box1").classList.add("box")
+  document.querySelector("#box1").style.color = "red"
+</script>
+</body>
+</html>

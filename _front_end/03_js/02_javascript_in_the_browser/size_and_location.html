@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>位置和尺寸</title>
+  <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+      .box {
+          width: 100px;
+          height: 100px;
+          margin: 20px;
+          border: 10px solid red;
+      }
+  </style>
+</head>
+<body>
+<div class="box"></div>
+<div class="box" id="box2"></div>
+
+<script src="../js/print_log.js"></script>
+<script>
+  const box = document.querySelector("#box2")
+
+  // 获取元素的尺寸
+  console.log("offsetWidth获取元素宽度(包含边框):"+box.offsetWidth)
+  console.log("offsetHeight获取元素高度(包含边框):"+box.offsetHeight)
+  console.log("clientWidth获取元素宽度(不包含边框):"+box.clientWidth)
+  console.log("clientHeight获取元素高度(不包含边框):"+box.clientHeight)
+  console.log("offsetLeft获取元素左边框距离父元素左边框的距离(如果父元素有定位):"+box.offsetLeft)
+  console.log("offsetTop获取元素上边框距离父元素上边框的距离(如果父元素有定位):"+box.offsetTop)
+</script>
+</body>
+</html>

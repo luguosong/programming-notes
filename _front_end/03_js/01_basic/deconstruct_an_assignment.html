@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>解构赋值</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  document.writeln(`<h2>数组解构</h2>`)
+  const [a, , b, c] = [1, 2, 3, 4]
+  console.log(a)
+  console.log(b)
+  console.log(c)
+
+
+  document.writeln(`<h2>对象解构</h2>`)
+  const obj = {
+    name: "张三",
+    age: 18,
+    family: {
+      mother: "张三妈妈",
+      father: "张三爸爸",
+      sister: "张三妹妹",
+    },
+    sayHi() {
+      console.log("你好")
+    },
+  }
+  // 对象结构时，变量名和属性名需要一致
+  // 当然，也可以对属性名进行重命名，比如将name重命名为username
+  const { name: username, family: { mother, father }, age, sayHi } = obj
+  console.log(username)
+  console.log(age)
+  console.log(mother)
+  console.log(father)
+  sayHi()
+
+</script>
+</body>
+</html>

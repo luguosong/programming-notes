@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>location</title>
+</head>
+<body>
+
+<button id="btn1">点击刷新页面</button>
+<button id="btn2">页面跳转</button>
+
+<script src="../js/print_log.js"></script>
+<script>
+  console.log("完整URL地址：" + location.href)
+  console.log("地址中的参数：" + location.search)
+  console.log("地址中的锚点：" + location.hash)
+
+  const btn1 = document.querySelector("#btn1")
+  btn1.onclick = function() {
+    // 刷新页面
+    location.reload()
+  }
+
+  const btn2 = document.querySelector("#btn2")
+  btn2.onclick = function() {
+    // 页面跳转
+    location.href = location.href + "?name=zhangsan&age=18#anchor"
+  }
+</script>
+</body>
+</html>

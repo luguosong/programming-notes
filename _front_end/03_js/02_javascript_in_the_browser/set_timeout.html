@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>定时器-setTimeout</title>
+</head>
+<body>
+<button>1秒后提示</button>
+<script>
+  const btn = document.querySelector("button")
+  btn.onclick = function() {
+    // 定时器，只执行一次
+    setTimeout(function() {
+      alert("1秒后提示")
+    }, 1000)
+  }
+</script>
+</body>
+</html>

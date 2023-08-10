@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>函数默认参数</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  /**
+   * a和b默认参数都是0
+   * @param a
+   * @param b
+   * @returns {number}
+   */
+  function add(a=0,b=0){
+    return a+b
+  }
+
+  console.log(add(1,2))
+  console.log(add())
+</script>
+</body>
+</html>

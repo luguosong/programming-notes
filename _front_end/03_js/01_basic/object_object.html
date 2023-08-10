@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Object对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  //keys()方法
+  const o = { name: "张三", age: 18 }
+  console.log(Object.keys(o)) // ["name", "age"]
+
+  //values()方法
+  console.log(Object.values(o)) // ["张三", 18]
+
+  // 拷贝对象
+  const obj = {}
+  Object.assign(obj, o)
+  console.log(JSON.stringify(obj)) // {name: "张三", age: 18}
+</script>
+</body>
+</html>

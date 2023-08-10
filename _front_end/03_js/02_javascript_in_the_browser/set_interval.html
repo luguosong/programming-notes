@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>定时器-setInterval</title>
+</head>
+<body>
+<div>时间</div>
+<script>
+  const div = document.querySelector("div")
+  setInterval(function() {
+    div.innerHTML = new Date().toString()
+  }, 1000)
+</script>
+</body>
+</html>

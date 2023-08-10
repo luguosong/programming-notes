@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>字符串对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  const str = "hello world"
+
+  // split()方法,将字符串转换为数组
+  const arr = str.split(" ")
+  console.log(arr) // ["hello", "world"]
+
+  // join()方法,将数组转换为字符串
+  const str2 = arr.join(" ")
+  console.log(str2) // hello world
+
+  // startWith()方法,判断字符串是否以指定的字符串开头
+  const str3 = "hello world"
+  console.log(str3.startsWith("hello")) // true
+
+  //trim()方法,去除字符串两端的空格
+  const str4 = " hello world "
+  console.log(str4.trim()) // hello world
+</script>
+</body>
+</html>

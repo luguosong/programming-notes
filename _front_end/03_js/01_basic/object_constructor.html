@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>构造函数创建对象</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  /*
+  * 定义构造函数，用于创建对象
+  * */
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  /*
+  * 静态属性和方法
+  * */
+  Person.nations = "中国"  // 静态属性
+  Person.sayHello = function () {  // 静态方法
+    console.log("静态方法执行")
+  }
+  Person.sayHello() //静态方法调用
+
+  /*
+  * 创建对象
+  * */
+  const person = new Person("张三", 18)
+  console.log(JSON.stringify(person))
+
+  /*
+  * 这里写一个普通函数对比
+  * */
+  function test() {
+    console.log(this)  // 普通函数中的this指向window
+  }
+
+  test()
+</script>
+</body>
+</html>

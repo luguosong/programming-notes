@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>本地存储</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  // 本地存储
+  localStorage.setItem("name", "Nicholas")
+  // 读取本地存储
+  console.log(localStorage.getItem("name"))
+  // 删除本地存储
+  localStorage.removeItem("name")
+
+  // 会话存储
+  sessionStorage.setItem("name", "Nicholas")
+  // 读取会话存储
+  console.log(sessionStorage.getItem("name"))
+  // 删除会话存储
+  sessionStorage.removeItem("name")
+
+  /*
+  * 只能存储字符串，需要存储对象，需要先将对象转为字符串
+  * */
+  const person = {
+    name: "Nicholas",
+    age: 29,
+    email: "11111@163.com",
+  }
+  // 先将对象转换成字符串
+  localStorage.setItem("person", JSON.stringify(person))
+  // 将字符串重新转换为对象
+  console.log(JSON.parse(localStorage.getItem("person")).name)
+  localStorage.removeItem("person")
+</script>
+</body>
+</html>

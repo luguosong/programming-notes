@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>闭包</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<!--不使用闭包-->
+<script>
+  let count1 = 0
+
+  function fun1() {
+    count1++
+    console.log("count1=" + count1)
+  }
+
+  document.writeln(`<h2>不使用闭包的情况</h2>`)
+  fun1()
+  fun1()
+  console.log("不使用闭包可以对变量进行随意的修改")
+  count1 = 1000
+  fun1()
+</script>
+
+<!--使用闭包-->
+<script>
+  function fun2() {
+    let count2 = 0
+    return function() {
+      count2++
+      console.log("count2=" + count2)
+    }
+  }
+
+  document.writeln(`<h2>使用闭包的情况</h2>`)
+  /*
+  * fun2_1是全局变量，因此一直不会被清理
+  * 💀💀因此，使用闭包会导致局部变量count2也一直不会被清理
+  * */
+  let fun2_1 = fun2()
+  fun2_1()
+  fun2_1()
+  console.log("使用闭包后，变量的值不会被随意修改")
+  count2 = 1000
+  fun2_1()
+</script>
+</body>
+</html>

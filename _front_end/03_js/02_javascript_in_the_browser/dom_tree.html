@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DOM树</title>
+</head>
+<body>
+<div id="father">
+  <div id="child1">子节点1</div>
+  <div id="child2">子节点2</div>
+  <div id="child3">子节点3</div>
+</div>
+<script>
+  const father = document.getElementById("father")
+  const child2 = document.getElementById("child2")
+  //查找节点
+  console.log(father.children) //查找所有子元素节点
+  console.log(father.firstElementChild) //查找第一个子元素节点
+  console.log(father.lastElementChild) //查找最后一个子元素节点
+  console.log(child2.previousElementSibling) //查找前一个兄弟元素节点
+  console.log(child2.nextElementSibling) //查找后一个兄弟元素节点
+  console.log(child2.parentNode) //查找父节点
+
+  //增加节点
+  const newChild1 = document.createElement("div")
+  newChild1.innerHTML = "新的子节点1"
+  father.appendChild(newChild1) //在父节点最后添加子节点
+  const newChild2 = document.createElement("div")
+  newChild2.innerHTML = "新的子节点2"
+  child2.append(newChild2) //在子节点最后添加子节点
+
+  //删除节点
+  newChild2.remove()
+
+</script>
+</body>
+</html>
