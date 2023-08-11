@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>深拷贝</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<script>
+  const obj = {
+    name: "张三",
+    family: {
+      father: "张爸爸",
+      mother: "张妈妈",
+    },
+    sayHi: function() {
+      console.log("Hi, I'm " + this.name)
+    },
+  }
+
+  //使用JSON序列化实现深拷贝
+  const newObj1 = JSON.parse(JSON.stringify(obj))
+  console.log(newObj1)
+  console.log(newObj1 === obj)
+  console.log(newObj1.family === obj.family)
+
+  //使用Lodash库实现深拷贝
+  const newObj2 = _.cloneDeep(obj)
+  console.log(newObj2)
+  console.log(newObj2 === obj)
+  console.log(newObj2.family === obj.family)
+
+  //使用递归实现深拷贝
+  function deepCopy(obj) {
+    if (typeof obj !== "object") {
+      return obj
+    }
+    const newObj = {}
+    for (let key in obj) {
+      newObj[key] = deepCopy(obj[key])
+    }
+    return newObj
+  }
+
+  const newObj3 = deepCopy(obj)
+  console.log(newObj3)
+  console.log(newObj3 === obj)
+  console.log(newObj3.family === obj.family)
+</script>
+</body>
+</html>

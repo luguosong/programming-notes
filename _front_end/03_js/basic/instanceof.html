@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>instanceof运算符</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  const person = new Person("孙悟空", 18)
+
+  // 判断Person构造函数的原型对象是否在person实例对象的原型链上
+  console.log(person instanceof Person) //true
+  // 判断Object构造函数的原型对象是否在person实例对象的原型链上
+  console.log(person instanceof Object) //true
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>__proto__属性</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  const Person = function(name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  const person = new Person("孙悟空", 18)
+
+  //原型对象中的constructor属性又指向了构造函数本身
+  console.log(person.__proto__ === Person.prototype) //true
+</script>
+</body>
+</html>

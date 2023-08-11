@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bind</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  // 定义一个简单的对象
+  const person = {
+    name: 'Alice',
+    greet: function(greeting) {
+      console.log(`${greeting}, my name is ${this.name}.`);
+    }
+  };
+
+  // 定义一个函数，用于在不同上下文中调用 greet 方法
+  function sayHello(greeting) {
+    this.greet(greeting);
+  }
+
+  // 使用 bind 创建一个新函数，将 person 对象绑定为 this
+  const greetPerson = person.greet.bind(person);
+
+  // 使用新函数调用 greet 方法，this 值已经绑定到 person 对象
+  greetPerson('Hello');  // 输出: "Hello, my name is Alice."
+
+  // 使用 bind 创建另一个新函数，同时绑定 this 和参数
+  const greetAlice = sayHello.bind(person, 'Hi');
+
+  // 使用新函数调用 sayHello 方法，this 值绑定到 person 对象，参数预先指定为 'Hi'
+  greetAlice();  // 输出: "Hi, my name is Alice."
+</script>
+</body>
+</html>

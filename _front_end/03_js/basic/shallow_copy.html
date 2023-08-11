@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>浅拷贝</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  const obj = {
+    name: "张三",
+  }
+  //方式一：使用assign拷贝
+  const newObj1 = {}
+  Object.assign(newObj1, obj)
+  console.log(JSON.stringify(newObj1))
+  console.log(newObj1 === obj)
+  //方式二：使用展开运算符
+  const newObj2 = { ...obj }
+  console.log(JSON.stringify(newObj2))
+  console.log(newObj2 === obj)
+
+  const arr = [1, 2, 3]
+  //方式一：使用concat方法实现浅拷贝
+  const newArr1 = arr.concat()
+  console.log(JSON.stringify(newArr1))
+  console.log(newArr1 === arr)
+  //方式二：使用展开运算符
+  const newArr2 = [...arr]
+  console.log(JSON.stringify(newArr2))
+  console.log(newArr2 === arr)
+
+</script>
+</body>
+</html>

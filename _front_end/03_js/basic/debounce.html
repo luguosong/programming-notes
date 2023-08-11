@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>防抖</title>
+  <style>
+    html{
+        height: 100px;
+    }
+  </style>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  // 防抖函数
+  function debounce(func, delay) {
+    let timeoutId;
+
+    return function() {
+      // 清除之前的定时器
+      clearTimeout(timeoutId);
+
+      // 创建新的定时器
+      timeoutId = setTimeout(() => {
+        func.apply(this, arguments);
+      }, delay);
+    };
+  }
+
+  // 假设有一个需要防抖的函数
+  function handleMouseMove(event) {
+    console.log(`Mouse moved: (${event.clientX}, ${event.clientY})`);
+  }
+
+  // 创建一个防抖函数，设置延迟为300毫秒
+  // 鼠标一直移动，则会一直调用debounce，但是debounce内部会清除之前的定时器，重新创建新的定时器
+  // 因此handleMouseMove只会在鼠标停止移动300毫秒后才会执行
+  const debouncedHandleMouseMove = debounce(handleMouseMove, 300);
+
+  // 模拟鼠标移动事件
+  window.addEventListener("mousemove", debouncedHandleMouseMove);
+</script>
+</body>
+</html>

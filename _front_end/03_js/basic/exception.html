@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>异常</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function add(a, b) {
+    if (typeof a !== "number" || typeof b !== "number") {
+      throw new Error("参数必须是数字")
+    }
+    console.log("计算结果为：" + (a + b))
+  }
+
+  try {
+    add(1, 2)
+    add("1", 2)
+  } catch (e) {
+    console.log(e.message)
+  } finally {
+    console.log("finally")
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>节流</title>
+  <style>
+      html {
+          height: 100px;
+      }
+  </style>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  // 节流函数
+  function throttle(func, delay) {
+    let timeoutId
+
+    return function() {
+      // 如果定时器存在，则不执行
+      if (timeoutId) {
+        return
+      }
+
+      // 创建新的定时器
+      timeoutId = setTimeout(() => {
+        func.apply(this, arguments)
+
+        // 执行完毕后清除定时器
+        timeoutId = null
+      }, delay)
+    }
+  }
+
+  // 假设有一个需要节流的函数
+  function handleMouseMove(event) {
+    console.log(`Mouse moved: (${event.clientX}, ${event.clientY})`)
+  }
+
+  // 创建一个节流函数，设置延迟为300毫秒
+  // 鼠标一直移动，则会一直调用throttle，但是throttle内部会判断定时器是否存在，如果存在则不执行
+  // 因此handleMouseMove只会在鼠标停止移动300毫秒后才会执行
+  const throttledHandleMouseMove = throttle(handleMouseMove, 2000)
+
+  // 模拟鼠标移动事件
+  window.addEventListener("mousemove", throttledHandleMouseMove)
+</script>
+</body>
+</html>

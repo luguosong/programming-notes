@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>原型继承</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  //**********父类**********
+  //父类构造
+  function Person() {
+    this.eyes = "两个眼睛"
+  }
+
+  Person.prototype.eat = function() {
+    console.log("吃饭")
+  }
+
+  //**********子类**********
+  //子类构造函数Man
+  function Man() {
+
+  }
+  // 指定原型对象
+  Man.prototype = new Person()
+  //将原型的constructor指向构造函数
+  Man.prototype.constructor=Man
+  //子类构造函数Woman
+  function Woman() {
+
+  }
+  // 指定原型对象
+  Woman.prototype = new Person()
+  //将原型的constructor指向构造函数
+  Woman.prototype.constructor=Woman
+  // 为原型对象添加方法
+  Woman.prototype.childbirth=function() {
+    console.log("生孩子")
+  }
+
+  // **********调用阶段**********
+  const man = new Man()
+  man.eat() //继承了父类的方法
+  //由于Woman的原型对象是实时new出来的，因此并不会与Man分享方法
+  // man.childbirth()
+
+  const woman = new Woman()
+  woman.eat() //继承了父类的方法
+  woman.childbirth()
+</script>
+</body>
+</html>

@@ -20,6 +20,7 @@ console.log = function(message, color) {
 
   // 创建一个新的div元素来容纳输出内容
   const logDiv = document.createElement("div")
+
   logDiv.textContent = message + " "
   logDiv.style.color = color
 

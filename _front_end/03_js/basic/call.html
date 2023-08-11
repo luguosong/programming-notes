@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>call</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  function Person() {
+    this.sayHi = function() {
+      console.log(this.constructor)
+    }
+  }
+
+  const person = new Person()
+  //一般情况下，函数中的this指向调用者
+  person.sayHi()
+
+  //call方法可以改变函数中的this指向
+  //call方法的第一个参数是要改变的this指向，后面的参数是函数的参数
+  person.sayHi.call(window, 1, 2, 3)
+</script>
+</body>
+</html>

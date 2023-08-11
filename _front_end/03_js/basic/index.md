@@ -468,6 +468,7 @@ fun1(); // 调用 fun1 函数
 使用构造函数创建对象的好处是可以通过一个函数创建多个对象，达到复用的目的。
 
 new实例化的过程：
+
 1. 创建一个新对象
 2. 构造函数中的this指向新创建的对象
 3. 执行构造函数中的代码
@@ -594,7 +595,6 @@ new实例化的过程：
 
 <iframe src="closure.html"></iframe>
 
-
 # 原型对象
 
 ## 概述
@@ -634,7 +634,7 @@ new实例化的过程：
 
 {: .warning}
 > 箭头函数不能作为构造函数使用，因为箭头函数中的this指向的是其定义时所在的对象，而不是实例对象
-> 
+>
 > 同样的，箭头函数也不能作为原型对象中的方法使用
 
 ## constructor属性
@@ -646,3 +646,141 @@ new实例化的过程：
 {% endhighlight %}
 
 <iframe src="constructor_attribute.html"></iframe>
+
+## __proto__属性
+
+- 每个实例对象都有一个`__proto__属性`，指向原型对象
+
+{% highlight html %}
+{% include_relative proto_attribute.html %}
+{% endhighlight %}
+
+<iframe src="proto_attribute.html"></iframe>
+
+## 原型链
+
+`__proto__`属性链状结构称为原型链
+
+原型链查找过程：
+
+1. 当访问一个对象成员时，首先查找该对象自身有没有该成员
+2. 如果没有，通过实例对象的`__proto__`属性去原型对象中查找
+3. 如果还没有，通过原型对象的`__proto__`属性去原型对象的原型对象中查找
+4. 以此类推，直到找到`Object.prototype`对象的原型对象，如果还没有，返回undefined
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/front-end/prototype_chain.svg)
+
+## instanceof运算符
+
+- 用于检查构造函数的prototype属性是否出现在实例对象的原型链上
+
+{% highlight html %}
+{% include_relative instanceof.html %}
+{% endhighlight %}
+
+<iframe src="instanceof.html"></iframe>
+
+## 原型继承
+
+通过手动指定`子构造函数`的`原型对象`为`父构造函数的实例对象`。实现让`子构造函数的实例对象`继承`父实例对象`的属性和方法。
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202308101715700-%E5%8E%9F%E5%9E%8B%E7%BB%A7%E6%89%BF.png)
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/front-end/prototype_inheritance.svg)
+
+{% highlight html %}
+{% include_relative prototype_inheritance.html %}
+{% endhighlight %}
+
+<iframe src="prototype_inheritance.html"></iframe>
+
+# 深浅拷贝
+
+## 浅拷贝
+
+{% highlight html %}
+{% include_relative shallow_copy.html %}
+{% endhighlight %}
+
+<iframe src="shallow_copy.html"></iframe>
+
+## 浅拷贝存在的问题
+
+当对象或数组内部存在对象元素，浅拷贝会导致拷贝后的对象或数组内部的对象元素，指向同一个内存地址，修改其中一个，会影响另一个。
+
+## 深拷贝
+
+{% highlight html %}
+{% include_relative deep_copy.html %}
+{% endhighlight %}
+
+<iframe src="deep_copy.html"></iframe>
+
+{: .warning}
+> 使用JSON序列化深拷贝会忽略函数。因为JSON不支持函数的序列化
+
+# 异常处理
+
+通过throw抛出异常，异常抛出后，如果不进行处理，程序会终止。
+
+try...catch...finally用来捕获异常，防止程序终止。
+
+{% highlight html %}
+{% include_relative exception.html %}
+{% endhighlight %}
+
+<iframe src="exception.html"></iframe>
+
+# 调试
+
+`debugger`用来设置断点，调试程序
+
+# 改变this指向
+
+只针对于非箭头函数。
+
+## call方法
+
+{% highlight html %}
+{% include_relative call.html %}
+{% endhighlight %}
+
+<iframe src="call.html"></iframe>
+
+## apply方法
+
+{% highlight html %}
+{% include_relative apply.html %}
+{% endhighlight %}
+
+<iframe src="apply.html"></iframe>
+
+## bind方法
+
+不会调用函数，而是返回一个新函数，新函数的this指向bind方法的第一个参数，其余参数作为新函数的参数。
+
+{% highlight html %}
+{% include_relative bind.html %}
+{% endhighlight %}
+
+<iframe src="bind.html"></iframe>
+
+# 防抖
+
+`防抖（Debounce）`是一种常用的前端技术，用于处理频繁触发的事件，例如窗口大小调整、输入框输入等。防抖的目的是在一连串的事件触发中，只执行最后一次事件，从而避免过于频繁的响应。这在减少不必要的网络请求或提高性能时非常有用。
+
+{% highlight html %}
+{% include_relative debounce.html %}
+{% endhighlight %}
+
+<iframe src="debounce.html"></iframe>
+
+# 节流
+
+`节流（Throttle）`是一种常用的前端技术，用于处理频繁触发的事件，例如窗口大小调整、输入框输入等。节流的目的是在一连串的事件触发中，只执行第一次事件，从而避免过于频繁的响应。这在减少不必要的网络请求或提高性能时非常有用。
+
+{% highlight html %}
+{% include_relative throttle.html %}
+{% endhighlight %}
+
+<iframe src="throttle.html"></iframe>
