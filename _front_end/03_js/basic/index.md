@@ -93,7 +93,9 @@ JavaScript也保留或限制对某些关键字的使用，这些关键字当前`
 
 如果两条语句分别写在两行，通常可以省略它们之间的分号
 
-# 变量
+# 变量和常量
+
+## 变量
 
 {: .note-title}
 > 变量
@@ -123,7 +125,7 @@ JavaScript也保留或限制对某些关键字的使用，这些关键字当前`
 
 <iframe src="variant.html"></iframe>
 
-# 声明提升
+## 声明提升
 
 {: .note-title}
 > 声明提升
@@ -164,7 +166,7 @@ fun1(); // 调用 fun1 函数
 {: .note}
 > 变量提升仅限于var声明，let声明不会提升
 
-# 常量
+## 常量
 
 {% highlight html %}
 {% include_relative const.html %}
@@ -784,3 +786,145 @@ try...catch...finally用来捕获异常，防止程序终止。
 {% endhighlight %}
 
 <iframe src="throttle.html"></iframe>
+
+# Promise（ES6）
+
+## 回调函数存在的问题
+
+- 阅读性差，回调不会立马执行。
+- 回调如果有大量嵌套，可维护性差。
+- 回调地狱。
+
+## 回调地狱
+
+需求：数组中有三个元素，异步判断其是否为偶数，先判断第一个，如果是偶数，再判断下一个。
+
+{% highlight html %}
+{% include_relative callback_hell.html %}
+{% endhighlight %}
+
+## Promise概述
+
+`Promise`是ES6新增的语法，用于解决回调地狱的问题。
+
+- `Promise构造`：用于封装尚未支持 Promise 的基于回调的 API。
+
+Promise构造函数的参数是一个回调函数：
+
+- 回调函数参数1：resolve函数，用于将Promise状态改为成功
+- 回调函数参数2：reject函数，用于将Promise状态改为失败
+
+成员方法：
+
+- then方法：用于指定Promise状态改变时的回调函数
+- catch方法：用于指定Promise状态改变时的回调函数
+
+## Promise.all方法
+
+用于将多个Promise实例，包装成一个新的Promise实例.
+
+`会等待所有的Promise实例都执行完成，才会执行then方法。`
+
+```javascript
+// 定义两个模拟的异步函数，每个函数返回一个 Promise，模拟异步操作
+function asyncOperation1() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("异步操作1完成")
+    }, 1000)
+  })
+}
+
+function asyncOperation2() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("异步操作2完成")
+    }, 1500)
+  })
+}
+
+// 使用 Promise.all 同时处理多个异步操作
+Promise.all([asyncOperation1(), asyncOperation2()])
+  .then((results) => {
+    console.log("所有异步操作都已完成:", results)
+  })
+  .catch((error) => {
+    console.error("一个或多个异步操作失败:", error)
+  })
+```
+
+## Promise.race方法
+
+用于将多个Promise实例，包装成一个新的Promise实例
+
+`会等待第一个Promise实例执行完成，才会执行then方法。`
+
+```javascript
+// 定义两个模拟的异步函数，每个函数返回一个 Promise，模拟异步操作
+function asyncOperation1() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("异步操作1完成")
+    }, 1000)
+  })
+}
+
+function asyncOperation2() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("异步操作2完成")
+    }, 1500)
+  })
+}
+
+// 使用 Promise.race 同时处理多个异步操作
+Promise.race([asyncOperation1(), asyncOperation2()])
+  .then((result) => {
+    console.log("第一个异步操作完成:", result)
+  }).catch((error) => {
+  console.error("一个或多个异步操作失败:", error)
+})
+```
+
+## Promise解决回调地狱
+
+{% highlight html %}
+{% include_relative promise.html %}
+{% endhighlight %}
+
+# async/await（ES7）
+
+## async/await概述
+
+{% highlight html %}
+{% include_relative async_await.html %}
+{% endhighlight %}
+
+<iframe src="async_await.html"></iframe>
+
+## async+Promise
+
+{% highlight html %}
+{% include_relative async_promise.html %}
+{% endhighlight %}
+
+<iframe src="async_promise.html"></iframe>
+
+# 事件循环：微任务和宏任务
+
+- 宏任务
+    - 整体代码
+    - setTimeout
+    - setInterval
+- 微任务
+    - Promise.then/catch/finally
+
+整体代码（被script包裹的代码）属于一个宏任务，一般先执行
+
+当宏任务和微任务同时存在时，微任务先执行。
+
+{% highlight html %}
+{% include_relative event_loop.html %}
+{% endhighlight %}
+
+<iframe src="event_loop.html"></iframe>

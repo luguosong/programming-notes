@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用原生XMLHttpRequest发送请求</title>
+</head>
+<body>
+<!--发送get请求-->
+<script>
+  // 1. 创建XMLHttpRequest对象
+  const xhr = new XMLHttpRequest()
+  // 2. 配置请求信息
+  xhr.open("get", "https://ajax-api.itheima.net/api/news")
+  // 3. 发送请求
+  xhr.send()
+  // 4. 监听请求状态
+  xhr.onreadystatechange = function() {
+    // 5. 判断请求是否成功
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      // 6. 获取响应数据
+      console.log(JSON.parse(xhr.responseText))
+    }
+  }
+</script>
+
+<!--发送post请求-->
+<script>
+  // 1. 创建XMLHttpRequest对象
+  const xhr2 = new XMLHttpRequest()
+  // 2. 配置请求信息
+  xhr2.open("post", "https://ajax-api.itheima.net/api/login")
+  xhr2.setRequestHeader("content-type", "application/json") //设置请求体参数类型
+  // 3. 发送请求
+  xhr2.send(JSON.stringify({ username: "admin", password: "123456" }))
+  // 4. 监听请求状态
+  xhr2.onreadystatechange = function() {
+    // 5. 判断请求是否成功
+    if (xhr2.readyState === 4 && xhr2.status === 200) {
+      // 6. 获取响应数据
+      console.log(JSON.parse(xhr.responseText))
+    }
+  }
+</script>
+</body>
+</html>

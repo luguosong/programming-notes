@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>async和await</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+
+  // async修饰一个函数，表示函数是异步的
+  async function func() {
+    // await之前的代码会同步执行
+    console.log(1)
+    // await之后的代码会异步执行
+    // await必须在async函数内部使用
+    let num = await 2
+    console.log(num)
+  }
+  //方法调用
+  func()
+  console.log(3)
+</script>
+</body>
+</html>

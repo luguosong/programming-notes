@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>async+Promise对象搭配使用</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<script>
+  let arr = [10, 7, 20];
+
+  function isEven(num) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (num % 2 === 0) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
+      }, 1000);
+    });
+  }
+
+  async function checkEvenNumbers() {
+    try {
+      // 正常情况返回Promise对象
+      // 但使用await修饰后，返回的是Promise对象的resolve值
+      let result = await isEven(arr[0]);
+      if (result) {
+        result = await isEven(arr[1]);
+        if (result) {
+          result = await isEven(arr[2]);
+          if (result) {
+            console.log('全部为偶数');
+          }
+        }
+      }
+    } catch (error) {
+      console.log('不是全部为偶数');
+    }
+  }
+
+  checkEvenNumbers();
+</script>
+</body>
+</html>

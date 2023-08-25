@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ECharts如么</title>
+</head>
+<body>
+
+<!--一个具备宽高的容器-->
+<div id="main" style="width: 600px;height: 400px"></div>
+
+<script src="../js/echarts.min.js"></script>
+<script>
+  // 初始化echarts实例
+  const myChart = echarts.init(document.querySelector("#main"))
+
+  // 指定图表的配置项和数据
+  var option = {
+    // 标题组件
+    title: {
+      // 主标题文本
+      text: 'ECharts 入门示例'
+    },
+    // 提示框组件
+    tooltip: {},
+    // 图例
+    legend: {
+      // 图例的数据数组
+      data:['销量']
+    },
+    // x轴
+    xAxis: {
+      // 类目数据
+      data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+    },
+    // y轴
+    yAxis: {},
+    // 数据系列列表
+    series: [{
+      // 系列名称
+      name: '销量',
+      // 系列
+      type: 'bar',
+      // 数据值数组
+      data: [5, 20, 36, 10, 10, 20]
+    }]
+  };
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+</script>
+</body>
+</html>

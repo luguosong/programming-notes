@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>表单和Ajax结合</title>
+</head>
+<body>
+<form>
+  <form>
+    <label>
+      用户名
+      <input name="username">
+    </label>
+    <label>
+      密码
+      <input type="password" name="password">
+    </label>
+    <input type="submit">
+  </form>
+
+  <script src="../js/axios.js"></script>
+  <script src="../js/form-serialize.js"></script>
+  <script>
+    document.querySelector("form").addEventListener("submit", function(e) {
+      // ⭐阻止默认行为, 阻止表单提交
+      e.preventDefault()
+      const formData = serialize(this) //username=bob&password=12345678
+      // const formData = serialize(this, { hash: true }) //{username: 'zhangsan', password: '12345678'}
+      console.log(formData)
+      // 发送请求
+      axios({
+        url: "https://ajax-api.itheima.net/api/data",
+        method: "post",
+        data: formData,
+      }).then((resp) => {
+        console.log(resp.data)
+      })
+    })
+  </script>
+</form>
+</body>
+</html>

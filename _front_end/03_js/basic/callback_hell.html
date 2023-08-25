@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>回调地狱</title>
+</head>
+<body>
+//需求：数组中有三个元素，异步判断其是否为偶数，先判断第一个，如果是偶数，再判断下一个。
+<script>
+  let arr = [10, 8, 9]
+  function isEven(num, callback) {
+    setTimeout(() => {
+      if (num % 2 === 0) {
+        callback(true)
+      } else {
+        callback(false)
+      }
+    }, 1000)
+  }
+
+  isEven(arr[0], (result) => {
+    if (result) {
+      isEven(arr[1], (result) => {
+        if (result) {
+          isEven(arr[2], (result) => {
+            if (result) {
+              console.log('全部为偶数')
+            } else {
+              console.log('不是全部为偶数')
+            }
+          })
+        } else {
+          console.log('不是全部为偶数')
+        }
+      })
+    } else {
+      console.log('不是全部为偶数')
+    }
+  })
+</script>
+
+</body>
+</html>

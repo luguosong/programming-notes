@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Axios发送get请求</title>
+</head>
+<body>
+<script src="../js/axios.js"></script>
+<script>
+  axios({
+    // 请求地址
+    url: "https://ajax-api.itheima.net/api/hero",
+    // 请求方式
+    method: "get",
+  }).then((resp) => {
+    console.log(resp.data)
+  })
+</script>
+</body>
+</html>

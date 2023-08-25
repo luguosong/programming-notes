@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FormData文件上传</title>
+</head>
+<body>
+<form>
+  <input type="file" name="avatar">
+  <input type="submit">
+</form>
+
+<script src="../js/axios.js"></script>
+<script>
+  document.querySelector("form").addEventListener("submit", function(e) {
+    e.preventDefault()
+    const formData = new FormData(this)
+    console.log(formData)
+    axios({
+      url: "https://ajax-api.itheima.net/api/file",
+      method: "post",
+      data: formData,
+    }).then((resp) => {
+      console.log(resp.data)
+    })
+  })
+</script>
+</body>
+</html>

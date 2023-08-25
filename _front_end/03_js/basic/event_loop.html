@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>宏任务和微任务</title>
+</head>
+<body>
+<script src="../js/print_log.js"></script>
+<!--被script包裹的代码是整体代码-->
+<script>
+  //第1步:整体代码属于宏任务，因此整体代码先从头到尾执行一遍
+  console.log(1)
+
+  setTimeout(() => {
+    //第5步：异步宏任务最后执行
+    console.log(2)
+  }, 0)
+
+  new Promise((resolve, reject) => {
+    //第1步:创建对象也属于整体代码中的一部分，因此先执行
+    console.log(3)
+    resolve(4)
+  }).then((result) => {
+    //第4步:then属于微任务，因此优先于定时器的异步宏任务执行
+    console.log(result)
+  })
+
+  //第3步:这里依旧属于第一个宏任务：整体代码，因此先执行
+  console.log(5)
+</script>
+</body>
+</html>

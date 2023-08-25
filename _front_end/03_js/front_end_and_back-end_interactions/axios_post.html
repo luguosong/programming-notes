@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>发送post请求</title>
+</head>
+<body>
+<script src="../js/axios.js"></script>
+<script>
+  axios({
+    url: "https://ajax-api.itheima.net/api/books",
+    method: "post",
+    // 参数
+    data: {
+      bookname: "三国演义",
+      author: "罗贯中",
+      publisher: "人民出版社",
+    },
+  }).then((resp) => {
+    console.log(resp.data)
+  })
+</script>
+</body>
+</html>
