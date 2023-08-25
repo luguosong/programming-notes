@@ -302,6 +302,7 @@
     // onclick函数适用于toc中的所有链接，将以事件作为第一个参数被调用，
     // 这可以用来停止、传播、防止默认或执行行动。
     onClick: function(e) {
+      console.log(111)
       let nodes = e.target.parentNode.parentNode.childNodes
       for (let i = 0; i < nodes.length; i++) {
         nodes[i].querySelector("a").classList.remove("is-active-link")
@@ -317,21 +318,10 @@
     },
     // orderedList可以被设置为false，以生成无序列表（ul）而不是有序列表（ol）。
     orderedList: false,
-    // 如果有固定的文章滚动容器，设置计算标题的偏移量
     scrollContainer: null,
-    // 如果 ToC DOM 已经由外部系统渲染，则阻止渲染
     skipRendering: false,
-    // 更改标题标签的可选回调。 例如，它可用于在您认为太长的多行标题上缩减和放置省略号。
-    // 每次解析标题时调用。
-    // 期望返回一个字符串，修改label为display.function(string) => string
     headingLabelCallback: false,
-    // ignore headings that are hidden in DOM
     ignoreHiddenElements: false,
-    // Optional callback to modify properties of parsed headings.
-    // The heading element is passed in node parameter and information parsed by default parser is provided in obj parameter.
-    // Function has to return the same or modified obj.
-    // The heading will be excluded from TOC if nothing is returned.
-    // function (object, HTMLElement) => object | void
     headingObjectCallback: null,
     // 设置基本路径，如果您在 `head` 中使用 `base` 标签，这很有用。
     basePath: "",
@@ -536,6 +526,13 @@
   })
 </script>
 
+<!--修复tocbot点击内容，目录会跳转的bug-->
+<script>
+  const content = document.querySelector(".middle")
+  content.addEventListener("click", function(e){
+    e.stopPropagation() // 阻止事件冒泡，让tocbot拿不到click事件
+  })
+</script>
 
 </body>
 </html>
