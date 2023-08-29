@@ -9,21 +9,22 @@
           background-color: #a9dcb2;
       }
 
-      /*通过伪元素添加额外标签*/
-      .clearfix:after{
+      /* 通过伪元素添加额外标签 */
+      .clearfix::after{
           content: "";
           display: block;
           clear: both;
       }
 
-      /*双伪元素法清除浮动*/
-      /*这里before伪元素放在这是解决外边距塌陷问题的*/
-      .clearfix2:before,.clearfix2:after{
+      /* 双伪元素法清除浮动 */
+
+      /* 这里before伪元素放在这是解决外边距塌陷问题的 */
+      .clearfix2::before,.clearfix2::after{
           content: "";
           display: table;
       }
 
-      .clearfix2:after{
+      .clearfix2::after{
           clear: both;
       }
 
