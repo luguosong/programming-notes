@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>清除浮动</title>
+  <style>
+      .father {
+          width: 200px;
+          background-color: #a9dcb2;
+      }
+
+      /*通过伪元素添加额外标签*/
+      .clearfix:after{
+          content: "";
+          display: block;
+          clear: both;
+      }
+
+      /*双伪元素法清除浮动*/
+      /*这里before伪元素放在这是解决外边距塌陷问题的*/
+      .clearfix2:before,.clearfix2:after{
+          content: "";
+          display: table;
+      }
+
+      .clearfix2:after{
+          clear: both;
+      }
+
+      .child {
+          width: 100px;
+          height: 50px;
+          background-color: rgba(115, 160, 197, 0.4);
+      }
+
+      .float {
+          float: left;
+      }
+
+      .below {
+          width: 200px;
+          height: 60px;
+          background-color: rgba(255, 198, 109,0.3);
+      }
+  </style>
+</head>
+<body>
+<h2>标准流情况下，父盒子不设置高度，会被子盒子高度撑开</h2>
+<div class="father">
+  <div class="child"></div>
+</div>
+<div class="below">下方盒子</div>
+
+<h2>💀子元素设置浮动，父盒子高度不会被撑开</h2>
+<div class="father">
+  <div class="child float"></div>
+</div>
+<div class="below">下方盒子</div>
+
+<h2>方式一：额外标签法清除浮动</h2>
+<div class="father">
+  <div class="child float"></div>
+  <!--在父元素内容的最后添加一个块级元素，设置CSS属性为clear:both-->
+  <div style="clear: both"></div>
+</div>
+<div class="below">下方盒子</div>
+
+<h2>方式二：通过伪元素实现额外标签法：</h2>
+<div class="father clearfix">
+  <div class="child float"></div>
+</div>
+<div class="below">下方盒子</div>
+
+<h2>方式三：双伪元素法清除浮动（同时解决了子元素外边距塌陷问题）：</h2>
+<div class="father clearfix2">
+  <div class="child float"></div>
+</div>
+<div class="below">下方盒子</div>
+
+<h2>方式三：父元素设置overflow属性</h2>
+<div class="father" style="overflow: hidden">
+  <div class="child float"></div>
+</div>
+<div class="below">下方盒子</div>
+</body>
+</html>

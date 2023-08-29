@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>伪元素选择器</title>
+  <style>
+      p{
+          border: #5ca2c4 solid 1px;
+      }
+
+      p::before {
+          content: "“";
+          font-size: 1.2em;
+          color: blue;
+      }
+
+      p::after {
+          content: "”";
+          font-size: 1.2em;
+          color: blue;
+      }
+  </style>
+</head>
+<body>
+<p>This is some sample text.</p>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>主轴方向</title>
+  <style>
+      div {
+          background-color: #dddddd;
+      }
+
+      div div {
+          width: 100px;
+          height: 50px;
+          background-color: #73a0c5;
+          overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+<h2>flex-direction:主轴方向</h2>
+row:默认值，主轴为水平方向，起点在左端。column:主轴为垂直方向，起点在上沿。
+<div style="display:flex; flex-direction: column">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+设置主轴为垂直方向，且侧轴居中：
+<div style="display:flex; flex-direction: column; align-items: center">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>浮动</title>
+  <style>
+      div {
+          width: 100px;
+          height: 100px;
+          background-color: rgba(115, 160, 197, 0.4);
+      }
+
+      .standard {
+          width: 200px;
+          height: 200px;
+          background-color: #7a7a7a;
+      }
+  </style>
+</head>
+<body>
+<div class="standard">标准流盒子</div>
+<div style="float: left">左浮动</div>
+<div style="float: right">右浮动</div>
+<!--浮动会脱离标准流，不占据标准流的位置，后面的标准流盒子会占据浮动盒子的位置-->
+<div class="standard">标准流盒子</div>
+</body>
+</html>

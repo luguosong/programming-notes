@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>侧轴布局</title>
+  <style>
+      div {
+          background-color: #dddddd;
+          width: 600px;
+          height: 150px;
+      }
+
+      div div {
+          width: 200px;
+          height: 50px;
+          background-color: #73a0c5;
+          overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+<div style="display: flex;flex-wrap: wrap;align-content: space-evenly">
+  <div>子元素</div>
+  <div>子元素</div>
+  <div>子元素</div>
+  <div>子元素</div>
+  <div>子元素</div>
+  <div>子元素</div>
+</div>
+</body>
+</html>

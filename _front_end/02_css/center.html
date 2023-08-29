@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>水平垂直居中</title>
+  <style>
+      .father {
+          width: 300px;
+          height: 200px;
+          border: grey solid 1px;
+          position: relative;
+      }
+
+      .child {
+          width: 50px;
+          height: 50px;
+          background-color: #a9dcb2;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+      }
+  </style>
+</head>
+<body>
+<div class="father">
+  <div class="child"></div>
+</div>
+</body>
+</html>

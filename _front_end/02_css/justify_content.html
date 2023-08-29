@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>主轴对齐方式</title>
+  <style>
+      div {
+          background-color: #dddddd;
+      }
+
+      div div {
+          width: 100px;
+          height: 50px;
+          background-color: #73a0c5;
+          overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+<h2>主轴对其方式:justify-content</h2>
+flex-start:左对齐
+<div style="display:flex; justify-content: flex-start">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+flex-end:右对齐
+<div style="display:flex; justify-content: flex-end">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+center：居中
+<div style="display:flex; justify-content: center">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+space-between：两端对齐
+<div style="display:flex; justify-content: space-between">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+space-around：在每行上均匀分配弹性元素。
+<div style="display:flex; justify-content: space-around">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+space-evenly：相邻 flex 项之间的间距，主轴起始位置到第一个 flex 项的间距，主轴结束位置到最后一个 flex 项的间距，都完全一样。
+<div style="display:flex; justify-content: space-evenly">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+</body>
+</html>

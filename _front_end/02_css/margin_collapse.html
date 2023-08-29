@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>外边距塌陷问题</title>
+  <style>
+      .father {
+          width: 200px;
+          height: 200px;
+          background-color: #ccc;
+      }
+
+      .child {
+          width: 100px;
+          height: 100px;
+          position: relative;
+          background-color: #73a0c5;
+          margin: 20px;
+      }
+
+      .child:before {
+          content: "";
+          position: absolute;
+          top: -20px; /* 负的外边距值 */
+          right: -20px; /* 负的外边距值 */
+          bottom: -20px; /* 负的外边距值 */
+          left: -20px; /* 负的外边距值 */
+          background-color: rgba(78, 132, 153, 0.3); /* 设置背景颜色 */
+      }
+  </style>
+</head>
+<body>
+子盒子外边距塌陷问题：
+<div class="father">
+  <div class="child"></div>
+</div>
+
+为父盒子添加overflow: hidden;解决外边距塌陷问题：
+<div class="father" style="overflow: hidden">
+  <div class="child"></div>
+</div>
+
+为父盒子添加padding解决外边距塌陷问题：
+<div class="father" style="padding-top: 1px">
+  <div class="child"></div>
+</div>
+
+为父盒子添加边框解决外边距塌陷问题：
+<div class="father" style="border-top: 1px solid red;">
+  <div class="child"></div>
+</div>
+</body>
+</html>

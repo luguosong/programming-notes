@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>结构伪类选择器</title>
+  <style>
+
+      /* 选择第一个元素 */
+      .text:first-child {
+          color: red;
+      }
+
+      /* 选择第四个元素 */
+      .text:nth-child(4) {
+          color: green;
+      }
+
+      /* 选择最后一个元素 */
+      .text:last-child {
+          color: blue;
+      }
+  </style>
+</head>
+<body>
+<ul>
+  <li class="text">第一个元素</li>
+  <li class="text">第二个元素</li>
+  <li class="text">第三个元素</li>
+  <li class="text">第四个元素</li>
+  <li class="text">第五个元素</li>
+  <li class="text">第六个元素</li>
+</ul>
+</body>
+</html>

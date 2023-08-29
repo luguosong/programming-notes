@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>相对定位</title>
+  <style>
+      div {
+          width: 200px;
+          height: 100px;
+          font-size: smaller;
+      }
+
+      .original{
+          background-color: #a9dcb244;
+          position: absolute;
+      }
+
+      .relative{
+          background-color: #a9dcb2;
+          position: relative;
+          left: 100px;
+          top: 50px;
+      }
+  </style>
+</head>
+<body>
+<div class="original">定位后，原先位置会保留，不会脱离标准流</div>
+<div class="relative">相对定位后</div>
+后续内容
+</body>
+</html>

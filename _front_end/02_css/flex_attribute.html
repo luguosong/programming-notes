@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>盒子伸缩比</title>
+  <style>
+      div {
+          background-color: #dddddd;
+      }
+
+      div div {
+          height: 50px;
+          background-color: #73a0c5;
+          overflow: hidden;
+          border: grey solid 1px;
+      }
+  </style>
+</head>
+<body>
+<div style="display: flex">
+  <div style="flex: 1">子元素</div>
+  <div style="flex: 2">子元素</div>
+  <div style="flex: 1">子元素</div>
+</div>
+</body>
+</html>

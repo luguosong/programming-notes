@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>盒子模型</title>
+  <style>
+      div {
+          width: 100px;
+          height: 100px;
+          background-color: #73a0c5;
+      }
+
+      .padding {
+          padding: 10px;
+      }
+
+      .border {
+          border: 5px solid #ffc66d;
+      }
+
+      .margin {
+          margin: 10px;
+      }
+  </style>
+</head>
+<body>
+内容区域:
+<div>
+  内容区域
+</div>
+内容区域+内边距:
+<div class="padding">
+  内容区域
+</div>
+内容区域+内边距+边框:
+<div class="padding border">
+  内容区域
+</div>
+内容区域+内边距+边框+外边距:
+<div class="padding border margin">
+  内容区域
+</div>
+
+</body>
+</html>

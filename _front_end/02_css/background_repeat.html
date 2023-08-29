@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>背景图平铺方式</title>
+  <style>
+      div {
+          width: 100px;
+          height: 100px;
+          margin: 10px;
+          background-color: #a9dcb2;
+          background-image: url(./img/bbt.png);
+      }
+
+      .repeat {
+          background-repeat: repeat;
+      }
+
+      .repeatX {
+          background-repeat: repeat-x;
+      }
+
+      .repeatY {
+          background-repeat: repeat-y;
+      }
+
+      .noRepeat {
+          background-repeat: no-repeat;
+      }
+  </style>
+</head>
+<body>
+平铺（默认方式）：
+<div class="repeat"></div>
+沿水平方向平铺：
+<div class="repeatX"></div>
+沿垂直方向平铺：
+<div class="repeatY"></div>
+不平铺：
+<div class="noRepeat"></div>
+</body>
+</html>

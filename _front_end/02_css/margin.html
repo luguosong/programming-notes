@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>外边距合并</title>
+  <style>
+      .above {
+          width: 100px;
+          height: 100px;
+          position: relative;
+          background-color: #73a0c5;
+          margin: 40px;
+      }
+
+      .above:before {
+          content: "";
+          position: absolute;
+          top: -40px; /* 负的外边距值 */
+          right: -40px; /* 负的外边距值 */
+          bottom: -40px; /* 负的外边距值 */
+          left: -40px; /* 负的外边距值 */
+          background-color: rgba(200, 200, 200, 0.5); /* 设置背景颜色 */
+      }
+
+      .below {
+          width: 100px;
+          height: 100px;
+          position: relative;
+          background-color: #73a0c5;
+          margin: 20px;
+      }
+
+      .below:before {
+          content: "";
+          position: absolute;
+          top: -20px; /* 负的外边距值 */
+          right: -20px; /* 负的外边距值 */
+          bottom: -20px; /* 负的外边距值 */
+          left: -20px; /* 负的外边距值 */
+          background-color: rgba(78, 132, 153, 0.2); /* 设置背景颜色 */
+      }
+
+  </style>
+</head>
+<body>
+
+<br>外边距合并现象：
+<div class="above"></div>
+<div class="below"></div>
+
+左右并不会出现外边距合并现象：<br>
+<div class="above" style="display: inline-block"></div><!--
+--><div class="below" style="display: inline-block"></div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>z-index</title>
+  <style>
+      div {
+          width: 50px;
+          height: 50px;
+      }
+
+      .father {
+          position: relative;
+      }
+
+      .child1 {
+          background-color: #5ca2c4;
+      }
+
+      .child2 {
+          background-color: #ffc66d;
+          position: absolute;
+          top: 10px;
+          left: 10px;
+      }
+
+      .child3 {
+          background-color: #ff6d6d;
+          position: absolute;
+          top: 20px;
+          left: 20px;
+      }
+  </style>
+</head>
+<body>
+<h2>默认情况下后来者居上：</h2>
+<div class="father">
+  <div class="child1"></div>
+  <div class="child2"></div>
+  <div class="child3"></div>
+</div>
+<h2>通过z-index属性可以改变层级关系：</h2>
+<div class="father">
+  <div class="child1"></div>
+  <div class="child2" style="z-index: 1"></div>
+  <div class="child3"></div>
+</div>
+</body>
+</html>

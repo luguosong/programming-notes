@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>flex布局</title>
+  <style>
+      div {
+          background-color: #dddddd;
+      }
+
+      div div {
+          width: 100px;
+          height: 50px;
+          background-color: #73a0c5;
+          overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+<h2>flex布局</h2>
+<div style="display:flex">
+  <div>子元素</div>
+  <div>子元素</div>
+  <div>子元素</div>
+</div>
+
+<h2>当子元素过多，尺寸会被压缩</h2>
+<div style="display:flex">
+  <div>子元素</div>
+  <div>子元素</div>
+  <div>子元素</div>
+  <div style="width: 3000px">子元素</div>
+  <div>子元素</div>
+</div>
+
+
+</body>
+</html>

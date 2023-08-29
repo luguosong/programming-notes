@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>侧轴对其方式</title>
+  <style>
+      div {
+          background-color: #dddddd;
+      }
+
+      div div {
+          width: 100px;
+          height: 50px;
+          background-color: #73a0c5;
+          overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+<h2>侧轴对其方式:align-items和align-self</h2>
+flex-start:起始位置排序
+<div style="display:flex;height: 80px; align-items: flex-start">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+flex-end:结束位置排序
+<div style="display:flex;height: 80px; align-items: flex-end">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+center:居中排序
+<div style="display:flex;height: 80px; align-items: center">
+  <div>子元素1</div>
+  <div>子元素2</div>
+  <div>子元素3</div>
+</div>
+align-self单独对指定子元素进行设置：
+<div style="display:flex;height: 80px; align-items: center">
+  <div>子元素1</div>
+  <div style="align-self: flex-start">子元素2</div>
+  <div style="align-self: flex-end">子元素2</div>
+  <div>子元素3</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>元素移除</title>
+  <style>
+      .father {
+          width: 200px;
+          height: 200px;
+          background-color: #73a0c5;
+          margin-bottom: 20px;
+      }
+
+      .child {
+          width: 50px;
+          height: 300px;
+          background: linear-gradient(to bottom, #7a7a7a, #2a4c7e);
+      }
+  </style>
+</head>
+<body>
+溢出隐藏：
+<div class="father" style="overflow: hidden">
+  <div class="child"></div>
+</div>
+溢出滚动条：
+<div class="father" style="overflow: scroll">
+  <div class="child"></div>
+</div>
+溢出自动：
+<div class="father" style="overflow: auto">
+  <div class="child"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>背景图缩放</title>
+  <style>
+      div {
+          width: 200px;
+          height: 200px;
+          margin: 10px;
+          background-color: #a9dcb2;
+          background-image: url(./img/zwjs.png);
+          background-repeat: no-repeat;
+      }
+
+      .cover {
+          background-size: cover;
+      }
+
+      .contain {
+          background-size: contain;
+      }
+
+      .percentage1 {
+          background-size: 50%;
+      }
+
+      .percentage2 {
+          background-size: 100% 100%;
+      }
+  </style>
+</head>
+<body>
+<div class="cover"></div>
+<div class="contain"></div>
+<div class="percentage1"></div>
+<div class="percentage2"></div>
+</body>
+</html>
