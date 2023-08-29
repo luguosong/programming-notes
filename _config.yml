@@ -126,7 +126,7 @@ heading_anchors: true
 # Aux links for the upper right navigation
 aux_links:
   "Code on GitHub":
-    - "//github.com/luguosong/programming-notes"
+    - "https://github.com/luguosong/programming-notes"
 
 # Makes Aux links open in a new tab. Default is false
 aux_links_new_tab: false
@@ -192,6 +192,7 @@ callouts:
 plugins:
   - jekyll-seo-tag
   - jekyll-github-metadata
+  - jekyll-include-cache
 
 kramdown:
   syntax_highlighter_opts:
