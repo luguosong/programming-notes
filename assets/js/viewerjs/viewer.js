@@ -8,7 +8,7 @@
  * Date: 2021-08-01T13:35:49.731Z
  */
 
-;(function (global, factory) {
+(function (global, factory) {
   typeof exports === "object" && typeof module !== "undefined"
     ? (module.exports = factory())
     : typeof define === "function" && define.amd

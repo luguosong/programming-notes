@@ -7,7 +7,7 @@
     return e[o].call(l.exports, l, l.exports, n), (l.l = !0), l.exports
   }
 
-  ;(n.m = e),
+  (n.m = e),
     (n.c = t),
     (n.d = function (e, t, o) {
       n.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: o })
@@ -58,10 +58,10 @@
     n((n.s = 0))
 })([
   function (e, t, n) {
-    ;(function (o) {
+    (function (o) {
       var l, r, i
       !(function (o, s) {
-        ;(r = []),
+        (r = []),
           (l = (function (e) {
             "use strict"
             var t,
@@ -93,7 +93,7 @@
                   o && i < o + t
                     ? (clearTimeout(l),
                       (l = setTimeout(function () {
-                        ;(o = i), e.apply(r, s)
+                        (o = i), e.apply(r, s)
                       }, t)))
                     : ((o = i), e.apply(r, s))
                 }
@@ -447,7 +447,7 @@
               .querySelector(e.tocSelector)
               .querySelectorAll("." + e.listClass + "." + e.collapsibleClass)
             t.call(h, function (t) {
-              ;-1 === t.className.indexOf(e.isCollapsedClass) &&
+              -1 === t.className.indexOf(e.isCollapsedClass) &&
                 (t.className += r + e.isCollapsedClass)
             }),
               f.nextSibling &&
