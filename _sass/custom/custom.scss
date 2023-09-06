@@ -1,7 +1,6 @@
-@import url('/assets/css/fonts/SourceCodePro.css');
-@import url('/assets/css/fonts/ZCOOL.css');
-@import url('https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/lxgwwenkai-bold.css');
-
+@import url("/assets/css/fonts/SourceCodePro.css");
+@import url("/assets/css/fonts/ZCOOL.css");
+@import url("https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/lxgwwenkai-bold.css");
 
 ::-webkit-scrollbar {
   width: 14px;
@@ -45,7 +44,7 @@ body {
   height: 100vh;
   width: 100%;
   background-color: #27262b;
-  font-family: 'Source Code Pro', 'LXGW WenKai', sans-serif, 'ZCOOL KuaiLe';
+  font-family: "Source Code Pro", "LXGW WenKai", sans-serif, "ZCOOL KuaiLe";
   color: #d8d7d4;
   overflow: auto;
 }
@@ -87,7 +86,7 @@ body {
   height: 100%;
   display: inline-flex;
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 //左侧面板头部图片
@@ -100,9 +99,6 @@ body {
 .left-header a {
   font-size: 1.2rem;
   color: white;
-  flex: 1;
-  text-align: center;
-  line-height: 3rem;
 }
 
 //左侧内容
@@ -127,7 +123,6 @@ body {
   display: inline-block;
   margin: 0 0.3rem;
 }
-
 
 .middle {
   flex: 1;
@@ -173,7 +168,6 @@ body {
 .update-time-record {
   display: flex;
 }
-
 
 .middle-bread {
   padding-left: 1rem;
@@ -245,38 +239,43 @@ body {
     content: counter(section) " ";
     font-size: 1.4rem;
     font-weight: normal;
-    font-family: 'LXGW WenKai', sans-serif;
+    font-family: "LXGW WenKai", sans-serif;
   }
 
   h2:before {
     content: counter(section) "." counter(subsection) " ";
     font-size: 1rem;
     font-weight: normal;
-    font-family: 'LXGW WenKai', sans-serif;
+    font-family: "LXGW WenKai", sans-serif;
   }
 
   h3:before {
-    content: counter(section) "." counter(subsection) "." counter(subsubsection) " ";
+    content: counter(section) "." counter(subsection) "." counter(subsubsection)
+      " ";
     font-size: 0.8rem;
     font-weight: normal;
-    font-family: 'LXGW WenKai', sans-serif;
+    font-family: "LXGW WenKai", sans-serif;
   }
 
   h4:before {
-    content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) " ";
+    content: counter(section) "." counter(subsection) "." counter(subsubsection)
+      "." counter(subparagraph) " ";
     font-size: 0.5rem;
     font-weight: lighter;
-    font-family: 'LXGW WenKai', sans-serif;
+    font-family: "LXGW WenKai", sans-serif;
   }
 
   h5:before {
-    content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) "." counter(subsubparagraph) " ";
-    font-family: 'LXGW WenKai', sans-serif;
+    content: counter(section) "." counter(subsection) "." counter(subsubsection)
+      "." counter(subparagraph) "." counter(subsubparagraph) " ";
+    font-family: "LXGW WenKai", sans-serif;
   }
 
   h6:before {
-    content: counter(section) "." counter(subsection) "." counter(subsubsection) "." counter(subparagraph) "." counter(subsubparagraph) "." counter(subsubsubparagraph) " ";
-    font-family: 'LXGW WenKai', sans-serif;
+    content: counter(section) "." counter(subsection) "." counter(subsubsection)
+      "." counter(subparagraph) "." counter(subsubparagraph) "."
+      counter(subsubsubparagraph) " ";
+    font-family: "LXGW WenKai", sans-serif;
   }
 
   h1,
@@ -288,12 +287,13 @@ body {
     position: relative;
     margin-top: 1em;
     margin-bottom: 0.25em;
-    font-family: 'Source Code Pro', 'ZCOOL KuaiLe', 'LXGW WenKai', sans-serif;
+    font-family: "Source Code Pro", "ZCOOL KuaiLe", "LXGW WenKai", sans-serif;
     color: #91c2e7;
     font-style: italic;
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
-    background-image: linear-gradient(135deg, #27262b, #27262b), linear-gradient(135deg, #dbc3a2, #1e2122);
+    background-image: linear-gradient(135deg, #27262b, #27262b),
+      linear-gradient(135deg, #dbc3a2, #1e2122);
     border-bottom: 1px transparent solid;
 
     &:first-child {
@@ -324,7 +324,6 @@ body {
     line-height: 1.2;
   }
 }
-
 
 //右侧toc
 .right {
@@ -376,7 +375,6 @@ body {
   transform: scale(1.05, 1.05);
 }
 
-
 .nav-list .nav-list-item .nav-list-link {
   padding: 4px 1rem;
 }
@@ -392,8 +390,7 @@ code {
   font-family: "Source Code Pro", "ZCOOL KuaiLe", "LXGW WenKai", sans-serif;
 }
 
-
-:not(pre,figure) > code {
+:not(pre, figure) > code {
   /* styles go here */
   color: #449cc7;
   padding: 0;
@@ -411,10 +408,14 @@ code {
   background: url(/assets/images/checker.png) repeat;
 }
 
-p.note-title > p:first-child, blockquote.note-title > p:first-child,
-p.warning-title > p:first-child, blockquote.warning-title > p:first-child,
-p.important-title > p:first-child, blockquote.important-title > p:first-child,
-p.new-title > p:first-child, blockquote.new-title > p:first-child {
+p.note-title > p:first-child,
+blockquote.note-title > p:first-child,
+p.warning-title > p:first-child,
+blockquote.warning-title > p:first-child,
+p.important-title > p:first-child,
+blockquote.important-title > p:first-child,
+p.new-title > p:first-child,
+blockquote.new-title > p:first-child {
   font-size: 1rem;
   text-transform: none;
   padding-bottom: 0.5rem;
@@ -433,11 +434,11 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
   cursor: pointer;
 }
 
-
 //代码高亮
 .highlight {
-  .cm, .c1 {
-    color: #77AD5E;
+  .cm,
+  .c1 {
+    color: #77ad5e;
     font-weight: lighter;
   }
 
@@ -450,7 +451,8 @@ p.new-title > p:first-child, blockquote.new-title > p:first-child {
     background-color: transparent;
   }
 
-  .nt, .nc {
+  .nt,
+  .nc {
     color: #60a4d8;
   }
 

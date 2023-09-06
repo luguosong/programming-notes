@@ -10,13 +10,10 @@
   <!--左侧-->
   <div class="left" id="left-sidebar">
     <!--左侧顶部logo和标题-->
-    <div class="left-header">
-      <div>
-        <a href="/" style="text-decoration: none">
-          &nbsp{{ site.title }}
-        </a>
-        <a id="menu-button" style="display: none"></a>
-      </div>
+    <div class="left-header" style="display: flex;justify-content: center;align-items: center">
+      <img src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202309061501091.gif" alt="" style="height: 1.5rem;opacity: 0.5">
+      <a href="/" style="text-decoration: none">{{ site.title }}</a>
+      <a id="menu-button" style="display: none"></a>
     </div>
 
     <nav aria-label="Main" id="site-nav" style="flex: 1;overflow: auto">
@@ -472,11 +469,13 @@
   sitenav.scrollTop = getCookie("scrollTop")
 
   window.addEventListener("load", function() {
-    const objs = document.getElementsByTagName("img")
+    let objs = document.querySelector("#main-content").getElementsByTagName("img")
     const apply = document.getElementById("apply")
     const applyImg = document.getElementById("applyImg")
     const weixing = document.getElementById("weixing")
     const weixingImg = document.getElementById("weixingImg")
+
+    objs = [...objs, applyImg, weixingImg]
 
     for (let i = 0; i < objs.length; i++) {
       if (!objs[i].classList.contains("unImgView")) {
@@ -529,7 +528,7 @@
 <!--修复tocbot点击内容，目录会跳转的bug-->
 <script>
   const content = document.querySelector(".middle")
-  content.addEventListener("click", function(e){
+  content.addEventListener("click", function(e) {
     e.stopPropagation() // 阻止事件冒泡，让tocbot拿不到click事件
   })
 </script>

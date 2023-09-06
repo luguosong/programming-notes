@@ -5,7 +5,7 @@
   Results in: HTML for the head element.
   Includes:
     head_nav.html, head_custom.html.
-  Overwrites: 
+  Overwrites:
     ga_tracking_ids, ga_property, file, favicon.
   Should not be cached, because included files depend on page.
 {%- endcomment -%}
@@ -27,7 +27,7 @@
 
 
   <link rel="stylesheet" href="{{ '/assets/css/just-the-docs-default.css' | relative_url }}">
-  
+
   {% include head_nav.html %}
 
   {% if site.ga_tracking != nil %}
@@ -53,6 +53,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {% include_cached favicon.html %}
+
+  {% for file in site.static_files %}
+  {% if file.path == site.favicon_ico or file.path == '/favicon.ico' %}
+  {% assign favicon = true %}
+  {% endif %}
+  {% endfor %}
+  {% if favicon %}
+  <link rel="icon" href="{{ site.favicon_ico | default: '/favicon.ico' | relative_url }}" type="image/x-icon">
+  {% endif %}
 
   {% seo %}
 

@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: 💀陆国松的编程笔记
+title: 陆国松的编程笔记
 description: 一个Java程序员的学习笔记
 url: "https://www.luguosong.com" # the base hostname & protocol for your site, e.g. http://example.com
 repository: luguosong/programming-notes # for github-metadata
@@ -67,7 +67,6 @@ exclude:
   - "*.cer"
   - "*.p12"
   - "*.pdf"
-  - "*.gif"
   - "*.cmd"
   - "*mvnw"
   - "*.sample"
@@ -230,10 +229,3 @@ just_the_docs:
       name: 前端开发
     topic:
       name: 专项研究
-
-
-sass:
-  sass_dir: _sass
-  style: compressed
-  cache: false
-  debug_info: false
