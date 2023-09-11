@@ -1,7 +1,6 @@
 ---
 layout: note
 title: 字符集和编码详解
-nav_order: 10
 ---
 
 # 示意图
