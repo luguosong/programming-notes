@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    height: 100vh;
+}
+
+.div-border{
+    padding: 10px;
+    margin: 10px;
+    border: rgb(128, 128, 128) dotted 1px;
+}
