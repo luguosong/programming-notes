@@ -2,8 +2,7 @@
 const originalConsoleLog = console.log
 
 // 重写console.log函数
-console.log = function(message, color) {
-
+console.log = function (message, color) {
   if (color === undefined) color = "#666"
 
   if (typeof message === "number") {
@@ -31,6 +30,6 @@ console.log = function(message, color) {
   originalConsoleLog.call(console, message)
 }
 
-window.onerror = function(message, source, lineno, colno, error) {
+window.onerror = function (message, source, lineno, colno, error) {
   console.log(message, "red")
 }

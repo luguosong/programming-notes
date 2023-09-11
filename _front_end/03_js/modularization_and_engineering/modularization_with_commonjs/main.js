@@ -1,6 +1,6 @@
-const other1 = require('./other1.js');
-const other2 = require('./other2.js');
+const other1 = require("./other1.js")
+const other2 = require("./other2.js")
 
-other1.sayHi1();
+other1.sayHi1()
 
-other2.sayHi2();
+other2.sayHi2()

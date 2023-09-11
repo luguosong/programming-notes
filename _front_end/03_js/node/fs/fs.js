@@ -15,4 +15,3 @@ fs.readFile("./file.txt", (err, data) => {
   }
   console.log("文件读取：", data.toString("utf8"))
 })
-

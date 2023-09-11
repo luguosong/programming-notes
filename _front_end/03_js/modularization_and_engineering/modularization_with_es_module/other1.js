@@ -10,5 +10,5 @@ function sayHello() {
 
 export default {
   sayHi,
-  sayHello
+  sayHello,
 }

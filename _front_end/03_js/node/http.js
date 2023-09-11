@@ -11,7 +11,9 @@ server.listen(3000, () => {
 // 监听请求
 server.on("request", (req, res) => {
   console.log("==========收到一条请求==========")
-  console.log("收到请求，请求路径是：" + req.url + "，请求方法是：" + req.method )
+  console.log(
+    "收到请求，请求路径是：" + req.url + "，请求方法是：" + req.method
+  )
   for (let key in req.headers) {
     console.log(key + "：" + req.headers[key])
   }
