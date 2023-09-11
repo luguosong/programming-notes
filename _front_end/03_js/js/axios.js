@@ -1,5 +1,5 @@
 /* axios v0.21.1 | (c) 2020 by Matt Zabriskie */
-;(function webpackUniversalModuleDefinition(root, factory) {
+(function webpackUniversalModuleDefinition(root, factory) {
   if (typeof exports === "object" && typeof module === "object")
     module.exports = factory()
   else if (typeof define === "function" && define.amd) define([], factory)
