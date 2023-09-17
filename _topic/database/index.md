@@ -102,6 +102,16 @@ collation-server = utf8_general_ci
 - `DML`：Data manipulation language,数据操作语言，用于对数据库中表的数据进行增删改。如：insert、update、delete。
 - `DCL`：Data control language,数据控制语言，用于定义访问权限和安全级别。如：grant、revoke。
 
+# DQL-DESCRIBE查询
+
+```sql
+-- 查询表结构 --
+describe employees;
+
+-- 查询表结构（简写） --
+desc employees;
+```
+
 # DQL-SELECT查询
 
 ## 基本查询
@@ -109,25 +119,25 @@ collation-server = utf8_general_ci
 ```sql
 -- 查询表中所有字段 --
 select *
-from employees
+from employees;
 
 -- 指定字段 --
 select employee_id, last_name, salary
-from employees
+from employees;
 
 -- 别名（三种方式） --
 select employee_id as id, last_name 名字, salary "员工 收入"
-from employees
+from employees;
 
 -- 去重 --
 -- 去重一般只查询一个字段 --
 select distinct department_id
-from employees
+from employees;
 
 -- null处理 --
 -- commission_pct存在null值，使用IFNULL函数处理 --
 select salary "月收入", salary * (1 + IFNULL(commission_pct, 0)) * 12 "年收入"
-from employees
+from employees;
 
 -- 关键字冲突 --
 -- 当表名或字段是关键字时，使用着重号``包裹 --
@@ -140,7 +150,7 @@ select * from `order`;
 -- 查询last_name为King的员工 --
 select *
 from employees
-where last_name = 'King'
+where last_name = 'King';
 ```
 
 ## 算数运算符
@@ -249,25 +259,25 @@ where not salary > 10000;
 
 ```sql
 -- 升序 --
+-- asc是ascend（递增）的含义 --
 select *
 from employees
 order by salary;
 
 -- 降序 --
+-- desc是descend（递减）的含义--
 select *
 from employees
 order by salary desc;
+
+-- 二级排序 --
+-- 先按salary排序，再按last_name排序 --
+select *
+from employees
+order by salary desc , last_name desc ;
 ```
 
 
 
-# DQL-DESCRIBE查询
 
-```sql
--- 查询表结构 --
-describe employees
-
--- 查询表结构（简写） --
-desc employees
-```
 
