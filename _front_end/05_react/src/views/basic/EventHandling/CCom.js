@@ -28,7 +28,7 @@ class CCom extends Component {
                 {/*✅*/}
                 <Button onClick={() => {
                     alert("当使用箭头函数时，this 指向箭头函数被定义的地方，" +
-                        "也就是 CCom 类，因此可以在箭头函数中访问到 a。this.a=" + this.a)
+                        "也就是 FCom 类，因此可以在箭头函数中访问到 a。this.a=" + this.a)
                 }}>属性中定义箭头函数</Button>
 
                 {/*✅*/}

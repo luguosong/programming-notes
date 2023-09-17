@@ -5,6 +5,8 @@ const context = createContext();
 
 const {Provider, Consumer} = context;
 
+// {% raw %}
+
 class Child1 extends Component {
     render() {
         return (
@@ -44,6 +46,20 @@ class Child2 extends Component {
     }
 }
 
+class Child3 extends Component {
+    render() {
+        return (
+            <div>
+                <Card title={"子组件2"}>
+                    接收来自子组件1的内容：{this.context.msg}
+                </Card>
+            </div>
+        );
+    }
+}
+
+Child3.contextType = context
+
 class CCom extends Component {
 
     //只有通过状态的改变，才会刷新组件
@@ -62,10 +78,9 @@ class CCom extends Component {
                 }
             }}>
                 <div>
-                    <Child1 onChange={(value) => {
-
-                    }}></Child1>
+                    <Child1></Child1>
                     <Child2></Child2>
+                    <Child3></Child3>
                 </div>
             </Provider>
         );
@@ -73,3 +88,5 @@ class CCom extends Component {
 }
 
 export default CCom;
+
+//{% endraw %}

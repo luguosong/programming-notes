@@ -8,7 +8,6 @@ const {Header, Footer, Sider, Content} = Layout;
 
 const layoutStyle = {
     height: "100%",
-    display: "flex"
 }
 
 const headerStyle = {
@@ -18,22 +17,17 @@ const headerStyle = {
     justifyContent: "space-between"
 }
 
-const mainStyle = {
-    flex: 1,
-    display: "flex"
-}
-
 const siderStyle = {
     backgroundColor: "#ffffff",
     borderRight: "rgba(100,100,100,0.1) 1px solid",
-    display: "auto"
+    display: "auto",
+    overflow: "auto"
 }
 
 const contentStyle = {
     overflow: "auto",
     backgroundColor: "#ffffff",
-    height: "100%",
-    flex: 1
+    height: "100%"
 }
 
 function DefaultLayout(props) {
@@ -56,7 +50,7 @@ function DefaultLayout(props) {
                 </Link>
 
             </Header>
-            <Layout style={mainStyle} hasSider>
+            <Layout hasSider>
                 <Sider style={siderStyle}>
                     <SiderMenu/>
                 </Sider>
