@@ -359,6 +359,34 @@ const navigate = useNavigate();
 }}>编程式导航，路由传参</Button>
 ```
 
+导航参数获取：
+
+```jsx
+function Subroute1() {
+
+   const [searchParams] = useSearchParams()
+
+   return (
+           <Card title={"二级路由"}>
+              subroute1
+              <p>{searchParams.has("id") ? "接收到参数：" + searchParams.get("id") : "id属性不存在"}</p>
+           </Card>
+   )
+}
+
+function Subroute2() {
+
+   const params = useParams()
+
+   return (
+           <Card title={"二级路由"}>
+              subroute2
+              <p>接收到参数：{params.id}</p>
+           </Card>
+   )
+}
+```
+
 ## 路由拦截
 
 ```jsx
