@@ -71,6 +71,7 @@ exclude:
   - "*mvnw"
   - "*.sample"
   - "**/node_modules/*"
+  - "**/target/*"
 
 # Set a path/url to a logo that will be displayed instead of the title
 #logo: "/assets/images/just-the-docs.png"
@@ -202,7 +203,7 @@ compress_html:
   clippings: all
   comments: all
   endings: all
-  startings: []
+  startings: [ ]
   blanklines: false
   profile: false
   # ignore:
@@ -212,9 +213,11 @@ compress_html:
 collections:
   basic:
     output: true
+  front_end:
+    output: true
   java:
     output: true
-  front_end:
+  javaweb:
     output: true
   topic:
     output: true
@@ -223,9 +226,11 @@ just_the_docs:
   collections:
     basic:
       name: 基础知识
-    java:
-      name: JAVA
     front_end:
       name: 前端开发
+    java:
+      name: JAVA
+    javaweb:
+      name: JAVA WEB
     topic:
       name: 专项研究
