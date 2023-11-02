@@ -5,490 +5,229 @@ nav_order: 50
 create_time: 2023/6/29
 ---
 
-# create-react-app脚手架
+# 🍪描述UI
 
-```shell
-# 使用脚手架创建项目
-npx create-react-app my-app
+React 是一个用于构建用户界面（UI）的 JavaScript 库，用户界面由按钮、文本和图像等小单元内容构建而成。React
+帮助你把它们组合成`可重用`、`可嵌套`的组件。从 web 端网站到移动端应用，屏幕上的所有内容都可以被分解成组件。
+
+# 定义组件
+
+{% highlight react %}
+{% include_relative src/views/describing-the-ui/defining-a-component/FCom.js %}
+{% endhighlight %}
+
+# 使用组件
+
+{% highlight react %}
+{% include_relative src/views/describing-the-ui/using-a-component/FCom.js %}
+{% endhighlight %}
+
+# 组件的导入与导出
+
+导出组件：
+
+```javascript
+export default xxx
 ```
 
-# 项目构建过程
+导入组件：
 
-1. `npm start`启动项目,触发项目的构建和启动。
-2. 查找并加载`src/index.js`,这是应用程序的入口点。
-3. 在`src/index.js`中，使用`ReactDOM.render()`方法，将React`根组件`渲染到 `public/index.html` 中的根容器`<div id="root">`
-   中。
+```javascript
+import xxx from 'xxx'
+```
 
-# index.js
+# JSX
 
-{% highlight js %}
-{% include_relative src/index.js %}
-{% endhighlight %}
+React组件使用一种被称为`JSX`的语法扩展来描述这些标签。JSX看起来和HTML很像，但它的语法更加严格并且可以动态展示信息。
 
-# 函数式组件和类组件
+JSX规则：
 
-- `类组件`
-- `函数式组件`：16.8版本之前没有状态管理，16.8之后采用react hooks进行状态管理
+- 只能返回一个根元素
+- 标签必须闭合
+- 使用驼峰式命名法给~~所有~~大部分属性命名！
+- 在 JSX 中通过`大括号`使用 JavaScript
 
-# 创建和使用组件
+# Props属性
 
-函数式组件实现：
+每个父组件都可以提供 props 给它的子组件，从而将一些信息传递给它。
 
-{% highlight jsx %}
-{% include_relative src/views/basic/CreatingAndNestingComponents/FCom.js %}
-{% endhighlight %}
-
-类组件实现：
-
-{% highlight jsx %}
-{% include_relative src/views/basic/CreatingAndNestingComponents/CCom.js %}
-{% endhighlight %}
-
-# Html转JSX
-
-[地址](https://transform.tools/html-to-jsx)
-
-# 添加样式
-
-## 基本用法
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ComponentStyles/CCom.js %}
-{% endhighlight %}
-
-{: .note}
-> 推荐使用行内样式，防止CSS污染。
-
-## ⭐CSSModule
-
-将css文件命名为`xxx.module.css`,然后在组件中将css当作对象使用。
-
-这样可以防止css之间相互污染。
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ComponentStyles/CssModuleCCom.js %}
-{% endhighlight %}
-
-# 事件处理
-
-{% highlight jsx %}
-{% include_relative src/views/basic/EventHandling/CCom.js %}
-{% endhighlight %}
-
-{: .note}
-> React组件中的非箭头函数中的this无法访问组件实例中的属性和方法，需要使用箭头函数或使用`bind`绑定this。
-
-{: .note-title}
-> 事件代理
->
-> React中的事件处理是基于事件代理的，事件代理是将事件绑定到`root根元素上`，通过事件`冒泡机制`，触发父元素上的事件，从而实现事件处理。
->
-> 事件对象（通常称为event）在事件冒泡过程中会携带相关信息，其中包括触发事件的目标元素（即触发事件的子元素）以及其他与事件相关的信息。通过这些信息获取到触发事件的子元素，从而实现事件处理。
-
-# 引用
-
-## 函数式组件
-
-{% highlight jsx %}
-{% include_relative src/views/basic/Ref/FCom.js %}
-{% endhighlight %}
-
-## 类组件
-
-{% highlight jsx %}
-{% include_relative src/views/basic/Ref/CCom.js %}
-{% endhighlight %}
-
-# 状态
-
-状态改变组件会重新渲染，组件修改状态不会自动改变。
-
-## 函数式组件实现
-
-{% highlight jsx %}
-{% include_relative src/views/basic/State/FCom.js %}
-{% endhighlight %}
-
-## 类组件实现
-
-`setState`是异步的，如果需要获取最新的状态，需要使用回调函数。
-
-{% highlight jsx %}
-{% include_relative src/views/basic/State/CCom.js %}
-{% endhighlight %}
-
-# 列表循环
-
-{% highlight jsx %}
-{% include_relative src/views/basic/List/CCom.js %}
-{% endhighlight %}
-
-# 条件渲染
-
-- 使用三元运算符
-- 使用逻辑与运算符`&&`
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ConditionalRendering/CCom.js %}
-{% endhighlight %}
-
-# 属性（父传子）
-
-可以通过属性传递数据，提高组件复用性。
-
-属性不能在子组件中修改，只能通过父组件修改。
-
-函数式组件：
-
-{% highlight jsx %}
-{% include_relative src/views/basic/Props/FCom.js %}
-{% endhighlight %}
-
-类组件：
-
-{% highlight jsx %}
-{% include_relative src/views/basic/Props/CCom.js %}
-{% endhighlight %}
-
-# 组件通信（子传父，父传子）
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ComponentCommunication/CCom.js %}
-{% endhighlight %}
-
-# 组件通信（发布订阅）
-
-使用发布订阅模式。
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ComponentCommunicationPubSub/CCom.js %}
-{% endhighlight %}
-
-# 组件通信（Context）
-
-使用生产者消费者模式。
-
-使用`createContext`创建一个上下文，使用`Provider`提供上下文，使用`Consumer`消费上下文。
-
-## 函数式组件（useContext）
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ComponentCommunicationContext/FCom.js %}
-{% endhighlight %}
-
-## 类组件
-
-{% highlight jsx %}
-{% include_relative src/views/basic/ComponentCommunicationContext/CCom.js %}
-{% endhighlight %}
-
-# 状态管理（useReducer）
-
-将状态管理与组件分离。
-
-一般useReducer会和useContext一起配合使用。
-
-{% highlight jsx %}
-{% include_relative src/views/basic/UseReducer/FCom.js %}
+{% highlight react %}
+{% include_relative src/views/describing-the-ui/passing-props-to-a-component/FCom.js %}
 {% endhighlight %}
 
 # 插槽
 
-可以通过插槽实现组件的复用。并且减少父子组件间的通信。
-
-{% highlight jsx %}
-{% include_relative src/views/basic/Slot/CCom.js %}
+{% highlight react %}
+{% include_relative src/views/describing-the-ui/slot/CCom.js %}
 {% endhighlight %}
 
-# 生命周期
+# 条件渲染
 
-- `constructor`：构造函数，初始化state和props
-- ~~`componentWillMount`~~：组件将要挂载
-- componentDidMount: 组件挂载完成
-- ~~`componentWillReceiveProps(nextProps)`~~：组件将要接收新的props
-- `getDerivedStateFromProps(nextProps, prevState)`：组件将要接收新的props或state
-- `shouldComponentUpdate(nextProps, nextState)`: 组件是否需要更新,返回true更新，返回false不更新
-- ~~`componentWillUpdate`~~：组件将要更新
-- `getSnapshotBeforeUpdate(prevProps, prevState)`：组件更新前获取快照
-- `componentDidUpdate(prevProps, prevState)`：组件更新完成
-- `componentWillUnmount`：组件将要卸载
-- `render`：渲染函数
-
-{% highlight jsx %}
-{% include_relative src/views/basic/LifeCycle/CCom.js %}
+{% highlight react %}
+{% include_relative src/views/describing-the-ui/conditional-rendering/FCom.js %}
 {% endhighlight %}
 
-# PureComponent
+# 列表渲染
 
-使用setStatus更新状态时，如果想优化性能，我自可以自己手动在`shouldComponentUpdate`
-中进行判断，但是这样会很麻烦，React提供了`PureComponent`，可以自动帮我们进行判断。
+使用`map`函数渲染列表。使用`filter`函数过滤列表。使用`key`属性来标识列表项。
 
-{% highlight jsx %}
-{% include_relative src/views/basic/PureComponentDemo/CCom.js %}
+{% highlight react %}
+{% include_relative src/views/describing-the-ui/rendering-lists/FCom.js %}
 {% endhighlight %}
 
-# useEffect
+# 🍪添加交互
 
-- useEffect中如果第二个参数数组为空，则只会在组件挂载时执行，相当于`componentDidMount`。
-- useEffect如果第二个参数不为空，则会监听对应的内容变化，相当于`componentDidUpdate`。
-- useEffect如果返回一个函数，则会在组件卸载时执行，相当于`componentWillUnmount`。
+界面上的控件会根据用户的输入而更新。例如，点击按钮切换轮播图的展示。在 React 中，随时间变化的数据被称为状态（state）。你可以向任何组件添加状态，并按需进行更新。
 
-{% highlight jsx %}
-{% include_relative src/views/basic/LifeCycle/FCom.js %}
+# 响应事件
+
+{% highlight react %}
+{% include_relative src/views/adding-interactivity/responding-to-events/FCom.js %}
 {% endhighlight %}
 
-# useCallBack
+# state
 
-当组件更新时，函数会重新创建。为了避免这种情况，可以使用`useCallBack`。
+{: .note-title}
+> 普通变量和state的区别
+>
+> - `局部变量`无法在多次渲染中持久保存，当React再次渲染这个组件时，它会重新初始化这个变量。而`state`可以在多次渲染中持久保存。
+> - 更改`局部变量`不会触发渲染。而更改`state`会触发渲染。
 
-{% highlight jsx %}
-{% include_relative src/views/basic/UseCallBack/FCom.js %}
+{% highlight react %}
+{% include_relative src/views/adding-interactivity/state-a-components-memory/FCom.js %}
 {% endhighlight %}
 
-# useMemo-计算属性
+# 原理：渲染和提交
 
-useMemo类似与Vue中的计算属性。
+组件请求和提供UI的过程如下：
 
-{% highlight jsx %}
-{% include_relative src/views/basic/UseMemo/FCom.js %}
-{% endhighlight %}
-
-# 自定义hooks
-
-自定义hooks可以将组件逻辑提取到可重用的函数中。
-
-{% highlight jsx %}
-{% include_relative src/views/basic/CustomHooks/FCom.js %}
-{% endhighlight %}
-
-# ⭐React Router V6
-
-## 概述
-
-- `react-router`:核心模块
-- `react-router-dom`：开发网页，包含`react-router`
-- `react-router-native`：开发Native应用
-
-## 安装
-
-```shell
-npm install react-router-dom
-```
-
-## 路由模式
-
-- `BrowserRouter`：浏览器路由模式，使用`history.pushState`和`history.replaceState`实现路由跳转，不会刷新页面。
-- `HashRouter`：hash路由模式，使用`location.hash`实现路由跳转，不会刷新页面。
-
-## 路由组件-Route
-
-- `path`：路由路径
-- `element`：路由组件
-- `index`: 默认路由
-
-## 重定向
-
-```jsx
-// 方式一：使用Navigate组件
-<Route path="" element={<Navigate to={"CreatingAndNestingComponents"}/>}/>
-```
-
-```jsx
-// 方式二：自定义Redirect组件
-<Route path="" element={<Redirect to={"CreatingAndNestingComponents"} />} />
-
-function Redirect(props) {
-  const { to } = props
-
-  useEffect(() => {
-    // replace: true表示替换当前路由
-    navigator.to(to, { replace: true })
-  })
-  return null
-}
-```
-
-## 嵌套路由
-
-```jsx
-<Route path="Leve1" element={<Leve1/>}>
-  <Route path="Leve2-1" element={<Leve21/>}/>
-  <Route path="Leve2-2" element={<Leve22/>}/>
-</Route>
-```
-
-```jsx
-function Leve1() {
-   return (
-     <div>
-        {/*Leve1组件中使用路由容器接收子路由*/}
-        <Outlet></Outlet>
-     </div>
-   )
-}
-```
-
-## 导航
-
-声明式导航：
-
-```jsx
-// 方式一
-<Link to="child1">Child1</Link>
-
-// 方式二:可以对导航进行样式定制
-<NavLink to="child2" className={({isActive}) => {
-   return isActive ? "myRouterActive" : "myRouterUnActive"
-}}>Child2:声明式导航NavLink，可以对选中进行样式定制</NavLink>
-```
-
-
-编程式导航：
-
-```jsx
-const navigate = useNavigate();
-
-// 组件使用useSearchParams接收参数
-<Button onClick={() => {
-   navigate(`child2/subroute1?id=1000`)
-}}>编程式导航，查询参数传参</Button>
-
-// 组件使用useParams接收参数
-<Button onClick={() => {
-   navigate(`child2/subroute2/1001`)
-}}>编程式导航，路由传参</Button>
-```
-
-导航参数获取：
-
-```jsx
-function Subroute1() {
-
-   const [searchParams] = useSearchParams()
-
-   return (
-           <Card title={"二级路由"}>
-              subroute1
-              <p>{searchParams.has("id") ? "接收到参数：" + searchParams.get("id") : "id属性不存在"}</p>
-           </Card>
-   )
-}
-
-function Subroute2() {
-
-   const params = useParams()
-
-   return (
-           <Card title={"二级路由"}>
-              subroute2
-              <p>接收到参数：{params.id}</p>
-           </Card>
-   )
-}
-```
-
-## 路由拦截
-
-```jsx
-<Route path={"login"} element={<Login/>}/>
-{/*进行路由拦截判断*/}
-<Route path={"backstage"}
-       element={<PrivateRoute element={<Backstage/>}/>}/>
-```
-
-```jsx
-function PrivateRoute({element}) {
-   if (!localStorage.getItem("token")) {
-      return <Navigate to={"../login"}/>
-   }
-   return element;
-}
-```
+1. 触发一次渲染
+    1. 组件的`初次渲染`。
+    2. 组件（或者其祖先之一）的`状态`发生了改变。
+2. 渲染组件
+    1. 在进行初次渲染时, React 会调用根组件。
+    2. 对于后续的渲染, React 会调用内部状态更新触发了渲染的函数组件。
+    3. 如果当前组件包含子组件，会一直渲染到最底层的子组件。
+3. 提交到DOM
+    1. 对于初次渲染， React 会使用 `appendChild()` DOM API 将其创建的所有 DOM 节点放在屏幕上。
+    2. 对于重渲染， React 将应用最少的必要操作（在渲染时计算！），以使得 DOM 与最新的渲染输出相互匹配。
 
 {: .warning}
-> 注意！这里不能直接在路由中进行判断。
+> React仅在渲染之间存在差异时才会`更改DOM`节点。如下面组件，当time属性变化时，并`不会更新input标签`：
+>
+> ```react
+> export default function Clock({ time }) {
+>   return (
+>     <>
+>       <h1>{time}</h1>
+>       <input />
+>     </>
+>   );
+> }
+> ```
+
+# state如同快照
+
+当对状态进行修改时，状态并不会立刻改变，而是生成一个快照。等到下一次渲染时，才会将快照中的状态更新到组件中：
+
+{% highlight react %}
+{% include_relative src/views/adding-interactivity/state-as-a-snapshot/FCom.js %}
+{% endhighlight %}
+
+# state更新加入队列
+
+在下次渲染之前多次更新同一个 state。
+
+将`更新函数`传递给一个 state 设置函数时：
+1. React 会将此函数加入队列，以便在对应处理函数中的所有其他代码运行后进行处理。
+2. 在下一次渲染期间，React 会遍历队列并给你更新之后的最终 state。
+
+当你在下次`渲染期间`调用 useState 时，React 会遍历队列。先获取`之前state的值`作为`参数 n `传递给第一个更新函数的值。然后 React 会获取你上一个更新函数的`返回值`，并将其作为 `n` 传递给下一个更新函数，以此类推。
+
+
+{% highlight react %}
+{% include_relative src/views/adding-interactivity/queueing-a-series-of-state-updates/FCom.js %}
+{% endhighlight %}
+
+# 更新对象类型state
+
+当你想要更新一个对象时，你需要创建一个新的对象（或者将其拷贝一份），然后将 state 更新为此对象。
+
+{% highlight react %}
+{% include_relative src/views/adding-interactivity/updating-objects-in-state/FCom.js %}
+{% endhighlight %}
+
+# 更新数组类型state
+
+{% highlight react %}
+{% include_relative src/views/adding-interactivity/updating-arrays-in-state/FCom.js %}
+{% endhighlight %}
+
+# 🍪状态管理
+
+随着你的应用不断变大，更有意识的去关注应用状态如何组织，以及数据如何在组件之间流动会对你很有帮助。冗余或重复的状态往往是缺陷的根源。
+
+# 声明式编程
+
+命令式编程和声明式编程：
+- `命令式编程`：必须去根据要发生的事情写一些明确的命令去操作UI
+- `声明式编程`：只需要告诉React你想要的结果，React会自动帮你处理
+
+{% highlight react %}
+{% include_relative src/views/managing-state/reacting-to-input-with-state/FCom.js %}
+{% endhighlight %}
+
+# state构建原则
+
+构建state的原则:
+- 合并关联的 state
+- 避免互相矛盾的 state
+- 避免冗余的state:如果你能在渲染期间从组件的 props 或其现有的 state 变量中计算出一些信息，则不应将这些信息放入该组件的 state 中。
+- 避免重复的state
+- 避免深度嵌套的 state
+
+# 共享状态：状态提升
+
+希望两个组件的状态始终同步更改,可以将相关 state 从这两个组件上移除，并把 state 放到它们的公共父级，再通过 props 将 state 传递给这两个组件。
+
+{% highlight react %}
+{% include_relative src/views/managing-state/sharing-state-between-components/FCom.js %}
+{% endhighlight %}
+
+# 受控组件
+
+当组件中的重要信息是由`props`而不是其自身`状态`驱动时，就可以认为该组件是`受控组件`。这就允许父组件完全指定其行为。
+
+`非受控组件`的特点是简单，不需要太多配置。
+
+而`受控组件`的特点是灵活，需要父组件使用 props 对其进行配置。
+
+{: .warning-title}
+> 可信单一数据源
 > 
-> 因为路由只会在页面加载时执行一次，如果在路由中进行判断，当token失效时，无法进行跳转。
+> 对于每个独特的状态，都应该存在且只存在于一个指定的组件中作为 state。
 
-## 路由组件懒加载
+# 对state进行保留和重置
 
-```jsx
-// 路由组件懒加载
-const lazyLoad = (path) => {
-   const Comp = React.lazy(() => import(`${path}`));
-   return (
-           <React.Suspense fallback={<>加载中</>}>
-              <Comp/>
-           </React.Suspense>
-   )
-}
-```
+每个组件都有完全独立的state,互不影响。
 
-## useRoutes
+- 组件停止渲染，state状态会被清除
+- 相同位置的相同组件（比如只是属性不一样），状态会被保留
+- 相同位置的不同组件，state状态会被清除(包含它下面的子组件的state也会被清理)
 
-```jsx
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { useRoutes } from 'react-router-dom';
+相同位置相同组件重置组件(特殊情况):
+- 将组件渲染在不同的位置
+- 使用 key 来重置 state
 
-function Home() {
-   return <div>Home Page</div>;
-}
+{: .note}
+> `如果你想在重新渲染时保留 state，几次渲染中的树形结构就应该相互“匹配”`。结构不同就会导致 state 的销毁，因为 React 会在将一个组件从树中移除时销毁它的 state。
 
-function About() {
-   return <div>About Page</div>;
-}
+{% highlight react %}
+{% include_relative src/views/managing-state/preserving-and-resetting-state/FCom.js %}
+{% endhighlight %}
 
-function Contact() {
-   return <div>Contact Page</div>;
-}
+# Reducer
 
-const routes = [
-   { path: '/', element: <Home /> },
-   { path: '/about', element: <About /> },
-   { path: '/contact', element: <Contact /> },
-];
-
-function App() {
-   const routeResult = useRoutes(routes);
-
-   return (
-           <Router>
-              <div>
-                 <h1>My App</h1>
-                 {routeResult}
-              </div>
-           </Router>
-   );
-}
-
-export default App;
-```
-
-# 反向代理解决跨域
-
-安装`http-proxy-middleware`。
-
-```shell
-npm install http-proxy-middleware --save
-```
-
-在`src`目录下创建`setupProxy.js`文件。
-
-```js
-const { createProxyMiddleware } = require('http-proxy-middleware');
-
-module.exports = function(app) {
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: 'https://www.xxxx.com:5000',
-      changeOrigin: true,
-    })
-  );
-};
-```
-
-# Redux
+`Reducer`将组件的所有`状态更新`逻辑整合到一个外部函数中。
 
 

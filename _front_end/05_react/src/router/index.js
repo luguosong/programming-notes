@@ -9,11 +9,13 @@ import Ref from "../views/basic/Ref";
 import State from "../views/basic/State";
 import List from "../views/basic/List";
 import ConditionalRendering from "../views/basic/ConditionalRendering";
+import ConditionalRendering2 from "../views/describing-the-ui/conditional-rendering";
 import Props from "../views/basic/Props";
 import ComponentCommunication from "../views/basic/ComponentCommunication";
 import ComponentCommunicationPubSub from "../views/basic/ComponentCommunicationPubSub";
 import ComponentCommunicationContext from "../views/basic/ComponentCommunicationContext";
 import Slot from "../views/basic/Slot";
+import Slot2 from "../views/describing-the-ui/slot";
 import LifeCycle from "../views/basic/LifeCycle/CCom";
 import UseEffect from "../views/basic/LifeCycle/FCom";
 import PureComponentDemo from "../views/basic/PureComponentDemo";
@@ -22,6 +24,19 @@ import UseMemo from "../views/basic/UseMemo";
 import UseReducer from "../views/basic/UseReducer";
 import CustomHooks from "../views/basic/CustomHooks";
 import RouterDemo from "../views/router/RouterDemo";
+import DefiningAComponent from "../views/describing-the-ui/defining-a-component";
+import UsingAComponent from "../views/describing-the-ui/using-a-component";
+import PassingPropsToAComponent from "../views/describing-the-ui/passing-props-to-a-component";
+import RenderingLists from "../views/describing-the-ui/rendering-lists";
+import RespondingToEvents from "../views/adding-interactivity/responding-to-events";
+import StateAComponentsMemory from "../views/adding-interactivity/state-a-components-memory";
+import StateAsASnapshot from "../views/adding-interactivity/state-as-a-snapshot";
+import QueueingASeriesOfStateUpdates from "../views/adding-interactivity/queueing-a-series-of-state-updates";
+import UpdatingObjectsInState from "../views/adding-interactivity/updating-objects-in-state";
+import UpdatingArraysInState from "../views/adding-interactivity/updating-arrays-in-state";
+import ReactingToInputWithState from "../views/managing-state/reacting-to-input-with-state";
+import SharingStateBetweenComponents from "../views/managing-state/sharing-state-between-components";
+import PreservingAndResettingState from "../views/managing-state/preserving-and-resetting-state";
 
 
 function NotFound() {
@@ -74,6 +89,32 @@ export default function MainRouter(props) {
                     <Route path={"router"}>
                         <Route path="RouterDemo/*" element={<RouterDemo/>}/>
                     </Route>
+                    {/*描述UI*/}
+                    <Route path={"describing-the-ui"}>
+                        <Route path="defining-a-component" element={<DefiningAComponent/>}/>
+                        <Route path="using-a-component" element={<UsingAComponent/>}/>
+                        <Route path="passing-props-to-a-component" element={<PassingPropsToAComponent/>}/>
+                        <Route path="slot" element={<Slot2/>}/>
+                        <Route path="conditional-rendering" element={<ConditionalRendering2/>}/>
+                        <Route path="rendering-lists" element={<RenderingLists/>}/>
+
+                    </Route>
+                    {/*添加交互*/}
+                    <Route path={"adding-interactivity"}>
+                        <Route path="responding-to-events" element={<RespondingToEvents/>}/>
+                        <Route path="state-a-components-memory" element={<StateAComponentsMemory/>}/>
+                        <Route path="state-as-a-snapshot" element={<StateAsASnapshot/>}/>
+                        <Route path="queueing-a-series-of-state-updates" element={<QueueingASeriesOfStateUpdates/>}/>
+                        <Route path="updating-objects-in-state" element={<UpdatingObjectsInState/>}/>
+                        <Route path="updating-arrays-in-state" element={<UpdatingArraysInState/>}/>
+                    </Route>
+
+                    <Route path={"managing-state"}>
+                        <Route path={"reacting-to-input-with-state"} element={<ReactingToInputWithState/>}/>
+                        <Route path={"sharing-state-between-components"} element={<SharingStateBetweenComponents/>}/>
+                        <Route path={"preserving-and-resetting-state"} element={<PreservingAndResettingState/>}/>
+                    </Route>
+
 
                     <Route path='*' element={<NotFound/>}/>
                 </Route>

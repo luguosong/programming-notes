@@ -1,3 +1,4 @@
+//{% raw %}
 import React, {createContext, useContext, useState} from 'react';
 import {Card, Input} from "antd";
 
@@ -52,3 +53,4 @@ function FCom(props) {
 }
 
 export default FCom;
+//{% endraw %}

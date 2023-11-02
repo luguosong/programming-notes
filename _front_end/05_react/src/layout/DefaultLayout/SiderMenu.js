@@ -35,6 +35,39 @@ function SiderMenu(props) {
             children: [
                 {key: "RouterDemo", label: "路由示例"},
             ]
+        },
+        {
+            label: "描述UI",
+            key: "describing-the-ui",
+            children: [
+                {key: "defining-a-component", label: "定义组件"},
+                {key: "using-a-component", label: "使用组件"},
+                {key: "passing-props-to-a-component", label: "props"},
+                {key: "slot", label: "插槽"},
+                {key: "conditional-rendering", label: "条件渲染"},
+                {key: "rendering-lists", label: "列表渲染"},
+            ]
+        },
+        {
+            label: "添加交互",
+            key:"adding-interactivity",
+            children: [
+                {key: "responding-to-events", label: "响应事件"},
+                {key: "state-a-components-memory", label: "State"},
+                {key: "state-as-a-snapshot", label: "state如同一张快照"},
+                {key: "queueing-a-series-of-state-updates", label: "state更新加入队列"},
+                {key: "updating-objects-in-state", label: "state对象更新"},
+                {key: "updating-arrays-in-state", label: "state数组更新"},
+            ]
+        },
+        {
+            label: "状态管理",
+            key:"managing-state",
+            children: [
+                {key: "reacting-to-input-with-state", label: "State响应输入"},
+                {key: "sharing-state-between-components", label: "状态提升"},
+                {key: "preserving-and-resetting-state", label: "状态保留和重置"},
+            ]
         }
     ]
     const navigate = useNavigate();
@@ -58,7 +91,6 @@ function SiderMenu(props) {
                     const path = item.keyPath.reduceRight((pre, cur) => {
                         return pre + "/" + cur
                     },"");
-                    console.log(path)
                     navigate(path)
                 }}
                 defaultSelectedKeys={selectedKeys}

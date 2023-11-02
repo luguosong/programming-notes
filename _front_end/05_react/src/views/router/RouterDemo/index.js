@@ -10,7 +10,7 @@ import {
     useParams,
     useSearchParams
 } from "react-router-dom";
-import {Button, Card} from "antd";
+import {Button, Card, Space} from "antd";
 import "./index.css"
 
 
@@ -46,32 +46,34 @@ function Root() {
 
     return (
         <div>
-            <Button>
-                <Link to="child1">Child1:声明式导航Link</Link>
-            </Button>
-            <Button>
-                <NavLink to="child2" className={({isActive}) => {
-                    return isActive ? "myRouterActive" : "myRouterUnActive"
-                }}>Child2:声明式导航NavLink，可以对选中进行样式定制</NavLink>
-            </Button>
+            <Space>
+                <Button>
+                    <Link to="child1">Child1:声明式导航Link</Link>
+                </Button>
+                <Button>
+                    <NavLink to="child2" className={({isActive}) => {
+                        return isActive ? "myRouterActive" : "myRouterUnActive"
+                    }}>Child2:声明式导航NavLink，可以对选中进行样式定制</NavLink>
+                </Button>
 
-            <Button onClick={() => {
-                navigate(`child2/subroute1?id=1000`)
-            }}>编程式导航，查询参数传参</Button>
+                <Button onClick={() => {
+                    navigate(`child2/subroute1?id=1000`)
+                }}>编程式导航，查询参数传参</Button>
 
-            <Button onClick={() => {
-                navigate(`child2/subroute2/1001`)
-            }}>编程式导航，路由传参</Button>
-
-
-            <Button onClick={() => {
-                navigate(`backstage`)
-            }}>后台页面</Button>
+                <Button onClick={() => {
+                    navigate(`child2/subroute2/1001`)
+                }}>编程式导航，路由传参</Button>
 
 
-            <Button>
-                <Link to="lazyLoad">组件懒加载</Link>
-            </Button>
+                <Button onClick={() => {
+                    navigate(`backstage`)
+                }}>后台页面</Button>
+
+
+                <Button>
+                    <Link to="lazyLoad">组件懒加载</Link>
+                </Button>
+            </Space>
 
             {/*Outlet作为嵌套路由的路由容器*/}
             <Outlet/>
