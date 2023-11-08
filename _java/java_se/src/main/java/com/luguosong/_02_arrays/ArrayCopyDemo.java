@@ -35,8 +35,8 @@ public class ArrayCopyDemo {
          * 复制方法二
          *
          * 参数一：源数组
-         * 参数二：源数组开始位置
-         * 参数三：目标数组
+         * 参数二：要复制的数组范围的初始索引，包含在内
+         * 参数三：要复制的范围的最终索引，不包括在内。(该索引可能位于数组之外）
          * 返回值：复制后的数组
          * */
         String[] copyTo2 = Arrays.copyOfRange(copyFrom, 2, 9);
