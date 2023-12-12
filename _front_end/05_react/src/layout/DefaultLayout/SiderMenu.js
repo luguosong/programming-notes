@@ -67,6 +67,9 @@ function SiderMenu(props) {
                 {key: "reacting-to-input-with-state", label: "State响应输入"},
                 {key: "sharing-state-between-components", label: "状态提升"},
                 {key: "preserving-and-resetting-state", label: "状态保留和重置"},
+                {key: "extracting-state-logic-into-a-reducer", label: "Reducer"},
+                {key: "passing-data-deeply-with-context", label: "Context"},
+                {key: "scaling-up-with-reducer-and-context", label: "Context+Reducer"},
             ]
         }
     ]

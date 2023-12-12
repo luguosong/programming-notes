@@ -37,6 +37,9 @@ import UpdatingArraysInState from "../views/adding-interactivity/updating-arrays
 import ReactingToInputWithState from "../views/managing-state/reacting-to-input-with-state";
 import SharingStateBetweenComponents from "../views/managing-state/sharing-state-between-components";
 import PreservingAndResettingState from "../views/managing-state/preserving-and-resetting-state";
+import ExtractingStateLogicIntoAReducer from "../views/managing-state/extracting-state-logic-into-a-reducer";
+import PassingDataDeeplyWithContext from "../views/managing-state/passing-data-deeply-with-context";
+import ScalingUpWithReducerAndContext from "../views/managing-state/scaling-up-with-reducer-and-context";
 
 
 function NotFound() {
@@ -113,8 +116,11 @@ export default function MainRouter(props) {
                         <Route path={"reacting-to-input-with-state"} element={<ReactingToInputWithState/>}/>
                         <Route path={"sharing-state-between-components"} element={<SharingStateBetweenComponents/>}/>
                         <Route path={"preserving-and-resetting-state"} element={<PreservingAndResettingState/>}/>
+                        <Route path={"extracting-state-logic-into-a-reducer"}
+                               element={<ExtractingStateLogicIntoAReducer/>}/>
+                        <Route path={"passing-data-deeply-with-context"} element={<PassingDataDeeplyWithContext/>}/>
+                        <Route path={"scaling-up-with-reducer-and-context"} element={<ScalingUpWithReducerAndContext/>}/>
                     </Route>
-
 
                     <Route path='*' element={<NotFound/>}/>
                 </Route>

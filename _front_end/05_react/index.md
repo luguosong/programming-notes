@@ -5,7 +5,7 @@ nav_order: 50
 create_time: 2023/6/29
 ---
 
-# 🍪描述UI
+# 🏷️描述UI
 
 React 是一个用于构建用户界面（UI）的 JavaScript 库，用户界面由按钮、文本和图像等小单元内容构建而成。React
 帮助你把它们组合成`可重用`、`可嵌套`的组件。从 web 端网站到移动端应用，屏幕上的所有内容都可以被分解成组件。
@@ -75,7 +75,7 @@ JSX规则：
 {% include_relative src/views/describing-the-ui/rendering-lists/FCom.js %}
 {% endhighlight %}
 
-# 🍪添加交互
+# 🏷️添加交互
 
 界面上的控件会根据用户的输入而更新。例如，点击按钮切换轮播图的展示。在 React 中，随时间变化的数据被称为状态（state）。你可以向任何组件添加状态，并按需进行更新。
 
@@ -163,7 +163,7 @@ JSX规则：
 {% include_relative src/views/adding-interactivity/updating-arrays-in-state/FCom.js %}
 {% endhighlight %}
 
-# 🍪状态管理
+# 🏷️状态管理
 
 随着你的应用不断变大，更有意识的去关注应用状态如何组织，以及数据如何在组件之间流动会对你很有帮助。冗余或重复的状态往往是缺陷的根源。
 
@@ -229,5 +229,39 @@ JSX规则：
 # Reducer
 
 `Reducer`将组件的所有`状态更新`逻辑整合到一个外部函数中。
+
+{% highlight react %}
+{% include_relative src/views/managing-state/extracting-state-logic-into-a-reducer/FCom.js %}
+{% endhighlight %}
+
+# Context深层传递参数
+
+通常来说，你会通过 props 将信息从父组件传递到子组件。但是，如果你必须通过许多中间组件向下传递 props，或是在你应用中的许多组件需要相同的信息，传递 props 会变的十分冗长和不便。`Context`允许父组件向其下层无论多深的任何组件提供信息，而无需通过 props 显式传递。
+
+{% highlight react %}
+{% include_relative src/views/managing-state/passing-data-deeply-with-context/FCom.js %}
+{% endhighlight %}
+
+# Reducer+Context
+
+可以将Reducer和Context整合到一个文件中，方便管理：
+
+{% highlight react %}
+{% include_relative src/views/managing-state/scaling-up-with-reducer-and-context/CountProvider.js %}
+{% endhighlight %}
+
+然后将组件包裹在Provider中：
+
+{% highlight react %}
+{% include_relative src/views/managing-state/scaling-up-with-reducer-and-context/FCom.js %}
+{% endhighlight %}
+
+# 🏷️应急方案
+
+# ref
+
+当你希望组件记住某些信息，但又不想让这些信息`触发新的渲染`时，你可以使用`ref`。
+
+与`state`类似，ref能在渲染之间保留，但是不会触发渲染。
 
 
