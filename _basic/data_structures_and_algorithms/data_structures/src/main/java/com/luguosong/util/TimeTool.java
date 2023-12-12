@@ -1,8 +1,10 @@
 package com.luguosong.util;
 
 public class TimeTool {
+
     public static void check(String title, Runnable task) {
         if (task == null) return;
+        System.out.println("-------------------------------------");
         title = (title == null) ? "" : ("【" + title + "】");
         System.out.println(title);
         long begin = System.nanoTime();

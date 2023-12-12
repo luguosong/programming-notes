@@ -1,13 +1,15 @@
 package com.luguosong;
 
+import org.junit.jupiter.api.Test;
+
 /**
  * 数组测试
  *
  * @author luguosong
  */
-public class ArrayDemo {
-    public static void main(String[] args) {
-
+public class ArrayTest {
+    @Test
+    public void test(){
         int[] arrays = new int[]{111, 222, 333};
 
         //增:数组在创建后长度就固定了，无法再增加元素

@@ -6,7 +6,13 @@ parent: 数据结构与算法
 create_time: 2023/5/18
 ---
 
-# 线性结构(List)✨
+# 耗时观察工具
+
+{% highlight java %}
+{% include_relative main/java/com/luguosong/util/TimeTool.java %}
+{% endhighlight %}
+
+# 🍪线性结构(List)
 
 `线性结构（线性表）`是具有n个`相同类型元素`的有限`序列`
 
@@ -26,7 +32,7 @@ create_time: 2023/5/18
 ## 调用
 
 {% highlight java %}
-{% include_relative com/luguosong/ArrayDemo.java %}
+{% include_relative test/java/com/luguosong/ArrayTest.java %}
 {% endhighlight %}
 
 # 动态数组（Array List）
@@ -35,21 +41,19 @@ create_time: 2023/5/18
 
 并且，`动态数组`提供了相关操作，如读取元素，查找元素，插入元素，删除元素等。
 
-## 实现
+将公共的接口和不实现的接口封装到父类中：
 
 {% highlight java %}
-{% include_relative com/luguosong/util/ArrayList.java %}
+{% include_relative main/java/com/luguosong/util/list/AbstractList.java %}
 {% endhighlight %}
 
-## 调用
+实现剩余方法：
 
 {% highlight java %}
-{% include_relative com/luguosong/ArrayListDemo.java %}
+{% include_relative main/java/com/luguosong/util/list/ArrayList.java %}
 {% endhighlight %}
 
 # 链表
-
-
 
 # 树形结构(Tree)✨
 
