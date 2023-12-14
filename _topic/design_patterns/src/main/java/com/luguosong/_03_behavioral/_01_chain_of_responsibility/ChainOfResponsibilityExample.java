@@ -35,6 +35,7 @@ public class ChainOfResponsibilityExample {
     static public abstract class BaseHandler implements Handler {
         protected Handler nextHandler;
 
+        @Override
         public void setNextHandler(Handler nextHandler) {
             this.nextHandler = nextHandler;
         }
