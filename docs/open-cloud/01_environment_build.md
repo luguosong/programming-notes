@@ -59,6 +59,6 @@ create_time: 2023/5/9
 4. 运行命令启动
 
 ```shell
-JobRunner --token=df1dceb8e2d6f6b0894363b085801e36 --host=127.0.0.1 --port=8080 --name=basic_runner --waitTimeOut=10000 --rootUrl=/ --cachePath=E:\OpenClould\cache
+JobRunner --token=df1dceb8e2d6f6b0894363b085801e36 --host=127.0.0.1 --port=8080 --name=basic_runner --waitTimeOut=10000 --rootUrl=/ --cachePath=E:\OpenClould24.8\cache
 ```
 

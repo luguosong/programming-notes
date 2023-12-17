@@ -231,6 +231,6 @@ just_the_docs:
     java:
       name: JAVA
     javaweb:
-      name: JAVA WEB
+      name: 服务端开发
     topic:
       name: 专项研究
