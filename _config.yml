@@ -234,3 +234,6 @@ just_the_docs:
       name: 服务端开发
     topic:
       name: 专项研究
+
+# 增量生成
+incremental: true
