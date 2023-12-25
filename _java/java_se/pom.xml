@@ -8,6 +8,15 @@
     <artifactId>java_se</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <!--简化File和I/O开发-->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.15.1</version>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
