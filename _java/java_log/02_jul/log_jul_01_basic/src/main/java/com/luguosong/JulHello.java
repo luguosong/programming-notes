@@ -13,7 +13,7 @@ import java.util.logging.SimpleFormatter;
 public class JulHello {
     public static void main(String[] args) {
         //获取日志记录器
-        Logger logger = Logger.getLogger("com.luguosong.JulTest");
+        Logger logger = Logger.getLogger("com.luguosong.JulHello");
 
 
         //设置日志记录器的日志级别

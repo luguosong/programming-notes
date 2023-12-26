@@ -8,6 +8,7 @@ import org.apache.log4j.helpers.LogLog;
  */
 public class Log4jConfig {
     public static void main(String[] args) {
+        //允许启用/禁用 log4j 内部日志记录。
         LogLog.setInternalDebugging(true);
 
         Logger logger = Logger.getLogger(Log4jConfig.class);

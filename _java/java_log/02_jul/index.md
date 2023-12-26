@@ -56,7 +56,7 @@ Jul支持多种`日志级别`，包括`SEVERE`、`WARNING`、`INFO`、`CONFIG`�
 {% include_relative log_jul_01_basic/src/main/java/com/luguosong/HandlerToFile.java %}
 {% endhighlight %}
 
-# 日志处理器父子关系
+# 日志记录器父子关系
 
 {: .note-title}
 > 父子关系的作用
