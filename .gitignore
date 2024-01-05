@@ -137,9 +137,9 @@ vendor/
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/artifacts
-# .idea/compiler.xml
-# .idea/jarRepositories.xml
-# .idea/modules.xml
+# .idea/compiler.xml_ioc
+# .idea/jarRepositories.xml_ioc
+# .idea/modules.xml_ioc
 # .idea/*.iml
 # .idea/modules
 # *.iml
@@ -385,7 +385,7 @@ build-iPhoneSimulator/
 
 # for a library or gem, you might want to ignore these files since the code is
 # intended to run in multiple environments; otherwise, check them in:
-# Gemfile.lock
+Gemfile.lock
 # .ruby-version
 # .ruby-gemset
 
