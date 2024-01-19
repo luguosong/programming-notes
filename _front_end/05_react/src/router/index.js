@@ -40,6 +40,10 @@ import PreservingAndResettingState from "../views/managing-state/preserving-and-
 import ExtractingStateLogicIntoAReducer from "../views/managing-state/extracting-state-logic-into-a-reducer";
 import PassingDataDeeplyWithContext from "../views/managing-state/passing-data-deeply-with-context";
 import ScalingUpWithReducerAndContext from "../views/managing-state/scaling-up-with-reducer-and-context";
+import ReferencingValuesWithRefs from "../views/escape-hatches/referencing-values-with-refs";
+import ManageAListOfRefs from "../views/escape-hatches/manage-a-list-of-refs";
+import RefAccessingAnotherComponent from "../views/escape-hatches/ref-accessing-another-component";
+import SynchronizingWithEffects from "../views/escape-hatches/synchronizing-with-effects";
 
 
 function NotFound() {
@@ -119,7 +123,15 @@ export default function MainRouter(props) {
                         <Route path={"extracting-state-logic-into-a-reducer"}
                                element={<ExtractingStateLogicIntoAReducer/>}/>
                         <Route path={"passing-data-deeply-with-context"} element={<PassingDataDeeplyWithContext/>}/>
-                        <Route path={"scaling-up-with-reducer-and-context"} element={<ScalingUpWithReducerAndContext/>}/>
+                        <Route path={"scaling-up-with-reducer-and-context"}
+                               element={<ScalingUpWithReducerAndContext/>}/>
+                    </Route>
+
+                    <Route path={"escape-hatches"}>
+                        <Route path={"referencing-values-with-refs"} element={<ReferencingValuesWithRefs/>}/>
+                        <Route path={"manage-a-list-of-refs"} element={<ManageAListOfRefs/>}/>
+                        <Route path={"ref-accessing-another-component"} element={<RefAccessingAnotherComponent/>}/>
+                        <Route path={"synchronizing-with-effects"} element={<SynchronizingWithEffects/>}/>
                     </Route>
 
                     <Route path='*' element={<NotFound/>}/>

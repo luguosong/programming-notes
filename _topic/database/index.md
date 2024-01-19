@@ -1,281 +1,402 @@
 ---
 layout: note
-title: 数据库
+title: 数据库-mysql
 create_time: 2023/9/7
 ---
 
-# 历史
+# 🏷️安装与概述
 
-- 1995年，瑞典MySQL AB公司开发的`MySQL`数据库诞生。
-- 2008年，Sun公司收购MySQL AB公司。
-- 2009年，Oracle公司收购Sun公司。MySQL成为Oracle旗下产品。
-- 2009年，MySQL AB公司的创始人`Michael Widenius`开发出MySQL的分支——以其最小的女儿玛莉亚（Maria）命名的`MariaDB`
-- 2015年，`Mysql5.7`发布
-- 2016年，`Mysql8.0`发布。MySQL5.x之后的license分为`免费的社区版`与`收费的标准版、企业版`等。
+# 常见的数据库管理系统
 
-# 版本
+- 关系型数据库
+    - `Oracle`:甲骨文公司的数据库产品。最早的商业数据库产品。
+    - `Mysql`:开源的数据库产品。最流行的数据库产品。
+    - `Microsoft SQL Server`:微软的数据库产品。
+    - `DB2`:IBM的数据库产品,常应用于银行系统中。
+    - `PostgreSQL`:开源的数据库产品。最符合SQL标准。
+    - `SQLite`:轻量级的数据库产品。常用于移动端(手机端)。
+    - `Sybase`:曾经是最流行的数据库产品之一。提供了一个非常专业的数据库建模工具`PowerDesigner`。
+    - `infomix`:IBM公司出品，Information和Unix的组合词。第一个被移植到Linux的商业数据库产品。
+- 键值型数据库
+    - `Redis`:开源的键值型数据库产品。
+- 文档型数据库
+    - `MongoDB`:开源的文档型数据库产品。可以存储XML、JSON等格式的数据。
 
-- `Mysql Community Server`：社区版，开源免费
-- `Mysql Enterprise Server`：企业版，收费
-- `Mysql Cluster`：集群版，开源免费
-- `Mysql Cluster CGE`：高级集群版，收费
+# Mysql历史
 
-# 安装Mysql
+- 1995年，由瑞典MySQL AB公司开发。
+- 2008年，被Sun公司收购。
+- 2010年，被Oracle公司收购。MariaDB项目由MySQL的创始人`Michael Widenius`
+  发起，目的是完全兼容MySQL，包括API和命令行，使MySQL的使用者能够方便地切换到`MariaDB`，而不需要做任何修改和调整。
+- 2015年，`MySQL 5.7`发布。
+- Mysql6.x后分为社区版和企业版，社区版免费，企业版收费。
+- 2016年，`MySQL 8.0`发布。
 
-## 下载
+# Windows安装Mysql
 
-官网下载免费社区版Mysql：
+## 8.x版本安装
 
-![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202309071828340.png)
+- 双击msi文件进行安装
 
-选择社区版服务：
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031323954.png)
 
-![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202309071841013.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031339249.png)
 
-## Windows安装
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031340697.png)
 
-基本就是傻瓜式安装，略过。
+- 选择自定义，修改安装路径
 
-⭐安装完后将mysql中的bin目录添加到环境变量中。这样就可以在任意目录下使用mysql命令了。
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031346422.png)
 
-# 卸载Mysql
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031346061.png)
 
-## Windows卸载
+- 安装完成后进行配置
 
-- 先停止服务
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031344270.png)
 
-![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202309071813117.png)
+- 选择开发者电脑
 
-- 使用控制面板卸载软件
-- 删除数据文件存储目录
-- 删除环境变量
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031348848.png)
 
-![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202309071821732.png)
+- 使用默认端口
 
-# 登录
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031350058.png)
 
-```shell
-# 登录
-mysql -u root -P 端口 -h IP号 -p
-```
+- 设置Root密码
 
-# 默认数据库
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031352559.png)
 
-- `information_schema`：存储数据库的元数据，如数据库名、表名、列名等。
-- `mysql`：系统信息，存储用户信息、字符集等。
-- `performance_schema`：存储数据库的性能相关信息。
-- `sys`：存储数据库的结构信息。
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031354832.png)
 
-# 示例数据库脚本
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031358189.png)
 
-[点击下载](https://cdn.jsdelivr.net/gh/luguosong/images@master/file/sql/demo.sql)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031359196.png)
 
-# 默认编码设置
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031400123.png)
 
-5.x版本1需要将编码设置为`utf8`，8.x版本需要将编码设置为`utf8mb4`。
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031401652.png)
+
+- 配置环境变量
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031421685.png)
+
+## 5.x版本安装
+
+- 双击msi文件进行安装
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031532534.png)
+
+- 选择自定义安装
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031530702.png)
+
+- 选择需要安装的组件
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031534668.png)
+
+- 自定义安装路径和数据存储路径
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031602617.png)
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031603782.png)
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031539267.png)
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031540978.png)
+
+- 如果之前安装过其它mysql，需要修改默认3306端口
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031548201.png)
+
+- 设置root密码
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031550976.png)
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031553043.png)
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031554265.png)
+
+- 配置环境变量（同时安装不同版本的mysql，只能配置一个环境变量）
+
+## 卸载
+
+1. 通过控制面板卸载软件
+2. 手动删除数据库数据存放目录
+3. 删除环境变量中Path配置的mysql路径
+4. 如果是5.x版本，还需要去注册表删除mysql服务
+
+# 初始化配置
+
+## MariaDB设置无密码不能登录
+
+MariaDB 10.4.6版本开始，root用户默认使用`unix_socket`插件认证，不再使用`mysql_native_password`插件认证，所以无法使用密码登录。
 
 ```sql
--- 查看编码 --
-show
-variables like 'character%';
+-- 查看插件认证
+select * from global_priv \G
 
--- 查看比较规则,用于排序 --
-show
-variables like 'collation%';
+ALTER USER root@localhost IDENTIFIED VIA mysql_native_password USING PASSWORD("访问密码");
+
+flush privileges;
 ```
 
-在`my.ini`中设置：
+## MariaDB设置远程登录
+
+```sql
+-- 为root用户授权远程访问
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '访问密码' WITH GRANT OPTION;
+                               
+flush privileges;                    
+```
+
+找到目录`/etc/mysql/mariadb.conf.d`，编辑`50-server.cnf`文件，将其中的bind-address=127.0.0.1给注释掉（前面加#），如图:
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401031706097.png)
+
+## mysql5.x修改字符集
+
+通过观察发现，mysql 5.x版本默认采用拉丁字符集：
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401051721089.png)
+
+而mysql 8.x则改为了utf8字符集：
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401051722150.png)
+
+在mysql 5.x数据库文件存储路径下找到my.ini文件，修改如下配置：
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401051744323.png)
 
 ```ini
 [mysql]
+
 default-character-set = utf8
 
 [mysqld]
+
 character-set-server = utf8
 collation-server = utf8_general_ci
 ```
 
-# SQL分类
-
-- `DDL`：Data definition language,数据定义语言，用于定义数据库对象：数据库、表、列等。如：create、drop、alter。
-- `DQL`：Data query language,数据查询语言，用于查询数据库中表的记录。如：select、describe。
-- `DML`：Data manipulation language,数据操作语言，用于对数据库中表的数据进行增删改。如：insert、update、delete。
-- `DCL`：Data control language,数据控制语言，用于定义访问权限和安全级别。如：grant、revoke。
-
-# DQL-DESCRIBE查询
+# 默认数据库
 
 ```sql
--- 查询表结构 --
-describe employees;
-
--- 查询表结构（简写） --
-desc employees;
+show databases;
 ```
 
-# DQL-SELECT查询
+- `information_schema`：存储了关于数据库的信息，比如数据库名、数据库表名、数据库列名等。
+- `mysql`：存储了用户的权限信息。
+- `performance_schema`：存储了数据库服务器性能相关的信息。
+- `sys`：存储了数据库服务器的系统信息。
 
-## 基本查询
+# 大小写问题
+
+Windows中不区分大小写。
+
+Linux中`关键字、函数名、列名、列的别名`不区分大小写。`数据库名、表名、表的别名、变量名`区分大小写。
+
+{: .note-title}
+> 推荐采用统一的书写规范
+>
+> - 数据库名、表名、字段名都是用小写。
+> - 关键字、函数都是用大写。
+
+# 🏷️DML
+
+DML(Data Manipulation Language)数据操纵语言，用于对数据库中的数据进行`增删改查`
+操作。比如：`insert`、`update`、`delete`、`select`等。
+
+# DML-SELECT基础
 
 ```sql
--- 查询表中所有字段 --
-select *
-from employees;
+-- 后面跟表达式
+SELECT 1;
+SELECT 9 / 2;
+	
+-- 基本查询
+SELECT * FROM employees;
 
--- 指定字段 --
-select employee_id, last_name, salary
-from employees;
+-- 给列添加别名：AS
+SELECT employee_id 员工id, last_name AS 名字, salary AS "员工 工资" FROM employees;
 
--- 别名（三种方式） --
-select employee_id as id, last_name 名字, salary "员工 收入"
-from employees;
+-- 去除重复行:DISTINCT
+SELECT DISTINCT department_id FROM employees;
 
--- 去重 --
--- 去重一般只查询一个字段 --
-select distinct department_id
-from employees;
+-- 空值参与计算
+-- Null值参与计算，结果还是Null
+SELECT salary 月工资,commission_pct 奖金比,salary * (1 + commission_pct) * 12 年工资 FROM employees;
+-- 正确处理空值
+SELECT salary 月工资,commission_pct 奖金比,salary * (1+ IFNULL(0,commission_pct)) * 12 年工资 FROM employees;
 
--- null处理 --
--- commission_pct存在null值，使用IFNULL函数处理 --
-select salary "月收入", salary * (1 + IFNULL(commission_pct, 0)) * 12 "年收入"
-from employees;
+-- 着重号
+-- order是关键字，当表名与关键字重名时，使用着重号标记。
+SELECT * FROM `order`;
 
--- 关键字冲突 --
--- 当表名或字段是关键字时，使用着重号``包裹 --
-select * from `order`;
+-- 显示表结构
+DESCRIBE employees;
+DESC employees;
+
+-- 数据过滤
+SELECT * FROM employees WHERE department_id = 90;
 ```
 
-## 条件查询
+# DML-SELECT运算符
 
 ```sql
--- 查询last_name为King的员工 --
-select *
-from employees
-where last_name = 'King';
+-- 算数运算符
+SELECT 100, 100 + 0, 100 + 50, 100 / 2 FROM DUAL;
+-- 结果为101，字符串会隐式转换为数值
+SELECT 100 + "1" FROM DUAL;
+-- 结果为100，无法转换为数值的值会视为0
+SELECT 100 + "a" FROM DUAL;
+-- 与NULL进行计算：NULL
+SELECT 100 + NULL FROM DUAL;
+
+-- 比较运算符：1，1，1
+SELECT 1 != 2 ,1 = '1',0 = 'a' FROM DUAL;
+-- 与NULL进行比较: NULL,NULL
+SELECT 1 = NULL, NULL = NULL FROM DUAL;
+-- 安全等于，解决有NULL参与比较的情况:0,1
+SELECT 1 <=> NULL, NULL <=> NULL FROM DUAL;
+-- 与NULL相关的比较关键字:0,1,0
+SELECT 8 IS NULL, 8 IS NOT NULL,ISNULL(8) FROM DUAL;
+-- 区间查询（包含边界）
+SELECT employee_id,last_name, salary FROM employees WHERE salary BETWEEN 6000 AND 8000;
+-- 集合查找
+SELECT employee_id,last_name, salary FROM employees WHERE salary IN (6000,8000);
+-- 模糊查询,%表示不确定个数的字符,_表示一个字符
+SELECT last_name FROM employees WHERE last_name LIKE '%a%';
+SELECT last_name FROM employees WHERE last_name LIKE '_a%';
+-- 正则表达式
+SELECT last_name FROM employees WHERE last_name REGEXP '^a';
+
+-- 逻辑运算符
+SELECT employee_id,last_name, salary FROM employees WHERE salary=6000 OR salary=8000;
+SELECT employee_id,last_name, salary FROM employees WHERE salary>=6000 AND salary<=8000;
+SELECT employee_id,last_name, salary FROM employees WHERE NOT salary>6000;
+
+-- 位运算符（了解就行）
 ```
 
-## 算数运算符
+# DML-SELECT-排序
 
 ```sql
--- 加减运算 --
--- 结果为：110, 90, 135.5 --
-select 100 + 10, 100 - 10, 100 + 35.5
-from dual;
-
--- 数字和字符串进行运算 --
--- 如果字符串是纯数字，会自动转换为数字类型 --
--- 如果字符串不是纯数字，会转换为0 --
--- 结果为：101, 100 --
-select 100 + '1', 100 + 'a'
-from dual;
-
--- 与null进行运算 --
--- 结果为：null --
-select 100 + null
-from dual;
-
--- 除法运算 --
--- 结果为：50.0000 , 33.3333 , 33 --
-select 100 / 2, 100 / 3, 100 div 3
-from dual;
+-- 默认升序
+SELECT salary FROM employees ORDER BY salary;
+-- 升序（ascend）
+SELECT salary FROM employees ORDER BY salary ASC;
+-- 降序(descend)
+SELECT salary FROM employees ORDER BY salary DESC;
 ```
 
-## 比较运算符
+# DML-SELECT-分页
 
 ```sql
--- 等于 --
-select *
-from employees
-where commission_pct = 0.1;
-
--- 数字和字符串进行比较 --
--- 如果字符串是纯数字，会自动转换为数字类型 --
--- 如果字符串不是纯数字，会转换为0 --
-select *
-from employees
-where commission_pct = '0.1';
-
--- 与null进行比较 --
--- ❌判断一个值是否为null，不能使用=或!=，而是使用is null或is not null --
-select *
-from employees
-where commission_pct = null;
--- ✅ --
-select *
-from employees
-where commission_pct is null;
--- 判断字段不是null --
-select *
-from employees
-where commission_pct is not null;
-
--- 最大值和最小值 --
-select least(5,10,3), greatest(5,10,3)
-from dual;
-
--- 范围 --
--- between and包含边界值 --
-select *
-from employees
-where salary between 10000 and 20000;
-
--- 在指定数值内 --
-select *
-from employees
-where salary in (10000, 12000, 17000);
-
--- 模糊查询 --
--- %表示任意多个字符，_表示一个字符 --
-select *
-from employees
-where last_name like '%ll%';
-
--- 正则表达式 --
--- ^表示开头，$表示结尾 --
-select *
-from employees
-where last_name regexp '^a.*e$';
+-- limit m,n
+-- m表示从第几条记录开始(偏移量)，n表示查询几条记录
+-- limit (页码-1)*每页显示的记录数,每页显示的记录数
+SELECT employee_id,last_name FROM employees LIMIT 2,10;
+-- mysql 8.x新特性，OFFSET表示偏移量
+SELECT employee_id,last_name FROM employees LIMIT 10 OFFSET 2;
 ```
 
-## 逻辑运算符
+# DML-SELECT-多表查询
+
+{: .note-title}
+> 为什么需要多表？
+> 
+> - 解决冗余问题：将数据拆分到不同的表中，避免相同的数据在多张表中重复存储。
+> - 节约内存提高查询效率：将数据拆分到不同的表中，可以减少每张表中的数据量，提高查询效率。
+> - 更加方便维护
+
+- `内连接`：只查询两张表中满足条件的记录。
+- `外连接`：不仅查询两张表中满足条件的记录，还会查询不满足条件的记录。
+  - `左外连接`：以左边的表为主，查询左边表中的所有记录，以及右边表中满足条件的记录。
+  - `右外连接`：以右边的表为主，查询右边表中的所有记录，以及左边表中满足条件的记录。
+  - `全外连接`：查询两张表中的所有记录。
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401191439875.png)
 
 ```sql
--- 逻辑或 --
-select *
-from employees
-where salary < 10000 or salary > 20000;
+-- 内连接，只查询e.department_id = d.department_id的记录
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name 
+FROM employees e,departments d 
+WHERE e.department_id = d.department_id;
 
--- 逻辑与 --
-select *
-from employees
-where salary > 10000 and salary < 20000;
+-- SQL99内连接写法
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+FROM employees e JOIN departments d ON e.department_id = d.department_id;
 
--- 逻辑非 --
-select *
-from employees
-where not salary > 10000;
+-- 左外连接
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+FROM employees e LEFT JOIN departments d ON e.department_id = d.department_id;
+
+-- 右外连接
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+FROM employees e RIGHT JOIN departments d ON e.department_id = d.department_id;
+
+-- ❌全外连接,mysql不支持全外连接,oracle支持.
+-- SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+-- FROM employees e FULL JOIN departments d ON e.department_id = d.department_id;
+
+-- 使用联合查询实现全外连接
+-- 使用UNION ALL而不是UNION，因为UNION会去重，UNION ALL效率更高
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+FROM employees e LEFT JOIN departments d ON e.department_id = d.department_id
+UNION ALL 
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+FROM employees e RIGHT JOIN departments d ON e.department_id = d.department_id
+WHERE e.department_id IS NULL;
 ```
 
-## 排序
+一些新特性：
 
 ```sql
--- 升序 --
--- asc是ascend（递增）的含义 --
-select *
-from employees
-order by salary;
+-- 自然连接（SQL99）：自动查找两张表中相同的列，然后以这些列作为条件进行内连接
+-- 不够灵活，不推荐使用
+SELECT 
+e.department_id 员工表中部门id,d.department_id 部门表中部门id,
+e.manager_id 员工表中的经理id,d.manager_id 部门表中的经理id,
+e.last_name,d.department_name 
+FROM employees e NATURAL JOIN departments d;
 
--- 降序 --
--- desc是descend（递减）的含义--
-select *
-from employees
-order by salary desc;
-
--- 二级排序 --
--- 先按salary排序，再按last_name排序 --
-select *
-from employees
-order by salary desc , last_name desc ;
+-- USING子句（SQL99）：指定两张表中相同的列，然后以这些列作为条件进行内连接
+SELECT e.department_id 员工表中部门id,d.department_id 部门表中部门id,e.last_name,d.department_name
+FROM employees e JOIN departments d USING(department_id);
 ```
+
+`内联查询`只会查出两张表中满足条件的记录。
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401171702225.png)
+
+`左外联`的情况，虽然Grant员工没有匹配到部门，但还是会将员工表中的记录显示出来，只是部门表中的信息显示为NULL。
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401171701704.png)
+
+`右外联`的情况，虽然部门表中没有匹配到员工，但还是会将部门表中的记录显示出来，只是员工表中的信息显示为NULL。
+
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202401171704567.png)
+
+# 🏷️DDL
+
+DDL(Data Definition Language)数据定义语言，用于对数据库中的对象进行`增删改查`操作。比如：`create`、`alter`、`drop`、`truncate`
+等。
+
+# 🏷️DCL
+
+DCL(Data Control Language)数据控制语言，用于对数据库中的对象进行`授权`操作。比如：`grant`、`revoke`等。
+
+# 🏷️其它数据库对象
+
+# 🏷️Mysql8新特性
+
+# 🏷️Mysql架构
+
+# 🏷️Mysql索引调优
+
+# 🏷️Mysql事务
+
+# 🏷️Mysql日志和备份
 
 
 

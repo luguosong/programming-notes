@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过无参构造器配置Bean-->
+    <bean id="component1" class="com.luguosong.xml_ioc.Component"/>
+
+    <!--通过静态工厂方法配置Bean-->
+    <bean id="component2" class="com.luguosong.xml_ioc.ComponentFactory" factory-method="getComponent1"/>
+
+    <!--通过非静态工厂配置Bean-->
+    <bean id="factory1" class="com.luguosong.xml_ioc.ComponentFactory"/>
+    <bean id="component3" factory-bean="factory1" factory-method="getComponent2"/>
+
+    <!--通过有参构造配置Bean，并通过构造方法依赖注入-->
+    <bean id="util" class="com.luguosong.xml_ioc.Util"/>
+    <bean id="component4" class="com.luguosong.xml_ioc.Component">
+        <constructor-arg name="util" ref="util"/>
+        <constructor-arg name="msg" value="通过Component的无参构造方法创建Component对象,并使用构造函数进行依赖注入"/>
+    </bean>
+
+    <!--通过setter方法依赖注入-->
+    <bean id="component5" class="com.luguosong.xml_ioc.Component">
+        <!--❗其中name的值为setter方法名去除set后首字母小写-->
+        <property name="util" ref="util"/>
+        <property name="msg" value="使用无参构造创建对象，并通过Component的setter方法进行依赖注入"/>
+    </bean>
+</beans>
