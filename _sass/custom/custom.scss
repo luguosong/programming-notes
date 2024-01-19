@@ -1,6 +1,6 @@
-@import url("/assets/css/fonts/SourceCodePro.css");
-@import url("/assets/css/fonts/ZCOOL.css");
-@import url("https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css");
+@import "/assets/css/fonts/SourceCodePro.css";
+@import "/assets/css/fonts/ZCOOL.css";
+@import "https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css";
 
 ::-webkit-scrollbar {
   width: 14px;
@@ -195,6 +195,7 @@ body {
       &::before {
         position: relative;
         margin-left: -1.4rem;
+
         //vertical-align: middle;
         line-height: 1.5rem;
         margin-right: 0.2rem;
@@ -235,21 +236,21 @@ body {
   }
 
   /* 标题编号样式 */
-  h1:before {
+  h1::before {
     content: counter(section) " ";
     font-size: 1.4rem;
     font-weight: normal;
     font-family: "LXGW WenKai", sans-serif;
   }
 
-  h2:before {
+  h2::before {
     content: counter(section) "." counter(subsection) " ";
     font-size: 1rem;
     font-weight: normal;
     font-family: "LXGW WenKai", sans-serif;
   }
 
-  h3:before {
+  h3::before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection)
       " ";
     font-size: 0.8rem;
@@ -257,7 +258,7 @@ body {
     font-family: "LXGW WenKai", sans-serif;
   }
 
-  h4:before {
+  h4::before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection)
       "." counter(subparagraph) " ";
     font-size: 0.5rem;
@@ -265,13 +266,13 @@ body {
     font-family: "LXGW WenKai", sans-serif;
   }
 
-  h5:before {
+  h5::before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection)
       "." counter(subparagraph) "." counter(subsubparagraph) " ";
     font-family: "LXGW WenKai", sans-serif;
   }
 
-  h6:before {
+  h6::before {
     content: counter(section) "." counter(subsection) "." counter(subsubsection)
       "." counter(subparagraph) "." counter(subsubparagraph) "."
       counter(subsubsubparagraph) " ";
@@ -405,7 +406,7 @@ code {
 
 //Viewerjs图片预览图片背景
 .viewer-container img {
-  background: url(/assets/images/checker.png) repeat;
+  background: url("/assets/images/checker.png") repeat;
 }
 
 p.note-title > p:first-child,
@@ -447,7 +448,7 @@ blockquote.new-title > p:first-child {
   }
 
   .err {
-    color: #ff0000;
+    color: #f00;
     background-color: transparent;
   }
 
@@ -457,12 +458,13 @@ blockquote.new-title > p:first-child {
   }
 
   .no {
-    color: #aaaaaa;
+    color: #aaa;
   }
 
   .nf {
     color: #60aeec;
   }
+
   .nx {
     color: #ef596f;
   }
