@@ -1,0 +1,12 @@
+server:
+  port: 8100
+spring:
+  application:
+    name: gateway-hello
+  cloud:
+    gateway:
+      routes:
+        - id: gateway-hello
+          uri: http://localhost:8101/
+          predicates:
+            - Path=/**
