@@ -4,7 +4,7 @@ interface Person {
     location?: string; //可选属性
 }
 
-let tom: Person = {
+const tom: Person = {
     name: 'Tom',
     age: 25
 };
