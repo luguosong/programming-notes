@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace属性指向mapper接口-->
+<mapper namespace="com.luguosong.get_param.placeholder.mapper.EmployeesMapper">
+    <!--Employees getEmployeesById(Integer id);-->
+    <select id="getEmployeesById" resultType="com.luguosong.get_param.pojo.Employees">
+        select *
+        from employees
+        where id = #{id}
+    </select>
+
+    <!--Employees getEmployeesByName(String firstName);-->
+    <!--如果参数是字符串，需要手动加上引号-->
+    <select id="getEmployeesByName" resultType="com.luguosong.get_param.pojo.Employees">
+        select *
+        from employees
+        where first_name = #{firstName}
+    </select>
+</mapper>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网络请求</title>
+</head>
+<body>
+<div id="root"></div>
+<!--封装print方法，用于页面信息输出-->
+<script src="../js/print.js"></script>
+
+<script>
+    print("准备发送网络请求")
+
+    const request = new XMLHttpRequest();
+    request.open("GET", "https://httpbin.org/");
+    request.send();
+    // 注册响应到达的回调函数
+    request.onload = function () {
+        print("收到响应，响应码为：" + request.status)
+    }
+    // 注册网络出错的回调
+    request.onerror = function (e) {
+        print("网络错误：" + e.type)
+    }
+
+    print("主程序会继续执行，不会等待网络请求收到响应后再执行。")
+</script>
+</body>
+</html>

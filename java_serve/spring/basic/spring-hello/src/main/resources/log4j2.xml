@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 配置appender -->
+    <Appenders>
+        <!-- 配置consoleAppender -->
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %m%n"/>
+        </Console>
+    </Appenders>
+
+    <!-- 配置logger -->
+    <Loggers>
+        <!-- 配置rootlogger -->
+        <Root level="debug">
+            <AppenderRef ref="consoleAppender"/>
+        </Root>
+    </Loggers>
+</configuration>

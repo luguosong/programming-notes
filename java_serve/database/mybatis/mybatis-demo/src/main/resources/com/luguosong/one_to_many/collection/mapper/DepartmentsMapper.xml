@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luguosong.one_to_many.collection.mapper.DepartmentsMapper">
+
+    <resultMap id="departmentsResultMap" type="com.luguosong.one_to_many.pojo.Departments">
+        <id property="id" column="id"/>
+        <result property="departmentName" column="department_name"/>
+
+        <collection
+                ofType="com.luguosong.one_to_many.pojo.Employees"
+                property="employees">
+            <id property="id" column="e_id"/>
+            <result property="firstName" column="first_name"/>
+            <result property="lastName" column="last_name"/>
+            <result property="position" column="position"/>
+            <result property="hireDate" column="hire_date"/>
+        </collection>
+    </resultMap>
+
+    <select id="getDepartmentById" resultMap="departmentsResultMap">
+        SELECT * , employees.id AS e_id
+        FROM departments
+                 LEFT JOIN employees on departments.id = employees.department_id
+        where departments.id = #{id}
+    </select>
+</mapper>

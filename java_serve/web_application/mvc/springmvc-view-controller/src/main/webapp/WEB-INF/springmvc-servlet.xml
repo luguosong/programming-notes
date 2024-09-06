@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--配置组件扫描-->
+    <context:component-scan base-package="com.luguosong.controller"/>
+
+    <!--配置JSP视图解析器-->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/templates/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--在Spring MVC配置文件中配置视图控制器-->
+    <mvc:view-controller path="/test" view-name="test"/>
+
+    <!--<mvc:view-controller/>会让Spring MVC项目中的注解失效，需要重新开启-->
+    <!--开启注解驱动-->
+    <mvc:annotation-driven/>
+</beans>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+</head>
+<body>
+<button id="btn">点击</button>
+
+<script>
+    const btn = document.getElementById('btn');
+    // 通过addEventListener注册回调函数
+    btn.addEventListener('click', buttonClick);
+
+    // 回调函数
+    function buttonClick() {
+        alert("按钮被点击了")
+    }
+</script>
+</body>
+</html>

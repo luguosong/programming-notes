@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC 获取表单数据</title>
+</head>
+<body>
+
+<form method="post" th:action="@{/header-info/springMvc}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="获取请求头信息">
+</form>
+
+<button id="cookie">发送Cookie</button>
+
+<script th:inline="javascript" type="text/javascript">
+    document.getElementById("cookie").addEventListener("click", function () {
+        const ctxPath = /*[[@{/}]]*/'';
+        document.cookie = "username=zhangsan";
+        document.location = ctxPath + "cookie/springMvc";
+    })
+</script>
+
+</body>
+</html>

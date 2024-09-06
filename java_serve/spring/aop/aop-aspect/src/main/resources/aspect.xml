@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="userService" class="com.luguosong.xml.UserServiceImpl"/>
+    <bean id="userAspect" class="com.luguosong.xml.UserAspect"/>
+
+    <!--aop配置-->
+    <aop:config>
+        <!--配置切点表达式-->
+        <aop:pointcut id="myPointCut" expression="execution(* com.luguosong.xml.UserServiceImpl.*(..))"/>
+        <!--配置切面-->
+        <aop:aspect ref="userAspect">
+            <aop:before method="before" pointcut-ref="myPointCut"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="myPointCut"/>
+            <aop:around method="around" pointcut-ref="myPointCut"/>
+            <aop:after method="after" pointcut-ref="myPointCut"/>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="myPointCut"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

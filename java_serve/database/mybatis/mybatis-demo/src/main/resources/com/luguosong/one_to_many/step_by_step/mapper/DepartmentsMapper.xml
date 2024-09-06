@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luguosong.one_to_many.step_by_step.mapper.DepartmentsMapper">
+
+    <resultMap id="DepartmentsResult" type="com.luguosong.one_to_many.pojo.Departments">
+        <id property="id" column="id"/>
+        <result property="departmentName" column="department_name"/>
+        <collection
+                column="id"
+                select="com.luguosong.one_to_many.step_by_step.mapper.EmployeesMapper.getEmployeesByDeptId"
+                property="employees"/>
+    </resultMap>
+
+    <select id="getDepartmentsById" resultMap="DepartmentsResult">
+        SELECT *
+        FROM departments
+        WHERE id = #{id}
+    </select>
+</mapper>

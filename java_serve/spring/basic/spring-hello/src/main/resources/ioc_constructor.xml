@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="user" class="com.luguosong.ioc.User">
+        <!--指定构造函数第一个参数-->
+        <constructor-arg index="0" value="12"/>
+        <!--指定构造函数第二个参数-->
+        <constructor-arg index="1" value="李四"/>
+    </bean>
+
+
+    <bean id="userService" class="com.luguosong.ioc.UserService">
+        <!--注入对象-->
+        <constructor-arg index="0" ref="user"/>
+    </bean>
+
+    <bean id="userService2" class="com.luguosong.ioc.UserService">
+        <!--使用参数名称name指定参数-->
+        <constructor-arg name="user" ref="user"/>
+    </bean>
+
+    <bean id="userService3" class="com.luguosong.ioc.UserService">
+        <!--根据类型推断指定参数-->
+        <constructor-arg ref="user"/>
+    </bean>
+
+    <!--基于c命名空间注入-->
+    <bean id="user2" class="com.luguosong.ioc.User" c:_0="12" c:_1="李四"/>
+</beans>

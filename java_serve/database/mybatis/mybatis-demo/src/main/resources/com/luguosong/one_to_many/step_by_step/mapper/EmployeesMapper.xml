@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.luguosong.one_to_many.step_by_step.mapper.EmployeesMapper">
+
+    <select id="getEmployeesByDeptId" resultType="com.luguosong.one_to_many.pojo.Employees">
+        SELECT *
+        FROM employees
+        WHERE department_id = #{id}
+    </select>
+</mapper>

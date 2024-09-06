@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <servlet>
+        <servlet-name>getDemo</servlet-name>
+        <servlet-class>com.luguosong.GetServletDemo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getDemo</servlet-name>
+        <url-pattern>/getDemo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>postDemo</servlet-name>
+        <servlet-class>com.luguosong.PostServletDemo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>postDemo</servlet-name>
+        <url-pattern>/postDemo</url-pattern>
+    </servlet-mapping>
+</web-app>

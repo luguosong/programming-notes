@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回调地狱</title>
+</head>
+<body>
+<div id="root"></div>
+<!--封装print方法，用于页面信息输出-->
+<script src="../js/print.js"></script>
+
+<script>
+    setTimeout(() => {
+        print("执行第一次回调");
+        setTimeout(() => {
+            print("第一次回调结束，执行第二次回调")
+            setTimeout(() => {
+                print("第二次回调结束，执行第三次回调")
+                setTimeout(() => {
+                    print("第三次回调结束，执行第四次回调")
+                    setTimeout(() => {
+                        print("第四次回调结束，执行第五次回调")
+                        throw new Error("发生异常")
+                    }, 1000)
+                }, 1000)
+            }, 1000)
+        }, 1000)
+    }, 1000)
+</script>
+</body>
+</html>

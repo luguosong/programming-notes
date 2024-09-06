@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        a {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+session域内容: <span th:text="${session.sessionScope}"></span>
+
+<a th:href="@{/session-scope/servlet(rand=${#dates.createNow().time})}">通过HttpServletRequest对象设置session域</a>
+<a th:href="@{/session-scope/modelAndView(rand=${#dates.createNow().time})}">通过@SessionAttributes注解设置请求域</a>
+</body>
+</html>
