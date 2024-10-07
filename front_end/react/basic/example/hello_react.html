@@ -1,0 +1,17 @@
+<html>
+<body>
+<div id="app"></div>
+<!-- React 核心库-->
+<script src="js/react.development.js"></script>
+<!--专门针对DOM的方法，使您能够在DOM中使用React-->
+<script src="js/react-dom.development.js"></script>
+<!--babel库:用于将将你的JSX代码转换成普通的JavaScript。-->
+<script src="js/babel.min.js"></script>
+<!--您需要通知 Babel 要将哪些代码转换，方法是将脚本类型更改为 type=text/jsx。-->
+<script type="text/jsx">
+    const app = document.getElementById('app');
+    const root = ReactDOM.createRoot(app);
+    root.render(<h1>Develop. Preview. Ship.</h1>);
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Document</title>
+</head>
+<body>
+<form th:action="@{/user}" method="get">
+    <input type="submit" value="提交get请求">
+</form>
+
+<form th:action="@{/user}" method="post">
+    <input type="submit" value="提交post请求">
+</form>
+
+<form th:action="@{/user}" method="post">
+    <input type="hidden" name="_method" value="put">
+    <input type="submit" value="提交put请求">
+</form>
+
+<form th:action="@{/user}" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="提交delete请求">
+</form>
+</body>
+</html>
