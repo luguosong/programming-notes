@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="app"></div>
+<script type="text/javascript">
+    // 选择 ID 为 "app "的 div 元素
+    const app = document.getElementById('app');
+
+    // 创建新的 H1 元素
+    const header = document.createElement('h1');
+
+    // 为 H1 元素创建一个新文本节点
+    const text = 'Develop. Preview. Ship.';
+    const headerContent = document.createTextNode(text);
+
+    // 将文本添加到 H1 元素中
+    header.appendChild(headerContent);
+
+    // 将 H1 元素置于 div 内
+    app.appendChild(header);
+</script>
+</body>
+</html>

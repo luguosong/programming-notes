@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring MVC 获取表单数据</title>
+</head>
+<body>
+
+后台收到参数: [[${username}]]
+
+<form method="post" th:action="@{/form/servlet}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="servlet获取参数">
+</form>
+
+<form method="post" th:action="@{/form/springMvc}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="spring mvc @RequestParam注解获取参数">
+</form>
+
+<form method="post" th:action="@{/form/springMvc2}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="spring mvc 省略@RequestParam注解获取参数">
+</form>
+
+<form method="post" th:action="@{/formPojo/springMvc}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="spring mvc通过实体类获取参数">
+</form>
+
+<form method="post" th:action="@{/formString/springMvc}">
+    <label>
+        <input name="username" type="text">
+        <input name="password" type="password">
+    </label>
+    <input type="submit" value="通过@RequestBody获取完整请求字符串">
+</form>
+
+<!-- 添加一个按钮 -->
+<button id="send-btn">发送Json数据</button>
+
+<script>
+    // 获取按钮元素
+    const btn = document.getElementById('send-btn');
+
+    // 添加点击事件监听器
+    btn.addEventListener('click', () => {
+        // 发送 POST 请求
+        fetch([[@{/}]]+'jsonPojo/springMvc', {
+            method
+    :
+        'POST',
+            headers
+    :
+        {
+            'Content-Type'
+        :
+            'application/json'
+        }
+    ,
+        body: JSON.stringify({
+            // 请求数据
+            username: 'John Doe'
+        })
+    })
+    .
+        then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+    });
+</script>
+
+<form method="post" th:action="@{/requestEntity/springMvc}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="RequestEntity获取请求信息">
+</form>
+
+<form method="post" th:action="@{/responseEntity/springMvc}">
+    <label>
+        <input name="username" type="text">
+    </label>
+    <input type="submit" value="ResponseEntity自定义响应信息">
+</form>
+
+<form method="post" th:action="@{/fileUpload/springMvc}" enctype="multipart/form-data">
+    文件上传：<input type="file" name="fileName">
+    <input type="submit" value="文件上传">
+</form>
+
+<a th:href="@{/fileDownload/springMvc}">文件下载</a>
+
+</body>
+</html>
