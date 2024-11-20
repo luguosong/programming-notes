@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="mysqlToTable1" targetRuntime="MyBatis3Simple">
+        <!--配置数据库连接-->
+        <jdbcConnection
+                userId="root"
+                password="12345678"
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/learn_mybatis">
+            <!---->
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!--实体类生成策略-->
+        <javaModelGenerator
+                targetPackage="com.luguosong.pojo"
+                targetProject="./src/main/java">
+            <!--是否使用子包-->
+            <property name="enableSubPackages" value="true"/>
+            <!--去除字符串前后空格-->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--mapper映射文件生成策略-->
+        <sqlMapGenerator
+                targetPackage="com.luguosong.mapper"
+                targetProject="./src/main/resources">
+            <!--是否使用子包-->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator
+                type="XMLMAPPER"
+                targetPackage="com.luguosong.mapper"
+                targetProject="./src/main/java"/>
+
+
+        <!--指定相关表-->
+        <table tableName="departments" domainObjectName="Departments"/>
+        <table tableName="employees" domainObjectName="Employees"/>
+    </context>
+</generatorConfiguration>

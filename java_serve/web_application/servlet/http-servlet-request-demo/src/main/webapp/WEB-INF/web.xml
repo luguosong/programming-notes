@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <servlet>
+        <servlet-name>Hello</servlet-name>
+        <servlet-class>com.luguosong.HelloHttpServletRequest</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Hello</servlet-name>
+        <url-pattern>/hello</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>request</servlet-name>
+        <servlet-class>com.luguosong.GetRequestInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>request</servlet-name>
+        <url-pattern>/request</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>dispatcherA</servlet-name>
+        <servlet-class>com.luguosong.DispatcherServletA</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcherA</servlet-name>
+        <url-pattern>/dispatcherA</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>dispatcherB</servlet-name>
+        <servlet-class>com.luguosong.DispatcherServletB</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcherB</servlet-name>
+        <url-pattern>/dispatcherB</url-pattern>
+    </servlet-mapping>
+</web-app>

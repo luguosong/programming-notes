@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时任务</title>
+</head>
+<body>
+<div id="root"></div>
+<!--封装print方法，用于页面信息输出-->
+<script src="../js/print.js"></script>
+<script>
+    print("准备执行异步方法")
+    /*
+    * 每隔一秒执行一次回调
+    * */
+    const interval = setInterval(callBack, 1000);
+    print("主程序会继续执行，会不会等待定时任务执行完再执行")
+
+    let i = 0;
+
+    function callBack() {
+        print("1秒后，回调执行")
+        if (++i === 5) {
+            clearInterval(interval)
+        }
+    }
+</script>
+</body>
+</html>
