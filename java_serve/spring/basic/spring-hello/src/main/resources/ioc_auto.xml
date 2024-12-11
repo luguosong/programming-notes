@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="user" class="com.luguosong.ioc.User">
+        <property name="name" value="张三"/>
+    </bean>
+
+    <!--根据set注入的 方法名 去找对应 id 的bean标签-->
+    <bean id="userService1" class="com.luguosong.ioc.UserService" autowire="byName"/>
+
+    <!--根据类型去寻找对应class的bean-->
+    <!--❗根据类型匹配，同一种类型只能有一个bean，否则会报错-->
+    <bean id="userService2" class="com.luguosong.ioc.UserService" autowire="byType"/>
+
+</beans>

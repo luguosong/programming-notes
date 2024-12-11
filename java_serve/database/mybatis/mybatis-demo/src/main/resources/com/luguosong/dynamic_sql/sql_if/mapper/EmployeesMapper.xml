@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace属性指向mapper接口-->
+<mapper namespace="com.luguosong.dynamic_sql.sql_if.mapper.EmployeesMapper">
+    <select id="selectEmployees" resultType="com.luguosong.dynamic_sql.pojo.Employees">
+        select * from employees where 1=1
+        <if test="firstName != null and firstName != ''">
+            and first_name = #{firstName}
+        </if>
+        <if test="lastName != null and lastName != ''">
+            and last_name = #{lastName}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="com.luguosong.ioc.life_cycle.MyBeanPostProcessor"/>
+
+    <!--需要手动指定初始化方法和销毁方法，对应方法才会生效-->
+    <bean id="dog" class="com.luguosong.ioc.life_cycle.Dog" init-method="initBean" destroy-method="destroyBean">
+        <property name="name" value="wangcai"/>
+    </bean>
+</beans>
