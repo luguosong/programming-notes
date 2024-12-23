@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <servlet>
+        <servlet-name>servletConfigDemo</servlet-name>
+        <servlet-class>com.luguosong.ServletConfigDemo</servlet-class>
+        <!--配置初始化信息-->
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>12345678</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>servletConfigDemo</servlet-name>
+        <url-pattern>/servletConfigDemo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>servletConfigDemo2</servlet-name>
+        <servlet-class>com.luguosong.ServletConfigDemo2</servlet-class>
+        <!--配置初始化信息-->
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>root</param-value>
+        </init-param>
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>1212121212</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>servletConfigDemo2</servlet-name>
+        <url-pattern>/servletConfigDemo2</url-pattern>
+    </servlet-mapping>
+</web-app>

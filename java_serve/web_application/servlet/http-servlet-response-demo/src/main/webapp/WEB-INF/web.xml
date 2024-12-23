@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <servlet>
+        <servlet-name>writeDemo</servlet-name>
+        <servlet-class>com.luguosong.WriteDemo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>writeDemo</servlet-name>
+        <url-pattern>/writeDemo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>outputStreamDemo</servlet-name>
+        <servlet-class>com.luguosong.OutputStreamDemo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>outputStreamDemo</servlet-name>
+        <url-pattern>/outputStreamDemo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>redirectA</servlet-name>
+        <servlet-class>com.luguosong.RedirectA</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>redirectA</servlet-name>
+        <url-pattern>/redirectA</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>redirectB</servlet-name>
+        <servlet-class>com.luguosong.RedirectB</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>redirectB</servlet-name>
+        <url-pattern>/redirectB</url-pattern>
+    </servlet-mapping>
+</web-app>
