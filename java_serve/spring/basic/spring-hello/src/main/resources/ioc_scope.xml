@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--singleton:默认值，表示整个Spring容器中只有一个Bean实例，无论多少次请求，都会返回同一个实例。-->
+    <bean id="user1" class="com.luguosong.ioc.User" scope="singleton"/>
+
+    <!--prototype:每次请求都会创建一个新的Bean实例。-->
+    <bean id="user2" class="com.luguosong.ioc.User" scope="prototype"/>
+
+    <!--request:每个HTTP请求都会创建一个新的Bean实例。-->
+    <!--适用于Web应用，需要包含spring-webmvc依赖。-->
+    <bean id="user3" class="com.luguosong.ioc.User" scope="request"/>
+
+    <!--session:每个HTTP会话都会创建一个新的Bean实例。-->
+    <!--适用于Web应用，需要包含spring-webmvc依赖。-->
+    <bean id="user4" class="com.luguosong.ioc.User" scope="session"/>
+</beans>

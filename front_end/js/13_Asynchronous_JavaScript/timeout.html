@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>延时任务</title>
+</head>
+<body>
+<div id="root"></div>
+<!--封装print方法，用于页面信息输出-->
+<script src="../js/print.js"></script>
+<script>
+    print("准备执行异步方法")
+    /*
+    * 会在1秒后调用回调函数
+    * */
+    setTimeout(callBack, 1000)
+    print("主程序会继续执行，并不会等待延时任务执行完再执行")
+
+    /*
+    * 回调函数
+    * */
+    function callBack() {
+        print("1秒后，回调执行")
+    }
+</script>
+</body>
+</html>
