@@ -4,6 +4,8 @@ repo_url: https://github.com/luguosong/programming-notes # 右上角仓库链接
 repo_name: programming-notes # 右上角仓库名称
 edit_uri: edit/main/code/
 docs_dir: code
+dev_addr: '127.0.0.1:7000'
+
 
 theme:
   name: material
@@ -222,6 +224,8 @@ nav:
       - java_serve/index.md
       - Spring框架:
           - java_serve/spring/index.md
+          - 概述: java_serve/spring/overview/index.md
+          - IOC容器: java_serve/spring/beans/index.md
           - Spring框架版本说明: java_serve/spring/spring-framework-versions/index.md
           - 控制反转: java_serve/spring/basic/index.md
           - 面向切面编程: java_serve/spring/aop/index.md
@@ -342,6 +346,8 @@ nav:
       - 常用工具:
           - topics/tools/index.md
           - 内网穿透-frp: topics/tools/frp/index.md
+  - 文档翻译:
+      - document_translation/index.md
   - 英语:
       - english/index.md
       - 音标: english/phonetic_symbol/index.md
