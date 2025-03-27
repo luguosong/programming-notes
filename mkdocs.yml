@@ -117,13 +117,6 @@ extra:
 plugins:
   - statistics: # 字数统计插件：https://github.com/TonyCrane/mkdocs-statistics-plugin
       words_per_minute: 50
-  - glightbox: # 图片查看插件
-      touchNavigation: true
-      loop: false
-      zoomable: true
-      draggable: false
-      auto_caption: true
-      background: #000000
   - search
   - minify:
       minify_html: true
@@ -135,12 +128,15 @@ extra_css:
   - custom/css/font.css
   - custom/css/custom.css
   - https://unpkg.com/katex@0/dist/katex.min.css
+  - custom/css/viewer.css
 
 extra_javascript:
   - custom/js/custom.js
   - custom/js/katex.js
   - https://unpkg.com/katex@0/dist/katex.min.js
   - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+  - custom/js/viewer.js
+  - custom/js/viewer-js-init.js
 
 exclude_docs: |
   **/node_modules
@@ -220,6 +216,9 @@ nav:
       - Java日志:
           - java/log/index.md
           - 基础: java/log/basic/index.md
+      - Java单元测试:
+          - java/test/index.md
+          - JUnit5: java/test/junit/index.md
   - 服务端开发:
       - java_serve/index.md
       - Spring框架:
@@ -246,27 +245,6 @@ nav:
           - Mybatis Plus: java_serve/database/mybatis_plus/index.md
       - 认证和鉴权:
           - java_serve/authentication/index.md
-          - Spring Security实战:
-              - java_serve/authentication/spring-security/index.md
-              - Spring Security入门:
-                  - java_serve/authentication/spring-security/part1_say_hello_to_spring_security/index.md
-                  - 1.安全现状: java_serve/authentication/spring-security/part1_say_hello_to_spring_security/01_security_today/index.md
-                  - 2.Spring Security入门: java_serve/authentication/spring-security/part1_say_hello_to_spring_security/02_hello/index.md
-              - 配置身份认证:
-                  - java_serve/authentication/spring-security/part2_configuring_authentication/index.md
-                  - 3.管理用户: java_serve/authentication/spring-security/part2_configuring_authentication/03_managing_users/index.md
-                  - 4.管理密码: java_serve/authentication/spring-security/part2_configuring_authentication/04_managing_passwords/index.md
-                  - 5.网络应用的安全性始于过滤器: java_serve/authentication/spring-security/part2_configuring_authentication/05_begins_with_filters/index.md
-                  - 6.实现身份认证: java_serve/authentication/spring-security/part2_configuring_authentication/06_implementing_authentications/index.md
-              - 配置授权:
-                  - java_serve/authentication/spring-security/part3_configuring_authorization/index.md
-                  - 7.配置端点级授权：限制访问: java_serve/authentication/spring-security/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/index.md
-              - 实施OAuth 2和OpenID Connect:
-                  - java_serve/authentication/spring-security/part4_implementing_oAuth2_and_openid_connect/index.md
-              - 响应式:
-                  - java_serve/authentication/spring-security/part5_going_reactive/index.md
-              - 测试安全配置:
-                  - java_serve/authentication/spring-security/part6_testing_security_configurations/index.md
       - Spring Boot:
           - java_serve/springboot/index.md
           - 基础知识: java_serve/springboot/basic/index.md
@@ -348,6 +326,22 @@ nav:
           - 内网穿透-frp: topics/tools/frp/index.md
   - 文档翻译:
       - document_translation/index.md
+      - JUnit5官方文档: document_translation/junit5-user-guide/index.md
+      - Spring框架官方文档:
+          - document_translation/spring-framework/index.md
+          - 概述: document_translation/spring-framework/overview/index.md
+          - 核心技术:
+              - document_translation/spring-framework/02-core-technologies/index.md
+              - IOC容器:
+                  - document_translation/spring-framework/02-core-technologies/01-the-ioc-container/index.md
+                  - 简介: document_translation/spring-framework/02-core-technologies/01-the-ioc-container/01-introduction/index.md
+                  - 容器概述: document_translation/spring-framework/02-core-technologies/01-the-ioc-container/02-basics/index.md
+      - Spring Security实战:
+          - document_translation/spring-security-in-action2/index.md
+          - Spring Security入门:
+              - document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md
+              - 安全现状: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md
+              - Spring Security入门: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md
   - 英语:
       - english/index.md
       - 音标: english/phonetic_symbol/index.md
