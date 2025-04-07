@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>向Request域中存储数据</title>
+    <style>
+        a {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+请求域内容: <span th:text="${requestScope}"></span>
+
+<a th:href="@{/request-scope/servlet}">通过HttpServletRequest对象设置请求域</a>
+<a th:href="@{/request-scope/model}">通过Model对象设置请求域</a>
+<a th:href="@{/request-scope/map}">通过Map集合设置请求域</a>
+<a th:href="@{/request-scope/modelMap}">通过ModelMap对象设置请求域</a>
+<a th:href="@{/request-scope/modelAndView}">通过ModelAndView对象设置请求域</a>
+</body>
+</html>

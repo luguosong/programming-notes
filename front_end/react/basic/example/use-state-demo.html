@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app"></div>
+<!-- React 核心库-->
+<script src="js/react.development.js"></script>
+<!--专门针对DOM的方法，使您能够在DOM中使用React-->
+<script src="js/react-dom.development.js"></script>
+<!--babel库:用于将将你的JSX代码转换成普通的JavaScript，不要在生产环境中使用。-->
+<script src="js/babel.min.js"></script>
+<!--您需要通知 Babel 要将哪些代码转换，方法是将脚本类型更改为 type=text/jsx。-->
+<script type="text/jsx">
+
+    const {useState} = React;
+
+    function MyApp() {
+
+        const [state1, setState1] = useState(0)
+        const [state2, setState2] = useState(0)
+
+        return (
+            <>
+                <div>
+                    <button
+                        onClick={() => {
+                            setState1(state1 + 1)
+                        }
+                        }>改变状态一
+                    </button>
+                    <span>状态一：{state1}</span>
+                </div>
+                <div>
+                    <button
+                        onClick={
+                            () => {
+                                setState2(state2 + 1)
+                            }
+                        }>改变状态二
+                    </button>
+                    <span>状态二：{state2}
+            </span>
+                </div>
+            </>
+        );
+    }
+
+    const container = document.getElementById('app');
+    const root = ReactDOM.createRoot(container);
+    root.render(<MyApp/>);
+</script>
+
+<!--
+    请注意：此页面是尝试 React 的好方法，但不适合用于生产环境。
+	它在浏览器中使用 Babel 缓慢编译 JSX，并使用了较大的 React 开发版本。
+-->
+</body>
+</html>
