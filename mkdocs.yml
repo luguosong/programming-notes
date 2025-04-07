@@ -4,7 +4,7 @@ repo_url: https://github.com/luguosong/programming-notes # 右上角仓库链接
 repo_name: programming-notes # 右上角仓库名称
 edit_uri: edit/main/code/
 docs_dir: code
-dev_addr: '127.0.0.1:7000'
+dev_addr: '127.0.0.1:7111'
 
 
 theme:
@@ -13,8 +13,8 @@ theme:
   custom_dir: overrides # 自定义主题目录
   font:
     code: Source Code Pro
-  logo: https://gcore.jsdelivr.net/gh/luguosong/programming-notes@main/code/assert/logo.gif
-  favicon: https://gcore.jsdelivr.net/gh/luguosong/programming-notes@main/code/assert/logo.gif
+  logo: https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/assert/logo.gif
+  favicon: https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/assert/logo.gif
   icon:
     repo: fontawesome/brands/github
   features:
@@ -111,7 +111,7 @@ extra:
       link: https://github.com/luguosong
       name: Github
     - icon: simple/wechat
-      link: https://gcore.jsdelivr.net/gh/luguosong/images@master/blog-img/202404272008366.png
+      link: https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202404272008366.png
       name: 微信
 
 plugins:
@@ -127,14 +127,14 @@ plugins:
 extra_css:
   - custom/css/font.css
   - custom/css/custom.css
-  - https://unpkg.com/katex@0/dist/katex.min.css
+  - https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css
   - custom/css/viewer.css
 
 extra_javascript:
   - custom/js/custom.js
   - custom/js/katex.js
-  - https://unpkg.com/katex@0/dist/katex.min.js
-  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js
   - custom/js/viewer.js
   - custom/js/viewer-js-init.js
 
@@ -213,6 +213,7 @@ nav:
           - 概述: java/javase/src/main/java/com/luguosong/overview/index.md
           - 语言基础: java/javase/src/main/java/com/luguosong/basic/index.md
           - 面向对象: java/javase/src/main/java/com/luguosong/object_oriented/index.md
+          - 反射: java/javase/src/main/java/com/luguosong/reflection/index.md
       - Java日志:
           - java/log/index.md
           - 基础: java/log/basic/index.md
@@ -326,10 +327,13 @@ nav:
           - 内网穿透-frp: topics/tools/frp/index.md
   - 文档翻译:
       - document_translation/index.md
-      - JUnit5官方文档: document_translation/junit5-user-guide/index.md
+      - JUnit5官方文档:
+          - document_translation/junit5-user-guide/index.md
+          - 概述: document_translation/junit5-user-guide/01-overview/index.md
+          - 编写测试: document_translation/junit5-user-guide/02-writing-tests/index.md
       - Spring框架官方文档:
           - document_translation/spring-framework/index.md
-          - 概述: document_translation/spring-framework/overview/index.md
+          - 概述: document_translation/spring-framework/01-overview/index.md
           - 核心技术:
               - document_translation/spring-framework/02-core-technologies/index.md
               - IOC容器:
@@ -340,8 +344,23 @@ nav:
           - document_translation/spring-security-in-action2/index.md
           - Spring Security入门:
               - document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md
-              - 安全现状: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md
-              - Spring Security入门: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md
+              - 1.安全现状: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md
+              - 2.Spring Security入门: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md
+          - 配置身份认证:
+              - document_translation/spring-security-in-action2/part2_configuring_authentication/index.md
+              - 3.管理用户: document_translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md
+              - 4.管理密码: document_translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md
+              - 5.网络应用的安全性始于过滤器: document_translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/index.md
+              - 6.实现身份认证: document_translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/index.md
+          - 配置授权:
+              - document_translation/spring-security-in-action2/part3_configuring_authorization/index.md
+              - 7.配置端点级授权：限制访问: document_translation/spring-security-in-action2/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/index.md
+          - 实施OAuth 2和OpenID Connect:
+              - document_translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/index.md
+          - 响应式:
+              - document_translation/spring-security-in-action2/part5_going_reactive/index.md
+          - 测试安全配置:
+              - document_translation/spring-security-in-action2/part6_testing_security_configurations/index.md
   - 英语:
       - english/index.md
       - 音标: english/phonetic_symbol/index.md
