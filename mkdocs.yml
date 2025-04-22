@@ -331,6 +331,13 @@ nav:
           - document_translation/junit5-user-guide/index.md
           - 概述: document_translation/junit5-user-guide/01-overview/index.md
           - 编写测试: document_translation/junit5-user-guide/02-writing-tests/index.md
+      - 快捷学习Spring:
+          - document_translation/spring-start-here/index.md
+          - 第一部分:
+              - document_translation/spring-start-here/part1/index.md
+              - 现实世界中的Spring: document_translation/spring-start-here/part1/01-spring-in-the-real-world/index.md
+          - 第二部分:
+              - document_translation/spring-start-here/part2/index.md
       - Spring框架官方文档:
           - document_translation/spring-framework/index.md
           - 概述: document_translation/spring-framework/01-overview/index.md
