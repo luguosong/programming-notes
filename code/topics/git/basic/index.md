@@ -5,7 +5,7 @@
 ### 本地版本控制系统
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412252139936.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412252139936.png){ loading=lazy }
   <figcaption>本地版本控制.</figcaption>
 </figure>
 
@@ -19,7 +19,7 @@
 有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412261724074.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412261724074.png){ loading=lazy }
   <figcaption>集中化的版本控制</figcaption>
 </figure>
 
@@ -48,7 +48,7 @@
 这么一来，任何一处协同工作用的服务器发生故障，事后都可以用任何一个镜像出来的本地仓库恢复。 因为每一次的克隆操作，实际上都是一次对代码仓库的完整备份。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412261754847.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412261754847.png){ loading=lazy }
   <figcaption>分布式版本控制</figcaption>
 </figure>
 
@@ -72,7 +72,7 @@
 大部分版本控制系统（CVS、Subversion、Perforce 等等）存储的信息看作是一组基本文件和每个文件随时间逐步累积的差异 （它们通常称作 `基于差异`（delta-based）的版本控制）。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412262233902.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412262233902.png){ loading=lazy }
   <figcaption>存储每个文件与初始版本的差异.</figcaption>
 </figure>
 

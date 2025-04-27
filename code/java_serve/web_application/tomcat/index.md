@@ -26,7 +26,7 @@
 - [下载](https://tomcat.apache.org/download-80.cgi)压缩包，并解压。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405102214744.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405102214744.png){ loading=lazy }
   <figcaption>下载Tomcat压缩包</figcaption>
 </figure>
 

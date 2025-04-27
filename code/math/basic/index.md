@@ -51,7 +51,7 @@ $$
     `无理式`与`无理数`是两个不同的概念，不要混淆。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202407192200318.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202407192200318.png){ loading=lazy }
   <figcaption>代数式分类</figcaption>
 </figure>
 

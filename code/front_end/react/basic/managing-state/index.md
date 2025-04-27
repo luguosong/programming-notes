@@ -24,7 +24,7 @@
 - `错误时`：与输入状态类似，但会多错误的消息。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202501081711504.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202501081711504.png){ loading=lazy }
   <figcaption>定位组件中不同的视图状态</figcaption>
 </figure>
 
@@ -80,7 +80,7 @@ export default function Form({
 - `网络请求失败后`（计算机）应该将表单的状态切换到`失败的状态`，与此同时，显示错误信息。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202501081722190.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202501081722190.png){ loading=lazy }
   <figcaption>表单的各种状态</figcaption>
 </figure>
 
@@ -625,7 +625,7 @@ actions 来决定 状态如何更新。
 到太高的层级会导致 “逐层传递 props” 的情况。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202501091357593.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202501091357593.png){ loading=lazy }
   <figcaption>逐层传递props问题</figcaption>
 </figure>
 

@@ -9,7 +9,7 @@ icon: simple/jetbrains
 ### 定义实时模板
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409261739726.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409261739726.png){ loading=lazy }
   <figcaption>通过输入少量提示，生成代码块</figcaption>
 </figure>
 
@@ -86,12 +86,12 @@ MybatisX 插件功能：
 日志高亮美化插件
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409061558667.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409061558667.png){ loading=lazy }
   <figcaption>配置</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409061559895.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409061559895.png){ loading=lazy }
   <figcaption>效果</figcaption>
 </figure>
 

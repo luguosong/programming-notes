@@ -234,7 +234,7 @@ int x7 = 0x52_;
 应用程序的主方法中，你已经见过数组的例子。本节将更详细地讨论数组。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412101715066.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412101715066.png){ loading=lazy }
   <figcaption>一个包含10个元素的数组。</figcaption>
 </figure>
 

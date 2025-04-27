@@ -38,7 +38,7 @@ Spring框架以 Apache License 2.0 开源许可协议的形式发布，该框架
 > `spring-context`依赖内部会引用其它核心模块：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405301128137.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405301128137.png){ loading=lazy }
   <figcaption>spring-context依赖内部引入其它核心模块</figcaption>
 </figure>
 
@@ -68,7 +68,7 @@ Spring框架以 Apache License 2.0 开源许可协议的形式发布，该框架
 `使用阶段`：Spring根据`id名称`可以获取到对应的`对象实例`。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/diagrams/java_serve/spring/basic/Spring%20IOC%E5%8E%9F%E7%90%86.svg){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/java_serve/spring/basic/Spring%20IOC%E5%8E%9F%E7%90%86.svg){ loading=lazy }
   <figcaption>IOC原理图</figcaption>
 </figure>
 
@@ -312,7 +312,7 @@ util命名空间针对与集合的复用场景。
 ## 注解开发
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202406121824480.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202406121824480.png){ loading=lazy }
   <figcaption>注解开发依赖于aop包，context包中包含aop了</figcaption>
 </figure>
 

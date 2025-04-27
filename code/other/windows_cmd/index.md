@@ -15,11 +15,11 @@ netstat -ano|findstr "8080"
 ```
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405151732766.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405151732766.png){ loading=lazy }
   <figcaption>观察结果中的PID</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405151733757.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405151733757.png){ loading=lazy }
   <figcaption>在任务栏管理器中找到对应进程</figcaption>
 </figure>

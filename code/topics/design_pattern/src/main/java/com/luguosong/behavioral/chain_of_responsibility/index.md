@@ -7,7 +7,7 @@
 ## 结构
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409251414491.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409251414491.png){ loading=lazy }
   <figcaption>责任链</figcaption>
 </figure>
 
@@ -26,7 +26,7 @@
 这些检查需要依次进行。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409251456471.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409251456471.png){ loading=lazy }
   <figcaption>请求必须经过一系列检查后才能由订购系统来处理。</figcaption>
 </figure>
 
@@ -39,7 +39,7 @@
 - 可以对包含同样数据的重复请求返回缓存中的结果，从而提高系统响应速度。需要新增一个检查步骤，确保只有没有满足条件的缓存结果时请求才能通过并被发送给系统。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409251500680.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409251500680.png){ loading=lazy }
   <figcaption>代码变得越来越多，也越来越混乱。</figcaption>
 </figure>
 
@@ -51,7 +51,7 @@
 `处理者`可以决定不再沿着链传递请求，这可高效地取消所有后续处理步骤。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409251524277.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409251524277.png){ loading=lazy }
   <figcaption>处理者依次排列，组成一条链。</figcaption>
 </figure>
 

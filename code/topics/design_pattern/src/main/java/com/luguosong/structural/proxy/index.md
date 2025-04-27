@@ -7,7 +7,7 @@
 ## 结构
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202406172054353.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202406172054353.png){ loading=lazy }
   <figcaption>代理模式结构</figcaption>
 </figure>
 

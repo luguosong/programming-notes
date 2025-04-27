@@ -32,48 +32,48 @@
 - 选择`自定义安装`
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405011628249.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405011628249.png){ loading=lazy }
   <figcaption>打开Choosing a Setup Type窗口，选择安装类型，</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405012018783.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405012018783.png){ loading=lazy }
   <figcaption>此时如果直接“Next”（下一步），则产品的安装路径是默认的。如果想要自定义安装目录，则可以选中
 对应的产品，然后在下面会出现“Advanced Options”（高级选项）的超链接。</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![❗目录地址不要包含中文](https://gcore.jsdelivr.net/gh/luguosong/images@master/blog-img/202405012153168.png){ loading=lazy }
+  ![❗目录地址不要包含中文](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405012153168.png){ loading=lazy }
   <figcaption>设置程序和数据目录</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405012300025.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405012300025.png){ loading=lazy }
   <figcaption>执行安装</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405020905845.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405020905845.png){ loading=lazy }
   <figcaption>配置主机类型和端口</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022116763.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022116763.png){ loading=lazy }
   <figcaption>设置授权方式</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022117889.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022117889.png){ loading=lazy }
   <figcaption>设置root用户密码</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022127397.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022127397.png){ loading=lazy }
   <figcaption>设置服务</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022128484.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022128484.png){ loading=lazy }
   <figcaption>执行配置</figcaption>
 </figure>
 
@@ -84,72 +84,72 @@
 ### Windows安装MySql 8.4.0
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022200866.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022200866.png){ loading=lazy }
   <figcaption>打开安装程序</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022204141.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022204141.png){ loading=lazy }
   <figcaption>同意用户许可协议</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022206799.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022206799.png){ loading=lazy }
   <figcaption>选择安装类型</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022208117.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022208117.png){ loading=lazy }
   <figcaption>选择安装方式和安装路径</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022209137.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022209137.png){ loading=lazy }
   <figcaption>开始安装</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022211279.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022211279.png){ loading=lazy }
   <figcaption>完成安装，并开始配置mysql</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022213581.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022213581.png){ loading=lazy }
   <figcaption>进入配置页面</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022219903.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022219903.png){ loading=lazy }
   <figcaption>如果本电脑上安装过mysql，选择与之前服务并存</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022222829.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022222829.png){ loading=lazy }
   <figcaption>配置主机类型和端口</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022223978.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022223978.png){ loading=lazy }
   <figcaption>设置root用户密码</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022225243.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022225243.png){ loading=lazy }
   <figcaption>设置服务</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022228661.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022228661.png){ loading=lazy }
   <figcaption>配置服务器文件权限</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022229672.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022229672.png){ loading=lazy }
   <figcaption>创建示例数据库</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022230545.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022230545.png){ loading=lazy }
   <figcaption>执行配置</figcaption>
 </figure>
 
@@ -158,7 +158,7 @@
 - 停止服务
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202404292124989.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202404292124989.png){ loading=lazy }
   <figcaption>停止mysql服务</figcaption>
 </figure>
 
@@ -184,7 +184,7 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MySQL服务删除
 - 方式一：使用程序提供的登录界面,用户为root
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405022239479.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405022239479.png){ loading=lazy }
 </figure>
 
 - 方式二：使用cmd登录
@@ -245,7 +245,7 @@ collation-server=utf8_general_ci
 修改完配置，重启服务：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405030934605.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405030934605.png){ loading=lazy }
   <figcaption>重启服务</figcaption>
 </figure>
 

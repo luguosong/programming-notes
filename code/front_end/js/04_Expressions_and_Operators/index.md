@@ -90,7 +90,7 @@ new Point(2, 3) //创建一个Point对象
 操作符用于算术表达式、比较表达式、逻辑表达式、赋值表达式
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202403051545686.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202403051545686.png){ loading=lazy }
   <figcaption>操作符</figcaption>
 </figure>
 
@@ -175,7 +175,7 @@ i += 1 //i = i + 1
 ```
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202403051747149.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202403051747149.png){ loading=lazy }
   <figcaption>赋值操作符</figcaption>
 </figure>
 
@@ -206,7 +206,7 @@ let m2 = a || b //a不为falsy返回a(❗0,空字符串都是假值)，否则返
 用于表名操作符的`类型`
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202403060937105.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202403060937105.png){ loading=lazy }
   <figcaption>typeof操作符</figcaption>
 </figure>
 

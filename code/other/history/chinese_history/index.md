@@ -3,11 +3,11 @@
 ## 中国历史坐标尺
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202502211355569.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202502211355569.png){ loading=lazy }
   <figcaption>横板</figcaption>
 </figure>
 
-<img style="max-height: none;max-width: 80%" src="https://raw.githubusercontent.com/luguosong/images/master/blog-img/202502211354837.png">
+<img style="max-height: none;max-width: 80%" src="https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202502211354837.png">
 
 ## 史前时代
 

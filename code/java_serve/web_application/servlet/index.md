@@ -118,12 +118,12 @@ public interface Servlet {
 - 使用IDEA创建项目：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405141449467.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405141449467.png){ loading=lazy }
   <figcaption>创建项目</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405141509004.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405141509004.png){ loading=lazy }
   <figcaption>编译时，会在webapp/WEB-INF目录下生成classes目录，并将编译后的class文件放入其中</figcaption>
 </figure>
 
@@ -142,19 +142,19 @@ public interface Servlet {
 - IDEA中配置Tomcat
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405141548170.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405141548170.png){ loading=lazy }
   <figcaption>配置Tomcat</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405141548100.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405141548100.png){ loading=lazy }
   <figcaption>配置工件</figcaption>
 </figure>
 
 - 启动项目，成功访问Servlet
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405141532109.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405141532109.png){ loading=lazy }
   <figcaption>访问Servlet</figcaption>
 </figure>
 
@@ -348,7 +348,7 @@ public class GenericServlet implements Servlet {
 ```
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405182148096.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405182148096.png){ loading=lazy }
   <figcaption>当没有重写对应类型的方法处理函数，会调用默认的</figcaption>
 </figure>
 
@@ -466,12 +466,12 @@ public abstract class HttpServlet extends GenericServlet {
 ```
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405211738536.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405211738536.png){ loading=lazy }
   <figcaption>响应码为302发起重定向</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202405211739021.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405211739021.png){ loading=lazy }
   <figcaption>重定向到指定Servlet</figcaption>
 </figure>
 

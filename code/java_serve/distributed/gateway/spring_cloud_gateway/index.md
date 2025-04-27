@@ -61,7 +61,7 @@ spring:
 这是一个 Java 8 函数断言。输入类型是 Spring Framework 的 ServerWebExchange。这允许您匹配 HTTP 请求中的任何内容，例如头信息或参数。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410300952320.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410300952320.png){ loading=lazy }
   <figcaption>路由断言</figcaption>
 </figure>
 
@@ -70,7 +70,7 @@ spring:
 这些是使用特定工厂构建的GatewayFilter实例。在这里，您可以在发送下游请求之前或之后修改请求和响应。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410300954344.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410300954344.png){ loading=lazy }
   <figcaption>网关过滤器</figcaption>
 </figure>
 

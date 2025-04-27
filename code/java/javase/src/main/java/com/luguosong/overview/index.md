@@ -24,14 +24,14 @@ Java 编程语言是一种高级语言，可以用以下所有流行词来描述
 在 Java 编程语言中，所有源代码首先写在以 `.java 扩展名`结尾的纯文本文件中。然后，这些源文件通过 `javac 编译器`编译成 `.class 文件`。`.class 文件`不包含与处理器本地的代码；相反，它包含`字节码`——Java 虚拟机（Java VM）的机器语言。接着，java 启动工具使用 Java 虚拟机的一个实例运行你的应用程序。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202408281530619.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202408281530619.png){ loading=lazy }
   <figcaption>软件开发过程概述。</figcaption>
 </figure>
 
 由于 Java 虚拟机可在多种操作系统上使用，相同的 `.class 文件`能够在 Microsoft Windows、Solaris™ 操作系统（Solaris OS）、Linux 或 Mac OS 上运行。一些虚拟机，例如 Java SE HotSpot at a Glance，会在运行时执行额外的步骤，以提升应用程序的性能。这包括查找性能瓶颈和重新编译（为本地代码）经常使用的代码段等各种任务。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202408281531430.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202408281531430.png){ loading=lazy }
   <figcaption>通过 Java 虚拟机，应用程序能够在多个平台上运行。</figcaption>
 </figure>
 
@@ -49,7 +49,7 @@ Java 平台有两个组成部分：
 API 是一个大型的现成软件组件集合，提供了许多实用功能。它被分组为相关类和接口的库，这些库被称为包。下一节“Java 技术能做什么？”将重点介绍 API 提供的一些功能。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202408281533258.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202408281533258.png){ loading=lazy }
   <figcaption>API 和 Java 虚拟机将程序与底层硬件隔离开来。</figcaption>
 </figure>
 
@@ -123,7 +123,7 @@ class HelloWorldApp {
 打开一个命令窗口。你可以通过开始菜单选择“运行...”，然后输入cmd来实现。命令窗口应类似于下图所示。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202408281610785.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202408281610785.png){ loading=lazy }
   <figcaption>一个命令行窗口。</figcaption>
 </figure>
 

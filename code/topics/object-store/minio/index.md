@@ -7,14 +7,14 @@
 去[仓库](https://github.com/minio/minio)下的README文件中获取地址：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412191647917.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412191647917.png){ loading=lazy }
   <figcaption>github</figcaption>
 </figure>
 
 官网好像找不到免费地址了，这个地址下载需要许可证才能运行：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412191648961.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412191648961.png){ loading=lazy }
   <figcaption>官网提供的地址下载，需要许可证才能使用</figcaption>
 </figure>
 
@@ -70,7 +70,7 @@ docker run -p 9000:9000 -p 9090:9090 \
 ### Windows下安装
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202412192105650.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202412192105650.png){ loading=lazy }
   <figcaption>github README文档</figcaption>
 </figure>
 

@@ -11,7 +11,7 @@
 ### 注解
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202501312100302.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202501312100302.png){ loading=lazy }
   <figcaption>可用的注解</figcaption>
 </figure>
 

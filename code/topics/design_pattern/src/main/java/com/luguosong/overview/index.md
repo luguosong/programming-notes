@@ -39,7 +39,7 @@
 系统的初始设计者采用了标准的`面向对象`技术，创建了一个`鸭子超类`，所有其他鸭子类型都从这个超类继承。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409060916576.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409060916576.png){ loading=lazy }
   <figcaption>第一版</figcaption>
 </figure>
 
@@ -64,7 +64,7 @@
 我们可以部分行为使用`接口`替代。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202409060950737.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202409060950737.png){ loading=lazy }
   <figcaption>第二版</figcaption>
 </figure>
 

@@ -7,7 +7,7 @@
 - 官方下载二进制包：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410151623345.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410151623345.png){ loading=lazy }
   <figcaption>官方下载nacos二进制包</figcaption>
 </figure>
 
@@ -25,19 +25,19 @@ startup.cmd -m standalone
 - 在nacos安装包`conf目录`下找到`mysql-schema.sql`并执行。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410151651336.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410151651336.png){ loading=lazy }
   <figcaption>sql脚本</figcaption>
 </figure>
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410151653248.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410151653248.png){ loading=lazy }
   <figcaption>sql脚本会生成以下表</figcaption>
 </figure>
 
 - 打开`conf/application.properties`配置数据库链接参数：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410151655025.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410151655025.png){ loading=lazy }
   <figcaption>修改数据库链接配置</figcaption>
 </figure>
 
@@ -52,7 +52,7 @@ startup.cmd -m standalone
 先确认使用的`Spring Cloud Alibaba`的版本，再去官网找到对应`Spring Cloud`和`Spring Boot`的版本：
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410162204234.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410162204234.png){ loading=lazy }
   <figcaption>根据Spring Cloud Alibaba版本，找到Spring Cloud和Spring Boot的版本</figcaption>
 </figure>
 

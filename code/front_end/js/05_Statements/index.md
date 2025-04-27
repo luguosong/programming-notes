@@ -231,7 +231,7 @@ function f() {
 }
 ```
 
-![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202403071659494.png)
+![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202403071659494.png)
 
 ## "use strict"语句
 

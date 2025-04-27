@@ -5,7 +5,7 @@
 下图展示了一个简单的PDF文档，里面只包含`Hello World`这几个词。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202407051639656.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202407051639656.png){ loading=lazy }
   <figcaption>图1.1：一个简单的Hello World文件</figcaption>
 </figure>
 
@@ -120,7 +120,7 @@ startxref
 我手动将单词`World`替换为`Bruno`，将页面尺寸从`595 x 842`改为`120 x 806`，并更改了生产者行中iText的`版本号`。下图展示了结果。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202407051651262.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202407051651262.png){ loading=lazy }
   <figcaption>图1.2：一个修改过的Hello World文件</figcaption>
 </figure>
 
@@ -134,7 +134,7 @@ startxref
 。签名面板告诉我们该文件是由`Bruno Specimen`签名的，并提供更多的签名细节。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202407051705762.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202407051705762.png){ loading=lazy }
   <figcaption>图1.3：一个已签名的Hello World文件</figcaption>
 </figure>
 
@@ -207,7 +207,7 @@ startxref
 请看/ByteRange条目(第10行)：签名覆盖了从0到160字节和从16546到18291字节。签名本身占据了161到16545字节。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/diagrams/java_serve/topics/itext-signatures/chapter01_understanding_the_concept_of_digital_signatures/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84.svg){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/java_serve/topics/itext-signatures/chapter01_understanding_the_concept_of_digital_signatures/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84.svg){ loading=lazy }
   <figcaption>大致结构</figcaption>
 </figure>
 
@@ -225,7 +225,7 @@ startxref
 显示了如果我手动将 `World` 替换为 `Bruno` 会发生什么。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202407051814004.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202407051814004.png){ loading=lazy }
   <figcaption>图1.4：失效的签名</figcaption>
 </figure>
 
@@ -420,7 +420,7 @@ decrypt() 方法的参数。这些方法几乎是相同的。唯一的区别是 
 图1.5显示了这两种不同的概念。对于`加密`，使用公钥（绿色的钥匙）加密，使用私钥（红色的钥匙）解密。对于创建`签名`，则反过来。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202407081517802.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202407081517802.png){ loading=lazy }
   <figcaption>图1.5：非对称密钥算法，绿色代表公钥，红色代表私钥</figcaption>
 </figure>
 

@@ -59,7 +59,7 @@ spring:
 将服务生产者拆分为`service`(业务代码)、`dto`(存放数据传输对象)、`api`(存放Feign接口)模块。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410211012434.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410211012434.png){ loading=lazy }
   <figcaption>OpenFeign拆分方式一</figcaption>
 </figure>
 
@@ -68,7 +68,7 @@ spring:
 将Feign接口全部存放在同一个接口中。
 
 <figure markdown="span">
-  ![](https://raw.githubusercontent.com/luguosong/images/master/blog-img/202410211126986.png){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202410211126986.png){ loading=lazy }
   <figcaption>OpenFeign拆分方式二</figcaption>
 </figure>
 
