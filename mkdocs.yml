@@ -125,18 +125,18 @@ plugins:
       cache_safe: true
 
 extra_css:
-  - custom/css/font.css
-  - custom/css/custom.css
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/css/font.css
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/css/custom.css
   - https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css
-  - custom/css/viewer.css
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/css/viewer.css
 
 extra_javascript:
-  - custom/js/custom.js
-  - custom/js/katex.js
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/js/custom.js
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/js/katex.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js
-  - custom/js/viewer.js
-  - custom/js/viewer-js-init.js
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/js/viewer.js
+  - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/js/viewer-js-init.js
 
 exclude_docs: |
   **/node_modules
@@ -144,7 +144,9 @@ exclude_docs: |
 copyright: Copyright &copy; 2024 Lu Guosong #版权信息
 
 nav:
-  - 主页: index.md
+  - 主页:
+      - index.md
+      - 学习资源: resources.md
   - 基础知识:
       - basic/index.md
       - 计算机组成原理:
@@ -336,6 +338,7 @@ nav:
           - 第一部分:
               - document_translation/spring-start-here/part1/index.md
               - 现实世界中的Spring: document_translation/spring-start-here/part1/01-spring-in-the-real-world/index.md
+              - 定义Bean: document_translation/spring-start-here/part1/02-defining-beans/index.md
           - 第二部分:
               - document_translation/spring-start-here/part2/index.md
       - Spring框架官方文档:
