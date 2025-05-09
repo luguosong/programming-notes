@@ -27,6 +27,8 @@ jobs:
           path: .cache
           restore-keys: |
             mkdocs-material-
+      - run: |
+          yq -i '.plugins += ["git-revision-date-localized","git-authors"]' mkdocs.yml
       - run: pip install mkdocs-material
       - run: pip install mkdocs-glightbox
       - run: pip install mkdocs-statistics-plugin

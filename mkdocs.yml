@@ -125,13 +125,7 @@ plugins:
       minify_js: true
       minify_css: true
       cache_safe: true
-  # 可显示页面最后一次 git 修改的日期。该插件使用 babel 和 timeago.js 提供不同的本地化日期格式。
-  - git-revision-date-localized
-  # MkDocs 插件，用于显示页面的 Git 作者信息。
-  - git-authors:
-      show_contribution: true
-      show_line_count: true
-      show_email_address: false
+
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/css/font.css
