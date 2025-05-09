@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace属性指向mapper接口-->
+<mapper namespace="com.luguosong.get_param.param_annotation.mapper.EmployeesMapper">
+    <!--Employees getEmployeesByName1(@Param("firstName") String firstName, @Param("lastName") String lastName);-->
+    <!--可以使用arg0，arg1，arg2...-->
+    <select id="getEmployeesByName" resultType="com.luguosong.get_param.pojo.Employees">
+        select *
+        from employees
+        where first_name = #{firstName}
+          and last_name = #{lastName}
+    </select>
+</mapper>

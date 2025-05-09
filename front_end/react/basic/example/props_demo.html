@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app"></div>
+<!-- React 核心库-->
+<script src="js/react.development.js"></script>
+<!--专门针对DOM的方法，使您能够在DOM中使用React-->
+<script src="js/react-dom.development.js"></script>
+<!--babel库:用于将将你的JSX代码转换成普通的JavaScript，不要在生产环境中使用。-->
+<script src="js/babel.min.js"></script>
+<!--您需要通知 Babel 要将哪些代码转换，方法是将脚本类型更改为 type=text/jsx。-->
+<script type="text/jsx">
+    /*
+    * 子组件
+    *
+    * 通过 解构 的方式获取props对象中的属性
+    * */
+    function RedText({color}) {
+        return (
+            <p style={{color: color}}>
+                Hello,React component!
+            </p>
+        );
+    }
+
+
+    /*
+    * 另外一种写法
+    *
+    * 事实上，props 正是 组件的唯一参数！ React 组件函数接受一个参数，一个 props 对象
+    * */
+    function RedText2(props) {
+        return (
+            <p style={{color: props.color}}>
+                Hello,React component!
+            </p>
+        );
+    }
+
+    /*
+    * 父组件
+    * */
+    function MyApp() {
+        return (
+            <>
+                {/*将props传递给子组件*/}
+                <RedText color="green"/>
+                <RedText2 color="blue"/>
+            </>
+        );
+    }
+
+    const container = document.getElementById('app');
+    const root = ReactDOM.createRoot(container);
+    root.render(<MyApp/>);
+</script>
+</body>
+</html>

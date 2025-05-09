@@ -1,0 +1,148 @@
+.md-typeset h1, h2, h3, h4, h5, h6 {
+    color: #5e8bde;
+    font-weight: 1000 !important;
+}
+
+.md-typeset {
+    counter-reset: section-1;
+}
+
+.md-typeset h2 {
+    border-bottom: 1px inset rgba(53, 86, 129, 0.3);
+    counter-increment: section-1;
+    counter-reset: section-2 section-3 section-4;
+}
+
+.md-typeset h3 {
+    counter-increment: section-2;
+    counter-reset: section-3 section-4;
+}
+
+.md-typeset h4 {
+    counter-increment: section-3;
+    counter-reset: section-4;
+}
+
+.md-typeset h5 {
+    text-transform: none;
+    counter-increment: section-4;
+}
+
+.md-typeset h2:before {
+    content: counter(section-1) ". ";
+}
+
+.md-typeset h3:before {
+    content: counter(section-1) "." counter(section-2) " ";
+}
+
+.md-typeset h4:before {
+    content: counter(section-1) "." counter(section-2) "." counter(section-3) " ";
+}
+
+.md-typeset h5:before {
+    content: counter(section-1) "." counter(section-2) "." counter(section-3) "." counter(section-4) " ";
+}
+
+/*不限制内容的宽度*/
+.md-grid {
+    max-width: none !important;
+}
+
+/*图片设置白色背景*/
+figure img {
+    background-color: RGB(255, 255, 255);
+    padding: 2px;
+    border-radius: 1px;
+    cursor: zoom-in;
+}
+
+/*[dir=ltr] .md-nav--secondary .md-nav__list {*/
+/*    padding-left: 1rem;*/
+/*}*/
+
+/*.md-nav--secondary .md-nav__list {*/
+/*    counter-reset: item*/
+/*}*/
+
+/*.md-nav--secondary .md-ellipsis:before {*/
+/*    content: counters(item, ".") " ";*/
+/*    counter-increment: item*/
+/*}*/
+
+.md-main__inner {
+    margin: 1rem;
+}
+
+/*段落首行缩进*/
+article > p {
+    text-indent: 2em;
+}
+
+/*评论不需要前缀*/
+.md-typeset #__comments:before {
+    content: none
+}
+
+.md-content iframe {
+    width: 100%;
+}
+
+.highlighttable .linenos {
+    font-size: 0.64rem;
+}
+
+.md-typeset figcaption {
+    font-size: 0.6rem;
+    font-weight: 900;
+}
+
+.highlight span.filename {
+    font-size: 0.65em;
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list{
+    padding-left: 0.2rem;
+}
+
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__list{
+    list-style: circle;
+    padding-left: 1.4rem;
+    font-style: italic;
+}
+
+.md-nav--secondary > .md-nav__list {
+    list-style: "📓";
+    padding-left: 1rem !important;
+}
+
+
+/*文章图片最大高度限制*/
+.md-typeset img {
+    max-height: 50vh;
+}
+
+p > code, li > code {
+    color: #73a0c5 !important;
+    background-color: rgba(115, 160, 179, 0.1) !important;
+    font-weight: 700;
+}
+
+li::marker {
+    color: #5e8bde; /* 设置圆点颜色为蓝色 */
+}
+
+:root > * {
+    --md-code-hl-number-color: #BBBBBB;
+    --md-code-hl-special-color: #BBBBBB;
+    --md-code-hl-function-color: #61AFEF;
+    --md-code-hl-constant-color: #0779f8;
+    --md-code-hl-keyword-color: #CDBEFD;
+    --md-code-hl-string-color: #89CA78;
+    --md-code-hl-name-color: #D19A66;
+    --md-code-hl-operator-color: #BBBBBB;
+    --md-code-hl-punctuation-color: #BBBBBB;
+    --md-code-hl-comment-color: #5C6370;
+    /*--md-code-hl-generic-color:red;*/
+    --md-code-hl-variable-color: #FF8998;
+}

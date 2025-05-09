@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app"></div>
+<!-- React 核心库-->
+<script src="js/react.development.js"></script>
+<!--专门针对DOM的方法，使您能够在DOM中使用React-->
+<script src="js/react-dom.development.js"></script>
+<!--babel库:用于将将你的JSX代码转换成普通的JavaScript，不要在生产环境中使用。-->
+<script src="js/babel.min.js"></script>
+<!--您需要通知 Babel 要将哪些代码转换，方法是将脚本类型更改为 type=text/jsx。-->
+<script type="text/jsx">
+
+    const {useState} = React;
+
+    /*
+    * 定义组件
+    *
+    * 组件的名称必须以大写字母开头
+    * */
+    function ProfilePage({userId}) {
+        const [comment, setComment] = useState("")
+
+        return (
+            <div style={{border: "1px solid black"}}>
+                <h3>子组件</h3>
+                <label>
+                    评论输入框:
+                    <input value={comment} onChange={(e) => setComment(e.target.value)}/>
+                </label>
+                <p>
+                    评论输入框的内容并不会因为用户id的变化而更新，因为ProfilePage的位置没有变化，也没有被销毁。组件不会重新渲染。
+                </p>
+                当前用户id:{userId}
+            </div>
+        );
+    }
+
+    /*
+    * 使用组件
+    * */
+    function MyApp() {
+        const [userId, setUserId] = useState(0)
+        return (
+            <div style={{border: "1px solid black", padding: "10px"}}>
+                <h3>父组件</h3>
+                <button onClick={() => setUserId(userId + 1)}>切换用户id</button>
+                <p>
+                    父组件通过props将用户id传递给子组件⬇️
+                </p>
+                {/* 使用子组件 */}
+                <ProfilePage userId={userId}/>
+            </div>
+        );
+    }
+
+    const container = document.getElementById('app');
+    const root = ReactDOM.createRoot(container);
+    root.render(<MyApp/>);
+</script>
+</body>
+</html>
