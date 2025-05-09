@@ -115,17 +115,7 @@ extra:
       name: 微信
 
 plugins:
-  # 字数统计插件：https://github.com/TonyCrane/mkdocs-statistics-plugin
-  - statistics:
-      words_per_minute: 50
   - search
-  # 这是一个用于在页面写入磁盘前对其 HTML 进行压缩的 mkdocs 插件。
-  - minify:
-      minify_html: true
-      minify_js: true
-      minify_css: true
-      cache_safe: true
-
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/css/font.css

@@ -28,7 +28,31 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: |
-          yq -i '.plugins += ["git-revision-date-localized","git-authors"]' mkdocs.yml
+          yq -i '
+            .plugins += [
+            "git-revision-date-localized",
+            {
+              "git-authors": {
+                "show_contribution": true,
+                "show_line_count": true,
+                "show_email_address": false
+              }
+            },
+            {
+              "statistics": {
+                "words_per_minute": 50
+              }
+            },
+            {
+              "minify": {
+                "minify_html": true
+                "minify_js": true
+                "minify_css": true
+                "cache_safe": true
+              }
+            }
+          ]
+          ' mkdocs.yml
       - run: pip install mkdocs-material
       - run: pip install mkdocs-glightbox
       - run: pip install mkdocs-statistics-plugin
