@@ -664,7 +664,7 @@ null，因为我们并没有给这只鹦鹉分配任何名字。Spring 只是创
 	@Component 注解时，在 Spring 调用 Parrot 类的构造方法后，我们并没有机会再做额外的处理。如果我们希望在 Spring 创建 bean
 	之后立即执行一些操作，该怎么办呢？这时就可以使用 @PostConstruct 注解。
 	
-	Spring 借用了 Java EE 的 @PostConstruct 注解。我们同样可以在 Spring Bean 中使用这个注解，来指定一组在 Bean 创建后由 Spring
+	Spring 借用了 Java EE 的 `@PostConstruct 注解`。我们同样可以在 Spring Bean 中使用这个注解，来指定一组在 Bean 创建后由 Spring
 	执行的操作。你只需要在组件类中定义一个方法，并用 @PostConstruct 注解标记该方法，Spring 就会在构造方法执行完毕后自动调用它。
 	
 	接下来，我们需要在 pom.xml 文件中添加使用 @PostConstruct 注解所需的 Maven 依赖：
@@ -709,3 +709,123 @@ null，因为我们并没有给这只鹦鹉分配任何名字。Spring 只是创
 上下文中，这为开发带来了极大的灵活性，因为你可以直接通过调用上下文实例的方法，将新的实例加入到上下文中。当你需要以自定义的方式向上下文中添加
 Bean，而 @Bean 或其他注解（如组件注解）无法满足你的需求时，就可以采用这种方式。比如，你可能需要根据应用的特定配置，在 Spring
 上下文中注册特定的 Bean。虽然通过 @Bean 和组件注解可以实现大多数场景，但有些需求却无法像下面代码片段那样实现：
+
+``` java
+if(condition){
+// 如果条件为真，则向 Spring 上下文中添加一个特定的 bean。
+registerBean(b1);
+}else{
+// 否则，请在 Spring 上下文中再添加一个 bean。
+registerBean(b2);
+}
+
+```
+
+以鹦鹉为例，场景如下：应用程序会读取一组鹦鹉，其中有些是绿色的，有些是橙色的。你希望应用程序只将绿色的鹦鹉添加到 Spring
+上下文中（见图 2.13）。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202504281115306.png){ loading=lazy }
+  <figcaption>图2.13 通过 registerBean() 方法将特定对象实例添加到 Spring 容器</figcaption>
+</figure>
+
+让我们来看一下这个方法是如何运作的。要通过编程方式向 Spring 容器中添加一个 bean，只需调用 ApplicationContext 实例的
+`registerBean()` 方法即可。`registerBean() 方法`有四个参数，具体如下代码片段所示：
+
+```java
+<T> void registerBean(
+		String beanName,
+		Class<T> beanClass,
+		Supplier<T> supplier,
+		BeanDefinitionCustomizer... customizers);
+```
+
+1. 第一个参数 beanName 用于为你在 Spring 容器中添加的 bean 指定一个`名称`。如果你不需要为这个 bean 命名，在调用方法时可以将该参数设置为
+   null。
+2. 第二个参数是你要添加到容器中的 bean 所对应的`类`。比如你想添加一个 Parrot 类的实例，这个参数就传 Parrot.class。
+3. 第三个参数是一个 `Supplier 实例`。你需要实现这个 Supplier，使其返回你要添加到容器中的实例对象。请注意，Supplier 是
+   java.util.function 包下的一个函数式接口，其作用就是在不接收任何参数的情况下返回一个你定义的值。
+4. 第四个也是最后一个参数是 BeanDefinitionCustomizer 的可变参数（varargs）。如果你对这个接口不熟悉也没关系，BeanDefinitionCustomizer
+   只是一个用来`配置 bean 不同属性的接口`，比如可以用来设置 bean 为主实例（primary）。由于它是可变参数类型，你可以完全省略这个参数，也可以传入一个或多个
+   BeanDefinitionCustomizer 类型的值。
+
+在项目`sq-ch2-ex8`中，你可以看到一个使用 registerBean() 方法的示例。你会注意到，这个项目的配置类是空的，而我们用来作为 bean
+定义示例的 Parrot 类只是一个普通的 Java 对象（POJO），并没有使用任何注解。下面的代码片段展示了我为这个示例定义的配置类：
+
+```java
+
+@Configuration
+public class ProjectConfig {
+}
+```
+
+我定义了用于创建该 bean 的 Parrot 类：
+
+```java
+public class Parrot {
+	private String name;
+	// 省略了 getter 和 setter
+}
+
+```
+
+在项目的主方法中，我使用了 registerBean() 方法将一个 Parrot 类型的实例添加到了 Spring 容器中。下面的代码展示了主方法的实现。图
+2.14 重点展示了调用 registerBean() 方法的语法。
+
+```java
+public class Main {
+	public static void main(String[] args) {
+		var context =
+				new AnnotationConfigApplicationContext(
+						ProjectConfig.class);
+		//我们创建了想要添加到 Spring 上下文中的实例。
+		Parrot x = new Parrot();
+		x.setName("Kiki");
+		//我们定义了一个 Supplier 来返回该实例。
+		Supplier<Parrot> parrotSupplier = () -> x;
+		//我们调用 registerBean() 方法，将该实例添加到 Spring 容器中。
+		context.registerBean("parrot1",
+				Parrot.class, parrotSupplier);
+
+		//为了验证该 bean 已经被加入到上下文中，
+		// 我们可以引用 parrot bean，并在控制台打印它的名称。
+		Parrot p = context.getBean(Parrot.class);
+		System.out.println(p.getName());
+	}
+}
+```
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202504281126389.png){ loading=lazy }
+  <figcaption>图2.14 通过调用 registerBean() 方法以编程方式向 Spring 容器中添加 Bean</figcaption>
+</figure>
+
+在添加 bean 时，可以将一个或多个 bean 配置器实例作为最后的参数，用于设置不同的 bean 特性。例如，你可以通过修改
+registerBean() 方法的调用方式，将某个 bean 设置为主 bean（primary），如下方代码片段所示。当上下文中存在多个同类型的 bean 时，主
+bean 会成为 Spring 默认选择的实例：
+
+``` java
+context.registerBean("parrot1",
+					 Parrot.class,
+					 parrotSupplier,
+					 bc -> bc.setPrimary(true));
+```
+
+你已经迈出了进入Spring世界的重要第一步。学会如何将bean添加到Spring上下文中，乍一看似乎没什么大不了，但其实比你想象的要重要得多。有了这项技能，你现在就可以继续学习如何在Spring上下文中引用这些bean了，这部分内容我们会在第三章详细讲解。
+
+!!! note
+
+    在本书中，我们只采用了现代的配置方式。不过，我认为你也有必要了解一下 Spring 框架早期是如何进行配置的。那时候，我们通常使用 XML 来编写这些配置。在附录 B 中，我们提供了一个简短的示例，让你感受一下如何通过 XML 向 Spring 容器中添加一个 bean。
+
+## 总结
+
+- 在学习 Spring 时，首先需要掌握的就是如何将对象实例（我们称之为 bean）添加到 Spring 容器中。你可以把 Spring 容器想象成一个桶，你希望
+  Spring 能够管理哪些实例，就把它们放进这个桶里。Spring 只能“看到”你添加到其容器中的那些实例。
+- 你可以通过三种方式将 bean 添加到 Spring 容器中：使用 @Bean 注解、使用构造型注解，以及通过编程方式添加。
+	- 使用 @Bean 注解将实例添加到 Spring 容器时，你可以将任何类型的对象实例作为 bean 注入，甚至可以将同一类型的多个实例添加到
+	  Spring 容器。从这个角度来看，这种方式比使用构造型注解更加灵活。不过，这种方式需要你为每个要添加到容器的独立实例，在配置类中单独编写一个方法，因此代码量会相对多一些。
+	- 使用构造型注解（比如 @Component），你只能为带有特定注解的应用类创建
+	  bean。这种配置方式需要编写的代码更少，使得配置更加简洁易读。对于你自己定义并可以添加注解的类，通常会优先选择这种方式，而不是
+	  @Bean 注解。
+	- 使用 registerBean() 方法，则可以实现自定义逻辑，将 bean 添加到 Spring 容器中。需要注意的是，这种方式仅适用于 Spring 5
+	  及以上版本。

@@ -49,6 +49,27 @@ icon: material/book-edit
 - 豆瓣地址：[基础卷](https://book.douban.com/subject/35751619/)、[进阶卷](https://book.douban.com/subject/35751623/)
 - [在线阅读](https://www.ituring.com.cn/book/2935)
 
+#### 📺老杜JaveSE
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505081443750.png){ loading=lazy }
+  <figcaption>动力节点Java零基础视频教程(上部)，java入门必刷java视频</figcaption>
+</figure>
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505081444156.png){ loading=lazy }
+  <figcaption>动力节点Java零基础视频教程(中部)，java入门必刷java视频</figcaption>
+</figure>
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505081445331.png){ loading=lazy }
+  <figcaption>动力节点Java零基础视频教程(下部)，java入门必刷java视频</figcaption>
+</figure>
+
+- [上部](https://www.bilibili.com/video/BV1a5411y77c/?spm_id_from=333.337.search-card.all.click)
+- [中部](https://www.bilibili.com/video/BV1Eb4y1P7iq/?spm_id_from=333.337.search-card.all.click)
+- [下部](https://www.bilibili.com/video/BV1p7421N7XT/?spm_id_from=333.337.search-card.all.click)
+
 ### JVM
 
 #### 📺JVM-宋红康
@@ -114,4 +135,29 @@ icon: material/book-edit
 
 ### 设计模式
 
+#### 📄Refactoring.Guru
 
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505081453975.png){ loading=lazy }
+  <figcaption>refactoring guru</figcaption>
+</figure>
+
+- [文档地址](https://refactoringguru.cn/design-patterns)
+
+#### 📄设计模式之美-王争
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505081455971.png){ loading=lazy }
+  <figcaption>设计模式之美</figcaption>
+</figure>
+
+- [文档地址](https://time.geekbang.org/column/intro/100039001?tab=catalog)
+
+#### 📘Head First设计模式
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505081457796.png){ loading=lazy }
+  <figcaption>Head First设计模式（第二版）</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/35779421/)
