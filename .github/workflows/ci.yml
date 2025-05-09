@@ -45,9 +45,9 @@ jobs:
             },
             {
               "minify": {
-                "minify_html": true
-                "minify_js": true
-                "minify_css": true
+                "minify_html": true,
+                "minify_js": true,
+                "minify_css": true,
                 "cache_safe": true
               }
             }
