@@ -29,4 +29,6 @@ jobs:
       - run: pip install mkdocs-glightbox
       - run: pip install mkdocs-statistics-plugin
       - run: pip install mkdocs-minify-plugin
+      - run: pip install mkdocs-git-revision-date-localized-plugin
+      - run: pip install mkdocs-git-authors-plugin
       - run: mkdocs gh-deploy --force

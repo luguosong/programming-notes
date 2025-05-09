@@ -4,7 +4,7 @@ repo_url: https://github.com/luguosong/programming-notes # 右上角仓库链接
 repo_name: programming-notes # 右上角仓库名称
 edit_uri: edit/main/code/
 docs_dir: code
-dev_addr: '127.0.0.1:7111'
+dev_addr: '127.0.0.1:7212'
 
 
 theme:
@@ -115,14 +115,23 @@ extra:
       name: 微信
 
 plugins:
-  - statistics: # 字数统计插件：https://github.com/TonyCrane/mkdocs-statistics-plugin
+  # 字数统计插件：https://github.com/TonyCrane/mkdocs-statistics-plugin
+  - statistics:
       words_per_minute: 50
   - search
+  # 这是一个用于在页面写入磁盘前对其 HTML 进行压缩的 mkdocs 插件。
   - minify:
       minify_html: true
       minify_js: true
       minify_css: true
       cache_safe: true
+  # 可显示页面最后一次 git 修改的日期。该插件使用 babel 和 timeago.js 提供不同的本地化日期格式。
+  - git-revision-date-localized
+  # MkDocs 插件，用于显示页面的 Git 作者信息。
+  - git-authors:
+      show_contribution: true
+      show_line_count: true
+      show_email_address: false
 
 extra_css:
   - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/css/font.css
@@ -339,6 +348,7 @@ nav:
               - document_translation/spring-start-here/part1/index.md
               - 现实世界中的Spring: document_translation/spring-start-here/part1/01-spring-in-the-real-world/index.md
               - 定义Bean: document_translation/spring-start-here/part1/02-defining-beans/index.md
+              - Bean装配: code/document_translation/spring-start-here/part1/03-wiring-beans/index.md
           - 第二部分:
               - document_translation/spring-start-here/part2/index.md
       - Spring框架官方文档:
