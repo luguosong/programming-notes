@@ -8,23 +8,139 @@ icon: material/book-edit
 
 ### 计算机组成原理
 
+#### 📺尚硅谷视频-武老师
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121656254.png){ loading=lazy }
+  <figcaption>尚硅谷《计算机组成原理》计算机408考研、考试不挂+考研拿下！计组</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1vt421L7oc)
+
+#### 📺湖科大教书匠
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121705014.png){ loading=lazy }
+  <figcaption>计算机组成原理微课堂</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1qG41197E4)
+
 ### 操作系统
+
+#### 📘操作系统概念
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121728182.png){ loading=lazy }
+  <figcaption>Operating System Concepts</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/30272539/)
 
 ### 计算机网络
 
+#### 📺湖科大教书匠
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121702878.png){ loading=lazy }
+  <figcaption>计算机网络微课堂</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1c4411d7jb)
+
+#### 📺中科大郑烇视频
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121700351.png){ loading=lazy }
+  <figcaption>中科大郑烇、杨坚全套《计算机网络（自顶向下方法 第7版，James F.Kurose，Keith W.Ross）》课程</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1JV411t7ow)
+
 ### 数据结构与算法
+
+#### 📘算法导论
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121708554.png){ loading=lazy }
+  <figcaption>算法导论（原书第3版）</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/20432061/)
+
+#### 📄Hello 算法
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121710220.png){ loading=lazy }
+  <figcaption>Hello 算法</figcaption>
+</figure>
+
+- [网站地址](https://www.hello-algo.com/)
 
 ## 前端
 
 ### HTML
 
+#### 📄MDN文档
+
+- [文档地址](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
+
 ### CSS
+
+#### 📘CSS权威指南
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121745035.png){ loading=lazy }
+  <figcaption>CSS: The Definitive Guide, 5th Edition</figcaption>
+</figure>
+
+- [豆瓣地址](http://book.douban.com/subject/37143731/)
 
 ### JavaScript
 
+#### 📘JavaScript权威指南
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121747255.png){ loading=lazy }
+  <figcaption>JavaScript权威指南 (原书第7版)</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/35396470/)
+
+#### 📄现代JavaScript教程
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121749155.png){ loading=lazy }
+  <figcaption>现代JavaScript教程</figcaption>
+</figure>
+
+- [文档地址](https://zh.javascript.info/)
+
 ### Vue
 
+#### 📄官方文档
+
+- [文档地址](https://cn.vuejs.org/guide/introduction.html)
+
 ### React
+
+#### 📄官方文档
+
+- [文档地址](https://zh-hans.react.dev/learn)
+
+### 打包工具
+
+#### 📄webpack官方文档
+
+- [官方文档](https://webpack.docschina.org/concepts/)
+
+#### 📄rollup官方文档
+
+- [官方文档](https://cn.rollupjs.org/introduction/)
+
+#### 📄vite官方文档
+
+- [官方文档](https://cn.vite.dev/guide/)
 
 ## Java基础
 
@@ -134,6 +250,15 @@ icon: material/book-edit
 ### Git
 
 ### 设计模式
+
+#### 📘设计模式：可复用面向对象软件的基础
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505121759090.png){ loading=lazy }
+  <figcaption>设计模式</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/34262305/)
 
 #### 📄Refactoring.Guru
 

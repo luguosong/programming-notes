@@ -303,7 +303,9 @@ nav:
           - MinIO: topics/object-store/minio/index.md
       - Linux:
           - topics/linux/index.md
-          - Linux概述: topics/linux/basic/index.md
+          - 基础知识:
+              - topics/linux/basic/index.md
+              - 概述: topics/linux/basic/01-overview/index.md
           - 文件系统: topics/linux/file_directory/index.md
           - shell脚本: topics/linux/shell/index.md
           - 使用者管理: topics/linux/user_management/index.md
