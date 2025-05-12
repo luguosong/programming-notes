@@ -208,7 +208,25 @@ icon: material/book-edit
 
 ### Java日志
 
+#### 📺动力节点视频
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122057792.png){ loading=lazy }
+  <figcaption>动力节点Java日志框架实战视频教程_从零玩转Java日志框架</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1Mb4y1Z74W)
+
 ### Java测试
+
+#### 📘JUnit实战
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122100857.png){ loading=lazy }
+  <figcaption>JUnit实战</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/36423337/)
 
 ## Java服务端开发
 
@@ -235,19 +253,101 @@ icon: material/book-edit
 
 ### JavaWeb
 
-### 数据库
+#### 📘Tomcat与Java Web开发技术详解
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122102239.png){ loading=lazy }
+  <figcaption>Tomcat与Java Web开发技术详解</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/34780582/)
+
+### 连接数据库
+
+#### 📄JDBC官方文档（JavaSE文档）
+
+- [文档地址](https://docs.oracle.com/javase/tutorial/jdbc/index.html)
+
+#### 📄Mybatis官方文档
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122106780.png){ loading=lazy }
+  <figcaption>MyBatis</figcaption>
+</figure>
+
+- [文档地址](https://mybatis.org/mybatis-3/zh_CN/index.html)
+
+#### 📄MyBatis-Plus官方文档
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122108682.png){ loading=lazy }
+  <figcaption>MyBatis-Plus</figcaption>
+</figure>
+
+- [文档地址](https://baomidou.com/introduce/)
 
 ### 认证和鉴权
 
-### 测试
+#### 📘Spring Security实战
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122112812.png){ loading=lazy }
+  <figcaption>Spring Security in Action, Second Edition</figcaption>
+</figure>
+
+- [图书地址](https://www.manning.com/books/spring-security-in-action-second-edition)
 
 ## 专项研究
 
-### Mysql
+### 数据库
 
-### Redis
+#### 📘数据库系统概念
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122114141.png){ loading=lazy }
+  <figcaption>数据库系统概念 (原书第7版)</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/35501216/)
+
+#### 📘MySQL必知必会
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122115690.png){ loading=lazy }
+  <figcaption>MySQL必知必会（第2版）</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/37087527/)
+
+#### 📺老杜mysql
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122117099.png){ loading=lazy }
+  <figcaption>mysql入门，晋级，存储过程，mysql面试题，老杜mysql数据库全套视频教程精讲</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1px421f7YW)
+
+#### 📺宋红康mysql
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122136105.png){ loading=lazy }
+  <figcaption>MySQL数据库入门到大牛，mysql安装到优化，百科全书级，全网天花板</figcaption>
+</figure>
+
+- [视频地址](https://www.bilibili.com/video/BV1iq4y1u7vj)
 
 ### Git
+
+#### 📘Pro Git
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505122142616.png){ loading=lazy }
+  <figcaption>Pro Git</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/27133267/)
+- [官方下载地址](https://git-scm.com/book/zh/v2)
 
 ### 设计模式
 
