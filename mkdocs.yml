@@ -219,7 +219,6 @@ nav:
       - java_serve/index.md
       - Spring框架:
           - java_serve/spring/index.md
-          - 概述: java_serve/spring/overview/index.md
           - IOC容器: java_serve/spring/beans/index.md
           - Spring框架版本说明: java_serve/spring/spring-framework-versions/index.md
           - 控制反转: java_serve/spring/basic/index.md
@@ -324,6 +323,14 @@ nav:
           - 内网穿透-frp: topics/tools/frp/index.md
   - 文档翻译:
       - document_translation/index.md
+      - CSS权威指南:
+          - document_translation/css-the-definitive-guide/index.md
+          - CSS基础: document_translation/css-the-definitive-guide/01-css-fundamentals/index.md
+      - MobX官方文档:
+          - document_translation/mobx/index.md
+          - MobX与React十分钟入门: document_translation/mobx/getting-started/index.md
+          - 介绍: document_translation/mobx/01-introduction/index.md
+          - MobX核心: document_translation/mobx/02-mobx-core/index.md
       - JUnit5官方文档:
           - document_translation/junit5-user-guide/index.md
           - 概述: document_translation/junit5-user-guide/01-overview/index.md
@@ -334,7 +341,7 @@ nav:
               - document_translation/spring-start-here/part1/index.md
               - 现实世界中的Spring: document_translation/spring-start-here/part1/01-spring-in-the-real-world/index.md
               - 定义Bean: document_translation/spring-start-here/part1/02-defining-beans/index.md
-              - Bean装配: code/document_translation/spring-start-here/part1/03-wiring-beans/index.md
+              - Bean装配: document_translation/spring-start-here/part1/03-wiring-beans/index.md
           - 第二部分:
               - document_translation/spring-start-here/part2/index.md
       - Spring框架官方文档:
