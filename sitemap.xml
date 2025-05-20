@@ -2,754 +2,758 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://www.luguosong.com/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/resources/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/01-overview/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/02-data-representation-and-operations/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/03-memory/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/04-instruction-set/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/05-cpu/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_architecture_principles/06-bus-and-io-system/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_network/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/computer_network/application_http/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/data-structures-and-algorithm-analysis/src/main/java/com/luguosong/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/data-structures-and-algorithm-analysis/src/main/java/com/luguosong/_01_foundations/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/data-structures-and-algorithm-analysis/src/main/java/com/luguosong/_01_foundations/_01_the_role_of_algorithms_in_computers/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/basic/operating_system/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/css-the-definitive-guide/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/css-the-definitive-guide/01-css-fundamentals/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/junit5-user-guide/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/junit5-user-guide/01-overview/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/junit5-user-guide/02-writing-tests/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/mobx/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/mobx/01-introduction/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/mobx/02-mobx-core/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
+    </url>
+    <url>
+         <loc>https://www.luguosong.com/document_translation/mobx/03-mobx-and-react/</loc>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/mobx/getting-started/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-framework/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-framework/01-overview/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-framework/02-core-technologies/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-framework/02-core-technologies/01-the-ioc-container/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-framework/02-core-technologies/01-the-ioc-container/01-introduction/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-framework/02-core-technologies/01-the-ioc-container/02-basics/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part2_configuring_authentication/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part3_configuring_authorization/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part5_going_reactive/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-security-in-action2/part6_testing_security_configurations/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-start-here/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-start-here/part1/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-start-here/part1/01-spring-in-the-real-world/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-start-here/part1/02-defining-beans/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-start-here/part1/03-wiring-beans/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/document_translation/spring-start-here/part2/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/english/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/english/grammar/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/english/new_concept_english/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/english/phonetic_symbol/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/english/programming_vocabulary/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/code_bundler/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/code_bundler/webpack/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/css/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/html/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/html/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/html/html5/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/01_Introduction_to_JavaScript/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/02_Lexical_Structure/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/03_Types_Values_and_Variables/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/04_Expressions_and_Operators/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/05_Statements/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/06_Objects/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/07_Arrays/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/js/13_Asynchronous_JavaScript/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/basic/adding-interactivity/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/basic/describing-the-ui/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/basic/escape-hatches/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/basic/managing-state/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/global-state-management/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/global-state-management/mobx/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/global-state-management/redux/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/nextjs/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/react/react_router/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/typescript/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/typescript/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/typescript/engineering/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/front_end/vue/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/javase/src/main/java/com/luguosong/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/javase/src/main/java/com/luguosong/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/javase/src/main/java/com/luguosong/object_oriented/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/javase/src/main/java/com/luguosong/overview/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/javase/src/main/java/com/luguosong/reflection/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/log/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/log/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/test/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java/test/junit/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/authentication/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/database/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/database/jdbc/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/database/mybatis/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/database/mybatis_plus/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/configuration/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/configuration/nacos/nacos/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/gateway/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/gateway/spring_cloud_gateway/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/invocation/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/invocation/open-feign/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/invocation/rest-template/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/service-discovery/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/distributed/service-discovery/nacos/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/spring/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/spring/aop/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/spring/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/spring/beans/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/spring/spring-framework-versions/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/spring/ssm/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/springboot/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/springboot/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/filter_listener/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/jsp/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/mvc/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/reactive/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/servlet/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/session_cookie/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/java_serve/web_application/tomcat/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/math/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/math/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/math/latex/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/history/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/history/chinese_history/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/idea/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/mathjax/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/mathjax/formulas/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/potplayer/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/website_building/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/website_building/demo/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/website_building/website_building/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/other/windows_cmd/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/cryptography/src/main/java/com/luguosong/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/behavioral/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/behavioral/chain_of_responsibility/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/creational/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/overview/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/structural/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/design_pattern/src/main/java/com/luguosong/structural/proxy/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/build/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/compose/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/compose/compose-file-reference/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/compose/compose-file-reference/services-top-level-elements/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/compose/compose-file-reference/volumes-top-level-element/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/engine/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/engine/storage/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/docker/engine/storage/volumes/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/git/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/git/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/itext-signatures/src/main/java/com/luguosong/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/itext-signatures/src/main/java/com/luguosong/chapter01_understanding_the_concept_of_digital_signatures/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/itext-signatures/src/main/java/com/luguosong/chapter02_pdf_and_digital_signatures/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/itext-signatures/src/main/java/com/luguosong/chapter03_certificate_authorities_certificate_revocation_and_time_stamping/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/itext-signatures/src/main/java/com/luguosong/chapter04_creating_signatures_externally/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/itext-signatures/src/main/java/com/luguosong/chapter05_validation_of_signed_documents/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/basic/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/basic/01-overview/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/file_directory/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/shell/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/system_administrator/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/linux/user_management/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/maven/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/maven/base/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/object-store/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/object-store/minio/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/sql/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/sql/dcl/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/sql/ddl/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/sql/dml/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/sql/environment_building/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/tools/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
     <url>
          <loc>https://www.luguosong.com/topics/tools/frp/</loc>
-         <lastmod>2025-05-19</lastmod>
+         <lastmod>2025-05-20</lastmod>
     </url>
 </urlset>
