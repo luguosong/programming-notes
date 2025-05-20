@@ -71,12 +71,12 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
-      use_pygments: true #控制是在构建时使用Pygments进行高亮还是在浏览器中使用JavaScript语法高亮器进行高亮。
-      anchor_linenums: true
-      auto_title: true #自动为所有代码块添加一个标题
-      line_spans: __span
-      pygments_lang_class: true #指示Pygments添加一个CSS类来标识代码块的语言
-      linenums: true #为所有代码块添加行号
+      use_pygments: true # 控制是在构建时使用Pygments进行高亮还是在浏览器中使用JavaScript语法高亮器进行高亮。
+      anchor_linenums: true # 如果代码块包含行号，启用此设置后，行号会被包裹为锚点链接，方便你进行超链接和分享。
+      auto_title: true # 自动为所有代码块添加一个标题
+      line_spans: __span # 当启用此选项时，代码块的每一行都会被包裹在一个 span 元素中，这对于实现诸如行高亮等功能来说是必不可少的。
+      pygments_lang_class: true # 指示Pygments添加一个CSS类来标识代码块的语言
+      linenums: true # 为所有代码块添加行号
       linenums_style: pymdownx-inline # 行号样式
   - pymdownx.inlinehilite
   - pymdownx.snippets
@@ -331,6 +331,7 @@ nav:
           - MobX与React十分钟入门: document_translation/mobx/getting-started/index.md
           - 介绍: document_translation/mobx/01-introduction/index.md
           - MobX核心: document_translation/mobx/02-mobx-core/index.md
+          - MobX和React: document_translation/mobx/03-mobx-and-react/index.md
       - JUnit5官方文档:
           - document_translation/junit5-user-guide/index.md
           - 概述: document_translation/junit5-user-guide/01-overview/index.md
