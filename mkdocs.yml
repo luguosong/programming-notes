@@ -132,7 +132,7 @@ extra_javascript:
   - https://cdn.jsdelivr.net/gh/luguosong/programming-notes@main/code/custom/js/viewer-js-init.js
 
 exclude_docs: |
-  **/node_modules
+  node_modules
 
 copyright: Copyright &copy; 2024 Lu Guosong #版权信息
 
@@ -161,46 +161,46 @@ nav:
               - basic/data-structures-and-algorithm-analysis/src/main/java/com/luguosong/_01_foundations/index.md
               - 算法在计算中的作用: basic/data-structures-and-algorithm-analysis/src/main/java/com/luguosong/_01_foundations/_01_the_role_of_algorithms_in_computers/index.md
   - 前端:
-      - front_end/index.md
+      - front-end/index.md
       - HTML:
-          - front_end/html/index.md
-          - 基础: front_end/html/basic/index.md
-          - HTML5: front_end/html/html5/index.md
+          - front-end/html/index.md
+          - 基础: front-end/html/basic/index.md
+          - HTML5: front-end/html/html5/index.md
       - CSS:
-          - front_end/css/index.md
+          - front-end/css/index.md
       - JavaScript:
-          - front_end/js/index.md
-          - JavaScript简介: front_end/js/01_Introduction_to_JavaScript/index.md
-          - 词法结构: front_end/js/02_Lexical_Structure/index.md
-          - 类型、值和变量: front_end/js/03_Types_Values_and_Variables/index.md
-          - 表达式与操作符: front_end/js/04_Expressions_and_Operators/index.md
-          - 语句: front_end/js/05_Statements/index.md
-          - 对象: front_end/js/06_Objects/index.md
-          - 数组: front_end/js/07_Arrays/index.md
-          - 异步编程: front_end/js/13_Asynchronous_JavaScript/index.md
+          - front-end/js/index.md
+          - JavaScript简介: front-end/js/01_Introduction_to_JavaScript/index.md
+          - 词法结构: front-end/js/02_Lexical_Structure/index.md
+          - 类型、值和变量: front-end/js/03_Types_Values_and_Variables/index.md
+          - 表达式与操作符: front-end/js/04_Expressions_and_Operators/index.md
+          - 语句: front-end/js/05_Statements/index.md
+          - 对象: front-end/js/06_Objects/index.md
+          - 数组: front-end/js/07_Arrays/index.md
+          - 异步编程: front-end/js/13_Asynchronous_JavaScript/index.md
       - TypeScript:
-          - front_end/typescript/index.md
-          - 基本语法: front_end/typescript/basic/index.md
-          - 工程化: front_end/typescript/engineering/index.md
+          - front-end/typescript/index.md
+          - 基本语法: front-end/typescript/basic/index.md
+          - 工程化: front-end/typescript/engineering/index.md
       - 代码打包:
-          - front_end/code_bundler/index.md
-          - webpack: front_end/code_bundler/webpack/index.md
+          - front-end/code_bundler/index.md
+          - webpack: front-end/code_bundler/webpack/index.md
       - Vue:
-          - front_end/vue/index.md
+          - front-end/vue/index.md
       - React:
-          - front_end/react/index.md
+          - front-end/react/index.md
           - 基本语法:
-              - front_end/react/basic/index.md
-              - 描述UI: front_end/react/basic/describing-the-ui/index.md
-              - 添加交互: front_end/react/basic/adding-interactivity/index.md
-              - 状态管理: front_end/react/basic/managing-state/index.md
-              - 脱困机制: front_end/react/basic/escape-hatches/index.md
+              - front-end/react/basic/index.md
+              - 描述UI: front-end/react/basic/describing-the-ui/index.md
+              - 添加交互: front-end/react/basic/adding-interactivity/index.md
+              - 状态管理: front-end/react/basic/managing-state/index.md
+              - 脱困机制: front-end/react/basic/escape-hatches/index.md
           - 全局状态管理:
-              - front_end/react/global-state-management/index.md
-              - Redux: front_end/react/global-state-management/redux/index.md
-              - Mobx: front_end/react/global-state-management/mobx/index.md
-          - React Router: front_end/react/react_router/index.md
-          - Next.js: front_end/react/nextjs/index.md
+              - front-end/react/global-state-management/index.md
+              - Redux: front-end/react/global-state-management/redux/index.md
+              - Mobx: front-end/react/global-state-management/mobx/index.md
+          - React Router: front-end/react/react_router/index.md
+          - Next.js: front-end/react/nextjs/index.md
   - Java基础:
       - java/index.md
       - JavaSE:
@@ -216,48 +216,48 @@ nav:
           - java/test/index.md
           - JUnit5: java/test/junit/index.md
   - 服务端开发:
-      - java_serve/index.md
+      - java-serve/index.md
       - Spring框架:
-          - java_serve/spring/index.md
-          - IOC容器: java_serve/spring/beans/index.md
-          - Spring框架版本说明: java_serve/spring/spring-framework-versions/index.md
-          - 控制反转: java_serve/spring/basic/index.md
-          - 面向切面编程: java_serve/spring/aop/index.md
-          - SSM整合: java_serve/spring/ssm/index.md
+          - java-serve/spring/index.md
+          - IOC容器: java-serve/spring/beans/index.md
+          - Spring框架版本说明: java-serve/spring/spring-framework-versions/index.md
+          - 控制反转: java-serve/spring/basic/index.md
+          - 面向切面编程: java-serve/spring/aop/index.md
+          - SSM整合: java-serve/spring/ssm/index.md
       - Web应用:
-          - java_serve/web_application/index.md
-          - Tomcat服务器: java_serve/web_application/tomcat/index.md
-          - Servlet: java_serve/web_application/servlet/index.md
-          - JSP: java_serve/web_application/jsp/index.md
-          - Session和Cookie: java_serve/web_application/session_cookie/index.md
-          - 过滤器和监听器: java_serve/web_application/filter_listener/index.md
-          - MVC架构模式: java_serve/web_application/mvc/index.md
-          - 响应式编程: java_serve/web_application/reactive/index.md
+          - java-serve/web_application/index.md
+          - Tomcat服务器: java-serve/web_application/tomcat/index.md
+          - Servlet: java-serve/web_application/servlet/index.md
+          - JSP: java-serve/web_application/jsp/index.md
+          - Session和Cookie: java-serve/web_application/session_cookie/index.md
+          - 过滤器和监听器: java-serve/web_application/filter_listener/index.md
+          - MVC架构模式: java-serve/web_application/mvc/index.md
+          - 响应式编程: java-serve/web_application/reactive/index.md
       - 数据库开发:
-          - java_serve/database/index.md
-          - JDBC: java_serve/database/jdbc/index.md
-          - Mybatis: java_serve/database/mybatis/index.md
-          - Mybatis Plus: java_serve/database/mybatis_plus/index.md
+          - java-serve/database/index.md
+          - JDBC: java-serve/database/jdbc/index.md
+          - Mybatis: java-serve/database/mybatis/index.md
+          - Mybatis Plus: java-serve/database/mybatis_plus/index.md
       - 认证和鉴权:
-          - java_serve/authentication/index.md
+          - java-serve/authentication/index.md
       - Spring Boot:
-          - java_serve/springboot/index.md
-          - 基础知识: java_serve/springboot/basic/index.md
+          - java-serve/springboot/index.md
+          - 基础知识: java-serve/springboot/basic/index.md
       - 分布式/微服务:
-          - java_serve/distributed/index.md
+          - java-serve/distributed/index.md
           - 服务发现:
-              - java_serve/distributed/service-discovery/index.md
-              - Nacos: java_serve/distributed/service-discovery/nacos/index.md
+              - java-serve/distributed/service-discovery/index.md
+              - Nacos: java-serve/distributed/service-discovery/nacos/index.md
           - 配置管理:
-              - java_serve/distributed/configuration/index.md
-              - Nacos: java_serve/distributed/configuration/nacos/nacos.md
+              - java-serve/distributed/configuration/index.md
+              - Nacos: java-serve/distributed/configuration/nacos/nacos.md
           - 服务调用:
-              - java_serve/distributed/invocation/index.md
-              - RestTemplate: java_serve/distributed/invocation/rest-template/index.md
-              - OpenFeign: java_serve/distributed/invocation/open-feign/index.md
+              - java-serve/distributed/invocation/index.md
+              - RestTemplate: java-serve/distributed/invocation/rest-template/index.md
+              - OpenFeign: java-serve/distributed/invocation/open-feign/index.md
           - 网关:
-              - java_serve/distributed/gateway/index.md
-              - Spring Cloud Gateway: java_serve/distributed/gateway/spring_cloud_gateway/index.md
+              - java-serve/distributed/gateway/index.md
+              - Spring Cloud Gateway: java-serve/distributed/gateway/spring_cloud_gateway/index.md
   - 专项研究:
       - topics/index.md
       - 设计模式:
@@ -322,59 +322,53 @@ nav:
           - topics/tools/index.md
           - 内网穿透-frp: topics/tools/frp/index.md
   - 文档翻译:
-      - document_translation/index.md
+      - document-translation/index.md
       - CSS权威指南:
-          - document_translation/css-the-definitive-guide/index.md
-          - CSS基础: document_translation/css-the-definitive-guide/01-css-fundamentals/index.md
-      - MobX官方文档:
-          - document_translation/mobx/index.md
-          - MobX与React十分钟入门: document_translation/mobx/getting-started/index.md
-          - 介绍: document_translation/mobx/01-introduction/index.md
-          - MobX核心: document_translation/mobx/02-mobx-core/index.md
-          - MobX和React: document_translation/mobx/03-mobx-and-react/index.md
+          - document-translation/css-the-definitive-guide/index.md
+          - CSS基础: document-translation/css-the-definitive-guide/01-css-fundamentals/index.md
       - JUnit5官方文档:
-          - document_translation/junit5-user-guide/index.md
-          - 概述: document_translation/junit5-user-guide/01-overview/index.md
-          - 编写测试: document_translation/junit5-user-guide/02-writing-tests/index.md
+          - document-translation/junit5-user-guide/index.md
+          - 概述: document-translation/junit5-user-guide/01-overview/index.md
+          - 编写测试: document-translation/junit5-user-guide/02-writing-tests/index.md
       - 快捷学习Spring:
-          - document_translation/spring-start-here/index.md
+          - document-translation/spring-start-here/index.md
           - 第一部分:
-              - document_translation/spring-start-here/part1/index.md
-              - 现实世界中的Spring: document_translation/spring-start-here/part1/01-spring-in-the-real-world/index.md
-              - 定义Bean: document_translation/spring-start-here/part1/02-defining-beans/index.md
-              - Bean装配: document_translation/spring-start-here/part1/03-wiring-beans/index.md
+              - document-translation/spring-start-here/part1/index.md
+              - 现实世界中的Spring: document-translation/spring-start-here/part1/01-spring-in-the-real-world/index.md
+              - 定义Bean: document-translation/spring-start-here/part1/02-defining-beans/index.md
+              - Bean装配: document-translation/spring-start-here/part1/03-wiring-beans/index.md
           - 第二部分:
-              - document_translation/spring-start-here/part2/index.md
+              - document-translation/spring-start-here/part2/index.md
       - Spring框架官方文档:
-          - document_translation/spring-framework/index.md
-          - 概述: document_translation/spring-framework/01-overview/index.md
+          - document-translation/spring-framework/index.md
+          - 概述: document-translation/spring-framework/01-overview/index.md
           - 核心技术:
-              - document_translation/spring-framework/02-core-technologies/index.md
+              - document-translation/spring-framework/02-core-technologies/index.md
               - IOC容器:
-                  - document_translation/spring-framework/02-core-technologies/01-the-ioc-container/index.md
-                  - 简介: document_translation/spring-framework/02-core-technologies/01-the-ioc-container/01-introduction/index.md
-                  - 容器概述: document_translation/spring-framework/02-core-technologies/01-the-ioc-container/02-basics/index.md
+                  - document-translation/spring-framework/02-core-technologies/01-the-ioc-container/index.md
+                  - 简介: document-translation/spring-framework/02-core-technologies/01-the-ioc-container/01-introduction/index.md
+                  - 容器概述: document-translation/spring-framework/02-core-technologies/01-the-ioc-container/02-basics/index.md
       - Spring Security实战:
-          - document_translation/spring-security-in-action2/index.md
+          - document-translation/spring-security-in-action2/index.md
           - Spring Security入门:
-              - document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md
-              - 1.安全现状: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md
-              - 2.Spring Security入门: document_translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md
+              - document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md
+              - 1.安全现状: document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md
+              - 2.Spring Security入门: document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md
           - 配置身份认证:
-              - document_translation/spring-security-in-action2/part2_configuring_authentication/index.md
-              - 3.管理用户: document_translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md
-              - 4.管理密码: document_translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md
-              - 5.网络应用的安全性始于过滤器: document_translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/index.md
-              - 6.实现身份认证: document_translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/index.md
+              - document-translation/spring-security-in-action2/part2_configuring_authentication/index.md
+              - 3.管理用户: document-translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md
+              - 4.管理密码: document-translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md
+              - 5.网络应用的安全性始于过滤器: document-translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/index.md
+              - 6.实现身份认证: document-translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/index.md
           - 配置授权:
-              - document_translation/spring-security-in-action2/part3_configuring_authorization/index.md
-              - 7.配置端点级授权：限制访问: document_translation/spring-security-in-action2/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/index.md
+              - document-translation/spring-security-in-action2/part3_configuring_authorization/index.md
+              - 7.配置端点级授权：限制访问: document-translation/spring-security-in-action2/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/index.md
           - 实施OAuth 2和OpenID Connect:
-              - document_translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/index.md
+              - document-translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/index.md
           - 响应式:
-              - document_translation/spring-security-in-action2/part5_going_reactive/index.md
+              - document-translation/spring-security-in-action2/part5_going_reactive/index.md
           - 测试安全配置:
-              - document_translation/spring-security-in-action2/part6_testing_security_configurations/index.md
+              - document-translation/spring-security-in-action2/part6_testing_security_configurations/index.md
   - 英语:
       - english/index.md
       - 音标: english/phonetic_symbol/index.md

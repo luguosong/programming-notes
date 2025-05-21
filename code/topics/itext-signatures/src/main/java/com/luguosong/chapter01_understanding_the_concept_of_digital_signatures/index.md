@@ -207,7 +207,7 @@ startxref
 请看/ByteRange条目(第10行)：签名覆盖了从0到160字节和从16546到18291字节。签名本身占据了161到16545字节。
 
 <figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/java_serve/topics/itext-signatures/chapter01_understanding_the_concept_of_digital_signatures/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84.svg){ loading=lazy }
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/diagrams/java-serve/topics/itext-signatures/chapter01_understanding_the_concept_of_digital_signatures/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E8%AF%AD%E6%B3%95%E7%BB%93%E6%9E%84.svg){ loading=lazy }
   <figcaption>大致结构</figcaption>
 </figure>
 
