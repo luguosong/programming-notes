@@ -253,6 +253,22 @@ icon: material/book-edit
 
 ### JavaWeb
 
+#### 📘HTTP/2 in Action
+
+学习JavaWeb前，有必要先学一下Http协议。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202505301451247.png){ loading=lazy }
+  <figcaption>HTTP/2 in Action</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/35137621/)
+
+还有两本书也可以看，只是有点老了：
+
+- [HTTP权威指南](https://book.douban.com/subject/10746113/)
+- [图解HTTP](https://book.douban.com/subject/25863515/)
+
 #### 📘Tomcat与Java Web开发技术详解
 
 <figure markdown="span">
