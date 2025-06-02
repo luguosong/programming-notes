@@ -242,6 +242,15 @@ icon: material/book-edit
 - [豆瓣地址](https://book.douban.com/subject/35219951/)
 - [电子书](https://www.manning.com/books/spring-start-here)
 
+#### 📘Spring实战
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506021623449.png){ loading=lazy }
+  <figcaption>Spring实战</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/36142064/)
+
 #### 📄官方文档
 
 <figure markdown="span">
@@ -301,6 +310,17 @@ icon: material/book-edit
 </figure>
 
 - [文档地址](https://baomidou.com/introduce/)
+
+### Spring Boot
+
+#### 📘Spring Boot: Up and Running
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506021626728.png){ loading=lazy }
+  <figcaption>Spring Boot: Up and Running</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/35176313/)
 
 ### 认证和鉴权
 
