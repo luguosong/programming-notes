@@ -322,6 +322,15 @@ icon: material/book-edit
 
 - [豆瓣地址](https://book.douban.com/subject/35176313/)
 
+#### 📘Spring Boot in Practice
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506040939404.png){ loading=lazy }
+  <figcaption>Spring Boot in Practice</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/36235291/)
+
 ### 认证和鉴权
 
 #### 📘Spring Security实战
