@@ -119,7 +119,7 @@ article > p {
 
 /*文章图片最大高度限制*/
 .md-typeset img {
-    max-height: 50vh;
+    max-width: 90%;
 }
 
 p > code, li > code {
