@@ -265,6 +265,8 @@ nav:
           - 概述: topics/design_pattern/src/main/java/com/luguosong/overview/index.md
           - 创建型模式:
               - topics/design_pattern/src/main/java/com/luguosong/creational/index.md
+              - 简单工厂: topics/design_pattern/src/main/java/com/luguosong/creational/pattern01_simple_factory/index.md
+              - 工厂方法: topics/design_pattern/src/main/java/com/luguosong/creational/pattern02_factory_method/index.md
           - 结构型模式:
               - topics/design_pattern/src/main/java/com/luguosong/structural/index.md
               - 代理🔥: topics/design_pattern/src/main/java/com/luguosong/structural/proxy/index.md
