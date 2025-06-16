@@ -4,39 +4,13 @@ icon: material/axe
 
 # 设计模式
 
-## 教程与书籍
+设计模式这块知识比较抽象，不是说学完一遍就可以完全掌握的，很有可能模式全部都记得但不知道怎么用，总结一个反复学习的计划：
 
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081824194.png){ loading=lazy }
-  <figcaption><a href="https://book.douban.com/subject/34262305/">设计模式：可复用面向对象软件的基础</a></figcaption>
-</figure>
+- 第一遍，别管三七二十一，先把所有模式的结构过一遍，扫一遍示例，解决什么问题。
+- 第二遍结合设计原则，分析这些模式的设计意图，做到深刻理解为什么要这么设计。
+- 第三遍将结构相似容易混淆的模式进行对比，找出区别。防止混淆，学晕了。
+- 第四遍可以在日常开发中留意成熟的框架用到哪些模式（比如Spring相关框架）。持续积累经验与总结。
 
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081822272.png){ loading=lazy }
-  <figcaption><a href="https://time.geekbang.org/column/intro/100039001?tab=catalog">设计模式之美-王争</a></figcaption>
-</figure>
+!!! warning
 
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081823658.png){ loading=lazy }
-  <figcaption><a href="https://refactoringguru.cn/design-patterns">refactoring guru</a></figcaption>
-</figure>
-
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081825715.png){ loading=lazy }
-  <figcaption><a href="https://book.douban.com/subject/2243615/">Head First 设计模式（中文版）</a></figcaption>
-</figure>
-
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081826191.png){ loading=lazy }
-  <figcaption><a href="https://book.douban.com/subject/26933281/">图解设计模式</a></figcaption>
-</figure>
-
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081828691.png){ loading=lazy }
-  <figcaption><a href="https://book.douban.com/subject/30173863/">Java设计模式</a></figcaption>
-</figure>
-
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405081829298.png){ loading=lazy }
-  <figcaption><a href="https://book.douban.com/subject/36116620/">大话设计模式</a></figcaption>
-</figure>
+	从我的学习感受来看，我不建议一上来先学一大堆设计原则，没有具体的设计模式作为支撑，设计原则会变得很抽象。建议先学完设计模式，再去学习设计原则。
