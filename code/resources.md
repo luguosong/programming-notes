@@ -342,6 +342,46 @@ icon: material/book-edit
 
 - [图书地址](https://www.manning.com/books/spring-security-in-action-second-edition)
 
+### 服务架构
+
+#### 📘企业应用架构模式
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506251415308.png){ loading=lazy }
+  <figcaption>企业应用架构模式（典藏版） [英]马丁·福勒</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/36867071/)
+
+#### 📘数据密集型应用系统设计
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506251418035.png){ loading=lazy }
+  <figcaption>数据密集型应用系统设计</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/30329536/)
+
+### 分布式/微服务
+
+#### 📘微服务架构设计模式
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506251416782.png){ loading=lazy }
+  <figcaption>微服务架构设计模式</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/33425123/)
+
+#### 📘凤凰架构:构建可靠的大型分布式系统
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202506251421441.png){ loading=lazy }
+  <figcaption>凤凰架构</figcaption>
+</figure>
+
+- [豆瓣地址](https://book.douban.com/subject/35492898/)
+
 ## 专项研究
 
 ### 数据库
