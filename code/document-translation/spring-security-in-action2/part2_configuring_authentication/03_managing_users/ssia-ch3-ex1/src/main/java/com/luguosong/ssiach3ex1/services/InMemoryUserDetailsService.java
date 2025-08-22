@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
-/**
- * @author luguosong
- */
+// 自定义UserDetailsService
 public class InMemoryUserDetailsService implements UserDetailsService {
 
 	private final List<UserDetails> users;

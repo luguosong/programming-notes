@@ -1,5 +1,6 @@
 package com.luguosong.ssiach3ex1.config;
 
+
 import com.luguosong.ssiach3ex1.model.User;
 import com.luguosong.ssiach3ex1.services.InMemoryUserDetailsService;
 import org.springframework.context.annotation.Bean;
@@ -11,24 +12,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-/**
- * @author luguosong
- */
 @Configuration
 public class ProjectConfig {
 
-	/*
-	* 自定义UserDetailsService
-	* */
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails u = new User("john", "12345", "read");
-		List<UserDetails> users = List.of(u);
-		return new InMemoryUserDetailsService(users);
-	}
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails u = new User("john", "12345", "read");
+        List<UserDetails> users = List.of(u);
+        return new InMemoryUserDetailsService(users);
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
 }
