@@ -4,7 +4,7 @@ repo_url: https://github.com/luguosong/programming-notes # 右上角仓库链接
 repo_name: programming-notes # 右上角仓库名称
 edit_uri: edit/main/code/
 docs_dir: code
-dev_addr: '127.0.0.1:7212'
+dev_addr: '127.0.0.1:11014' # 本地启动，端口冲突，可以通过这个配置修改端口
 
 
 theme:
@@ -265,13 +265,15 @@ nav:
           - 概述: topics/design_pattern/src/main/java/com/luguosong/overview/index.md
           - 创建型模式:
               - topics/design_pattern/src/main/java/com/luguosong/creational/index.md
-              - 简单工厂: topics/design_pattern/src/main/java/com/luguosong/creational/pattern01_simple_factory/index.md
-              - 工厂方法: topics/design_pattern/src/main/java/com/luguosong/creational/pattern02_factory_method/index.md
+              - 工厂方法: topics/design_pattern/src/main/java/com/luguosong/creational/factory_method/index.md
           - 结构型模式:
               - topics/design_pattern/src/main/java/com/luguosong/structural/index.md
-              - 代理🔥: topics/design_pattern/src/main/java/com/luguosong/structural/proxy/index.md
+              - 装饰: topics/design_pattern/src/main/java/com/luguosong/structural/decorator/index.md
+              - 代理: topics/design_pattern/src/main/java/com/luguosong/structural/proxy/index.md
           - 行为型模式:
               - topics/design_pattern/src/main/java/com/luguosong/behavioral/index.md
+              - 策略: topics/design_pattern/src/main/java/com/luguosong/behavioral/strategy/index.md
+              - 观察者: topics/design_pattern/src/main/java/com/luguosong/behavioral/observer/index.md
               - 责任链: topics/design_pattern/src/main/java/com/luguosong/behavioral/chain_of_responsibility/index.md
       - Maven:
           - topics/maven/index.md
@@ -327,6 +329,7 @@ nav:
       - document-translation/index.md
       - CSS权威指南:
           - document-translation/css-the-definitive-guide/index.md
+          - 前言: document-translation/css-the-definitive-guide/00-preface/index.md
           - CSS基础: document-translation/css-the-definitive-guide/01-css-fundamentals/index.md
       - JUnit5官方文档:
           - document-translation/junit5-user-guide/index.md
