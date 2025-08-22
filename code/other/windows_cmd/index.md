@@ -2,24 +2,28 @@
 icon: material/microsoft-windows
 ---
 
-# windows命令
+# windows操作
 
-## 查看端口占用
+## Windows快捷键
 
-```shell
-# 查看所有端口
-netstat -ano
+- `Win + D`:显示桌面
+- `Win + E`:打开资源管理器
+- `Win + R`:打开运行对话框
+- `Win + L`:锁定计算机
+- `Win + tab`:切换任务视图
 
-# 查看指定端口
-netstat -ano|findstr "8080"
-```
+## 常用Dos命令
 
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405151732766.png){ loading=lazy }
-  <figcaption>观察结果中的PID</figcaption>
-</figure>
-
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202405151733757.png){ loading=lazy }
-  <figcaption>在任务栏管理器中找到对应进程</figcaption>
-</figure>
+| 功能            | Windows命令                                      | 
+|---------------|------------------------------------------------|
+| 查看端口号占用       | netstat -ano<br/> netstat -ano\|findstr "8080" |        
+| 创建文件夹         | mkdir xxx                                      |        
+| 列出当前目录下的文件和目录 | dir                                            |        
+| 清屏            | cls                                            |        
+| 推出dos窗口       | exit                                           |        
+| 切换盘           | e:                                             |
+| 删除指定文件        | del xxx\|del *.txt                             |
+| 查看网络信息        | ipconfig \| ipconfig /all                      |
+|               |                                                |
+|               |                                                |
+|               |                                                |
