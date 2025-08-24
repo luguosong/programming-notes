@@ -7,6 +7,10 @@
     counter-reset: section-1;
 }
 
+.md-typeset figure figcaption {
+    text-align: left;
+}
+
 .md-typeset h2 {
     border-bottom: 1px inset rgba(53, 86, 129, 0.3);
     counter-increment: section-1;
@@ -101,11 +105,11 @@ article > p {
     font-size: 0.65em;
 }
 
-.md-nav--secondary .md-nav__list .md-nav__list{
+.md-nav--secondary .md-nav__list .md-nav__list {
     padding-left: 0.2rem;
 }
 
-.md-nav--secondary .md-nav__list .md-nav__list .md-nav__list{
+.md-nav--secondary .md-nav__list .md-nav__list .md-nav__list {
     list-style: circle;
     padding-left: 1.4rem;
     font-style: italic;
