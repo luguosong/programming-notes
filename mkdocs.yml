@@ -374,6 +374,8 @@ nav:
               - document-translation/spring-security-in-action2/part5_going_reactive/index.md
           - 测试安全配置:
               - document-translation/spring-security-in-action2/part6_testing_security_configurations/index.md
+      - 深入浅出密码学:
+          - document-translation/real-world-cryptography/index.md
   - 英语:
       - english/index.md
       - 音标: english/phonetic_symbol/index.md
