@@ -21,19 +21,10 @@ public class ProjectConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http)
 			throws Exception {
 
-		/*
-		 * 并没有执行http.httpBasic(Customizer.withDefaults());
-		 * 也就是说并不会添加BasicAuthenticationFilter过滤器
-		 * */
-
-		/*
-		 * 在指定位置添加过滤器
-		 * */
+		//将自定义过滤器添加到BasicAuthenticationFilter位置
 		http.addFilterAt(filter, BasicAuthenticationFilter.class)
 				.authorizeHttpRequests(c -> c.anyRequest().permitAll());
 
-
 		return http.build();
 	}
-
 }

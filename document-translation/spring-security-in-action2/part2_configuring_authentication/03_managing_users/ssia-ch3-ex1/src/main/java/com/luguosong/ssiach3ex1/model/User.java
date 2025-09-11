@@ -6,9 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author luguosong
- */
 public class User implements UserDetails {
 
     private final String username;

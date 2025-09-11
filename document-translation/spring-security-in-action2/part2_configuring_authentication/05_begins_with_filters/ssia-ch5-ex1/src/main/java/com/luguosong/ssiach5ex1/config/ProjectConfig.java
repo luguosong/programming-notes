@@ -1,5 +1,6 @@
 package com.luguosong.ssiach5ex1.config;
 
+
 import com.luguosong.ssiach5ex1.filters.AuthenticationLoggingFilter;
 import com.luguosong.ssiach5ex1.filters.RequestValidationFilter;
 import org.springframework.context.annotation.Bean;
@@ -8,9 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-/**
- * @author luguosong
- */
 @Configuration
 public class ProjectConfig {
 
@@ -22,10 +20,7 @@ public class ProjectConfig {
 				.addFilterAfter(
 						new AuthenticationLoggingFilter(),
 						BasicAuthenticationFilter.class)
-				.authorizeHttpRequests(
-						//允许所有请求访问
-						c -> c.anyRequest().permitAll()
-				);
+				.authorizeHttpRequests(c -> c.anyRequest().permitAll());
 
 		return http.build();
 	}

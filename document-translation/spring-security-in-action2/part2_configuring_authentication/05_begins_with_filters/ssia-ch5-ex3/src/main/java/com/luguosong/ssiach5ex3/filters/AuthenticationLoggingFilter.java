@@ -12,19 +12,19 @@ import java.util.logging.Logger;
 
 public class AuthenticationLoggingFilter extends OncePerRequestFilter {
 
-    private final Logger logger =
-            Logger.getLogger(AuthenticationLoggingFilter.class.getName());
+	private final Logger logger =
+			Logger.getLogger(AuthenticationLoggingFilter.class.getName());
 
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+	@Override
+	protected void doFilterInternal(HttpServletRequest request,
+									HttpServletResponse response,
+									FilterChain filterChain) throws ServletException, IOException {
 
-        String requestId = request.getHeader("Request-Id");
+		String requestId = request.getHeader("Request-Id");
 
-        logger.info("Successfully authenticated request with id " +  requestId);
+		logger.info("已成功验证请求 ID" + requestId);
 
-        filterChain.doFilter(request, response);
-    }
+		filterChain.doFilter(request, response);
+	}
 }

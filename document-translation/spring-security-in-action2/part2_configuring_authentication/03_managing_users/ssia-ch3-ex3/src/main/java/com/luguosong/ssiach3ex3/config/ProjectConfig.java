@@ -9,13 +9,11 @@ import org.springframework.security.ldap.DefaultLdapUsernameToDnMapper;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.ldap.userdetails.LdapUserDetailsManager;
 
-
 @Configuration
 public class ProjectConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-
         var cs = new DefaultSpringSecurityContextSource("ldap://127.0.0.1:33389/dc=springframework,dc=org");
         cs.afterPropertiesSet();
 

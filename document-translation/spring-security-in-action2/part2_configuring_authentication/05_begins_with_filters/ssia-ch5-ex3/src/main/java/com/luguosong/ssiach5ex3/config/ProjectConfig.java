@@ -1,6 +1,5 @@
 package com.luguosong.ssiach5ex3.config;
 
-
 import com.luguosong.ssiach5ex3.filters.AuthenticationLoggingFilter;
 import com.luguosong.ssiach5ex3.filters.RequestValidationFilter;
 import org.springframework.context.annotation.Bean;

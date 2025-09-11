@@ -12,21 +12,20 @@ import javax.sql.DataSource;
 @Configuration
 public class ProjectConfig {
 
-	@Bean
-	public UserDetailsService userDetailsService(DataSource dataSource) {
-		String usersByUsernameQuery = "select username, password, enabled from spring.users where username = ?";
-		String authsByUserQuery = "select username, authority from spring.authorities where username = ?";
-		var userDetailsManager = new JdbcUserDetailsManager(dataSource);
-		//自定义查询
-		userDetailsManager.setUsersByUsernameQuery(usersByUsernameQuery);
-		userDetailsManager.setAuthoritiesByUsernameQuery(authsByUserQuery);
-		return userDetailsManager;
+  @Bean
+  public UserDetailsService userDetailsService(DataSource dataSource) {
+    String usersByUsernameQuery = "select username, password, enabled from spring.users where username = ?";
+    String authsByUserQuery = "select username, authority from spring.authorities where username = ?";
+    var userDetailsManager = new JdbcUserDetailsManager(dataSource);
+    userDetailsManager.setUsersByUsernameQuery(usersByUsernameQuery);
+    userDetailsManager.setAuthoritiesByUsernameQuery(authsByUserQuery);
+    return userDetailsManager;
 
-	}
+  }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
-	}
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return NoOpPasswordEncoder.getInstance();
+  }
 
 }
