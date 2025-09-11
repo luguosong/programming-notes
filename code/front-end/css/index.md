@@ -1,5 +1,5 @@
 ---
-icon: simple/css3
+icon: simple/css
 ---
 
 # CSS
