@@ -1,0 +1,114 @@
+[project]
+site_name = "陆国松的编程笔记"
+site_description = "学习编程过程中整理的笔记集合"
+site_url = "https://luguosong.github.io/programming-notes"
+site_author = "陆国松"
+copyright = "Copyright &copy; 2025 陆国松"
+docs_dir = "code"
+repo_url = "https://github.com/luguosong/programming-notes"
+repo_name = "luguosong/programming-notes"
+edit_uri = "edit/main/code/"
+# 内外运行地址
+dev_addr = "localhost:7000"
+extra_css = [
+    "custom/css/font.css"
+]
+
+[project.theme]
+variant = "modern"
+language = "zh"
+logo = "assert/logo.gif"
+favicon = "assert/logo.gif"
+custom_dir = "overrides"
+features = [
+    # 当启用即时导航时，所有内部链接的点击操作都会被拦截，并通过XHR分发请求，而不会完全重新加载页面。
+    "navigation.instant",
+    # 当用户将鼠标悬停在链接上时就会开始获取页面内容。这会降低用户感知的加载时间，特别是在慢速网络环境下，因为导航后页面将会立即可用。
+    "navigation.instant.prefetch",
+    # 进度指示器。它会显示在页面顶部，等页面完全加载后再隐藏。
+    "navigation.instant.progress",
+    # 顶层板块会在视口宽度大于1220px时以菜单的形式显示在页眉下方，而在移动端则保持原样。
+    "navigation.tabs",
+    # 当启用粘性标签后，导航标签会固定在头部下方，并在向下滚动时始终可见。
+    "navigation.tabs.sticky",
+    # 文档面包屑
+    "navigation.path",
+    # 当启用裁剪功能时，只有可见的导航项会被渲染到 HTML 中，从而使构建后的网站体积减少 33% 或更多。
+    "navigation.prune",
+    # 启用章节索引页后，可以将文档直接附加到各个章节，这对于提供概览页面尤其有用。
+    "navigation.indexes",
+    # 当启用目录的锚点跟随功能时，侧边栏会自动滚动，确保当前激活的锚点始终可见。
+    "toc.follow",
+    # 返回顶部按钮
+    "navigation.top",
+    # 跳转到目标页后，搜索关键词高亮
+    "search.highlight",
+    # 页脚可以包含当前页面的上一页和下一页链接。
+    "navigation.footer",
+    # 编辑页面按钮
+    "content.action.edit",
+    # 查看页面代码按钮
+    "content.action.view"
+]
+
+[project.extra]
+generator = false
+
+# 社交链接
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/luguosong"
+name = "GitHub"
+
+[[project.extra.social]]
+icon = "simple/wechat"
+link = "https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/202404272008366.png"
+name = "微信"
+
+# 主题配色方案
+[[project.theme.palette]]
+scheme = "slate"
+accent = "blue"
+primary = "blue"
+toggle.icon = "lucide/moon"
+toggle.name = "切换到浅色模式"
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+accent = "orange"
+primary = "orange"
+toggle.name = "切换到深色模式"
+
+# 扩展程序
+[project.markdown_extensions.abbr]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.toc]
+permalink = true
+[project.markdown_extensions.pymdownx.arithmatex]
+generic = true
+[project.markdown_extensions.pymdownx.betterem]
+smart_enable = "all"
+[project.markdown_extensions.pymdownx.caret]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
+[project.markdown_extensions.pymdownx.highlight]
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.keys]
+[project.markdown_extensions.pymdownx.mark]
+[project.markdown_extensions.pymdownx.smartsymbols]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+[project.markdown_extensions.pymdownx.tilde]
+
+[project.nav]
+

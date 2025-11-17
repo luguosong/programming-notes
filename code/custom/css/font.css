@@ -1,5 +1,7 @@
 @import "https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css";
+@import "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900";
 
 :root {
-    --md-text-font: "LXGW WenKai Mono";
+    --md-text-font: "LXGW WenKai";
+    --md-code-font: "Source Code Pro,LXGW WenKai";
 }

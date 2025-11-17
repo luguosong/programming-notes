@@ -1,62 +1,28 @@
-name: ci
+name: Documentation
 on:
   push:
     branches:
       - master
       - main
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Configure Git Credentials
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+      - uses: actions/configure-pages@v5
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: 3.x
-      - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-      - uses: actions/cache@v4
+      - run: pip install zensical
+      - run: zensical build --clean
+      - uses: actions/upload-pages-artifact@v4
         with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-      - run: |
-          yq -i '
-            .plugins += [
-            "git-revision-date-localized",
-            {
-              "git-authors": {
-                "show_contribution": true,
-                "show_line_count": true,
-                "show_email_address": false
-              }
-            },
-            {
-              "statistics": {
-                "words_per_minute": 50
-              }
-            },
-            {
-              "minify": {
-                "minify_html": true,
-                "minify_js": true,
-                "minify_css": true,
-                "cache_safe": true
-              }
-            }
-          ]
-          ' mkdocs.yml
-      - run: pip install mkdocs-material
-      - run: pip install mkdocs-glightbox
-      - run: pip install mkdocs-statistics-plugin
-      - run: pip install mkdocs-minify-plugin
-      - run: pip install mkdocs-git-revision-date-localized-plugin
-      - run: pip install mkdocs-git-authors-plugin
-      - run: mkdocs gh-deploy --force
+          path: site
+      - uses: actions/deploy-pages@v4

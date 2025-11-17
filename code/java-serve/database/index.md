@@ -1,5 +1,5 @@
 ---
-icon: material/database
+icon: 
 ---
 
 # 数据库开发
