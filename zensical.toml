@@ -48,7 +48,10 @@ features = [
     # 编辑页面按钮
     "content.action.edit",
     # 查看页面代码按钮
-    "content.action.view"
+    "content.action.view",
+    "content.code.copy",
+    "content.code.select",
+    "content.code.annotate"
 ]
 
 [project.extra]
@@ -99,7 +102,12 @@ smart_enable = "all"
 emoji_generator = "zensical.extensions.emoji.to_svg"
 emoji_index = "zensical.extensions.emoji.twemoji"
 [project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+linenums = true
+line_spans = "__span"
+pygments_lang_class = true
 [project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.snippets]
 [project.markdown_extensions.pymdownx.keys]
 [project.markdown_extensions.pymdownx.mark]
 [project.markdown_extensions.pymdownx.smartsymbols]
@@ -110,5 +118,5 @@ alternate_style = true
 custom_checkbox = true
 [project.markdown_extensions.pymdownx.tilde]
 
-[project.nav]
+
 

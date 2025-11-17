@@ -1,6 +1,5 @@
 ---
 icon: material/home
-statistics: true
 ---
 
 # 你好 👋
@@ -14,5 +13,3 @@ statistics: true
 我很乐意为您提供帮助，解答您的问题，并与您分享更多关于编程和技术的知识。
 
 ---
-
-页面总数：`{{pages}}` 总字数：`{{words}}` 代码块行数：`{{codes}}`
