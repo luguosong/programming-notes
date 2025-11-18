@@ -17,12 +17,11 @@ extra_css = [
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css"
 ]
 extra_javascript = [
-    "custom/js/mathjax.jss",
+    "custom/js/mathjax.js",
     "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js",
     "custom/js/viewer-js-init.js"
 ]
-
 nav = [
     { "主页" = "index.md" },
     { "学习路线" = "resources.md" },
