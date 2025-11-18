@@ -10,25 +10,26 @@
 <img alt="GitHub License" src="https://img.shields.io/github/license/luguosong/programming-notes">
 </p>
 
-## 安装
+## 本地运行
 
 - 首先安装Python环境。
 
-- 安装 MkDocs：
+- 安装zensical
 
 ```shell
-pip install mkdocs
+pip install zensical
 ```
 
-- Material for MkDocs 作为一个 Python 包发布，可以通过 pip 安装，打开终端并安装 Material for MkDocs：
+- 运行
 
 ```shell
-pip install mkdocs-material
+zensical serve
 ```
 
-- MkDocs 自带一个内置开发服务器，可以让您在编写文档时进行预览。请确保您位于 mkdocs.yml 配置文件所在的目录，然后通过运行
-  mkdocs serve 命令启动服务器：
+- 编译成静态网页
 
 ```shell
-mkdocs serve
+zensical build
 ```
+
+具体操作请查看[zensical文档](https://zensical.org/docs/get-started/)。
