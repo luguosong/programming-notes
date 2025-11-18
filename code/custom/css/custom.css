@@ -59,7 +59,14 @@ article > p {
     text-indent: 2em;
 }
 
+
 :root > * {
+
+}
+
+/*深色背景颜色变量定制*/
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #20252c;
     --md-code-hl-number-color: #BBBBBB;
     --md-code-hl-special-color: #BBBBBB;
     --md-code-hl-function-color: #61AFEF;

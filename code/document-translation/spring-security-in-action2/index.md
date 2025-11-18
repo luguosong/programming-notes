@@ -4,13 +4,6 @@ icon: material/book
 
 # Spring Security实战
 
-## 思维导图
-
-<figure markdown="span">
-  ![](https://edrawcloudpubliccn.oss-cn-shenzhen.aliyuncs.com/viewer/self/1059758/share/2025-6-1/1748768394/main.svg){ loading=lazy }
-  <figcaption>Spring Security知识点</figcaption>
-</figure>
-
 ## 前言部分
 
 ### 推荐序

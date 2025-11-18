@@ -1,0 +1,55 @@
+/*自定义两边sidebar的宽度*/
+
+.md-sidebar {
+    width: 15.1rem
+}
+
+@supports selector(::-webkit-scrollbar) {
+    .md-sidebar__scrollwrap {
+        scrollbar-gutter: auto
+    }
+
+    [dir=ltr] .md-sidebar__inner {
+        padding-right: calc(100% - 14.5rem)
+    }
+
+    [dir=rtl] .md-sidebar__inner {
+        padding-left: calc(100% - 14.5rem)
+    }
+
+    @media screen and (max-width: 76.234375em) {
+        [dir=ltr] .md-sidebar__inner {
+            padding-right: 0
+        }
+
+        [dir=rtl] .md-sidebar__inner {
+            padding-left: 0
+        }
+    }
+}
+
+@media screen and (max-width: 76.234375em) {
+    [dir=ltr] .md-sidebar--primary {
+        left: -15.1rem
+    }
+
+    [dir=rtl] .md-sidebar--primary {
+        right: -15.1rem
+    }
+}
+
+@media screen and (min-width: 60em) {
+    [dir=ltr] .md-header__source {
+        margin-left: 1rem
+    }
+
+    [dir=rtl] .md-header__source {
+        margin-right: 1rem
+    }
+
+    .md-header__source {
+        display: block;
+        max-width: 14.5rem;
+        width: 14.5rem
+    }
+}

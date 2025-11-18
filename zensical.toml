@@ -14,6 +14,7 @@ dev_addr = "localhost:7000"
 extra_css = [
     "custom/css/font.css",
     "custom/css/custom.css",
+    "custom/css/sidebar-width.css",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css"
 ]
 extra_javascript = [
@@ -29,12 +30,12 @@ nav = [
         "document-translation/index.md",
         { "Spring Security实战（第二版）" = [
             "document-translation/spring-security-in-action2/index.md",
-            { "Spring Security入门" = [
+            { "第一部分：Spring Security入门" = [
                 "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md",
                 { "安全现状" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md" },
                 { "Spring Security 入门" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md" }
             ] },
-            { "配置身份认证" = [
+            { "第二部分：配置身份认证" = [
                 "document-translation/spring-security-in-action2/part2_configuring_authentication/index.md",
                 { "用户管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md" },
                 { "密码管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md" },
@@ -53,14 +54,13 @@ nav = [
     ] }
 ]
 
-
-
 [project.theme]
 variant = "modern"
 language = "zh"
 logo = "assert/logo.gif"
 favicon = "assert/logo.gif"
 custom_dir = "overrides"
+icon.repo = "fontawesome/brands/github"
 features = [
     # 当启用即时导航时，所有内部链接的点击操作都会被拦截，并通过XHR分发请求，而不会完全重新加载页面。
     "navigation.instant",
