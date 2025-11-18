@@ -5,5 +5,3 @@ document$.subscribe(async function () {
         new Viewer(figure);
     });
 })
-
-

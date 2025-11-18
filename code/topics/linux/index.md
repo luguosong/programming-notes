@@ -1,5 +1,0 @@
----
-icon: material/linux
----
-
-# Linux

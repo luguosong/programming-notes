@@ -1,3 +1,4 @@
+# Zensical版本 0.0.8
 [project]
 site_name = "陆国松的编程笔记"
 site_description = "学习编程过程中整理的笔记集合"
@@ -11,8 +12,49 @@ edit_uri = "edit/main/code/"
 # 内外运行地址
 dev_addr = "localhost:7000"
 extra_css = [
-    "custom/css/font.css"
+    "custom/css/font.css",
+    "custom/css/custom.css",
+    "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css"
 ]
+extra_javascript = [
+    "custom/js/mathjax.jss",
+    "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js",
+    "custom/js/viewer-js-init.js"
+]
+
+nav = [
+    { "主页" = "index.md" },
+    { "学习路线" = "resources.md" },
+    { "文档翻译" = [
+        "document-translation/index.md",
+        { "Spring Security实战（第二版）" = [
+            "document-translation/spring-security-in-action2/index.md",
+            { "Spring Security入门" = [
+                "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md",
+                { "安全现状" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md" },
+                { "Spring Security 入门" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md" }
+            ] },
+            { "配置身份认证" = [
+                "document-translation/spring-security-in-action2/part2_configuring_authentication/index.md",
+                { "用户管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md" },
+                { "密码管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md" },
+                { "一个Web应用的安全性始于过滤器" = "document-translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/index.md" },
+                { "实现身份认证" = "document-translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/index.md" }
+            ] }
+        ] }
+    ] },
+    { "专题研究" = [
+        "topic/index.md",
+        { "Zensical" = [
+            "topic/zensical/index.md",
+            { "基本使用" = "topic/zensical/basic/index.md" },
+            { "数学公式" = "topic/zensical/math/index.md" }
+        ] }
+    ] }
+]
+
+
 
 [project.theme]
 variant = "modern"
@@ -29,8 +71,6 @@ features = [
     "navigation.instant.progress",
     # 顶层板块会在视口宽度大于1220px时以菜单的形式显示在页眉下方，而在移动端则保持原样。
     "navigation.tabs",
-    # 当启用粘性标签后，导航标签会固定在头部下方，并在向下滚动时始终可见。
-    "navigation.tabs.sticky",
     # 文档面包屑
     "navigation.path",
     # 当启用裁剪功能时，只有可见的导航项会被渲染到 HTML 中，从而使构建后的网站体积减少 33% 或更多。
@@ -45,13 +85,15 @@ features = [
     "search.highlight",
     # 页脚可以包含当前页面的上一页和下一页链接。
     "navigation.footer",
+    "navigation.prune",
     # 编辑页面按钮
     "content.action.edit",
     # 查看页面代码按钮
     "content.action.view",
     "content.code.copy",
     "content.code.select",
-    "content.code.annotate"
+    "content.code.annotate",
+    "content.tooltips"
 ]
 
 [project.extra]
@@ -117,6 +159,5 @@ alternate_style = true
 [project.markdown_extensions.pymdownx.tasklist]
 custom_checkbox = true
 [project.markdown_extensions.pymdownx.tilde]
-
 
 

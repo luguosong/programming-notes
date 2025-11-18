@@ -11,5 +11,3 @@ icon: material/home
 如果您有任何疑问或需要进一步了解，欢迎在<a href="https://github.com/luguosong/programming-notes/issues">issues</a>下留言，
 或者直接在对应页面下方进行评论。
 我很乐意为您提供帮助，解答您的问题，并与您分享更多关于编程和技术的知识。
-
----
