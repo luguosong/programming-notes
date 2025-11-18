@@ -1,9 +1,26 @@
 # 数学公式
 
+## 基础
+
+### 加减乘除
+
 $$
-\cos x=\sum_{k=0}^{\infty}\frac{(-1)^k}{(2k)!}x^{2k}
+\begin{align}
+1 + 2 = 3 \\
+3 - 1 = 2 \\
+2 \times 3 = 6 \\
+6 \div 3 = 2
+\end{align}
 $$
 
-The homomorphism $f$ is injective if and only if its kernel is only the
-singleton set $e_G$, because otherwise $\exists a,b\in G$ with $a\neq b$ such
-that $f(a)=f(b)$.
+```latex
+$$
+\begin{align}
+    1 + 2 = 3 \\
+    3 - 1 = 2 \\
+    2 \times 3 = 6 \\
+    6 \div 3 = 2
+\end{align}
+$$
+```
+

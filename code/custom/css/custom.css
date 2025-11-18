@@ -11,21 +11,25 @@
     border-bottom: 1px inset rgba(53, 86, 129, 0.3);
     counter-increment: section-1;
     counter-reset: section-2 section-3 section-4;
+    color: #1391fc;
 }
 
 .md-typeset h3 {
     counter-increment: section-2;
     counter-reset: section-3 section-4;
+    color: #1f98ff;
 }
 
 .md-typeset h4 {
     counter-increment: section-3;
     counter-reset: section-4;
+    color: #1f98ff;
 }
 
 .md-typeset h5 {
     text-transform: none;
     counter-increment: section-4;
+    color: #309efc;
 }
 
 .md-typeset h2:before {
