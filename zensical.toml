@@ -10,7 +10,7 @@ repo_url = "https://github.com/luguosong/programming-notes"
 repo_name = "luguosong/programming-notes"
 edit_uri = "edit/main/code/"
 # 内外运行地址
-dev_addr = "localhost:7000"
+dev_addr = "localhost:7101"
 extra_css = [
     "custom/css/font.css",
     "custom/css/custom.css",
@@ -34,22 +34,27 @@ nav = [
             { "数学公式" = "topic/zensical/math/index.md" }
         ] }
     ] },
-    { "文档翻译" = [
+    { "文档书籍翻译" = [
         "document-translation/index.md",
-        { "Spring Security实战（第二版）" = [
+        { "Spring Security实战" = [
             "document-translation/spring-security-in-action2/index.md",
-            { "第一部分：Spring Security入门" = [
+            { "Spring Security入门" = [
                 "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md",
                 { "安全现状" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md" },
                 { "Spring Security 入门" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md" }
             ] },
-            { "第二部分：配置身份认证" = [
+            { "配置身份认证" = [
                 "document-translation/spring-security-in-action2/part2_configuring_authentication/index.md",
                 { "用户管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md" },
                 { "密码管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md" },
                 { "一个Web应用的安全性始于过滤器" = "document-translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/index.md" },
                 { "实现身份认证" = "document-translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/index.md" }
-            ] }
+            ] },
+            {"配置授权"=[
+                "document-translation/spring-security-in-action2/part3_configuring_authorization/index.md",
+                {"配置端点级授权：限制访问"="document-translation/spring-security-in-action2/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/index.md"},
+                {"配置端点级授权：实施访问限制"="document-translation/spring-security-in-action2/part3_configuring_authorization/08_configuring_endpoint_level_authorization_applying_restrictions/index.md"}
+            ]}
         ] }
     ] },
 ]
