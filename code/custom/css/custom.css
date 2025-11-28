@@ -1,0 +1,82 @@
+.md-grid {
+    /*内容区域始终延展以适应可用屏幕空间*/
+    max-width: initial;
+}
+
+.md-typeset {
+    counter-reset: section-1;
+}
+
+.md-typeset h2 {
+    border-bottom: 1px inset rgba(53, 86, 129, 0.3);
+    counter-increment: section-1;
+    counter-reset: section-2 section-3 section-4;
+    color: #1391fc;
+}
+
+.md-typeset h3 {
+    counter-increment: section-2;
+    counter-reset: section-3 section-4;
+    color: #1f98ff;
+}
+
+.md-typeset h4 {
+    counter-increment: section-3;
+    counter-reset: section-4;
+    color: #1f98ff;
+}
+
+.md-typeset h5 {
+    text-transform: none;
+    counter-increment: section-4;
+    color: #309efc;
+}
+
+.md-typeset h2:before {
+    content: counter(section-1) ". ";
+}
+
+.md-typeset h3:before {
+    content: counter(section-1) "." counter(section-2) " ";
+}
+
+.md-typeset h4:before {
+    content: counter(section-1) "." counter(section-2) "." counter(section-3) " ";
+}
+
+.md-typeset h5:before {
+    content: counter(section-1) "." counter(section-2) "." counter(section-3) "." counter(section-4) " ";
+}
+
+/*图片设置白色背景*/
+figure img {
+    background-color: RGB(255, 255, 255);
+    cursor: zoom-in;
+}
+
+/*段落首行缩进*/
+article > p, .admonition > p:not(.admonition-title) {
+    text-indent: 2em;
+}
+
+:root > * {
+
+}
+
+/*深色背景颜色变量定制*/
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #20252c;
+    --md-code-bg-color: rgba(20, 23, 31, 0.4);
+    --md-code-fg-color: #477cef;
+    --md-code-hl-number-color: #BBBBBB;
+    --md-code-hl-special-color: #BBBBBB;
+    --md-code-hl-function-color: #61AFEF;
+    --md-code-hl-constant-color: #0779f8;
+    --md-code-hl-keyword-color: #CDBEFD;
+    --md-code-hl-string-color: #89CA78;
+    --md-code-hl-name-color: #D19A66;
+    --md-code-hl-operator-color: #BBBBBB;
+    --md-code-hl-punctuation-color: #BBBBBB;
+    --md-code-hl-comment-color: #5C6370;
+    --md-code-hl-variable-color: #FF8998;
+}

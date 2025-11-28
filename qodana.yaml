@@ -1,0 +1,31 @@
+#-------------------------------------------------------------------------------#
+#               Qodana 分析由 qodana.yaml 文件配置              #
+#             https://www.jetbrains.com/help/qodana/qodana-yaml.html            #
+#-------------------------------------------------------------------------------#
+version: "1.0"
+
+#指定代码分析的检查配置文件
+profile:
+  name: qodana.starter
+
+#Enable inspections
+#include:
+#  - name: <SomeEnabledInspectionId>
+
+#Disable inspections
+#exclude:
+#  - name: <SomeDisabledInspectionId>
+#    paths:
+#      - <path/where/not/run/inspection>
+
+projectJDK: 17 #(应用于CI/CD流程)
+
+#在 Qodana 执行之前执行 shell 命令（应用于 CI/CD 流水线）
+#bootstrap: sh ./prepare-qodana.sh
+
+#在 Qodana 执行之前安装 IDE 插件（应用于 CI/CD 管道）
+#plugins:
+#  - id: <plugin.id> #(plugin id can be found at https://plugins.jetbrains.com)
+
+#指定Qodana代码检查器进行分析（应用于CI/CD管道）
+linter: jetbrains/qodana-jvm:latest
