@@ -48,31 +48,31 @@ nav = [
         { "Spring Security in Action 2" = [
             "document-translation/spring-security-in-action2/index.md",
             { "Spring Security入门" = [
-                "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/index.md",
-                { "1.安全现状" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/01_security_today/index.md" },
-                { "2.Spring Security 入门" = "document-translation/spring-security-in-action2/part1_say_hello_to_spring_security/02_hello/index.md" }
+                "document-translation/spring-security-in-action2/part1/index.md",
+                { "1.安全现状" = "document-translation/spring-security-in-action2/part1/01_security_today/index.md" },
+                { "2.Spring Security 入门" = "document-translation/spring-security-in-action2/part1/02_hello/index.md" }
             ] },
             { "配置身份认证" = [
-                "document-translation/spring-security-in-action2/part2_configuring_authentication/index.md",
-                { "3.用户管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/03_managing_users/index.md" },
-                { "4.密码管理" = "document-translation/spring-security-in-action2/part2_configuring_authentication/04_managing_passwords/index.md" },
-                { "5.一个Web应用的安全性始于过滤器" = "document-translation/spring-security-in-action2/part2_configuring_authentication/05_begins_with_filters/index.md" },
-                { "6.实现身份认证" = "document-translation/spring-security-in-action2/part2_configuring_authentication/06_implementing_authentications/index.md" }
+                "document-translation/spring-security-in-action2/part2/index.md",
+                { "3.用户管理" = "document-translation/spring-security-in-action2/part2/03_managing_users/index.md" },
+                { "4.密码管理" = "document-translation/spring-security-in-action2/part2/04_managing_passwords/index.md" },
+                { "5.一个Web应用的安全性始于过滤器" = "document-translation/spring-security-in-action2/part2/05_begins_with_filters/index.md" },
+                { "6.实现身份认证" = "document-translation/spring-security-in-action2/part2/06_implementing_authentications/index.md" }
             ] },
             { "配置授权" = [
-                "document-translation/spring-security-in-action2/part3_configuring_authorization/index.md",
-                { "7.配置端点级授权：限制访问" = "document-translation/spring-security-in-action2/part3_configuring_authorization/07_configuring_endpoint_level_authorization_restricting_access/index.md" },
-                { "8.配置端点级授权：应用访问限制" = "document-translation/spring-security-in-action2/part3_configuring_authorization/08_configuring_endpoint_level_authorization_applying_restrictions/index.md" },
-                { "9.配置CSRF防护" = "document-translation/spring-security-in-action2/part3_configuring_authorization/09_configuring_csrf_protection/index.md" },
-                { "10.配置CORS" = "document-translation/spring-security-in-action2/part3_configuring_authorization/10_configuring_cors/index.md" },
-                { "11.在方法级别实现授权" = "document-translation/spring-security-in-action2/part3_configuring_authorization/11_implementing_authorization_at_the_method_level/index.md" },
-                { "12.在方法级别实现过滤" = "document-translation/spring-security-in-action2/part3_configuring_authorization/12_implementing_filtering_at_the_method_level/index.md" }
+                "document-translation/spring-security-in-action2/part3/index.md",
+                { "7.配置端点级授权：限制访问" = "document-translation/spring-security-in-action2/part3/07_authorization_restricting_access/index.md" },
+                { "8.配置端点级授权：应用访问限制" = "document-translation/spring-security-in-action2/part3/08_authorization_applying_restrictions/index.md" },
+                { "9.配置CSRF防护" = "document-translation/spring-security-in-action2/part3/09_configuring_csrf_protection/index.md" },
+                { "10.配置CORS" = "document-translation/spring-security-in-action2/part3/10_configuring_cors/index.md" },
+                { "11.在方法级别实现授权" = "document-translation/spring-security-in-action2/part3/11_implementing_authorization_at_the_method_level/index.md" },
+                { "12.在方法级别实现过滤" = "document-translation/spring-security-in-action2/part3/12_implementing_filtering_at_the_method_level/index.md" }
             ] },
             { "实现OAuth 2与OpenID Connect" = [
-                "document-translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/index.md",
-                { "13.OAuth 2和OpenID Connect是什么" = "document-translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/13_what_are_oauth2_and_openid_connect/index.md" },
-                { "14.实现OAuth 2授权服务器" = "document-translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/14_implementing_an_oauth2_authorization_server/index.md" },
-                { "15.实现OAuth2资源服务器" = "document-translation/spring-security-in-action2/part4_implementing_oAuth2_and_openid_connect/15_implementing_an_oauth2_resource_server/index.md" }
+                "document-translation/spring-security-in-action2/part4/index.md",
+                { "13.OAuth 2和OpenID Connect是什么" = "document-translation/spring-security-in-action2/part4/13_what_are_oauth2_and_openid_connect/index.md" },
+                { "14.实现OAuth 2授权服务器" = "document-translation/spring-security-in-action2/part4/14_implementing_an_oauth2_authorization_server/index.md" },
+                { "15.实现OAuth2资源服务器" = "document-translation/spring-security-in-action2/part4/15_implementing_an_oauth2_resource_server/index.md" }
             ] }
         ] },
         { "Real World Cryptography" = [
