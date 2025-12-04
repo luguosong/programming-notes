@@ -49,8 +49,8 @@ nav = [
             "document-translation/spring-security-in-action2/index.md",
             { "Spring Security入门" = [
                 "document-translation/spring-security-in-action2/part1/index.md",
-                { "1.安全现状" = "document-translation/spring-security-in-action2/part1/01_security_today/index.md" },
-                { "2.Spring Security 入门" = "document-translation/spring-security-in-action2/part1/02_hello/index.md" }
+                { "1.安全现状" = "document-translation/spring-security-in-action2/part1/01-security-today/index.md" },
+                { "2.Spring Security 入门" = "document-translation/spring-security-in-action2/part1/02-hello/index.md" }
             ] },
             { "配置身份认证" = [
                 "document-translation/spring-security-in-action2/part2/index.md",

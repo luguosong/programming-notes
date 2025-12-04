@@ -30,19 +30,19 @@ Spring Security 实现授权服务器的职责，现在该讨论如何使用授�
 
 ## JWT 验证配置
 
-在本节中，我们讨论如何配置资源服务器以验证并使用 JWT。这是一种非透明的令牌（令牌本身包含资源服务器用于授权的数据）。要使用
-JWT，资源服务器需要证明它们是可信的——也就是说，预期的授权服务器确实签发了这些令牌，以此作为对用户和/或客户端通过身份验证的证明。其次，资源服务器还需要读取令牌中的数据，并据此实现授权规则。
+在本节中，我们将讨论如何配置资源服务器以验证并使用 JWT（JSON Web 令牌）。JWT 是非不透明令牌，包含资源服务器可用于授权的数据。要使用
+JWT，资源服务器需要证明这些令牌是真实有效的，也就是说，预期的授权服务器确实已颁发这些令牌，作为对用户和/或客户端身份验证的凭证。其次，资源服务器还需读取令牌中的数据，并基于这些数据执行授权策略。
 
-我们将通过实际操作来学习如何配置资源服务器，也就是从零开始实现并配置它。首先创建一个新的 Spring Boot
-项目并添加所需依赖，然后实现一个用于测试的演示端点（资源），接着配置认证和授权。我们将按照以下步骤进行：
+我们将通过实践来学习如何配置资源服务器，也就是说，亲自实现一个并从头开始配置。首先创建一个新的 Spring Boot
+项目，并添加所需的依赖项。接着实现一个演示端点（用于测试的资源），并着手配置认证与授权。我们将按照以下步骤进行：
 
-1. 在项目中添加所需依赖（我们使用 Maven，因此在 pom.xml 中配置）。
-2. 声明一个用于测试实现的占位端点。
-3. 通过配置服务的公钥集 URI，完成 JWT 认证。
+1. 在项目中添加所需依赖（由于使用 Maven，具体在 pom.xml 中配置）。
+2. 声明一个用于测试的虚拟端点。
+3. 通过配置服务的 JWT 公钥 URI，实现对 JWT 的认证。
 4. 实现授权规则。
-5. 验证实现：  
-   a. 使用授权服务器生成令牌；  
-   b. 使用该令牌调用第2步创建的占位端点。
+5. 通过以下方式测试实现：
+	1. 使用授权服务器生成 token。
+	2. 利用该 token 访问第 2 步创建的虚拟端点。
 
 下方列出了所需的依赖项。除了 Web 和 Spring Security 相关依赖外，我们还需要添加资源服务器的起步依赖。
 
@@ -233,16 +233,15 @@ public class ProjectConfig {
   <figcaption>图 15.3 授权码授权模式：客户端将用户重定向到授权服务器的登录页面。用户成功完成身份验证后，授权服务器携带授权码重定向回客户端。客户端再利用该授权码获取访问令牌。</figcaption>
 </figure>
 
-紧接在要点之后的下一个代码片段展示了你可以在浏览器中使用的 URL，用于跳转到授权服务器的 /authorize
-端点。请记住，你需要提供一些参数，并且它们的值必须与授权服务器中的配置保持一致。需要发送的参数包括：
+下面的代码片段（紧跟在项目符号之后）展示了可以在浏览器中使用的 URL，用于跳转到授权服务器的 /authorize
+端点。请记住，需要提供一些参数，其值必须与在授权服务器中配置的内容一致。必须发送的参数包括：
 
-- **response_type**——如果要使用授权码授权类型，值设为 `"code"`。
-- **client_id**——客户端 ID。
-- **scope**——你希望访问的范围，可以是授权服务器中配置的任意 scope。
-- **redirect_uri**——授权服务器在用户成功认证后重定向客户端的 URI。该 URI 必须是授权服务器中已配置的地址之一。
-- **code_challenge**——如果使用 PKCE（Proof Key for Code Exchange），需要提供由 code challenge 与 code verifier 组成的 code
-  challenge。
-- **code_challenge_method**——如果使用 PKCE，必须指定用于加密 code verifier 的哈希算法（例如 SHA-256）。
+- response_type——如果要使用授权码授权类型，请设置为 "code"。
+- client_id——客户端 ID。
+- scope——希望访问的作用域。可以是授权服务器中配置的任意作用域。
+- redirect_uri——授权服务器在成功认证后重定向客户端的 URI。该 URI 应为授权服务器中配置的 URI 之一。
+- code_challenge——如果使用 PKCE（用于代码交换的证明密钥），需要提供代码挑战与验证器对中的代码挑战值。
+- code_challenge_method——如果使用 PKCE，必须指定用于对代码验证器加密的哈希函数（例如 SHA-256）：
 
 ```shell
 http://localhost:8080/oauth2/authorize?response_type=code&client_id=client&scope=openid&redirect_uri=https://www.manning.com/authorized&code_challenge=QYPAZ5NU8yvtlQ9erXrUYR-T5AGCjCF47vN-KsaI2A8&code_challenge_method=S256
@@ -397,6 +396,528 @@ public class CustomAuthentication
 
 ```
 
-你已经定义了一个自定义的认证对象，接下来的任务是让应用知道如何把 JWT 转换成这个自定义对象。你可以像清单 15.9 所示那样配置一个特定的 Converter。注意我们使用了两个泛型类型：Jwt 和 CustomAuthentication。第一个泛型类型 Jwt 是转换器的输入，第二个类型 CustomAuthentication 是输出。因此，这个转换器会把 Jwt 对象（即 Spring Security 中读取 JWT 访问令牌的标准约定）转换成我们在清单 15.8 中实现的自定义类型（参见图 15.5）。
+你已经定义了一个自定义的认证对象，接下来的任务是让应用知道如何把 JWT 转换成这个自定义对象。你可以像清单 15.9 所示那样配置一个特定的
+Converter。注意我们使用了两个泛型类型：Jwt 和 CustomAuthentication。第一个泛型类型 Jwt 是转换器的输入，第二个类型
+CustomAuthentication 是输出。因此，这个转换器会把 Jwt 对象（即 Spring Security 中读取 JWT 访问令牌的标准约定）转换成我们在清单
+15.8 中实现的自定义类型（参见图 15.5）。
 
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251204145230198.png){ loading=lazy }
+  <figcaption>图 15.5 自定义转换器实现逻辑，将访问令牌中的信息填充到自定义身份验证结构中。</figcaption>
+</figure>
 
+```java title="清单 15.9 将访问令牌转换为认证对象"
+
+@Component
+public class JwtAuthenticationConverter
+		implements Converter<Jwt, CustomAuthentication> {
+
+	@Override
+	public CustomAuthentication convert(Jwt source) {
+		List<GrantedAuthority> authorities =
+				List.of(() -> "read");
+
+		String priority =
+				String.valueOf(source.getClaims().get("priority"));
+
+		return new CustomAuthentication(source,
+				authorities,
+				priority);
+	}
+}
+
+```
+
+您还可以在清单 15.9
+中看到，我定义了一个虚拟权限。在实际场景中，这些权限通常来自访问令牌（因为它们在授权服务器层面进行管理），也可能来自数据库或其他第三方系统（因为它们从业务角度进行管理）。在这个示例中，为简化起见，我为所有请求都添加了一个虚拟的“read”权限。但要记住，这也是处理权限的地方（这些权限最终也会出现在
+security context 的 authentication 对象中，因为它们在大多数情况下对授权规则至关重要）。
+
+接下来的清单展示了如何配置自定义转换器。在此例中，我通过依赖注入从 Spring 上下文中获取转换器 Bean，然后使用 JWT 认证配置中的
+jwtAuthenticationConverter() 方法。
+
+``` java title="清单 15.10 配置自定义认证转换器"
+
+@Configuration
+public class ProjectConfig {
+
+	// omitted code
+
+	//在类字段中注入转换器对象
+	private final JwtAuthenticationConverter converter;
+
+	// omitted constructor
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http)
+			throws Exception {
+
+		http.oauth2ResourceServer(
+				c -> c.jwt(
+						j -> j.jwkSetUri(keySetUri)
+								.jwtAuthenticationConverter(converter) //在身份验证机制中配置转换器对象
+				)
+		);
+
+		http.authorizeHttpRequests(
+				c -> c.anyRequest().authenticated()
+		);
+
+		return http.build();
+	}
+}
+
+```
+
+以上就是我们为了使用访问令牌的自定义声明所需进行的全部配置。现在让我们测试一下实现，验证其是否按预期工作。下一段代码展示了我对
+/demo 端点所做的修改：我让 /demo 端点返回来自安全上下文的 Authentication 实例。因为 Spring 知道如何在类型为 Authentication
+的参数中自动注入该值，所以我只需添加这个参数，然后让端点的处理方法原样返回即可：
+
+```java
+
+@GetMapping("/demo")
+public Authentication demo(Authentication a) {
+	return a;
+}
+```
+
+如果一切按预期运行，当你向 /demo 端点发送请求时，会收到一个响应，响应体与下列示例类似。注意，自定义的 `priority`
+属性已经正确地出现在认证对象中，并且值为 `HIGH`。
+
+``` json
+{
+  "authorities": [
+    {
+      "authority": "read"
+    }
+  ],
+  "details": {
+     "remoteAddress": "0:0:0:0:0:0:0:1",
+     "sessionId": null
+  },
+  "authenticated": true,
+    …
+
+  "name": "bill",
+  "priority": "HIGH",
+ }
+
+```
+
+## 通过内省配置令牌验证
+
+在本节中，我们将讨论使用内省机制进行访问令牌验证。若应用使用不透明令牌，或者希望在授权服务器层面实现令牌撤销，那么内省就是你必须采用的令牌验证方式。图15.6再次展示了内省流程，详见第14.4节。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251204151651204.png){ loading=lazy }
+  <figcaption>图 15.6 令牌自省。在资源服务器无法依赖基于签名的访问令牌验证（例如需要撤销令牌的情况），或者令牌本身不包含详细信息（如不透明令牌）时，资源服务器必须向授权服务器发起查询，以确认令牌的有效性并获取更多相关信息。</figcaption>
+</figure>
+
+我们将实现一个资源服务器来演示 introspection 的用法。要实现这个目标，需要按以下步骤操作：
+
+1. 确保授权服务器将资源服务器识别为一个客户端。资源服务器需要在授权服务器端注册客户端凭据。
+2. 在资源服务器端配置认证，使其使用 introspection。
+3. 从授权服务器获取访问令牌。
+4. 使用一个示例端点证明我们在步骤 3 中获取的访问令牌能够按预期正常工作。
+
+下面的代码片段展示了创建客户端实例的示例，我们将在授权服务器端注册该客户端。这个客户端代表的是我们的资源服务器。正如图15.6所示，资源服务器会向授权服务器发送请求（用于检查），因此资源服务器也同时成为了授权服务器的一个客户端。
+
+要发送自省请求，资源服务器需要客户端凭证进行身份验证，就像其他任何客户端一样。在这个示例中，我将修改我们在第14章讨论不透明令牌时创建的
+ssia-ch14-ex4 项目：
+
+``` java
+RegisteredClient resourceServer =   
+  RegisteredClient.withId(UUID.randomUUID().toString())
+           .clientId("resource_server")
+           .clientSecret("resource_server_secret")
+           .clientAuthenticationMethod(
+              ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+           .authorizationGrantType(
+              AuthorizationGrantType.CLIENT_CREDENTIALS)
+           .build();
+```
+
+请记住，像我在前面的代码片段中那样硬编码密码和配置数据是绝对不应该的。我已经尽可能简化了这些示例，以便让你专注于我们正在讨论的主题。在实际的应用中，应该将配置放在实现之外的文件中，并安全地持久化保存敏感信息（比如凭据）。
+
+下面的清单展示了如何将客户端详情的两个实例（客户端自身和资源服务器）添加到授权服务器的 RegisteredClientRepository 组件中。
+
+```java title="清单 15.12 RegisteredClientRepository 定义"
+
+@Bean
+public RegisteredClientRepository registeredClientRepository() {
+	RegisteredClient registeredClient =
+			RegisteredClient.withId(UUID.randomUUID().toString())
+					.clientId("client")
+					.clientSecret("secret")
+					.clientAuthenticationMethod(
+							ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+					.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+					.tokenSettings(TokenSettings.builder()
+							.accessTokenFormat(OAuth2TokenFormat.REFERENCE)
+							.accessTokenTimeToLive(Duration.ofHours(12))
+							.build())
+					.scope("CUSTOM")
+					.build();
+
+	RegisteredClient resourceServer =
+			RegisteredClient.withId(UUID.randomUUID().toString())
+					.clientId("resource_server")
+					.clientSecret("resource_server_secret")
+					.clientAuthenticationMethod(
+							ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+					.authorizationGrantType(
+							AuthorizationGrantType.CLIENT_CREDENTIALS)
+					.build();
+
+	return new InMemoryRegisteredClientRepository(
+			registeredClient,
+			resourceServer);
+}
+
+```
+
+在对清单 15.12 所做的修改之后，我们现在拥有一组资源服务器可以用来调用授权服务器公开的 introspection
+端点的凭据。接下来我们可以开始实现资源服务器。该示例位于项目 ssia-ch15-ex3 中。清单 15.13 展示了在属性文件中我是如何配置
+introspection 所需的三个关键值的：
+
+- 授权服务器公开的 introspection URI，资源服务器可以通过它来验证令牌
+- 资源服务器的客户端 ID，用于在调用 introspection 端点时标识自身
+- 资源服务器的客户端密钥，资源服务器会将其与客户端 ID 一起用于向 introspection 端点发送请求时的认证
+
+此外，我还将服务器端口改为 9090，与应用服务器（8080）不同，从而使两个应用能够同时运行。
+
+``` properties
+server.port=9090
+introspectionUri=http://localhost:8080/
+  oauth2/introspect
+
+resourceserver.clientID=resource_server
+resourceserver.secret=resource_server_secret
+```
+
+然后，您可以将属性文件中的值注入配置类的字段，并使用这些值来设置认证。下面的清单展示了配置类如何将属性文件中的值注入到字段中。
+
+``` java title="清单15.14 将值注入配置类字段"
+@Configuration
+public class ProjectConfig {
+
+  @Value("${introspectionUri}")
+  private String introspectionUri;
+
+  @Value("${resourceserver.clientID}")
+  private String resourceServerClientID;
+
+  @Value("${resourceserver.secret}")
+  private String resourceServerSecret;
+    
+}
+
+```
+
+使用 introspection URI 和凭证来配置身份验证。配置方式与我们为 JWT 访问令牌所做的配置类似——同样通过 HttpSecurity 对象的
+oauth2ResourceServer() 方法。不过，这里我们调用的是 oauth2ResourceServer() 定制器对象中的另一个配置方法：opaqueToken()。在
+opaqueToken() 方法中，配置 introspection URI 和凭证。下面的清单展示了该设置。
+
+``` java title="图 15.15 配置资源服务器对不透明令牌的身份验证"
+
+@Configuration
+public class ProjectConfig {
+
+	@Value("${introspectionUri}")
+	private String introspectionUri;
+
+	@Value("${resourceserver.clientID}")
+	private String resourceServerClientID;
+
+	@Value("${resourceserver.secret}")
+	private String resourceServerSecret;
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http)
+			throws Exception {
+
+		http.oauth2ResourceServer(
+				c -> c.opaqueToken(
+						o -> o.introspectionUri(introspectionUri)
+								.introspectionClientCredentials(
+										resourceServerClientID,
+										resourceServerSecret)
+				)
+		);
+
+		return http.build();
+	}
+}
+
+```
+
+请记得也要加入授权配置。下面的代码片段展示了你在第 7 章和第 8 章中学到的标准做法，让所有端点都必须进行请求认证：
+
+``` java
+http.authorizeHttpRequests(
+ c -> c.anyRequest().authenticated()
+);
+```
+
+下面的代码清单展示了该配置类的完整内容。
+
+``` java title="清单 15.16 配置类的完整内容"
+
+@Configuration
+public class ProjectConfig {
+
+	@Value("${introspectionUri}")
+	private String introspectionUri;
+
+	@Value("${resourceserver.clientID}")
+	private String resourceServerClientID;
+
+	@Value("${resourceserver.secret}")
+	private String resourceServerSecret;
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http)
+			throws Exception {
+
+		http.oauth2ResourceServer(
+				c -> c.opaqueToken(
+						o -> o.introspectionUri(introspectionUri)
+								.introspectionClientCredentials(
+										resourceServerClientID,
+										resourceServerSecret)
+				)
+		);
+
+		http.authorizeHttpRequests(
+				c -> c.anyRequest().authenticated()
+		);
+
+		return http.build();
+	}
+}
+
+```
+
+一个像下述代码片段中的简单 `/demo` 端点就足以让我们验证认证是否正常工作：
+
+``` java
+@RestController
+public class DemoController {
+
+ @GetMapping("/demo")
+ public String demo() {
+   return "Demo";
+ }
+}
+```
+
+现在您可以同时启动两个应用：授权服务器和资源服务器。它们需要同时运行。下方代码片段包含了一个 cURL 命令，可用于向 /token
+端点发送请求。为简化示例，我采用了客户端凭证授权类型，但您也可以使用第 14
+章所介绍的任意一种授权类型来获取访问令牌。请记住，无论通过何种方式获取访问令牌，资源服务器的配置都是相同的。
+
+``` shell
+curl -X POST 'http://localhost:8080/oauth2/token? \
+client_id=client& \
+grant_type=client_credentials' \
+--header 'Authorization: Basic Y2xpZW50OnNlY3JldA=='
+```
+
+如果请求成功，响应中会返回访问令牌。响应体如下所示，我已经截断了令牌的值，以便更好地展示在页面上：
+
+``` json
+{
+   "access_token": "2zLyYA8b6Q54-…",
+   "token_type": "Bearer",
+   "expires_in": 43199
+}
+```
+
+与 JWT 访问令牌的使用方式相同，向受保护的端点发送请求时需要将令牌作为 “Authorization” 头的值，并且访问令牌前必须加上字符串
+“Bearer”。下面的示例展示了可用于请求 /demo 端点的 cURL 命令。如果一切正常，你会在 200 OK 的响应状态中收到包含 “Demo”
+字符串的响应体。
+
+```shell
+curl 'http://localhost:9090/demo' \
+--header 'Authorization: Bearer 2zLyYA8b6Q54-…'
+```
+
+## 实现多租户系统
+
+在真实的应用中，情况并不总是完美。有时候在与第三方集成时，我们不得不调整实现以适应某些非标准的案例；另外，有时候我们的后端需要依赖多个授权服务器来完成认证和授权（多租户系统）。在这种情况下，我们应该如何配置应用？
+
+幸运的是，Spring Security 提供了灵活性，可以支持各种场景的实现。本节我们将讨论在更复杂的情况下如何配置资源服务器，比如多租户系统或与不遵循标准的应用进行交互。
+
+让我们看看图 15.7，回顾一下本书前两部分详细讨论的 Spring Security 认证设计。一个过滤器会拦截 HTTP
+请求，随后将认证责任交给认证管理器。认证管理器进一步调用实现了认证逻辑的认证提供者。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251204162538479.png){ loading=lazy }
+  <figcaption>图15.7 认证类设计。在认证过程中，过滤器捕获请求并将其传递给认证管理器组件。该管理器随后调用执行具体认证逻辑的认证提供器。认证成功后，应用会将已认证主体的详细信息记录到安全上下文中。</figcaption>
+</figure>
+
+为什么要记住这个设计？因为对于资源服务器来说，就像其他任何身份验证方式一样，如果想自定义身份验证的工作方式，就必须更换身份验证提供器。
+
+在资源服务器的场景中，Spring Security 允许你在配置中插入一个名为“认证管理器解析器”的组件（见图
+15.8）。该组件使应用在运行时能够决定调用哪个认证管理器。通过这种方式，你可以将认证流程委托给任意自定义的认证管理器，而该管理器又可以使用自定义的认证提供者。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251204162807051.png){ loading=lazy }
+  <figcaption>图 15.8 展示了实现身份验证管理器解析器的方式，您可以借此告诉应用应将身份验证职责委托给哪个身份验证管理器。</figcaption>
+</figure>
+
+如果你希望应用程序支持多个使用 JWT 的授权服务器，Spring Security 甚至提供了一个开箱即用的认证管理器解析器实现（图
+15.9）。在这种情况下，你只需接入 Spring Security 提供的 `JwtIssuerAuthenticationManagerResolver` 自定义实现即可。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251204170942198.png){ loading=lazy }
+  <figcaption>图 15.9 您的系统可能需要使用多个授权服务器来验证用户和客户端。</figcaption>
+</figure>
+
+列表15.17展示了如何在配置认证时使用authenticationManagerResolver()
+方法。在这个例子中，你会看到我只需创建一个JwtIssuerAuthenticationResolver类的实例，并为其提供了所有授权服务器的签发地址。该示例已在项目
+ssia-ch15-ex4 中实现。
+
+!!! note
+
+	请务必记住，不要在代码中直接写入 URL（或任何类似的可配置内容）。我们在示例中这么做，只是为了简化代码，让你能专注于最关键的学习内容。任何可自定义的内容都应该统一放在配置文件或环境变量中。
+
+``` java title="列表 15.17 使用 JWT 访问令牌的两个授权服务器的操作"
+@Configuration
+public class ProjectConfig {
+
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) 
+    throws Exception {
+    
+    http.oauth2ResourceServer(
+      j -> j.authenticationManagerResolver(
+               authenticationManagerResolver())
+    );
+
+    http.authorizeHttpRequests(
+      c -> c.anyRequest().authenticated()
+    );
+    return http.build();
+  }
+
+  @Bean
+  public AuthenticationManagerResolver<HttpServletRequest> 
+    authenticationManagerResolver() {
+    
+    var a = new JwtIssuerAuthenticationManagerResolver(
+        "http://localhost:7070", 
+        "http://localhost:8080");
+
+    return a;
+  }
+}
+```
+
+如图 15.10 所示配置，您的资源服务器可与运行在 7070 号和 8080 号端口的两个授权服务器协同工作。
+
+然而，事情有时会更复杂。Spring Security 不可能覆盖所有的自定义需求。在这种情况下，如果你需要进一步扩展资源服务器的能力，就必须实现自定义的授权管理器解析器。
+
+我们来考虑以下场景：你的资源服务器需要同时处理来自两个不同授权服务器的 JWT 和不透明令牌。假设资源服务器根据 “type”
+参数的值来区分请求。如果 “type” 参数的值为 “jwt”，资源服务器就必须使用 JWT 访问令牌与某个授权服务器进行认证；否则，它就会使用带有不透明访问令牌的另外一个授权服务器。
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251204171908439.png){ loading=lazy }
+  <figcaption>图 15.10：使用两个不同的授权服务器，每个服务器处理不同类型的令牌。资源服务器根据客户端在 HTTP 请求头中携带的特定值，确定应使用哪个授权服务器来验证访问令牌。</figcaption>
+</figure>
+
+Listing 15.18 展示了该场景的实现。资源服务器根据 HTTP 请求中 “type” 头的值，选择不同的授权服务器。为实现这一点，资源服务器根据该头的值使用不同的认证管理器。
+
+``` java title="图15.18 同时使用 JWT 和不透明令牌"
+@Configuration
+public class ProjectConfig {
+
+  // Omitted code
+
+  @Bean
+  public AuthenticationManagerResolver<HttpServletRequest> 
+    authenticationManagerResolver(
+        JwtDecoder jwtDecoder, 
+        OpaqueTokenIntrospector opaqueTokenIntrospector
+    ) {
+        
+    AuthenticationManager jwtAuth = new ProviderManager(
+      new JwtAuthenticationProvider(jwtDecoder)    
+    );
+
+    AuthenticationManager opaqueAuth = new ProviderManager(
+      new OpaqueTokenAuthenticationProvider(opaqueTokenIntrospector)
+    );
+
+    return (request) -> {
+      if ("jwt".equals(request.getHeader("type"))) {
+         return jwtAuth;
+      } else {
+         return opaqueAuth;
+      }
+    };
+  }
+
+  @Bean
+  public JwtDecoder jwtDecoder() {
+    return NimbusJwtDecoder
+            .withJwkSetUri("http://localhost:7070/oauth2/jwks")
+            .build();
+  }
+
+  @Bean
+  public OpaqueTokenIntrospector opaqueTokenIntrospector() {
+    return new SpringOpaqueTokenIntrospector(
+       "http://localhost:6060/oauth2/introspect",
+       "client", "secret");
+  }
+}
+```
+
+以下清单展示了其余配置内容，通过 authenticationManagerResolver() 方法的 customizer 参数配置自定义授权管理器解析器。
+
+``` java title="清单 15.19 配置 AuthenticationManagerResolver"
+@Configuration
+public class ProjectConfig {
+
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) 
+    throws Exception {
+    
+    http.oauth2ResourceServer(
+      j -> j.authenticationManagerResolver(
+                authenticationManagerResolver(
+                  jwtDecoder(), 
+                  opaqueTokenIntrospector()
+                ))
+    );
+
+    http.authorizeHttpRequests(
+      c -> c.anyRequest().authenticated()
+    );
+
+    return http.build();
+  }
+
+  // Omitted code
+
+}
+
+```
+
+即便在这个示例中，我们也使用了 Spring Security 提供的认证器实现：JwtAuthenticationProvider 和
+OpaqueTokenAuthenticationProvider。其中，JwtAuthenticationProvider 实现了使用 JWT 访问令牌连接标准授权服务器的认证逻辑，而
+OpaqueTokenAuthenticationProvider 则实现了处理不透明令牌的认证逻辑。但在实际应用中，可能还会遇到更复杂的情形。
+
+如果你需要实现一些高度定制化的功能，比如要与一个完全不遵循任何标准的系统集成，那么你甚至可以自己实现一个定制的认证提供者。
+
+## 摘要
+
+- Spring Security 提供了用于实现 OAuth 2/OpenID Connect 资源服务器的支持。要将身份验证配置为 OAuth 2/OpenID Connect
+  资源服务器，请使用 HttpSecurity 对象的 oauth2ResourceServer() 方法。
+- 如果打算使用 JWT，则需通过 oauth2ResourceServer() 自定义器参数的 jwt() 方法完成相关配置。
+- 如果系统使用不透明令牌或需要在授权服务器端撤销 JWT，也可以使用 Token 内省。在这种情况下，必须通过 oauth2ResourceServer()
+  自定义器参数的 opaqueToken() 方法配置身份验证。
+- 使用 JWT 时，必须设置公钥集合 URI。该 URI
+  由授权服务器对外提供，资源服务器调用它以获取授权服务器端配置的密钥对的公钥部分。授权服务器使用私钥部分对访问令牌进行签名，而资源服务器则需要公钥部分来验证令牌。
+- 使用内省时，需要配置内省 URI。资源服务器向该 URI 发送请求，以确认令牌是否有效以及获取更多相关信息。调用内省 URI
+  时，资源服务器相当于授权服务器的客户端，因此需要使用自己的客户端凭据进行身份验证。
+- Spring Security 还提供了使用身份验证管理器解析器组件自定义身份验证逻辑的能力。当必须实现更具体的场景（例如多租户或适配非标准实现）时，可以定义和配置这样的自定义组件。

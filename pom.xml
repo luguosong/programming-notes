@@ -7,6 +7,12 @@
     <groupId>com.luguosong</groupId>
     <artifactId>programming-notes</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>
+            code/document-translation/spring-security-in-action2/part4/14_implementing_an_oauth2_authorization_server/ssia-ch14-ex2
+        </module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

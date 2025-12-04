@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+    <body>
+        <form action="/product/add" method="post">
+            <span>Name:</span>
+            <span><input type="text" name="name" /></span>
+            <span><button type="submit">Add</button></span>
+            <input type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}" />
+        </form>
+    </body>
+</html>
