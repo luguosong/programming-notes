@@ -178,7 +178,7 @@ curl -u nikolai:12345 http://localhost:8080/sell
 curl -u julien:12345 http://localhost:8080/sell
 ```
 
-响应正文是
+响应体是
 
 ```shell
 [
@@ -227,7 +227,7 @@ public class ProductController {
 curl -u julien:12345 http://localhost:8080/sell
 ```
 
-响应正文是
+响应体是
 
 ```shell
 {
@@ -365,7 +365,7 @@ public class ProductController {
 }
 ```
 
-是时候运行应用程序，并通过调用 /find 接口来测试其行为了。我们期待在 HTTP 响应正文中仅看到被认证用户拥有的产品。接下来的代码片段展示了分别使用我们的两个用户
+是时候运行应用程序，并通过调用 /find 接口来测试其行为了。我们期待在 HTTP 响应体中仅看到被认证用户拥有的产品。接下来的代码片段展示了分别使用我们的两个用户
 Nikolai 和 Julien 调用该接口时的结果。要调用 /find 接口并以用户 Julien 进行认证，请使用以下 cURL 命令：
 
 ```shell

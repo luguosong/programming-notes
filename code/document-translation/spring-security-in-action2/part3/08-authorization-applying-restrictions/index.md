@@ -730,7 +730,7 @@ http.authorizeHttpRequests(
 curl http://localhost:8080/email/jane@example.com
 ```
 
-响应正文是
+响应体是
 
 ```shell
 Allowed for email jane@example.com

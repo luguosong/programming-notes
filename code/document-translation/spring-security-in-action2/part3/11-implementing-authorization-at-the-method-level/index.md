@@ -231,7 +231,7 @@ Hello, Fantastico
 curl -u natalie:12345 http://localhost:8080/hello
 ```
 
-响应正文是
+响应体是
 
 ```shell
 {
@@ -316,7 +316,7 @@ curl -u emma:12345 http://localhost:8080/secret/names/emma
 curl -u emma:12345 http://localhost:8080/secret/names/natalie
 ```
 
-响应正文是
+响应体是
 
 ```shell
 {
@@ -514,7 +514,7 @@ curl -u emma:12345 http://localhost:8080/book/details/natalie
 curl -u natalie:12345 http://localhost:8080/book/details/natalie
 ```
 
-响应正文是
+响应体是
 
 ```shell
 {
@@ -795,7 +795,7 @@ curl -u natalie:12345 http://localhost:8080/documents/asd555
 curl -u emma:12345 http://localhost:8080/documents/asd555
 ```
 
-响应正文是
+响应体是
 
 ```shell
 {
@@ -895,7 +895,7 @@ public class DocumentService {
 curl -u natalie:12345 http://localhost:8080/documents/abc123
 ```
 
-响应正文为
+响应体为
 
 ```shell
 {
@@ -937,7 +937,7 @@ curl -u emma:12345 http://localhost:8080/documents/asd555
 curl -u emma:12345 http://localhost:8080/documents/abc123
 ```
 
-响应正文为
+响应体为
 
 ```shell
 {

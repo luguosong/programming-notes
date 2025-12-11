@@ -54,33 +54,59 @@ nav = [
             ] },
             { "配置身份认证" = [
                 "document-translation/spring-security-in-action2/part2/index.md",
-                { "3.用户管理" = "document-translation/spring-security-in-action2/part2/03_managing_users/index.md" },
-                { "4.密码管理" = "document-translation/spring-security-in-action2/part2/04_managing_passwords/index.md" },
-                { "5.一个Web应用的安全性始于过滤器" = "document-translation/spring-security-in-action2/part2/05_begins_with_filters/index.md" },
-                { "6.实现身份认证" = "document-translation/spring-security-in-action2/part2/06_implementing_authentications/index.md" }
+                { "3.用户管理" = "document-translation/spring-security-in-action2/part2/03-managing-users/index.md" },
+                { "4.密码管理" = "document-translation/spring-security-in-action2/part2/04-managing-passwords/index.md" },
+                { "5.一个Web应用的安全性始于过滤器" = "document-translation/spring-security-in-action2/part2/05-begins-with-filters/index.md" },
+                { "6.实现身份认证" = "document-translation/spring-security-in-action2/part2/06-implementing-authentications/index.md" }
             ] },
             { "配置授权" = [
                 "document-translation/spring-security-in-action2/part3/index.md",
-                { "7.配置端点级授权：限制访问" = "document-translation/spring-security-in-action2/part3/07_authorization_restricting_access/index.md" },
-                { "8.配置端点级授权：应用访问限制" = "document-translation/spring-security-in-action2/part3/08_authorization_applying_restrictions/index.md" },
-                { "9.配置CSRF防护" = "document-translation/spring-security-in-action2/part3/09_configuring_csrf_protection/index.md" },
-                { "10.配置CORS" = "document-translation/spring-security-in-action2/part3/10_configuring_cors/index.md" },
-                { "11.在方法级别实现授权" = "document-translation/spring-security-in-action2/part3/11_implementing_authorization_at_the_method_level/index.md" },
-                { "12.在方法级别实现过滤" = "document-translation/spring-security-in-action2/part3/12_implementing_filtering_at_the_method_level/index.md" }
+                { "7.配置端点级授权：限制访问" = "document-translation/spring-security-in-action2/part3/07-authorization-restricting-access/index.md" },
+                { "8.配置端点级授权：应用访问限制" = "document-translation/spring-security-in-action2/part3/08-authorization-applying-restrictions/index.md" },
+                { "9.配置CSRF防护" = "document-translation/spring-security-in-action2/part3/09-configuring-csrf-protection/index.md" },
+                { "10.配置CORS" = "document-translation/spring-security-in-action2/part3/10-configuring-cors/index.md" },
+                { "11.在方法级别实现授权" = "document-translation/spring-security-in-action2/part3/11-implementing-authorization-at-the-method-level/index.md" },
+                { "12.在方法级别实现过滤" = "document-translation/spring-security-in-action2/part3/12-implementing-filtering-at-the-method-level/index.md" }
             ] },
             { "实现OAuth 2与OpenID Connect" = [
                 "document-translation/spring-security-in-action2/part4/index.md",
-                { "13.OAuth 2和OpenID Connect是什么" = "document-translation/spring-security-in-action2/part4/13_what_are_oauth2_and_openid_connect/index.md" },
-                { "14.实现OAuth 2授权服务器" = "document-translation/spring-security-in-action2/part4/14_implementing_an_oauth2_authorization_server/index.md" },
-                { "15.实现OAuth2资源服务器" = "document-translation/spring-security-in-action2/part4/15_implementing_an_oauth2_resource_server/index.md" }
+                { "13.OAuth 2和OpenID Connect是什么" = "document-translation/spring-security-in-action2/part4/13-what-are-oauth2-and-openid-connect/index.md" },
+                { "14.实现OAuth 2授权服务器" = "document-translation/spring-security-in-action2/part4/14-implementing-an-oauth2-authorization-server/index.md" },
+                { "15.实现OAuth2资源服务器" = "document-translation/spring-security-in-action2/part4/15-implementing-an-oauth2-resource-server/index.md" },
+                { "16.实现OAuth2客户端" = "document-translation/spring-security-in-action2/part4/16-implementing-an-oAuth2-client/index.md" }
+            ] },
+            { "响应式" = [
+                "document-translation/spring-security-in-action2/part5/index.md",
+                { "17.在响应式应用中实现安全性" = "document-translation/spring-security-in-action2/part5/17-implementing-security-in-reactive-applications/index.md" }
+            ] },
+            { "测试安全配置" = [
+                "document-translation/spring-security-in-action2/part6/index.md",
+                { "18.测试安全配置" = "document-translation/spring-security-in-action2/part6/18-testing-security-configurations/index.md" }
             ] }
+        ] },
+        { "Spring Security-6.5.7" = [
+            "document-translation/spring-security-567/index.md",
+            { "Servlet应用" = [
+                "document-translation/spring-security-567/servlet-applications/index.md",
+                { "OAuth2" = [
+                    "document-translation/spring-security-567/servlet-applications/oauth2/index.md"
+                ] }
+            ] }
+        ] },
+        { "Spring Authorization Server-1.5.3" = [
+            "document-translation/spring-authorization-server-153/index.md",
+            { "Spring Authorization Server 迁移至 Spring Security 7.0" = "document-translation/spring-authorization-server-153/moving-to-spring-security-70/index.md" },
+            { "概述" = "document-translation/spring-authorization-server-153/01-overview/index.md" },
+            { "获取帮助" = "document-translation/spring-authorization-server-153/02-getting-help/index.md" },
+            { "入门" = "document-translation/spring-authorization-server-153/03-getting-started/index.md" },
+            { "配置" = "document-translation/spring-authorization-server-153/04-configuration-model/index.md"}
         ] },
         { "Real World Cryptography" = [
             "document-translation/real-world-cryptography/index.md"
         ] },
         { "Java Cryptography: Tools and Techniques" = [
             "document-translation/java-cryptography-tools-and-techniques/index.md",
-            {"1.入门概览"="document-translation/java-cryptography-tools-and-techniques/01-getting-started-an-overview/index.md"}
+            { "1.入门概览" = "document-translation/java-cryptography-tools-and-techniques/01-getting-started-an-overview/index.md" }
         ] }
     ] },
 ]

@@ -552,7 +552,7 @@ scope=CUSTOM' \
 --header 'Authorization: Basic Y2xpZW50OnNlY3JldA=='
 ```
 
-下一个代码片段展示了包含所请求访问令牌的 HTTP 响应正文：
+下一个代码片段展示了包含所请求访问令牌的 HTTP 响应体：
 
 ```shell
 {
