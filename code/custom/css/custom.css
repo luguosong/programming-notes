@@ -52,6 +52,7 @@
 figure img {
     background-color: RGB(255, 255, 255);
     cursor: zoom-in;
+    max-width: 80%;
 }
 
 /*段落首行缩进*/
