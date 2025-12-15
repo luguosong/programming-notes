@@ -99,7 +99,21 @@ nav = [
             { "概述" = "document-translation/spring-authorization-server-153/01-overview/index.md" },
             { "获取帮助" = "document-translation/spring-authorization-server-153/02-getting-help/index.md" },
             { "入门" = "document-translation/spring-authorization-server-153/03-getting-started/index.md" },
-            { "配置" = "document-translation/spring-authorization-server-153/04-configuration-model/index.md"}
+            { "配置" = "document-translation/spring-authorization-server-153/04-configuration-model/index.md" },
+            { "核心模型/组件" = "document-translation/spring-authorization-server-153/05-core-model-components/index.md" },
+            { "协议端点" = "document-translation/spring-authorization-server-153/06-protocol-endpoints/index.md" },
+            { "操作指南" = [
+                "document-translation/spring-authorization-server-153/07-how-to-guides/index.md",
+                {"在单页应用（SPA）中使用PKCE进行身份认证" = "document-translation/spring-authorization-server-153/07-how-to-guides/01-authenticate-using-a-single-page-application-with-pkce/index.md"},
+                {"使用社交账号登录进行身份验证"="document-translation/spring-authorization-server-153/07-how-to-guides/02-authenticate-using-social-login/index.md"},
+                {"实现扩展授权许可类型"="document-translation/spring-authorization-server-153/07-how-to-guides/03-implement-an-extension-authorization-grant-type/index.md"},
+                {"实现多租户(Multitenancy)"="document-translation/spring-authorization-server-153/07-how-to-guides/04-implement-multitenancy/index.md"},
+                {"自定义OpenID Connect 1.0的UserInfo响应"="document-translation/spring-authorization-server-153/07-how-to-guides/05-customize-the-oidc-userinfo-response/index.md"},
+                {"通过JPA实现核心服务"="document-translation/spring-authorization-server-153/07-how-to-guides/06-implement-core-services-with-jpa/index.md"},
+                {"用Redis实现核心服务"="document-translation/spring-authorization-server-153/07-how-to-guides/07-implement-core-services-with-redis/index.md"},
+                {"在JWT访问令牌中将权限作为自定义声明添加"="document-translation/spring-authorization-server-153/07-how-to-guides/08-add-authorities-as-custom-claims-in-jwt-access-tokens/index.md"},
+                {"动态注册客户端"="document-translation/spring-authorization-server-153/07-how-to-guides/09-register-a-client-dynamically/index.md"}
+            ] }
         ] },
         { "Real World Cryptography" = [
             "document-translation/real-world-cryptography/index.md"

@@ -320,13 +320,13 @@ private Consumer<List<AuthenticationProvider>> configureJwtClientAssertionValida
 	return (authenticationProviders) ->
 		authenticationProviders.forEach((authenticationProvider) -> {
 			if (authenticationProvider instanceof JwtClientAssertionAuthenticationProvider) {
-				// Customize JwtClientAssertionDecoderFactory
+				// 自定义 JwtClientAssertionDecoderFactory
 				JwtClientAssertionDecoderFactory jwtDecoderFactory = new JwtClientAssertionDecoderFactory();
 				Function<RegisteredClient, OAuth2TokenValidator<Jwt>> jwtValidatorFactory = (registeredClient) ->
 					new DelegatingOAuth2TokenValidator<>(
-						// Use default validators
+						// 使用默认验证器
 						JwtClientAssertionDecoderFactory.DEFAULT_JWT_VALIDATOR_FACTORY.apply(registeredClient),
-						// Add custom validator
+						// 添加自定义验证器
 						new JwtClaimValidator<>("claim", "value"::equals));
 				jwtDecoderFactory.setJwtValidatorFactory(jwtValidatorFactory);
 
