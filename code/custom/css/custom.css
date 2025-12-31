@@ -49,7 +49,7 @@
 }
 
 /*图片设置白色背景*/
-figure img {
+.md-typeset figure img {
     background-color: RGB(255, 255, 255);
     cursor: zoom-in;
     max-width: 80%;
