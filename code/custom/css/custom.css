@@ -8,7 +8,6 @@
 }
 
 .md-typeset h2 {
-    border-bottom: 1px inset rgba(53, 86, 129, 0.3);
     counter-increment: section-1;
     counter-reset: section-2 section-3 section-4;
     color: #1391fc;
@@ -46,6 +45,43 @@
 
 .md-typeset h5:before {
     content: counter(section-1) "." counter(section-2) "." counter(section-3) "." counter(section-4) " ";
+}
+
+/*标题下方横线*/
+.md-typeset h2::after,
+.md-typeset h3::after,
+.md-typeset h4::after,
+.md-typeset h5::after,
+.md-typeset h6::after {
+    content: '';
+    display: block;
+    height: 1.2px;
+    margin-top: 8px;
+}
+
+.md-typeset h2::after {
+    width: 100%;
+    background: linear-gradient(to right, #0d68b340, transparent);
+}
+
+.md-typeset h3::after {
+    width: 75%;
+    background: linear-gradient(to right, #0a518b40, transparent);
+}
+
+.md-typeset h4::after {
+    width: 50%;
+    background: linear-gradient(to right, #08416f40, transparent);
+}
+
+.md-typeset h5::after {
+    width: 33%;
+    background: linear-gradient(to right, #54617440, transparent);
+}
+
+.md-typeset h6::after {
+    width: 15%;
+    background: linear-gradient(to right, #414b5940, transparent);
 }
 
 /*图片设置白色背景*/
