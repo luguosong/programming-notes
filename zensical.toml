@@ -25,7 +25,13 @@ extra_javascript = [
 ]
 nav = [
     { "主页" = "index.md" },
-    { "学习路线" = "roadmap.md" },
+    { "学习路线" = [
+        "roadmap/index.md",
+        { "基础知识" = "roadmap/basic/index.md" },
+        { "前端" = "roadmap/frontend/index.md" },
+        { "Java" = "roadmap/java/index.md" },
+        { "专题研究" = "roadmap/topic/index.md" }
+    ] },
     { "专题研究" = [
         "topic/index.md",
         { "Zensical" = [
@@ -44,6 +50,37 @@ nav = [
         ] },
         { "Spring Start Here" = [
             "document-translation/spring-start-here/index.md"
+        ] },
+        { "OAuth 2 in Action" = [
+            "document-translation/oauth2-in-action/index.md",
+            { "序" = "document-translation/oauth2-in-action/foreword/index.md" },
+            { "前言" = "document-translation/oauth2-in-action/preface/index.md" },
+            { "关于本书" = "document-translation/oauth2-in-action/about-this-book/index.md" },
+            { "起步" = [
+                "document-translation/oauth2-in-action/part1/index.md",
+                { "1.什么是 OAuth 2.0，以及你为什么需要关注？" = "document-translation/oauth2-in-action/part1/01-what-is-oauth2-and-why-should-you-care/index.md" },
+                { "2.OAuth 之舞" = "document-translation/oauth2-in-action/part1/02-the-oauth-dance/index.md" }
+            ] },
+            { "构建 OAuth 2 环境" = [
+                "document-translation/oauth2-in-action/part2/index.md",
+                { "3.构建一个简单的OAuth客户端" = "document-translation/oauth2-in-action/part2/03-building-a-simple-oauth-client/index.md" },
+                { "4.构建一个简单的 OAuth 受保护资源" = "document-translation/oauth2-in-action/part2/04-building-a-simple-oauth-protected-resource/index.md" },
+                { "5.构建一个简单的 OAuth 授权服务器" = "document-translation/oauth2-in-action/part2/05-building-a-simple-oauth-authorization-server/index.md" },
+                { "6.真实世界中的 OAuth 2.0" = "document-translation/oauth2-in-action/part2/06-oauth-2-in-the-real-world/index.md" }
+            ] },
+            { "OAuth 2 的实现与漏洞" = [
+                "document-translation/oauth2-in-action/part3/index.md",
+                { "7.常见客户端漏洞" = "document-translation/oauth2-in-action/part3/07-common-client-vulnerabilities/index.md" },
+                { "8.常见的受保护资源漏洞" = "document-translation/oauth2-in-action/part3/08-common-protected-resources-vulnerabilities/index.md" },
+                { "9.常见的授权服务器漏洞" = "document-translation/oauth2-in-action/part3/09-common-authorization-server-vulnerabilities/index.md" },
+                { "10.常见的 OAuth 令牌漏洞" = "document-translation/oauth2-in-action/part3/10-common-oauth-token-vulnerabilities/index.md" }
+            ] },
+            { "深入拓展 OAuth" = [
+                "document-translation/oauth2-in-action/part4/index.md",
+                {"OAuth 令牌"="document-translation/oauth2-in-action/part4/11-oauth-tokens/index.md"}
+            ] },
+            { "附录 A：我们的代码框架简介" = "document-translation/oauth2-in-action/appendix-a/index.md" },
+            { "附录 B：扩展代码清单" = "document-translation/oauth2-in-action/appendix-b/index.md" }
         ] },
         { "Spring Security in Action 2" = [
             "document-translation/spring-security-in-action2/index.md",
@@ -104,15 +141,15 @@ nav = [
             { "协议端点" = "document-translation/spring-authorization-server-153/06-protocol-endpoints/index.md" },
             { "操作指南" = [
                 "document-translation/spring-authorization-server-153/07-how-to-guides/index.md",
-                {"在单页应用（SPA）中使用PKCE进行身份认证" = "document-translation/spring-authorization-server-153/07-how-to-guides/01-authenticate-using-a-single-page-application-with-pkce/index.md"},
-                {"使用社交账号登录进行身份验证"="document-translation/spring-authorization-server-153/07-how-to-guides/02-authenticate-using-social-login/index.md"},
-                {"实现扩展授权许可类型"="document-translation/spring-authorization-server-153/07-how-to-guides/03-implement-an-extension-authorization-grant-type/index.md"},
-                {"实现多租户(Multitenancy)"="document-translation/spring-authorization-server-153/07-how-to-guides/04-implement-multitenancy/index.md"},
-                {"自定义OpenID Connect 1.0的UserInfo响应"="document-translation/spring-authorization-server-153/07-how-to-guides/05-customize-the-oidc-userinfo-response/index.md"},
-                {"通过JPA实现核心服务"="document-translation/spring-authorization-server-153/07-how-to-guides/06-implement-core-services-with-jpa/index.md"},
-                {"用Redis实现核心服务"="document-translation/spring-authorization-server-153/07-how-to-guides/07-implement-core-services-with-redis/index.md"},
-                {"在JWT访问令牌中将权限作为自定义声明添加"="document-translation/spring-authorization-server-153/07-how-to-guides/08-add-authorities-as-custom-claims-in-jwt-access-tokens/index.md"},
-                {"动态注册客户端"="document-translation/spring-authorization-server-153/07-how-to-guides/09-register-a-client-dynamically/index.md"}
+                { "在单页应用（SPA）中使用PKCE进行身份认证" = "document-translation/spring-authorization-server-153/07-how-to-guides/01-authenticate-using-a-single-page-application-with-pkce/index.md" },
+                { "使用社交账号登录进行身份验证" = "document-translation/spring-authorization-server-153/07-how-to-guides/02-authenticate-using-social-login/index.md" },
+                { "实现扩展授权许可类型" = "document-translation/spring-authorization-server-153/07-how-to-guides/03-implement-an-extension-authorization-grant-type/index.md" },
+                { "实现多租户(Multitenancy)" = "document-translation/spring-authorization-server-153/07-how-to-guides/04-implement-multitenancy/index.md" },
+                { "自定义OpenID Connect 1.0的UserInfo响应" = "document-translation/spring-authorization-server-153/07-how-to-guides/05-customize-the-oidc-userinfo-response/index.md" },
+                { "通过JPA实现核心服务" = "document-translation/spring-authorization-server-153/07-how-to-guides/06-implement-core-services-with-jpa/index.md" },
+                { "用Redis实现核心服务" = "document-translation/spring-authorization-server-153/07-how-to-guides/07-implement-core-services-with-redis/index.md" },
+                { "在JWT访问令牌中将权限作为自定义声明添加" = "document-translation/spring-authorization-server-153/07-how-to-guides/08-add-authorities-as-custom-claims-in-jwt-access-tokens/index.md" },
+                { "动态注册客户端" = "document-translation/spring-authorization-server-153/07-how-to-guides/09-register-a-client-dynamically/index.md" }
             ] }
         ] },
         { "Real World Cryptography" = [

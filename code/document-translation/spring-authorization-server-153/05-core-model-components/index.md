@@ -476,7 +476,7 @@ public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
 
 !!! tip
 
-    关于如何自定义 ID Token 的示例，请参阅指南《操作指南：自定义 OpenID Connect 1.0 UserInfo 响应》。
+    关于如何自定义 ID Token 的示例，请参阅指南[《操作指南：自定义 OpenID Connect 1.0 UserInfo 响应》](/document-translation/spring-authorization-server-153/07-how-to-guides/05-customize-the-oidc-userinfo-response/)。
 
 ## SessionRegistry
 

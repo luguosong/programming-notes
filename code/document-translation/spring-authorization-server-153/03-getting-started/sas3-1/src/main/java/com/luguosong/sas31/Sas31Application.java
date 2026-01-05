@@ -1,11 +1,13 @@
-package com.luguosong.ssiach5ex1;
+package com.luguosong.sas31;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SsiaCh5Ex1Application {
+public class Sas31Application {
+
 	public static void main(String[] args) {
-		SpringApplication.run(SsiaCh5Ex1Application.class, args);
+		SpringApplication.run(Sas31Application.class, args);
 	}
+
 }
