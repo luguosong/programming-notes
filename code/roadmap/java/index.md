@@ -4,9 +4,13 @@
 
 ## JavaSE
 
-### 基础
-
 - [ ] [The Java™ Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
+  
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260106132859648.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
 - [ ] [On Java 中文版](https://book.douban.com/subject/35751619/)
 
 <figure markdown="span">
@@ -32,7 +36,7 @@
   <figcaption></figcaption>
 </figure>
 
-### JVM
+## JVM
 
 - [ ] [尚硅谷宋红康JVM全套教程（详解java虚拟机 2020-01-16）](https://www.bilibili.com/video/BV1PJ411n7xZ/)
 
@@ -48,7 +52,7 @@
   <figcaption></figcaption>
 </figure>
 
-### 日志
+## 日志
 
 - [x] [动力节点Java日志框架实战视频教程_从零玩转Java日志框架（内含：Springboot日志、JUL日志、SLF4J日志、SLF4J日志、Log4j2日志等） 2021-05-31](https://www.bilibili.com/video/BV1Mb4y1Z74W)
 
@@ -57,10 +61,22 @@
   <figcaption></figcaption>
 </figure>
 
-### 测试
+## 测试
 
 - [ ] [Junit5官方文档](https://docs.junit.org/5.10.2/user-guide/)
+  
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260106133239470.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
 - [ ] [Junit6官方文档](https://docs.junit.org/6.0.1/overview.html)
+  
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260106133300433.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
 - [ ] [JUnit实战（第3版）](https://book.douban.com/subject/36423337/)
 
 <figure markdown="span">
@@ -68,7 +84,7 @@
   <figcaption></figcaption>
 </figure>
 
-### Maven
+## Maven
 
 - [ ] [尚硅谷Maven教程（maven入门+高深，全网无出其右！）](https://www.bilibili.com/video/BV12q4y147e4/?spm_id_from=333.337.search-card.all.click&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
 
@@ -77,9 +93,7 @@
   <figcaption></figcaption>
 </figure>
 
-## Java 服务端
-
-### Spring 框架
+## Spring 框架
 
 - [x] [老杜 Spring 视频教程 Spring视频零基础入门到高级，spring全套视频教程详解](https://www.bilibili.com/video/BV1Ft4y1g7Fb)
 
@@ -102,7 +116,7 @@
   <figcaption></figcaption>
 </figure>
 
-### 数据库开发
+## 数据库开发
 
 - [ ] [The Java™ Tutorials中JDBC部分](https://docs.oracle.com/javase/tutorial/jdbc/index.html)
 
@@ -152,7 +166,7 @@
   <figcaption></figcaption>
 </figure>
 
-### Web 开发
+## Web 开发
 
 - [ ] [Tomcat与Java Web开发技术详解](https://book.douban.com/subject/34780582/)
   
@@ -161,9 +175,14 @@
   <figcaption></figcaption>
 </figure>
 
-- [x] 老杜 JavaWeb 视频课程
+- [x] [老杜 JavaWeb 视频课程](https://www.bilibili.com/video/BV1Z3411C7NZ)
 
-### Spring Boot
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260106133428164.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
+## Spring Boot
 
 - [ ] [Spring Boot: Up and Running](https://book.douban.com/subject/35176313/)
   
@@ -179,12 +198,7 @@
   <figcaption></figcaption>
 </figure>
 
-<figure markdown="span">
-  { loading=lazy }
-  <figcaption></figcaption>
-</figure>
-
-### 认证鉴权
+## 认证鉴权
 
 - [ ] [OAuth 2 in Action](https://book.douban.com/subject/26997843/)
 	- [翻译](/document-translation/oauth2-in-action/)
@@ -225,20 +239,20 @@
   <figcaption></figcaption>
 </figure>
 
-### 微服务
+## 微服务
 
-#### 服务注册和发现
+### 服务注册和发现
 
-#### 分布式配置管理
+### 分布式配置管理
 
-#### 网关
+### 网关
 
-#### 服务间调用和负载均衡
+### 服务间调用和负载均衡
 
-#### 分布式事务
+### 分布式事务
 
-#### 服务熔断和降级
+### 服务熔断和降级
 
-#### 服务链路追踪
+### 服务链路追踪
 
-### 项目实战
+## 项目实战
