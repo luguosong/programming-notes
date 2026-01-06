@@ -10,17 +10,19 @@ repo_url = "https://github.com/luguosong/programming-notes"
 repo_name = "luguosong/programming-notes"
 edit_uri = "edit/main/code/"
 # 内外运行地址
-dev_addr = "localhost:7000"
+dev_addr = "localhost:17000"
 extra_css = [
     "custom/css/font.css",
     "custom/css/custom.css",
     "custom/css/sidebar-width.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css"
+    "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css",
+    "https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"
 ]
 extra_javascript = [
     "custom/js/mathjax.js",
     "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js",
+    "http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",
     "custom/js/viewer-js-init.js"
 ]
 nav = [
