@@ -32,12 +32,29 @@ nav = [
         { "Java" = "roadmap/java/index.md" },
         { "专题研究" = "roadmap/topic/index.md" }
     ] },
+    { "前端" = [
+        "frontend/index.md"
+    ] },
+    { "Java" = [
+        "java/index.md"
+    ] },
     { "专题研究" = [
         "topic/index.md",
         { "Zensical" = [
             "topic/zensical/index.md",
             { "基本使用" = "topic/zensical/basic/index.md" },
             { "数学公式" = "topic/zensical/math/index.md" }
+        ] }
+    ] },
+    { "数学" = [
+        "math/index.md",
+        { "初中数学" = "math/junior-high-school-maths/index.md" }
+    ] },
+    { "英语" = [
+        "english/index.md",
+        { "新概念英语" = [
+            "english/new-concept-english/index.md",
+            { "第一册" = "english/new-concept-english/01/index.md" }
         ] }
     ] },
     { "文档书籍翻译" = [
@@ -77,7 +94,7 @@ nav = [
             ] },
             { "深入拓展 OAuth" = [
                 "document-translation/oauth2-in-action/part4/index.md",
-                {"OAuth 令牌"="document-translation/oauth2-in-action/part4/11-oauth-tokens/index.md"}
+                { "11.OAuth 令牌" = "document-translation/oauth2-in-action/part4/11-oauth-tokens/index.md" }
             ] },
             { "附录 A：我们的代码框架简介" = "document-translation/oauth2-in-action/appendix-a/index.md" },
             { "附录 B：扩展代码清单" = "document-translation/oauth2-in-action/appendix-b/index.md" }
@@ -159,7 +176,7 @@ nav = [
             "document-translation/java-cryptography-tools-and-techniques/index.md",
             { "1.入门概览" = "document-translation/java-cryptography-tools-and-techniques/01-getting-started-an-overview/index.md" }
         ] }
-    ] },
+    ] }
 ]
 
 [project.theme]
