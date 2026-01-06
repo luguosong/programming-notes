@@ -903,5 +903,21 @@ OAuth 的访问令牌和刷新令牌都有明确的生命周期。它们由授�
 
 <figure markdown="span">
   ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260106101213152.png){ loading=lazy }
-  <figcaption></figcaption>
+  <figcaption>图 11.4 OAuth 令牌的生命周期</figcaption>
 </figure>
+
+尽管这种特定模式正变得越来越常见，但部署 OAuth 系统的方式还有很多，例如使用无状态的
+JWT：它们会过期，但无法被撤销。不过总体而言，令牌的使用、复用与刷新这一通用模式仍然是一致的。
+
+## 总结
+
+OAuth 令牌是 OAuth 系统中最核心、最具标志性的组成部分。
+
+- OAuth 令牌可以采用任何格式，只要授权服务器和受保护资源能够理解，并且令牌本身得到妥善保护。
+- OAuth 客户端从不需要理解令牌的格式（而且无论如何也不应该尝试这么做）。
+- JWT 定义了一种在令牌中存储结构化信息的方式。
+- JOSE 提供了对令牌内容进行密码学保护的方法。
+- Introspection 允许受保护资源在运行时查询令牌的状态。
+- Revocation 允许客户端在令牌签发之后通知授权服务器丢弃不再需要的令牌，从而完善令牌的生命周期。
+
+在你已经全面了解 OAuth 令牌的方方面面之后，我们接下来看看：如何通过动态客户端注册，将客户端引入授权服务器。
