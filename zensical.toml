@@ -22,7 +22,6 @@ extra_javascript = [
     "custom/js/mathjax.js",
     "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js",
-    "http://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",
     "custom/js/viewer-js-init.js"
 ]
 nav = [
@@ -97,11 +96,11 @@ nav = [
             { "深入拓展 OAuth" = [
                 "document-translation/oauth2-in-action/part4/index.md",
                 { "11.OAuth 令牌" = "document-translation/oauth2-in-action/part4/11-oauth-tokens/index.md" },
-                {"12.动态客户端注册"="document-translation/oauth2-in-action/part4/12-dynamic-client-registration/index.md"},
-                {"13.使用 OAuth 2.0 进行用户认证"="document-translation/oauth2-in-action/part4/13-user-authentication-with-oauth2/index.md"},
-                {"14.基于 OAuth 2.0 的协议与配置文件"="document-translation/oauth2-in-action/part4/14-protocols-and-profiles-using-oauth2/index.md"},
-                {"15.bearer 令牌以外的选择"="document-translation/oauth2-in-action/part4/15-beyond-bearer-tokens/index.md"},
-                {"16.总结与结语"="document-translation/oauth2-in-action/part4/16-summary-and-conclusions/index.md"}
+                { "12.动态客户端注册" = "document-translation/oauth2-in-action/part4/12-dynamic-client-registration/index.md" },
+                { "13.使用 OAuth 2.0 进行用户认证" = "document-translation/oauth2-in-action/part4/13-user-authentication-with-oauth2/index.md" },
+                { "14.基于 OAuth 2.0 的协议与配置文件" = "document-translation/oauth2-in-action/part4/14-protocols-and-profiles-using-oauth2/index.md" },
+                { "15.bearer 令牌以外的选择" = "document-translation/oauth2-in-action/part4/15-beyond-bearer-tokens/index.md" },
+                { "16.总结与结语" = "document-translation/oauth2-in-action/part4/16-summary-and-conclusions/index.md" }
             ] },
             { "附录 A：我们的代码框架简介" = "document-translation/oauth2-in-action/appendix-a/index.md" },
             { "附录 B：扩展代码清单" = "document-translation/oauth2-in-action/appendix-b/index.md" }
@@ -182,6 +181,21 @@ nav = [
         { "Java Cryptography: Tools and Techniques" = [
             "document-translation/java-cryptography-tools-and-techniques/index.md",
             { "1.入门概览" = "document-translation/java-cryptography-tools-and-techniques/01-getting-started-an-overview/index.md" }
+        ] },
+        { "Open Design Alliance" = [
+            "document-translation/opendesign/index.md",
+            { "Open Cloud" = [
+                "document-translation/opendesign/open-cloud/index.md",
+                { "Drawing inWEB" = [
+                    "document-translation/opendesign/open-cloud/drawing-inweb/index.md",
+                    { "概述" = "document-translation/opendesign/open-cloud/drawing-inweb/overview/index.md" },
+                    { "安装" = "document-translation/opendesign/open-cloud/drawing-inweb/installation/index.md" },
+                    { "介绍" = [
+                        "document-translation/opendesign/open-cloud/drawing-inweb/introduction/index.md",
+                        {"创建你的第一个 DrawingWeb SDK 应用"="document-translation/opendesign/open-cloud/drawing-inweb/introduction/first-app/index.md"}
+                    ] }
+                ] }
+            ] }
         ] }
     ] }
 ]
