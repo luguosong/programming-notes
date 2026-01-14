@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>DrawingInWeb</title>
+    <style>
+        body {
+            font-family: arial;
+            margin: 0;
+            padding: none;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .emscripten {
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        div.emscripten {
+            text-align: center;
+        }
+
+        div.emscripten_border {
+            border: 1px solid black;
+        }
+
+        .canvas-holder {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* 画布绝对不能设置任何边框或内边距，否则鼠标坐标会不准确 */
+        canvas.emscripten {
+            border: 0px none;
+            background-color: black;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <div class="emscripten_border">
+        <input type="file" />
+        <button id="download">Download</button>
+    </div>
+</div>
+<div class="canvas-holder">
+    <canvas
+            class="emscripten"
+            id="canvas"
+            oncontextmenu="event.preventDefault()"
+            tabindex="-1"
+    ></canvas>
+</div>
+
+<!-- 你的 JavaScript 代码将写在这里 -->
+<script>
+
+    <!--Emscripten 会读取这个全局 Module 对象来配置运行环境。-->
+    var Module = {
+        FS: {},
+        arguments: [],
+        ASSETS_FOLDER: '/assets',
+        // Emscripten标准： 运行前，初始化文件系统等
+        // 在 preRun 数组中，我们搭建了一个虚拟文件系统，用于存储和管理绘图文件
+        preRun: [
+            function () {
+                FS.mkdir(Module.ASSETS_FOLDER);
+            },
+        ],
+        // Emscripten标准：运行后，WASM 已加载完成
+        // 在 postRun 数组中，我们会在 WebAssembly 模块加载完成后初始化 DrawingWeb 应用
+        postRun: [
+            function () {
+                // ------------------- 初始化 FS 系统 --------------
+                function FileToArrayBuffer(file) {
+                    return new Promise((resolve) => {
+                        var reader = new FileReader();
+                        reader.onload = (ev) => resolve(ev.target.result);
+                        reader.readAsArrayBuffer(file);
+                    });
+                }
+                // -------------------------------------------------------
+
+                // ------------------- 初始化 ODA 库 ----------------
+                Module.canvas = document.querySelector('canvas');
+
+                var app = new Module.App();
+                //-------------
+
+                function OpenFile(name) {
+                    var time = Date.now();
+                    app.OpenFile(name);
+                    Resize();
+                    app.ZoomExtents();
+                    app.Update();
+                }
+
+                document.getElementById('download').onclick = () => {
+                    ReadFile(
+                        Module.ASSETS_FOLDER +
+                        '/' +
+                        document.querySelector("input[type='file']").files[0].name
+                    );
+                };
+                function ReadFile(name) {
+                    var buf = FS.readFile(name);
+                    var blob = new Blob([buf.buffer]);
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = name;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    console.log('Downloading start');
+                }
+
+                function Resize(ev) {
+                    Module.canvas.height = Module.canvas.clientHeight;
+                    Module.canvas.width = Module.canvas.clientWidth;
+                    app.Resize(Module.canvas.width, Module.canvas.height);
+                }
+
+                window.onresize = Resize;
+
+                // 应用已配置用于绘图交互的事件处理器
+
+                Module.canvas.onwheel = function (ev) {
+                    app.Zoom(-ev.deltaY * 0.01, ev.offsetX, ev.offsetY);
+                    ev.preventDefault();
+                };
+
+                Module.canvas.onmousedown = function (ev) {
+                    if (ev.buttons === 4) {
+                        app.ZoomExtents();
+                        ev.preventDefault();
+                    }
+                };
+
+                Module.canvas.onmousemove = function (ev) {
+                    switch (ev.buttons) {
+                        case 1:
+                            app.Dolly(ev.movementX, ev.movementY);
+                            break;
+                        case 2:
+                            app.Orbit(ev.movementX, ev.movementY);
+                            break;
+                        default:
+                            break;
+                    }
+                };
+
+                // ---- 动画帧循环
+                function render() {
+                    requestAnimationFrame(render);
+                    app.Update();
+                }
+                render();
+                // ---- 结束动画帧循环
+
+                document.querySelector("input[type='file']").onchange = function (ev) {
+                    const file = ev.target.files[0];
+                    if (file) {
+                        const name = file.name;
+                        FileToArrayBuffer(file)
+                            .then((arraybuffer) => new Uint8Array(arraybuffer))
+                            .then((array) => {
+                                const { exists } = FS.analyzePath(
+                                    Module.ASSETS_FOLDER + '/' + name
+                                );
+                                if (!exists)
+                                    Module.FS_createDataFile(
+                                        Module.ASSETS_FOLDER,
+                                        name,
+                                        array,
+                                        true,
+                                        true,
+                                        true
+                                    );
+                            })
+                            .then(() => OpenFile(Module.ASSETS_FOLDER + '/' + name))
+                            .catch((err) => console.error(err));
+                    }
+                };
+                // ------------------- 结束初始化 ODA 库 ----------------
+            },
+        ],
+        // Emscripten标准：用于 指定 WebGL/Canvas 渲染目标 的官方 API
+        canvas: (function () {
+            var canvas = document.getElementById('canvas');
+
+            // 作为默认的初始行为，当 WebGL 上下文丢失时会弹出一个警告框。为了让你的
+            // 应用更加健壮，在正式发布前你可能需要重写这一行为！
+            // 参见 http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+            canvas.addEventListener(
+                'webglcontextlost',
+                function (e) {
+                    alert('WebGL context lost. You will need to reload the page.');
+                    e.preventDefault();
+                },
+                false
+            );
+
+            return canvas;
+        })(),
+    };
+</script>
+
+<!-- 加载 DrawingWeb SDK -->
+<!--加载编译好的 C++ 代码（DrawingWeb.js + .wasm 文件）-->
+<script
+        async
+        type="text/javascript"
+        src="./DrawingWeb.js"
+></script>
+</body>
+</html>
