@@ -28,6 +28,7 @@
 </figure>
 
 - [ ] [CSS 权威指南](https://book.douban.com/subject/37143731/)
+    - [oreilly 在线地址](https://learning.oreilly.com/library/view/css-the-definitive/9781098117603/)
 
 <figure markdown="span">
   ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20251231160320152.png){ loading=lazy }
