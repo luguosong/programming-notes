@@ -132,3 +132,20 @@ React和Vue的官方文档都相当优秀，自学的话推荐优先看官方文
   ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260114143843982.png){ loading=lazy }
   <figcaption></figcaption>
 </figure>
+
+## WebAssembly
+
+- [MDN 文档](https://developer.mozilla.org/zh-CN/docs/WebAssembly)
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260119163809115.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
+- [Emscripten 官方文档](https://emscripten.org/)
+
+<figure markdown="span">
+  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/20260119163855746.png){ loading=lazy }
+  <figcaption></figcaption>
+</figure>
+
