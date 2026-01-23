@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>DrawingJS</title>
+  <style>
+    body {
+      font-family: arial;
+      margin: 0;
+      padding: none;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .emscripten {
+      padding-right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+    }
+
+    div.emscripten {
+      text-align: center;
+    }
+
+    div.emscripten_border {
+      border: 1px solid black;
+    }
+
+    .header {
+      height: 75px;
+    }
+
+    .canvas-holder {
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+    canvas.emscripten {
+      border: 0px none;
+      background-color: black;
+      width: 100%;
+      height: 100%;
+    }
+
+    #emscripten_logo {
+      display: inline-block;
+      margin: 0;
+    }
+
+    .spinner {
+      height: 30px;
+      width: 30px;
+      margin: 0;
+      margin-top: 20px;
+      margin-left: 20px;
+      display: inline-block;
+      vertical-align: top;
+
+      -webkit-animation: rotation .8s linear infinite;
+      -moz-animation: rotation .8s linear infinite;
+      -o-animation: rotation .8s linear infinite;
+      animation: rotation 0.8s linear infinite;
+
+      border-left: 5px solid rgb(235, 235, 235);
+      border-right: 5px solid rgb(235, 235, 235);
+      border-bottom: 5px solid rgb(235, 235, 235);
+      border-top: 5px solid rgb(120, 120, 120);
+
+      border-radius: 100%;
+      background-color: rgb(189, 215, 46);
+    }
+
+    @-webkit-keyframes rotation {
+      from {
+        -webkit-transform: rotate(0deg);
+      }
+
+      to {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @-moz-keyframes rotation {
+      from {
+        -moz-transform: rotate(0deg);
+      }
+
+      to {
+        -moz-transform: rotate(360deg);
+      }
+    }
+
+    @-o-keyframes rotation {
+      from {
+        -o-transform: rotate(0deg);
+      }
+
+      to {
+        -o-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes rotation {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #status {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 30px;
+      margin-left: 20px;
+      font-weight: bold;
+      color: rgb(120, 120, 120);
+    }
+
+    #progress {
+      height: 20px;
+      width: 300px;
+    }
+
+    #controls {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 30px;
+      margin-right: 20px;
+    }
+	#console {
+		position: relative;
+    width: 100%;
+    display: block;
+		bottom:0;
+		background-color: black;
+		border: 1px solid grey;
+		color: grey;
+    box-sizing: border-box;
+	}
+
+    #output {
+		width: 100%;
+		height: 173px;
+		border-left: 0px;
+		border-right: 0px;
+		padding-left: 0px;
+		padding-right: 0px;
+		display: block;
+		background-color: black;
+		color: white;
+		font-family: 'Lucida Console', Monaco, monospace;
+		outline: none;
+		box-sizing: border-box;
+		bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+
+    <div class="spinner" id='spinner'></div>
+    <div class="emscripten" id="status">Downloading...</div>
+
+    <span id='controls'>
+      <span><input type="checkbox" id="resize">Resize canvas</span>
+      <span><input type="checkbox" id="pointerLock" checked>Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
+      <span><input type="button" value="Fullscreen"
+          onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked, 
+                                                                            document.getElementById('resize').checked)">
+      </span>
+    </span>
+
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>
+    </div>
+
+    <div class="emscripten_border">
+      <input type="file" /><button id="download">Download</button>
+    </div>
+  </div>
+  <div class="canvas-holder">
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+  </div>
+
+  <textarea id="output" rows="8"></textarea>
+  <form>
+	<input id="console"/>
+  </form>
+  <script type='text/javascript'>
+    var statusElement = document.getElementById('status');
+    var progressElement = document.getElementById('progress');
+    var spinnerElement = document.getElementById('spinner');
+	
+	var inputConsole = document.getElementById("console");
+	document.querySelector("form").onsubmit = ev => {
+		ev.preventDefault();
+		var input = inputConsole.value;
+		inputConsole.value = "";
+		input = input.replace(/\s\s+/g," ");
+		input = input.split(" ");
+		if(input.length > 0){
+			const cmdName = input.shift().toUpperCase();
+			if(cmdName === "GRID") {
+				window["createGrid"]();
+			}else {
+			 execute.call(null,cmdName, input);
+			}
+		}
+		
+		
+	}
+
+    var Module = {
+      // TOTAL_MEMORY: 16777216,
+	  FS:{},
+      arguments: [],
+      preRun: [],
+      postRun: [
+        function () {
+		console.log(arguments);
+          // ------------------- Initialize FS system --------------
+          function FileToArrayBuffer(file) {
+            return new Promise(resolve => {
+              var reader = new FileReader();
+              reader.onload = (ev) => resolve(ev.target.result);
+              reader.readAsArrayBuffer(file);
+            })
+          }
+          // -------------------------------------------------------
+
+          // ------------------- Initialize ODA lib ----------------
+          Module.canvas = document.querySelector("canvas");
+
+          var test = new Module.CadCore();
+		  test.SetUserName("OpenCloud");
+		  window["execute"] = function execute(name, args = []) {
+
+			const vector_args = args.reduce((vector,arg)=>{
+				vector.push_back(arg);
+				return vector;
+			},new Module.VectorString())
+			
+		   test.ExecuteCommand(name, vector_args);
+		  };
+		  /////////////// grid -------------
+			window["createGrid"] = function createGrid(){
+			execute("LINE", ["-10,0", "-10,600", "850,600", "850,0", "-10,0", "0"])
+			execute("LINE", ["-10,0", "850,0", "850,-275", "-10,-275", "-10,0", "0"])
+			execute("LINE", ["-10,-27", "298,-27", "298,-54", 
+			"298,-54", "-10,-54", "-10,-81", "298,-81", "298,-108", 
+			"-10,-108", "-10,-135", "298,-135", 
+			"298,-162","-10,-162","-10,-189", 
+			"298,-189","-10,-189","-10,-216",
+			"298,-216","-10,-216","-10,-243",
+			"298,-243","-10,-243","-10,-275",
+			"0"])
+			execute("LINE", ["298,0", "298,-275", "0"])
+			execute("LINE", ["298,-81", "850,-81", "0"])
+			execute("LINE", ["298,-189", "850,-189", "0"])
+			execute("LINE", ["620,-81", "620,-275", "0"])
+			execute("LINE", ["687,-81", "687,-162", "0"])
+			execute("LINE", ["765,-81", "765,-162", "0"])
+			execute("LINE", ["620,-162", "850,-162", "0"])
+
+			execute("LINE", ["32,0", "32,-135", "0"])
+			execute("LINE", ["78,0", "78,-275", "0"])
+			execute("LINE", ["183,0", "183,-275", "0"])
+			execute("LINE", ["252,0", "252,-275", "0"])
+			
+			execute("TEXT", ["320,-70", "56", "0", "Open Cloud", ""])
+			};
+		  //-------------
+		  
+          function OpenFile(name) {
+            test.OpenFile(name);
+            Resize();
+            test.ZoomExtents();
+            //test.Update();
+          }
+		  document.getElementById("download").onclick = () => {
+			ReadFile(document.querySelector("input[type='file']").files[0].name)
+		  };
+		  function ReadFile(name) {
+			var buf = FS.readFile(name);
+			var blob = new Blob([buf.buffer]);
+			var url = window.URL.createObjectURL(blob);
+			var a = document.createElement("a");
+			a.style.display = "none";
+			a.href = url;
+			a.download = name;
+			document.body.appendChild(a);
+			a.click();
+			window.URL.revokeObjectURL(url);
+			console.log("Downloading start");
+		  }
+
+          function Resize(ev) {
+
+            Module.canvas.height = Module.canvas.clientHeight;
+            Module.canvas.width = Module.canvas.clientWidth;
+
+
+            test.Resize(Module.canvas.width, Module.canvas.height);
+            //test.Update();
+          };
+
+          window.onresize = Resize;
+
+          Module.canvas.onwheel = function (ev) {
+            test.Zoom(-ev.deltaY * 0.01, ev.offsetX, ev.offsetY);
+            ev.preventDefault()
+          };
+
+          Module.canvas.onmousedown = function (ev) {
+            if (ev.buttons === 4) {
+              test.ZoomExtents();
+              ev.preventDefault()
+            }
+          };
+
+          Module.canvas.onmousemove = function (ev) {
+
+            switch (ev.buttons) {
+              case 1:
+                test.Dolly(ev.movementX, ev.movementY);
+                break;
+              case 2:
+                test.Orbit(ev.movementX, ev.movementY);
+                break;
+              default:
+                break;
+            }
+
+          };
+
+          // ---- anim frame
+          function render() {
+            requestAnimationFrame(render)
+            test.Update();
+          }
+          render();
+          // ---- anim frame
+
+          document.querySelector("input[type='file']").onchange = function (ev) {
+            const file = ev.target.files[0];
+            if (file) {
+              const name = file.name;
+              console.log(file)
+              FileToArrayBuffer(file)
+                .then(arraybuffer => new Uint8Array(arraybuffer))
+                .then(array => Module.FS_createDataFile("/", name, array, true, true, true))
+                .then(() => OpenFile(name))
+                .catch(err => console.log(err))
+            }
+          };
+          //OpenFile("3D_TEST.dwg")
+
+          // ------------------- Initialize ODA lib ----------------
+        }
+      ],
+      print: (function () {
+        var element = document.getElementById('output');
+        if (element) element.value = ''; // clear browser cache
+        return function (text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          // These replacements are necessary if you render to raw HTML
+          //text = text.replace(/&/g, "&amp;");
+          //text = text.replace(/</g, "&lt;");
+          //text = text.replace(/>/g, "&gt;");
+          //text = text.replace('\n', '<br>', 'g');
+          console.log(text);
+          if (element) {
+            element.value += text + "\n";
+            element.scrollTop = element.scrollHeight; // focus on bottom
+          }
+        };
+      })(),
+      printErr: function (text) {
+        if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+        console.error(text);
+      },
+      canvas: (function () {
+        var canvas = document.getElementById('canvas');
+
+        // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+        // application robust, you may want to override this behavior before shipping!
+        // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+        canvas.addEventListener("webglcontextlost", function (e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+
+        return canvas;
+      })(),
+      setStatus: function (text) {
+        if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+        if (text === Module.setStatus.last.text) return;
+        var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+        var now = Date.now();
+        if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+        Module.setStatus.last.time = now;
+        Module.setStatus.last.text = text;
+        if (m) {
+          text = m[1];
+          progressElement.value = parseInt(m[2]) * 100;
+          progressElement.max = parseInt(m[4]) * 100;
+          progressElement.hidden = false;
+          spinnerElement.hidden = false;
+        } else {
+          progressElement.value = null;
+          progressElement.max = null;
+          progressElement.hidden = true;
+          if (!text) spinnerElement.style.display = 'none';
+        }
+        statusElement.innerHTML = text;
+      },
+      totalDependencies: 0,
+      monitorRunDependencies: function (left) {
+        this.totalDependencies = Math.max(this.totalDependencies, left);
+        Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+      }
+    };
+    Module.setStatus('Downloading...');
+    window.onerror = function (event) {
+      // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+      Module.setStatus('Exception thrown, see JavaScript console');
+      spinnerElement.style.display = 'none';
+      Module.setStatus = function (text) {
+        if (text) Module.printErr('[post-exception status] ' + text);
+      };
+    };
+  </script>
+  <script async type="text/javascript" src="./DrawingJs.js"></script>
+</body>
+
+</html>

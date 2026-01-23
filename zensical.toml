@@ -10,7 +10,7 @@ repo_url = "https://github.com/luguosong/programming-notes"
 repo_name = "luguosong/programming-notes"
 edit_uri = "edit/main/code/"
 # 内外运行地址
-dev_addr = "localhost:17000"
+dev_addr = "localhost:7000"
 extra_css = [
     "custom/css/font.css",
     "custom/css/custom.css",

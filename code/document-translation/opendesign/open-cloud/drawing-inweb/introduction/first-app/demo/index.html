@@ -94,6 +94,7 @@
                 Module.canvas = document.querySelector('canvas');
 
                 var app = new Module.App();
+                // var app = new Module.CadCore();
                 //-------------
 
                 function OpenFile(name) {
@@ -218,10 +219,15 @@
 
 <!-- 加载 DrawingWeb SDK -->
 <!--加载编译好的 C++ 代码（DrawingWeb.js + .wasm 文件）-->
+<!--<script-->
+<!--        async-->
+<!--        type="text/javascript"-->
+<!--        src="./DrawingWeb.js"-->
+<!--&gt;</script>-->
 <script
         async
         type="text/javascript"
-        src="./DrawingWeb.js"
+        src="./DrawingJs.js"
 ></script>
 </body>
 </html>
