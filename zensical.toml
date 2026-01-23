@@ -5,10 +5,10 @@ site_description = "学习编程过程中整理的笔记集合"
 site_url = "https://luguosong.github.io/programming-notes"
 site_author = "陆国松"
 copyright = "Copyright &copy; 2025 陆国松"
-docs_dir = "code"
+docs_dir = "docs"
 repo_url = "https://github.com/luguosong/programming-notes"
 repo_name = "luguosong/programming-notes"
-edit_uri = "edit/main/code/"
+edit_uri = "edit/main/docs/"
 # 内外运行地址
 dev_addr = "localhost:7000"
 extra_css = [
@@ -34,7 +34,22 @@ nav = [
         { "专题研究" = "roadmap/topic/index.md" }
     ] },
     { "前端" = [
-        "frontend/index.md"
+        "frontend/index.md",
+        { "React" = [
+            "frontend/react/index.md",
+            { "基础" = [
+                "frontend/react/basic/index.md",
+                { "基础语法" = "frontend/react/basic/basic-syntax/index.md" }
+            ] },
+            { "全局状态管理" = [
+                "frontend/react/global-state-management/index.md",
+                { "Mobx" = "frontend/react/global-state-management/mobx/index.md" }
+            ] },
+            { "路由" = [
+                "frontend/react/router/index.md",
+                { "React Router" = "frontend/react/router/react-router/index.md" }
+            ] }
+        ] }
     ] },
     { "Java" = [
         "java/index.md"
@@ -192,7 +207,7 @@ nav = [
                     { "安装" = "document-translation/opendesign/open-cloud/drawing-inweb/installation/index.md" },
                     { "介绍" = [
                         "document-translation/opendesign/open-cloud/drawing-inweb/introduction/index.md",
-                        {"创建你的第一个 DrawingWeb SDK 应用"="document-translation/opendesign/open-cloud/drawing-inweb/introduction/first-app/index.md"}
+                        { "创建你的第一个 DrawingWeb SDK 应用" = "document-translation/opendesign/open-cloud/drawing-inweb/introduction/first-app/index.md" }
                     ] }
                 ] }
             ] }
