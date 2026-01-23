@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <script>
+            const http = new XMLHttpRequest();
+            const url='http://127.0.0.1:8080/test';
+            http.open("POST", url);
+            http.send();
+
+            http.onreadystatechange = (e) => {
+                document.getElementById("output")
+                    .innerHTML =
+                    http.responseText;
+            }
+        </script>
+    </head>
+    <body>
+        <div id="output"></div>
+    </body>
+</html>

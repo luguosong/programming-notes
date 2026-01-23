@@ -1,0 +1,8 @@
+{"access_token":"DGdOY0HPpYVMYpkljsqRJitbbPwnRyJ1","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":"alice"}
+{"refresh_token":"ljMaMIhmII985db2UCZCp8czuxfa9mAt","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":{"sub":"9XE3-JI34-00132A","preferred_username":"alice","name":"Alice","email":"alice.wonderland@example.com","email_verified":true}}
+{"access_token":"6Mig8tbNT6HVcF71j6KNBB4gwOUBLMUd","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":"alice"}
+{"refresh_token":"29FnKibgy4Zt3rLEw365BCbDg3X8vHBA","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":{"sub":"9XE3-JI34-00132A","preferred_username":"alice","name":"Alice","email":"alice.wonderland@example.com","email_verified":true}}
+{"access_token":"JHzGzY7SCUe2U2NXR04567LgZppjfDiP","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":"alice"}
+{"refresh_token":"Hco7WOn2oFSTUHeecm28JvYjD1PMF4iZ","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":{"sub":"9XE3-JI34-00132A","preferred_username":"alice","name":"Alice","email":"alice.wonderland@example.com","email_verified":true}}
+{"access_token":"b5B1ooERFnhymcHdq5UoHpG6nD49pZXW","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":"bob"}
+{"refresh_token":"r6PP98UNIjhsaxJCPQNwZGFrqBwjc6zl","client_id":"oauth-client-1","scope":["movies","foods","music"],"user":{"sub":"1ZT5-OE63-57383B","preferred_username":"bob","name":"Bob","email":"bob.loblob@example.net","email_verified":false}}
