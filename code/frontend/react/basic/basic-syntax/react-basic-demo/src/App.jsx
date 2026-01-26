@@ -1,19 +1,12 @@
-import {Button} from "antd";
-import {useState} from "react";
+import {Route, Routes} from "react-router";
+import ContextDemo from "./context-demo/ContextDemo";
 
 const App = () => {
-
-    const [count, setCount] = useState(0)
-
     return (
-        <div>
-            <text>{count}</text>
-            <Button
-                onClick={() => {
-                    setCount(count + 1)
-                }}
-            >测试</Button>
-        </div>
+        <Routes>
+            {/*Context示例*/}
+            <Route path={"/context-demo"} element={<ContextDemo/>}/>
+        </Routes>
     );
 };
 
