@@ -8,7 +8,7 @@ const MobxReactDemo = () => {
 
     return (
         <Card
-            style={{width: 350}}
+
             title={"根组件"}
         >
             <Space>
@@ -22,6 +22,15 @@ const MobxReactDemo = () => {
                     reset
                 </Button>
             </Space>
+
+            <div>
+                <Button
+                    onClick={() => {
+                        myTimer.count += 1
+                    }}
+                >❗错误做法：不通过action，直接修改可观测属性（控制台会报错）</Button>
+
+            </div>
 
             <CountContext value={myTimer}>
                 <Child1/>

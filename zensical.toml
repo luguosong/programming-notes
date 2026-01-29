@@ -78,6 +78,21 @@ nav = [
         { "Introduction to Algorithms" = [
             "document-translation/introduction-to-algorithms/index.md"
         ] },
+        { "Mobx" = [
+            "document-translation/mobx/index.md",
+            { "MobX and React" = [
+                "document-translation/the-java-tutorials/mobX-and-react/index.md",
+                { "React 集成" = "document-translation/the-java-tutorials/mobX-and-react/react-integration/index.md" },
+                {"优化React组件渲染"="document-translation/the-java-tutorials/mobX-and-react/react-optimizations/index.md"}
+            ] },
+            {"Tips & Tricks"=[
+                "document-translation/the-java-tutorials/tips-tricks/index.md",
+                {"定义数据存储"="document-translation/the-java-tutorials/tips-tricks/defining-data-stores/index.md"},
+                {"理解响应式"="document-translation/the-java-tutorials/tips-tricks/understanding-reactivity/index.md"},
+                {"子类化"="document-translation/the-java-tutorials/tips-tricks/subclassing/index.md"},
+                {"分析响应性 {🚀}"="document-translation/the-java-tutorials/tips-tricks/analyzing-reactivity/index.md"}
+            ]}
+        ] },
         { "The Java Tutorials" = [
             "document-translation/the-java-tutorials/index.md"
         ] },
