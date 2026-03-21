@@ -16,10 +16,10 @@ graph TB
     B --> C[JDBC Driver\n各数据库厂商提供]
     C --> D[(关系型数据库\nMySQL / PostgreSQL / Oracle / H2…)]
 
-    style A fill:#4A90D9,color:#fff
-    style B fill:#7B68EE,color:#fff
-    style C fill:#20B2AA,color:#fff
-    style D fill:#CD853F,color:#fff
+    style A fill:#4A90D9,stroke:#6aaee8,color:#fff
+    style B fill:#7B68EE,stroke:#9b8ef5,color:#fff
+    style C fill:#20B2AA,stroke:#40c8c0,color:#fff
+    style D fill:#CD853F,stroke:#e0a060,color:#fff
 ```
 
 ### 核心接口
@@ -32,6 +32,37 @@ graph TB
 | `PreparedStatement` | `java.sql` | 执行预编译的参数化 SQL，防 SQL 注入 |
 | `ResultSet` | `java.sql` | 保存查询结果，提供游标逐行读取数据 |
 | `DataSource` | `javax.sql` | 连接池的标准接口，生产环境推荐使用 |
+
+### 驱动注册
+
+在调用 `DriverManager.getConnection()` 之前，JDBC 驱动必须先完成注册。JDBC 经历了三个演进阶段：
+
+| 方式 | 写法 | 说明 |
+|------|------|------|
+| 方式一：显式注册 | `DriverManager.registerDriver(new XxxDriver())` | 最原始的写法，会导致驱动被注册两次，不推荐 |
+| 方式二：反射加载 | `Class.forName("com.mysql.cj.jdbc.Driver")` | 触发驱动静态代码块，内部调用 `registerDriver()`；驱动类名可写入配置文件，实现解耦 |
+| 方式三：SPI 自动 | 无需任何代码 | JDBC 4.0（Java 6）起，JVM 自动扫描 classpath 中所有 JAR 的 `META-INF/services/java.sql.Driver` 文件并注册 |
+
+**方式一：显式调用 `DriverManager.registerDriver()`**
+
+``` java title="方式一：显式注册驱动对象"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/ConnectionTest.java:driver_register_way1"
+```
+
+**方式二：`Class.forName()` 反射触发静态初始化**
+
+``` java title="方式二：Class.forName 反射加载驱动"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/ConnectionTest.java:driver_register_way2"
+```
+
+**方式三：JDBC 4.0+ SPI 自动发现（现代推荐方式）**
+
+``` java title="方式三：SPI 自动注册，无需任何显式代码"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/ConnectionTest.java:driver_register_way3"
+```
+
+!!! note "现代项目无需手动注册"
+    使用 Maven/Gradle 引入驱动 JAR 后，JDBC 4.0 SPI 机制会在 `DriverManager` 初始化时自动完成注册。实际项目中**无需编写任何注册代码**，直接调用 `DriverManager.getConnection()` 即可。
 
 ---
 
@@ -137,6 +168,17 @@ jdbc:<子协议>:<子名称>
 --8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/StatementTest.java:sql_injection_demo"
 ```
 
+### 获取自增主键
+
+INSERT 语句执行后，经常需要立即获取新记录的自增主键 id（例如插入订单后需要 orderId 用于后续关联）。JDBC 通过 `Statement.RETURN_GENERATED_KEYS` 标志和 `getGeneratedKeys()` 方法实现此功能。
+
+``` java title="executeUpdate 传入 RETURN_GENERATED_KEYS，插入后读取自增主键"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/StatementTest.java:generated_keys"
+```
+
+!!! tip "PreparedStatement 同样支持"
+    `PreparedStatement` 也支持获取自增主键，在 `prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)` 时传入标志即可，用法完全一致。
+
 ---
 
 ## 第 4 章：ResultSet 数据读取
@@ -232,6 +274,24 @@ jdbc:<子协议>:<子名称>
 ``` java title="复用同一 PreparedStatement 对象执行多次查询"
 --8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:reuse_prepared_statement"
 ```
+
+### Blob 大字段读写
+
+`PreparedStatement` 通过 `setBytes()` / `setBinaryStream()` 写入二进制大对象（BLOB），通过 `getBytes()` / `getBinaryStream()` 读取。典型场景：存储图片、文档、音频等文件数据。
+
+| 方法 | 适用场景 |
+|------|---------|
+| `setBytes(int, byte[])` | 小文件，数据已在内存中（推荐） |
+| `setBinaryStream(int, InputStream)` | 大文件，流式写入，不占用内存 |
+| `getBytes(String)` | 读取小文件，直接返回 `byte[]` |
+| `getBinaryStream(String)` | 读取大文件，返回 `InputStream` |
+
+``` java title="PreparedStatement 写入和读取 BLOB 大字段"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:blob_write_read"
+```
+
+!!! warning "BLOB 大小限制"
+    MySQL 默认 `max_allowed_packet` 为 64 MB，存储超大文件建议使用对象存储（OSS/S3），数据库只存元数据和文件路径。
 
 !!! tip "优先使用 PreparedStatement"
     任何含用户输入的 SQL 都应使用 `PreparedStatement`。即使是内部系统无注入风险的场景，预编译带来的性能提升和代码可读性提升也值得优先选择 `PreparedStatement`。
@@ -382,6 +442,32 @@ sequenceDiagram
     DB-->>App: 返回结果
     App->>App: 归还连接到池（不销毁）
 ```
+
+### Druid 连接池
+
+[Druid](https://github.com/alibaba/druid) 是阿里巴巴开源的 JDBC 连接池，除基本连接池功能外，内置了 **SQL 监控、慢查询统计、连接池状态可视化**等运维能力，在国内 Java 项目中广泛使用。
+
+``` java title="Druid 连接池基本参数配置"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/ConnectionPoolTest.java:druid_basic_config"
+```
+
+**Druid 与 HikariCP 核心参数对比：**
+
+| 参数含义 | HikariCP | Druid |
+|---------|----------|-------|
+| 最大连接数 | `maximumPoolSize` | `maxActive` |
+| 最小空闲数 | `minimumIdle` | `minIdle` |
+| 初始化连接数 | — | `initialSize` |
+| 获取连接超时 | `connectionTimeout`（ms） | `maxWait`（ms） |
+| 连接检测 SQL | `connectionTestQuery` | `validationQuery` |
+
+``` java title="HikariCP vs Druid 使用方式对比"
+--8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/ConnectionPoolTest.java:druid_vs_hikari"
+```
+
+!!! note "如何选择连接池"
+    - **HikariCP**：性能最优，Spring Boot 默认，大多数场景首选
+    - **Druid**：功能丰富，需要 SQL 监控/慢查询统计/连接池状态监控时首选
 
 ### HikariCP 基本配置
 
