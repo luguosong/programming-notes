@@ -50,7 +50,7 @@ const TodosView = observer(({ todos }) => (
 
 ## 不要用数组索引当作key
 
-不要把数组索引或任何未来可能变化的值当作 `key`。如有需要，请为你的对象生成 `id`。可以参考这篇博文。
+不要把数组索引或任何未来可能变化的值当作 `key`。如有需要，请为你的对象生成 `id`。可以参考这篇[博文](https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318)。
 
 ## 尽量晚一些再解引用值
 

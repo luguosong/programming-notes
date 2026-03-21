@@ -250,7 +250,7 @@ React.render(<TimerView secondsPassed={myTimer.secondsPassed} />, document.body)
 
 ### 不要把observables传给不是observer的组件
 
-被 `observer` 包裹的组件，只会订阅该组件**自身渲染过程中**用到的 `observables`。因此，如果将可观察对象 / 数组 / `maps` 作为 props 传给子组件，那么这些子组件也必须同样用 `observer` 包裹。任何基于回调（callback）的组件也同样如此。
+被 `observer` 包裹的组件，只会订阅该组件自身渲染过程中用到的 `observables`。因此，如果将可观察对象 / 数组 / `maps` 作为 props 传给子组件，那么这些子组件也必须同样用 `observer` 包裹。任何基于回调（callback）的组件也同样如此。
 
 如果你想把 `observables` 传给一个不是 `observer` 的组件——无论是因为它是第三方组件，还是因为你希望该组件与 MobX 解耦——那么在传递之前，就必须先把 `observables` 转换为普通的 JavaScript 值或结构。
 
@@ -283,7 +283,7 @@ const TodoView = observer(({ todo }: { todo: Todo }) =>
 )
 ```
 
-### 回调组件可能需要<Observer>
+### 回调组件可能需要`<Observer>`
 
 设想同样的例子，只是这次 `GridRow` 接收的是一个 `onRender` 回调。由于 `onRender` 属于 `GridRow` 的渲染周期，而不是 `TodoView` 的 `render`（尽管从语法上看它写在那里面），我们必须确保这个回调组件使用了 `observer` 组件。或者，我们也可以通过 `<Observer />` 创建一个内联的匿名 `observer`：
 
@@ -455,7 +455,7 @@ const TimerView = observer(() => {
         }
     }))
 
-    // Effect that triggers upon observable changes.
+    // 在可观察对象发生变化时触发的 `Effect`。
     useEffect(
         () =>
             autorun(() => {
@@ -464,7 +464,7 @@ const TimerView = observer(() => {
         []
     )
 
-    // Effect to set up a timer, only for demo purposes.
+    // 用于设置计时器的 `effect`，仅用于演示。
     useEffect(() => {
         const handle = setInterval(timer.increaseTimer, 1000)
         return () => {
