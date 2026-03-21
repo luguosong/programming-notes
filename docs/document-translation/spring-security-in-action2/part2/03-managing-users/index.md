@@ -826,7 +826,7 @@ LDAP 系统集成进行用户管理，依然可以依赖它。在项目 ssia-ch3
 的简单演示。由于这个演示无法使用真实的 LDAP 服务器，我在 Spring Boot 应用中搭建了一个嵌入式 LDAP 服务器。为了配置嵌入式
 LDAP 服务器，我定义了一个简单的 LDAP 数据交换格式（LDIF）文件。下面是我的 LDIF 文件的内容。
 
-``` ldif title="清单 3.22 LDIF 文件的定义"
+```ldif title="清单 3.22 LDIF 文件的定义"
 // 定义基础实体
 dn: dc=springframework,dc=org
 objectclass: top

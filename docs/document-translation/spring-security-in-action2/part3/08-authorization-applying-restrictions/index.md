@@ -43,7 +43,7 @@ public class HelloController {
 John 拥有 ADMIN 角色，而 Jane 拥有 MANAGER 角色。为了指定只有拥有 ADMIN 角色的用户才能访问 /hello 端点，我们使用了
 requestMatchers() 方法来进行请求授权。下面的代码展示了该配置类的定义。
 
-``` java title="代码清单 8.2 配置类的定义"
+```java title="代码清单 8.2 配置类的定义"
 
 @Configuration
 public class ProjectConfig {
@@ -379,7 +379,7 @@ public class TestController {
 我们还需要创建几个拥有不同角色的用户。为简化操作，我们继续使用 InMemoryUserDetailsManager。下面的代码展示了在配置类中定义
 UserDetailsService 的方式。
 
-``` java title="清单8.7 UserDetailsService 的定义"
+```java title="清单8.7 UserDetailsService 的定义"
 
 @Configuration
 public class ProjectConfig {
@@ -415,7 +415,7 @@ public class ProjectConfig {
 让我们从第一个场景开始。对于使用 HTTP GET 方法访问 /a 路径的请求，应用需要对用户进行身份认证。而对于同一路径下使用 HTTP
 POST 方法的请求，则不需要认证。除此之外，应用会拒绝所有其他请求。下面的配置代码展示了如何实现这一需求。
 
-``` java title="清单 8.8 第一个场景 /a 的授权配置"
+```java title="清单 8.8 第一个场景 /a 的授权配置"
 
 @Configuration
 public class ProjectConfig {
@@ -508,7 +508,7 @@ curl -u john:12345 -XGET http://localhost:8080/a/b
 对于当前项目，我们希望所有以 /a/b 开头的路径请求都遵循相同的规则。在我们的场景中，这些路径包括 /a/b 和
 /a/b/c。为此，我们使用 ** 运算符。你可以在项目 ssia-ch8-ex3 中找到相关示例。
 
-``` java title="代码清单 8.9 配置类中针对多路径的修改"
+```java title="代码清单 8.9 配置类中针对多路径的修改"
 @Configuration
 public class ProjectConfig { 
 
@@ -606,7 +606,7 @@ public class ProductController {
 
 下面的代码示例展示了如何配置授权，使得只有参数值全为数字的请求始终被允许，其他所有请求都被拒绝。
 
-``` java title="代码清单8.11 配置授权以仅允许特定数字"
+```java title="代码清单8.11 配置授权以仅允许特定数字"
 
 @Configuration
 public class ProjectConfig {
@@ -761,7 +761,7 @@ curl http://localhost:8080/email/jane@example.net
 回到我们的正则表达式匹配器示例（ssia-ch8-ex6）：当你需要编写更复杂的规则，涉及更多路径模式和多个路径变量值时，使用正则表达式匹配器会更加方便。代码清单8.13展示了一个配置类的定义，该类通过正则表达式匹配器来满足对
 /video/{country}/{language} 路径的需求。我们还添加了两个具有不同权限的用户，用于测试该实现。
 
-``` java title="代码清单 8.13 使用正则表达式匹配器的配置类"
+```java title="代码清单 8.13 使用正则表达式匹配器的配置类"
 @Configuration
 public class ProjectConfig {
 

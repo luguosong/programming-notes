@@ -87,7 +87,7 @@ spring:
 
 这些组件可以定义如下：
 
-``` java title="SecurityConfig.java:一个用于快速上手的最小化配置。"
+```java title="SecurityConfig.java:一个用于快速上手的最小化配置。"
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;

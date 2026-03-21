@@ -69,7 +69,7 @@ Spring Security 和 Spring Boot 开发应用的初步步骤。它展示了 Sprin
 pom.xml 文件中。我们做这个项目的主要目的是了解在默认配置下，集成了 Spring Security
 的应用会有怎样的表现。同时，我们也希望搞清楚默认配置中包含了哪些组件，以及它们各自的作用。
 
-``` xml title="清单 2.1 我们第一个 Web 应用的 Spring Security 依赖"
+```xml title="清单 2.1 我们第一个 Web 应用的 Spring Security 依赖"
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-web</artifactId>
@@ -758,7 +758,7 @@ Security 的架构设计来应用它。
 你可能会发现，通过实现自定义的 AuthenticationProvider 来替换默认的认证逻辑会更适合你的需求。如果默认的实现无法完全满足你应用的要求，你可以选择编写自己的认证逻辑。完整的
 AuthenticationProvider 实现如下所示。
 
-``` java title="代码清单 2.13 认证提供者的完整实现"
+```java title="代码清单 2.13 认证提供者的完整实现"
 
 @Component
 public class CustomAuthenticationProvider

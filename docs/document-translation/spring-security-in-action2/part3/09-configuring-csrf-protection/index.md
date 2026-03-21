@@ -305,7 +305,7 @@ public class ProjectConfig {
 main.html 文件。main.html 文件暂时可以保持为空，因为在首次运行应用程序时，我们主要关注登录页面如何使用 CSRF
 令牌。下面的代码展示了用于主页面的 MainController 类。
 
-``` java title="代码清单9.5 MainController 类的定义"
+```java title="代码清单9.5 MainController 类的定义"
 @Controller
 public class MainController {
 
@@ -472,7 +472,7 @@ public class HelloController {
 若要自定义 CSRF 防护配置，可以在 `securityFilterChain()` 方法中，通过 `HttpSecurity` 对象的 `csrf()` 方法配合 `Customizer`
 对象进行设置。下面的示例代码展示了这种用法。
 
-``` java title="清单 9.10 用于配置 CSRF 防护的 Customizer 对象"
+```java title="清单 9.10 用于配置 CSRF 防护的 Customizer 对象"
 
 @Configuration
 public class ProjectConfig {
@@ -693,7 +693,7 @@ ID 的值。
 在该方法的逻辑中，我们会先检查这个值在数据库中是否存在：如果存在，就用新的令牌值更新数据库；如果不存在，就为这个 ID
 新建一条记录，并写入新的 CSRF 令牌值。下面的代码清单展示了 saveToken() 方法的实现。
 
-``` java title="清单 9.16 saveToken() 方法的实现"
+```java title="清单 9.16 saveToken() 方法的实现"
 @Override
 public void saveToken(
    CsrfToken csrfToken, 
@@ -720,7 +720,7 @@ jpaTokenRepository.findTokenByIdentifier(identifier);
 
 `loadToken()` 方法的实现会加载令牌的详细信息（如果存在），否则返回 null。下面的代码示例展示了该方法的具体实现。
 
-``` java title="代码清单 9.17：loadToken() 方法的实现"
+```java title="代码清单 9.17：loadToken() 方法的实现"
 
 @Override
 public CsrfToken loadToken(
@@ -779,7 +779,7 @@ public class ProjectConfig {
 
 不过，为了避免让我们的示例变得过于复杂，并让你能够专注于配置部分，我们将设置一个简单的 CsrfTokenRequestAttributeHandler，用于在 HTTP 请求对象上管理 CSRF 令牌。下面的代码展示了如何在配置类中配置 CsrfTokenRequestAttributeHandler。
 
-``` java title="代码清单9.19 自定义 CsrfTokenRepository 的配置类"
+```java title="代码清单9.19 自定义 CsrfTokenRepository 的配置类"
 @Configuration
 public class ProjectConfig {
 

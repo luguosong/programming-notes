@@ -71,7 +71,7 @@ setInterval(() => {
 
 `Observable` 可以像上面的示例那样，通过 `props` 传递给组件：
 
-``` javascript title="使用props"
+```javascript title="使用props"
 
 import { observer } from "mobx-react-lite"
 
@@ -87,7 +87,7 @@ ReactDOM.render(<TimerView timer={myTimer} />, document.body)
 
 由于我们是如何获得 `observable` 引用的并不重要，因此可以直接消费外层作用域中的 `observable`（包括从 `import` 等引入的）：
 
-``` javascript title="使用全局变量"
+```javascript title="使用全局变量"
 
 const myTimer = new Timer() // 参见上面的 `Timer` 定义。
 
@@ -105,7 +105,7 @@ ReactDOM.render(<TimerView />, document.body)
 
 `React Context` 是一种非常出色的机制，可以在整个子树范围内共享可观察对象 (observables)：
 
-``` javascript title="使用 React context"
+```javascript title="使用 React context"
 import {observer} from 'mobx-react-lite'
 import {createContext, useContext} from "react"
 

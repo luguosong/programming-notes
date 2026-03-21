@@ -672,7 +672,7 @@ curl -X POST 'http://localhost:8080/oauth2/introspect?token=iED8-…' \
 展示了如何修改令牌的存活时间。为了示例方便，我倾向于将其设置得很长（比如这里的 12 小时），但务必记住，真实应用中千万别设置得这么大。实际项目里通常会把存活时间控制在
 10 到 30 分钟以内。
 
-``` java title="列表 14.10 修改访问令牌的生存时间"
+```java title="列表 14.10 修改访问令牌的生存时间"
 RegisteredClient registeredClient = RegisteredClient
         .withId(UUID.randomUUID().toString())
         .clientId("client")

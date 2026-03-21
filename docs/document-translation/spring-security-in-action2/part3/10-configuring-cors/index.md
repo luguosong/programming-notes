@@ -73,7 +73,7 @@ ssia-ch10-ex1 中找到这个例子）：
 我们定义了一个控制器类，其中包含主页面的一个动作以及一个 REST 端点。由于该类是一个普通的 Spring MVC @Controller
 类，因此我们还必须显式地为该端点添加 @ResponseBody 注解。下面的示例展示了该控制器的定义。
 
-``` java title="第10.1节 控制器类的定义"
+```java title="第10.1节 控制器类的定义"
 
 @Controller
 public class MainController {
@@ -127,7 +127,7 @@ public class ProjectConfig {
 发起调用。即便 localhost 和 127.0.0.1 都指向同一台主机，但浏览器将它们视为不同的字符串，从而认为它们属于不同的域。下一个列表定义了
 main.html 页面。
 
-``` html title="清单 10.3 main.html 页面"
+```html title="清单 10.3 main.html 页面"
 <!DOCTYPE HTML>
 <html lang=»en»>
 <head>
