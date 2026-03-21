@@ -168,7 +168,7 @@ public void doFilter(
 
 下面的代码示例展示了如何在配置类中将自定义过滤器添加到认证过滤器之前。为了简化示例，我们使用 permitAll() 方法，允许所有未认证的请求通过。
 
-```java title="清单 5.3 在认证之前配置自定义过滤器"
+``` java title="清单 5.3 在认证之前配置自定义过滤器"
 
 @Configuration
 public class ProjectConfig {
@@ -189,7 +189,7 @@ public class ProjectConfig {
 
 我们还需要一个控制器类和一个端点，用于测试功能。下面的代码展示了控制器类的定义。
 
-```java title="清单 5.4 控制器类"
+``` java title="清单 5.4 控制器类"
 
 @RestController
 public class HelloController {
@@ -363,7 +363,7 @@ Authorization 请求头中添加了正确的静态密钥值，才能通过认证
 头中的值是否与之相同。如果两者一致，过滤器会将请求转发给过滤器链中的下一个组件；如果不一致，过滤器会将响应的 HTTP 状态码设置为
 401 Unauthorized，并且不会继续向下转发请求。下面的代码定义了 StaticKeyAuthenticationFilter 类。
 
-```java title="代码清单 5.7 StaticKeyAuthenticationFilter 类的定义"
+``` java title="代码清单 5.7 StaticKeyAuthenticationFilter 类的定义"
 // 为了让我们能够从属性文件中注入值，它会在 Spring 上下文中添加该类的一个实例。
 @Component
 // 通过实现 Filter 接口并重写 doFilter() 方法，定义认证逻辑。
@@ -417,7 +417,7 @@ public class StaticKeyAuthenticationFilter
 在代码清单5.8中，你可以看到用于添加过滤器的配置类的定义。请注意，这里我们没有调用 HttpSecurity 类的 httpBasic()
 方法，因为我们并不希望将 BasicAuthenticationFilter 实例添加到过滤器链中。
 
-```java title="代码清单 5.8 在配置类中添加过滤器"
+``` java title="代码清单 5.8 在配置类中添加过滤器"
 
 @Configuration
 public class ProjectConfig {
@@ -508,7 +508,7 @@ OncePerRequestFilter 类来实现过滤器。我在一个名为 ssia-ch5-ex3 的
 在代码清单5.9中，你会看到我对 AuthenticationLoggingFilter 类所做的修改。与第5.3节中的示例不同，这次它没有直接实现 Filter
 接口，而是继承了 OncePerRequestFilter 类。我们在这里重写的方法是 doFilterInternal()。你可以在项目 ssia-ch5-ex3 中找到这段代码。
 
-```java title="代码清单 5.9 继承 OncePerRequestFilter 类"
+``` java title="代码清单 5.9 继承 OncePerRequestFilter 类"
 public class AuthenticationLoggingFilter
 		extends OncePerRequestFilter {
 

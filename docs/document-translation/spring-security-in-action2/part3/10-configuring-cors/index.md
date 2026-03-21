@@ -99,7 +99,7 @@ public class MainController {
 此外，我们还需要定义一个配置类，在其中禁用 CSRF 保护，以便简化示例，让你可以专注于 CORS
 机制。同时，我们允许所有端点的非认证访问。下一段代码展示了该配置类的定义。
 
-```java title="清单10.2 配置类的定义"
+``` java title="清单10.2 配置类的定义"
 
 @Configuration
 public class ProjectConfig {
@@ -186,7 +186,7 @@ CORS。
 我们在 10.1 节创建的应用中演示了 @CrossOrigin 的用法。要让该应用支持跨域调用，唯一需要做的就是在控制器类中的 test() 方法上添加
 @CrossOrigin 注解。下列示例展示了如何通过该注解将本地主机设置为允许的来源。
 
-```java title="清单 10.4 使 localhost 成为允许的源"
+``` java title="清单 10.4 使 localhost 成为允许的源"
 
 @PostMapping("/test")
 @ResponseBody
@@ -216,7 +216,7 @@ CORS 配置。
 虽然使用 @CrossOrigin 注解很方便，但如你在 10.2 节中学到的，在很多情况下我们可能更希望在一个地方统一定义 CORS 配置。在本节中，我们将第
 10.1 和 10.2 节中所用的示例做出修改，改为在配置类中通过 Customizer 来应用 CORS 配置。下面的代码片段展示了我们在配置类中需要做的更改，以便定义我们希望允许的源。
 
-```java title="列表 10.5 在配置类中集中定义 CORS 配置"
+``` java title="列表 10.5 在配置类中集中定义 CORS 配置"
 
 @Configuration
 public class ProjectConfig {

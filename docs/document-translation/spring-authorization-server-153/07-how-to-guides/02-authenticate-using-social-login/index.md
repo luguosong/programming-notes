@@ -179,7 +179,7 @@ public class SecurityConfig {
 
 下面的示例 `AuthenticationSuccessHandler` 在用户首次登录时，会通过一个自定义组件将其信息记录到本地数据库中：
 
-```java title="FederatedIdentityAuthenticationSuccessHandler"
+``` java title="FederatedIdentityAuthenticationSuccessHandler"
 import java.io.IOException;
 import java.util.function.Consumer;
 
@@ -231,7 +231,7 @@ public final class FederatedIdentityAuthenticationSuccessHandler implements Auth
 ，将用户信息捕获并保存到数据库或其他数据存储中，用于实现联邦账号关联（Federated Account Linking）或即时账号开通（JIT Account
 Provisioning）等场景。下面是一个示例，仅将用户存储在内存中。
 
-```java title="UserRepositoryOAuth2UserHandler"
+``` java title="UserRepositoryOAuth2UserHandler"
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -342,7 +342,7 @@ public final class FederatedIdentityIdTokenCustomizer implements OAuth2TokenCust
 
 你可以将该自定义器通过发布为一个 `@Bean` 来配置到 Spring Authorization Server 中使用，如下例所示：
 
-```java title="配置 FederatedIdentityIdTokenCustomizer"
+``` java title="配置 FederatedIdentityIdTokenCustomizer"
 
 @Bean
 public OAuth2TokenCustomizer<JwtEncodingContext> idTokenCustomizer() {

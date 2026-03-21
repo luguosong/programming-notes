@@ -128,7 +128,7 @@ pom.xml 文件中。依赖如下：
 com.laurentiuspilca.ssia。下面的代码示例中，可以看到用于测试的空类定义。我们使用了 @SpringBootTest 注解，它提供了一种方便的方式来为整个测试套件管理
 Spring 容器上下文。
 
-```java title="清单 18.1 用于编写测试的类"
+``` java title="清单 18.1 用于编写测试的类"
 
 @SpringBootTest
 public class MainTests {
@@ -140,7 +140,7 @@ public class MainTests {
 一种方便的方式是使用 Spring 的 MockMvc 来实现对端点行为的测试。在 Spring Boot 应用中，你只需在测试类上添加一个注解，就可以自动配置
 MockMvc 工具，用于测试端点调用，如下面的示例所示。
 
-```java title="代码清单 18.2 使用 MockMvc 实现测试场景"
+``` java title="代码清单 18.2 使用 MockMvc 实现测试场景"
 
 @SpringBootTest
 @AutoConfigureMockMvc

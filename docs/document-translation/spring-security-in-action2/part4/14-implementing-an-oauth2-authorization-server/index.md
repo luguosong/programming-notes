@@ -87,7 +87,7 @@ public class SecurityConfig {
 此外，清单 14.1 中的过滤器指定了应用在要求用户登录时需要重定向的认证页面。我们需要这个配置，因为示例中计划启用授权码授权类型，而这意味着用户必须进行身份验证。Spring
 Web 应用的默认路径是 /login，因此除非我们配置自定义路径，否则在配置授权服务器时会采用该路径。
 
-```java title="清单 14.1 实现用于配置协议端点的过滤器"
+``` java title="清单 14.1 实现用于配置协议端点的过滤器"
 
 @Bean
 @Order(1)
@@ -123,7 +123,7 @@ public SecurityFilterChain asFilterChain(HttpSecurity http)
 
 还要注意我在示例14.1和14.2中使用的@Order注解。因为应用上下文中配置了多个SecurityFilterChain实例，所以需要通过该注解明确它们在配置中所应具有的优先级顺序。
 
-```java title="清单 14.2 实现授权配置的过滤器"
+``` java title="清单 14.2 实现授权配置的过滤器"
 
 @Bean
 @Order(2) // 我们将过滤器设置为在协议端点之后进行解释。
@@ -153,7 +153,7 @@ UserDetailsService 接口编写自定义实现。
 另外，还记得我们在第4章讨论过，NoOpPasswordEncoder 只能用于学习示例。它不会对密码做任何处理，密码以明文形式存在，任何有权限访问的人都能看到，显然这样不安全。我们应该始终使用带有强哈希函数（比如
 BCrypt）的密码编码器。
 
-```java title="清单 14.3 定义用户详情管理"
+``` java title="清单 14.3 定义用户详情管理"
 
 @Bean
 public UserDetailsService userDetailsService() {
@@ -188,7 +188,7 @@ UserDetailsService 接口的方式来实现 RegisteredClientRepository 接口。
 下一个代码示例展示了内存中 RegisteredClientRepository Bean 的定义。该方法创建一个包含必需信息的 RegisteredClient
 实例，并将其存储在内存中，以便授权服务器在认证过程中使用。
 
-```java title="示例14.4 实现客户端详情管理"
+``` java title="示例14.4 实现客户端详情管理"
 
 @Bean
 public RegisteredClientRepository registeredClientRepository() {
@@ -255,7 +255,7 @@ vault）中读取。
 
 因此，在我们的例子中，编程生成密钥是可以的，并且有助于展示授权服务器的工作原理。而在真实应用中，你必须将密钥安全地存储起来，并从指定位置读取。
 
-```java title="清单 14.5 实现密钥对集合管理"
+``` java title="清单 14.5 实现密钥对集合管理"
 
 @Bean
 public JWKSource<SecurityContext> jwkSource()
@@ -286,7 +286,7 @@ public JWKSource<SecurityContext> jwkSource()
 最后，我们需要添加到最简配置中的最后一个组件是 AuthorizationServerSettings 对象（示例
 14.6）。该对象允许你自定义授权服务器所暴露的所有端点路径。如果你按照下面的示例创建该对象，这些端点路径将会采用一些后面本节将要分析的默认设置。
 
-```java title="清单 14.6 配置授权服务器通用设置"
+``` java title="清单 14.6 配置授权服务器通用设置"
 
 @Bean
 public AuthorizationServerSettings authorizationServerSettings() {
@@ -314,7 +314,7 @@ http://localhost:8080/.well-known/openid-configuration
 
 调用 OpenID 配置端点时，您应该会收到如下所示的响应。
 
-```json title="图 14.7 OpenID 配置请求的响应"
+``` json title="图 14.7 OpenID 配置请求的响应"
 {
   "issuer": "http://localhost:8080",
   "authorization_endpoint": "http://localhost:8080/oauth2/authorize",
@@ -515,7 +515,7 @@ scope。在这个例子里，“CUSTOM”只是我随意起的名称，你可以
 
 本节讨论的示例可在项目 ssia-ch14-ex3 中找到。
 
-```java title="列表 14.8：为客户端凭证授权类型配置已注册客户端"
+``` java title="列表 14.8：为客户端凭证授权类型配置已注册客户端"
 
 @Bean
 public RegisteredClientRepository registeredClientRepository() {
@@ -571,7 +571,7 @@ ssia-ch14-ex4 中。
 
 清单 14.9 演示了如何为注册客户端配置不透明令牌。请记住，不透明令牌可以用于任何授权类型。本节中我将使用客户端凭证授权类型，以尽量简化流程，便于你专注于我们讨论的主题。当然，你也可以通过授权码授权类型生成不透明令牌。
 
-```java title="列表14.9 配置客户端使用不透明令牌"
+``` java title="列表14.9 配置客户端使用不透明令牌"
 
 @Bean
 public RegisteredClientRepository registeredClientRepository() {

@@ -95,7 +95,7 @@ public class HomeController {
 清单 16.2 展示了将 OAuth 2 登录配置为 Web 应用认证方式的设置。这样配置后，应用会自动采用授权码模式，引导用户跳转到指定的授权服务器登录，并在认证成功后再重定向回来。这一流程完全符合我们在第
 13 至第 15 章的讲解，并在这些章节中通过 cURL 多次进行了演示。
 
-```java title="列表 16.2 配置 OAuth 2 登录"
+``` java title="列表 16.2 配置 OAuth 2 登录"
 
 @Configuration
 public class SecurityConfig {
@@ -308,7 +308,7 @@ ClientRegistrationRepository 接口。
 
 您可以在 ssia-ch16-ex2 项目中找到此示例。
 
-```java title="清单 16.5 实现自定义逻辑"
+``` java title="清单 16.5 实现自定义逻辑"
 
 @Configuration
 public class SecurityConfig {
@@ -421,7 +421,7 @@ HTTP 请求，因为任意技术都可以轻松添加请求头（记住要在 Au
 我们将沿用第14章中构建的授权服务器，本章对应的项目是
 ssia-ch16-ex1-as。请记得先在授权服务器中添加一个客户端注册，支持使用客户端凭证授权类型。你可以修改第14章中已经配置过的那个（如下节所示），也可以新增一个满足该要求的客户端注册。
 
-```java title="清单 16.7 授权服务器端注册的客户端详细信息"
+``` java title="清单 16.7 授权服务器端注册的客户端详细信息"
 
 @Bean
 public RegisteredClientRepository registeredClientRepository() {
@@ -444,7 +444,7 @@ public RegisteredClientRepository registeredClientRepository() {
 与其他认证方式类似，Spring Security 也提供了 HttpSecurity 对象的一个方法来将应用配置为 OAuth 2 客户端。在下面示例中调用
 oauth2Client() 方法即可将应用配置为 OAuth 2 客户端。
 
-```java title="列表 16.8 配置 OAuth 2 客户端认证"
+``` java title="列表 16.8 配置 OAuth 2 客户端认证"
 
 @Configuration
 public class ProjectConfig {
@@ -470,7 +470,7 @@ public class ProjectConfig {
 
 不过因为我使用的是非通用提供方，所以还得指定更多细节，比如作用域、令牌 URI 以及认证方式。注意我将客户端凭证配置为授权类型。
 
-```java title="列表 16.9 为客户端应用配置客户端注册详细信息"
+``` java title="列表 16.9 为客户端应用配置客户端注册详细信息"
 
 @Configuration
 public class ProjectConfig {
@@ -507,7 +507,7 @@ public class ProjectConfig {
 
 类 `OAuth2AuthorizedClientManager` 定义了一个客户端管理器。下面的代码示例将客户端管理器配置为应用上下文中的一个 Bean。
 
-```java title="清单16.10 实现 OAuth 2 客户端管理器"
+``` java title="清单16.10 实现 OAuth 2 客户端管理器"
 
 @Configuration
 public class ProjectConfig {
