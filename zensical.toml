@@ -1,4 +1,4 @@
-# Zensical版本 0.0.8
+# Zensical版本 0.0.28
 [project]
 site_name = "陆国松的编程笔记"
 site_description = "学习编程过程中整理的笔记集合"
@@ -260,7 +260,8 @@ features = [
     "search.highlight",
     # 页脚可以包含当前页面的上一页和下一页链接。
     "navigation.footer",
-    "navigation.prune",
+    # 自动更新地址栏中的 URL 锚点，方便分享带锚点的页面链接。
+    "navigation.tracking",
     # 编辑页面按钮
     "content.action.edit",
     # 查看页面代码按钮
