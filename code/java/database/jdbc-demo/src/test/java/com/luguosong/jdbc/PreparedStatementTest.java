@@ -197,6 +197,63 @@ class PreparedStatementTest {
     }
     // --8<-- [end:reuse_prepared_statement]
 
+    // --8<-- [start:blob_write_read]
+    /**
+     * 演示 PreparedStatement 处理 BLOB 大字段
+     * 写入：setBytes() / setBinaryStream()
+     * 读取：getBytes() / getBinaryStream()
+     * 典型场景：存储图片、文件、音频等二进制数据
+     */
+    @Test
+    void testBlobWriteAndRead() throws Exception {
+        // 建一张含 BLOB 列的表（在测试内自行建表，避免影响其他测试）
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("CREATE TABLE IF NOT EXISTS attachments ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY, "
+                    + "filename VARCHAR(100), "
+                    + "content BLOB)");
+        }
+
+        // === 写入 BLOB 数据 ===
+        byte[] originalData = "Hello, JDBC Blob! 这是二进制内容。".getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        String insertSql = "INSERT INTO attachments (filename, content) VALUES (?, ?)";
+
+        try {
+            try (PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
+                pstmt.setString(1, "test.txt");
+                // setBytes：直接传入 byte[]（适合小文件）
+                pstmt.setBytes(2, originalData);
+                int rows = pstmt.executeUpdate();
+                assertEquals(1, rows, "BLOB 写入应影响 1 行");
+                System.out.println("BLOB 写入成功，数据长度: " + originalData.length + " 字节");
+            }
+
+            // === 读取 BLOB 数据 ===
+            String querySql = "SELECT filename, content FROM attachments WHERE filename = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(querySql)) {
+                pstmt.setString(1, "test.txt");
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    assertTrue(rs.next(), "应查到 BLOB 记录");
+                    String filename = rs.getString("filename");
+                    // getBytes：直接读出 byte[]
+                    byte[] readData = rs.getBytes("content");
+
+                    assertEquals("test.txt", filename);
+                    assertArrayEquals(originalData, readData, "读取的 BLOB 数据应与写入的完全一致");
+
+                    String readText = new String(readData, java.nio.charset.StandardCharsets.UTF_8);
+                    System.out.println("BLOB 读取成功，文件名: " + filename + "，内容: " + readText);
+                }
+            }
+        } finally {
+            // 使用 finally 确保断言失败时也能清理临时表
+            try (Statement stmt = conn.createStatement()) {
+                stmt.execute("DROP TABLE IF EXISTS attachments");
+            }
+        }
+    }
+    // --8<-- [end:blob_write_read]
+
     // --8<-- [start:teardown]
     /**
      * 每个测试后：删除表并关闭连接
