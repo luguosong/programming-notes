@@ -33,5 +33,11 @@
             <artifactId>HikariCP</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.23</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
