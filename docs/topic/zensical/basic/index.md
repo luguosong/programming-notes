@@ -284,7 +284,7 @@
 ### 标题与行号
 
 ````markdown
-```python title="hello.py" linenums="1"
+``` python title="hello.py" linenums="1"
 def greet(name: str) -> str:
     return f"Hello, {name}!"
 
@@ -292,7 +292,7 @@ print(greet("World"))
 ```
 ````
 
-```python title="hello.py" linenums="1"
+``` python title="hello.py" linenums="1"
 def greet(name: str) -> str:
     return f"Hello, {name}!"
 

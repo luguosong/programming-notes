@@ -194,7 +194,7 @@ my_authorization_server。
 
 下面的代码片段展示了授权服务器的配置部分，用于注册客户端的详细信息。稍后本节我们还会用到这些信息，并在应用端进行相应配置。
 
-```java title="清单 16.3 授权服务器端注册的客户端详情"
+``` java title="清单 16.3 授权服务器端注册的客户端详情"
 @Bean
 public RegisteredClientRepository registeredClientRepository() {
  var registeredClient = RegisteredClient
@@ -252,7 +252,7 @@ ID 与客户端密钥之外，还需要填写以下内容：
 - 重定向 URI——完成正确认证后，应用期望提供者重定向用户的 URI。此 URI 必须与授权服务器端注册的某个 URI（见清单 16.3）相匹配。
 - Web 应用请求的作用域——Web 应用请求的作用域只能是授权服务器端注册的那些之一（见清单 16.3）。
 
-```properties title="图16.4 客户端注册配置"
+``` properties title="图16.4 客户端注册配置"
 spring.security.oauth2.client.
 registration.my_authorization_server
 .client-id=client
@@ -373,7 +373,7 @@ oauth2Login() 也不例外。
 节中的示例直接使用接口的实现类。对于 OAuth 2 来说，OAuth2AuthenticationPrincipal 类就是该接口的实现。不过需要记住，为了便于维护，建议尽可能都通过
 Authentication 接口来获取所需信息，只有在别无选择（比如需要获取接口引用无法提供的某个细节）时才直接依赖具体实现。
 
-```java title="清单16.6 获取认证详细信息"
+``` java title="清单16.6 获取认证详细信息"
 @Controller
 public class HomeController {
 
@@ -549,7 +549,7 @@ OAuth 2 客户端的讨论。请记住，现实中的应用可能会更复杂。
 下面的示例展示了如何注入客户端管理器实例，并演示了如何通过某个端点获取访问令牌。当调用应用所暴露的 /token
 端点时，响应体中应包含访问令牌的值。
 
-```java title="清单 16.11 使用 OAuth 2 客户端管理器获取令牌"
+``` java title="清单 16.11 使用 OAuth 2 客户端管理器获取令牌"
 @RestController
 public class DemoController {
 

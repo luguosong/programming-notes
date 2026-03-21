@@ -55,7 +55,7 @@ JDBC 提供三种方式通过 `DriverManager` 获取连接。
 
 **方式三：`Properties` 对象传参**
 
-```java title="通过 Properties 对象传入认证信息"
+``` java title="通过 Properties 对象传入认证信息"
 --8<-- "code/java/database/jdbc-demo/src/test/java/com/luguosong/jdbc/ConnectionTest.java:connection_properties"
 ```
 

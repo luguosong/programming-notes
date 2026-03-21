@@ -109,7 +109,7 @@ public class Sha512PasswordEncoder
 方法中调用了这个哈希方法，现在encode()会返回输入值的哈希结果。为了验证哈希值是否匹配输入，matches()
 方法会对原始密码进行哈希处理，然后将其结果与用于校验的哈希值进行比较。
 
-```java title="代码清单4.3 使用 SHA-512 对输入进行哈希的方法实现"
+``` java title="代码清单4.3 使用 SHA-512 对输入进行哈希的方法实现"
 private String hashWithSHA512(String input) {
 	StringBuilder result = new StringBuilder();
 	try {

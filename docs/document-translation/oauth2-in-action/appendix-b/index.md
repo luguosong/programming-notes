@@ -107,7 +107,7 @@ app.get('/fetch_resource', function (req, res) {
 
 ## 清单 4：刷新访问令牌（3-2）
 
-```javascript title="清单 4：刷新访问令牌（3-2）"
+``` javascript title="清单 4：刷新访问令牌（3-2）"
 app.get('/fetch_resource', function(req, res) {
 
   console.log('Making request with access token %s', access_token);
@@ -179,7 +179,7 @@ var refreshAccessToken = function(req, res) {
 
 ## 清单 5：提取访问令牌（4-1）
 
-```javascript title="清单 5：提取访问令牌（4-1）"
+``` javascript title="清单 5：提取访问令牌（4-1）"
 var getAccessToken = function(req, res, next) {
 
   var inToken = null;
@@ -196,7 +196,7 @@ var getAccessToken = function(req, res, next) {
 
 ## 清单 6：查找令牌（4-1）
 
-```javascript title="清单 6：查找令牌（4-1）"
+``` javascript title="清单 6：查找令牌（4-1）"
 var getAccessToken = function(req, res, next) {
 
   var inToken = null;
@@ -300,7 +300,7 @@ app.post('/approve', function (req, res) {
 
 ## 清单 9：令牌端点（5-1）
 
-```javascript title="清单 9：令牌端点（5-1）"
+``` javascript title="清单 9：令牌端点（5-1）"
 app.post("/token", function(req, res){
 
   var auth = req.headers['authorization'];
@@ -373,7 +373,7 @@ app.post("/token", function(req, res){
 
 ## 清单 10：刷新访问令牌（5-2）
 
-```javascript title="清单 10：刷新访问令牌（5-2）"
+``` javascript title="清单 10：刷新访问令牌（5-2）"
 } else if (req.body.grant_type == 'refresh_token') {
   nosql.one().make(function(builder) {
   builder.where('refresh_token', req.body.refresh_token);
@@ -401,7 +401,7 @@ app.post("/token", function(req, res){
 
 ## 清单 11：自省端点（11-4）
 
-```javascript title="清单 11：自省端点（11-4）"
+``` javascript title="清单 11：自省端点（11-4）"
 app.post('/introspect', function(req, res) {
   var auth = req.headers['authorization'];
   var resourceCredentials = decodeClientCredentials(auth);
@@ -459,7 +459,7 @@ app.post('/introspect', function(req, res) {
 
 ## 清单 12：令牌撤销端点（11-5）
 
-```javascript title="清单 12：令牌撤销端点（11-5）"
+``` javascript title="清单 12：令牌撤销端点（11-5）"
 app.post('/revoke', function(req, res) {
   var auth = req.headers['authorization'];
   if (auth) {
@@ -512,7 +512,7 @@ app.post('/revoke', function(req, res) {
 
 ## 清单 13：注册端点（12-1）
 
-```javascript title="清单 13：注册端点（12-1）"
+``` javascript title="清单 13：注册端点（12-1）"
 app.post('/register', function (req, res){
 
   var reg = {};
@@ -606,7 +606,7 @@ app.post('/register', function (req, res){
 
 ## 清单 14：UserInfo 端点（13-1）
 
-```javascript title="清单 14：UserInfo 端点（13-1）"
+``` javascript title="清单 14：UserInfo 端点（13-1）"
 var userInfoEndpoint = function(req, res) {
 
   if (!__.contains(req.access_token.scope, 'openid')) {
@@ -665,7 +665,7 @@ var userInfoEndpoint = function(req, res) {
 
 ## 清单 15：处理 ID 令牌（13-1）
 
-```javascript title="清单 15：处理 ID 令牌（13-1）"
+``` javascript title="清单 15：处理 ID 令牌（13-1）"
 if (body.id_token) {
   userInfo = null;
   id_token = null;
@@ -707,7 +707,7 @@ if (body.id_token) {
 
 ## 清单 16：对 PoP 令牌进行自省与验证（15-1）
 
-```javascript title="清单 16：对 PoP 令牌进行自省与验证（15-1）"
+``` javascript title="清单 16：对 PoP 令牌进行自省与验证（15-1）"
 var getAccessToken = function(req, res, next) {
   var auth = req.headers['authorization'];
   var inToken = null;

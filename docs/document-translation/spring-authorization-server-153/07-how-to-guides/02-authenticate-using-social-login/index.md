@@ -273,7 +273,7 @@ public final class UserRepositoryOAuth2UserHandler implements Consumer<OAuth2Use
 下面的示例 `OAuth2TokenCustomizer` 会将身份验证提供方返回的用户声明（claims）映射到 Spring Authorization Server 生成的
 `id_token` 中：
 
-```java title="FederatedIdentityIdTokenCustomizer"
+``` java title="FederatedIdentityIdTokenCustomizer"
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
