@@ -1,3 +1,7 @@
+---
+icon: lucide/telescope
+---
+
 # 专题研究
 
 ## mysql

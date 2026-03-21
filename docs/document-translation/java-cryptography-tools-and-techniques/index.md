@@ -1,5 +1,5 @@
 ---
-icon: material/book
+icon: material/shield-lock
 ---
 
 # Java Cryptography: Tools and Techniques

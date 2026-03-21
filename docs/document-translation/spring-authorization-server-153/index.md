@@ -1,5 +1,5 @@
 ---
-icon: material/web
+icon: simple/springsecurity
 ---
 
 # Spring Authorization Server-1.5.3

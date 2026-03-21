@@ -1,3 +1,7 @@
+---
+icon: material/language-javascript
+---
+
 # 前端
 
 - [前端工程师学习路线](https://roadmap.sh/frontend)

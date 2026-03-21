@@ -1,5 +1,5 @@
 ---
-icon: material/web
+icon: simple/mobx
 ---
 
 # Mobx

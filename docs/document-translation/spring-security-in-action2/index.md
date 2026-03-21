@@ -1,5 +1,5 @@
 ---
-icon: material/book
+icon: simple/springsecurity
 ---
 
 # Spring Security in Action 2

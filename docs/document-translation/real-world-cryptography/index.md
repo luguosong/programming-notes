@@ -1,5 +1,5 @@
 ---
-icon: material/book
+icon: material/lock
 ---
 
 # Real World Cryptography

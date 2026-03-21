@@ -1,5 +1,5 @@
 ---
-icon: material/web
+icon: fontawesome/brands/java
 ---
 
 # The Java Tutorials

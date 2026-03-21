@@ -1,5 +1,5 @@
 ---
-icon: material/book
+icon: simple/spring
 ---
 
 # Spring Start Here

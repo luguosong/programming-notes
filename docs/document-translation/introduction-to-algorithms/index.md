@@ -1,5 +1,5 @@
 ---
-icon: material/book
+icon: material/graph
 ---
 
 # Introduction to Algorithms

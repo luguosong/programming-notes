@@ -1,5 +1,5 @@
 ---
-icon: material/web
+icon: material/vector-square
 ---
 
 # Open Design Alliance

@@ -1,3 +1,7 @@
+---
+icon: fontawesome/brands/java
+---
+
 # Java
 
 - [Java 工程师学习路线](https://roadmap.sh/java)

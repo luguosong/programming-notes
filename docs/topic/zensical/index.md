@@ -1,5 +1,5 @@
 ---
-icon: fontawesome/solid/book
+icon: material/file-document
 ---
 
 # Zensical
