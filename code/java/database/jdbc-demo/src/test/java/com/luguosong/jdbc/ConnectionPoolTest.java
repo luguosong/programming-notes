@@ -1,5 +1,6 @@
 package com.luguosong.jdbc;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.junit.jupiter.api.Test;
@@ -154,4 +155,90 @@ class ConnectionPoolTest {
         }
     }
     // --8<-- [end:datasource_get_connection]
+
+    // --8<-- [start:druid_basic_config]
+    /**
+     * 演示 Druid 连接池基本配置
+     * Druid 是阿里巴巴开源的连接池，内置 SQL 监控、慢查询统计等功能，广泛用于国内 Java 项目
+     */
+    @Test
+    void testDruidBasicConfig() throws Exception {
+        String url = "jdbc:h2:mem:testdb_druid_basic;DB_CLOSE_DELAY=-1";
+
+        // 创建 DruidDataSource 并配置基本参数
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(url);
+        dataSource.setUsername(USER);
+        dataSource.setPassword(PASSWORD);
+        // 连接池核心参数
+        dataSource.setMaxActive(10);          // 最大活跃连接数
+        dataSource.setMinIdle(2);             // 最小空闲连接数
+        dataSource.setInitialSize(2);         // 初始化连接数
+        dataSource.setMaxWait(30000);         // 获取连接最大等待时间（毫秒）
+        // 连接有效性检测
+        dataSource.setValidationQuery("SELECT 1");
+        dataSource.setTestWhileIdle(true);    // 空闲时检测连接有效性
+
+        System.out.println("Druid 连接池配置完成");
+        System.out.println("最大活跃连接数: " + dataSource.getMaxActive());
+        System.out.println("最小空闲连接数: " + dataSource.getMinIdle());
+
+        // 从 Druid 连接池获取连接并执行查询
+        try (Connection conn = dataSource.getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            assertNotNull(conn, "从 Druid 连接池获取的连接不应为 null");
+
+            // ResultSet 使用 try-with-resources 确保自动关闭（与最佳实践章节一致）
+            try (ResultSet rs = stmt.executeQuery("SELECT 1 AS result")) {
+                assertTrue(rs.next());
+                assertEquals(1, rs.getInt("result"), "Druid 连接池连接测试查询应返回 1");
+                System.out.println("Druid 连接池连接测试成功，查询结果: " + rs.getInt("result"));
+            }
+        } finally {
+            dataSource.close();
+        }
+    }
+    // --8<-- [end:druid_basic_config]
+
+    // --8<-- [start:druid_vs_hikari]
+    /**
+     * 对比 Druid 与 HikariCP 的使用方式：两者均实现 javax.sql.DataSource 接口
+     * HikariCP：性能极致，是 Spring Boot 默认连接池
+     * Druid：功能丰富，内置监控（SQL 监控、慢查询、连接池状态），适合需要运维可观测性的场景
+     */
+    @Test
+    void testDruidVsHikari() throws Exception {
+        String url = "jdbc:h2:mem:testdb_druid_vs;DB_CLOSE_DELAY=-1";
+
+        // === HikariCP ===
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(url);
+        hikariConfig.setUsername(USER);
+        hikariConfig.setPassword(PASSWORD);
+        hikariConfig.setMaximumPoolSize(5);
+
+        try (HikariDataSource hikari = new HikariDataSource(hikariConfig);
+             Connection conn = hikari.getConnection()) {
+            assertNotNull(conn);
+            System.out.println("HikariCP 连接类: " + conn.getClass().getName());
+        }
+
+        // === Druid ===
+        DruidDataSource druid = new DruidDataSource();
+        druid.setUrl(url);
+        druid.setUsername(USER);
+        druid.setPassword(PASSWORD);
+        druid.setMaxActive(5);
+
+        try (Connection conn = druid.getConnection()) {
+            assertNotNull(conn);
+            System.out.println("Druid 连接类: " + conn.getClass().getName());
+        } finally {
+            druid.close();
+        }
+
+        System.out.println("两种连接池均实现 javax.sql.DataSource，业务代码无需关心底层实现");
+    }
+    // --8<-- [end:druid_vs_hikari]
 }
