@@ -52,7 +52,11 @@ nav = [
         ] }
     ] },
     { "Java" = [
-        "java/index.md"
+        "java/index.md",
+        { "数据库" = [
+            "java/database/index.md",
+            { "JDBC" = "java/database/jdbc/index.md" }
+        ] }
     ] },
     { "专题研究" = [
         "topic/index.md",
