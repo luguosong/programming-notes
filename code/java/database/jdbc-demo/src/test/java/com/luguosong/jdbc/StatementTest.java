@@ -163,6 +163,44 @@ class StatementTest {
     }
     // --8<-- [end:sql_injection_demo]
 
+    // --8<-- [start:generated_keys]
+    /**
+     * 演示 Statement.RETURN_GENERATED_KEYS：插入后获取自动生成的主键值
+     * 适用场景：INSERT 后需要立刻拿到新记录的自增 id，再用于关联操作
+     */
+    @Test
+    void testGetGeneratedKeys() throws SQLException {
+        // 建一张带自增主键的表用于演示
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute("CREATE TABLE IF NOT EXISTS orders ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY, "
+                    + "product VARCHAR(100), "
+                    + "amount DOUBLE)");
+        }
+
+        // 关键：executeUpdate 第二个参数传 Statement.RETURN_GENERATED_KEYS
+        // 告诉驱动：执行完 INSERT 后请保留生成的主键，供 getGeneratedKeys() 读取
+        String sql = "INSERT INTO orders (product, amount) VALUES ('Java Book', 99.9)";
+        try (Statement stmt = conn.createStatement()) {
+            try {
+                int rowsAffected = stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+                assertEquals(1, rowsAffected, "应插入 1 条记录");
+
+                // 通过 getGeneratedKeys() 获取自动生成的主键
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    assertTrue(generatedKeys.next(), "应有生成的主键");
+                    long generatedId = generatedKeys.getLong(1);
+                    assertTrue(generatedId > 0, "生成的主键 id 应大于 0");
+                    System.out.println("新插入记录的自增主键 id: " + generatedId);
+                }
+            } finally {
+                // 使用 finally 确保断言失败时也能清理临时表
+                stmt.execute("DROP TABLE IF EXISTS orders");
+            }
+        }
+    }
+    // --8<-- [end:generated_keys]
+
     // --8<-- [start:teardown]
     /**
      * 每个测试后：删除表并关闭连接
