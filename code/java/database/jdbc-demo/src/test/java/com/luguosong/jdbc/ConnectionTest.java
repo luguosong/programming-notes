@@ -90,4 +90,66 @@ class ConnectionTest {
         conn.close();
     }
     // --8<-- [end:connection_properties]
+
+    // --8<-- [start:driver_register_way1]
+    /**
+     * 驱动注册方式一：显式调用 DriverManager.registerDriver()
+     * 缺点：会导致驱动注册两次（驱动本身的静态代码块也会注册一次）
+     */
+    @Test
+    void testRegisterDriverWay1() throws Exception {
+        // 显式创建驱动对象并注册
+        // 注意：这种方式会造成驱动被注册两次，一般不推荐
+        DriverManager.registerDriver(new org.h2.Driver());
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            assertNotNull(conn, "方式一：显式注册驱动后应能获取连接");
+            System.out.println("方式一（registerDriver）连接成功: " + conn.isValid(2));
+        }
+    }
+    // --8<-- [end:driver_register_way1]
+
+    // --8<-- [start:driver_register_way2]
+    /**
+     * 驱动注册方式二：使用 Class.forName() 反射加载驱动类
+     * 触发驱动类的静态代码块，静态代码块内部调用 DriverManager.registerDriver()
+     * 优点：驱动类名可写在配置文件中，解耦实现
+     */
+    @Test
+    void testRegisterDriverWay2() throws Exception {
+        // 反射加载驱动类，触发静态初始化，驱动自动注册
+        Class.forName("org.h2.Driver");
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            assertNotNull(conn, "方式二：Class.forName 注册驱动后应能获取连接");
+            System.out.println("方式二（Class.forName）连接成功: " + conn.isValid(2));
+        }
+    }
+    // --8<-- [end:driver_register_way2]
+
+    // --8<-- [start:driver_register_way3]
+    /**
+     * 驱动注册方式三：JDBC 4.0+ SPI 自动发现（Java 6 起）
+     * 无需任何显式注册代码，JVM 启动时自动扫描 classpath 中
+     * 所有 JAR 包的 META-INF/services/java.sql.Driver 文件并注册声明的驱动
+     */
+    @Test
+    void testRegisterDriverWay3() throws Exception {
+        // JDBC 4.0+ 无需手动注册，直接获取连接即可
+        // JVM 已通过 SPI 机制自动发现并注册了 org.h2.Driver
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            assertNotNull(conn, "方式三：SPI 自动注册驱动后应能获取连接");
+            // 验证驱动已被自动注册：DriverManager 中有驱动信息
+            java.util.Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
+            boolean h2Found = false;
+            while (drivers.hasMoreElements()) {
+                java.sql.Driver driver = drivers.nextElement();
+                if (driver.getClass().getName().contains("h2")) {
+                    h2Found = true;
+                    break;
+                }
+            }
+            assertTrue(h2Found, "H2 驱动应已被 SPI 自动注册");
+            System.out.println("方式三（SPI 自动）连接成功: " + conn.isValid(2));
+        }
+    }
+    // --8<-- [end:driver_register_way3]
 }
