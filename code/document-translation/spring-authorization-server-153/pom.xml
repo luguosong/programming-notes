@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 聚合 POM：统一管理《Spring Authorization Server 1.5.3》所有示例 -->
+    <!-- 在 IntelliJ IDEA 中打开此文件即可导入全部子模块 -->
+    <groupId>com.luguosong</groupId>
+    <artifactId>spring-authorization-server-153</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>Spring Authorization Server 1.5.3 示例合集</name>
+
+    <modules>
+        <module>sas3-1</module>
+    </modules>
+
+</project>

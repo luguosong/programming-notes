@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 聚合 POM：统一管理《Spring Security in Action 2nd Edition》所有章节示例 -->
+    <!-- 在 IntelliJ IDEA 中打开此文件即可导入全部章节子模块 -->
+    <groupId>com.luguosong</groupId>
+    <artifactId>spring-security-in-action2</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>Spring Security in Action 2nd Edition 示例合集</name>
+
+    <modules>
+        <module>ssia-ch2-ex1</module>
+        <module>ssia-ch2-ex2</module>
+        <module>ssia-ch2-ex3</module>
+        <module>ssia-ch2-ex4</module>
+        <module>ssia-ch2-ex5</module>
+        <module>ssia-ch3-ex1</module>
+        <module>ssia-ch3-ex2</module>
+        <module>ssia-ch3-ex3</module>
+        <module>ssia-ch5-ex1</module>
+        <module>ssia-ch5-ex2</module>
+        <module>ssia-ch5-ex3</module>
+        <module>ssia-ch6-ex1</module>
+        <module>ssia-ch6-ex2</module>
+        <module>ssia-ch6-ex3</module>
+        <module>ssia-ch6-ex4</module>
+        <module>ssia-ch7-ex1</module>
+        <module>ssia-ch7-ex2</module>
+        <module>ssia-ch7-ex3</module>
+        <module>ssia-ch7-ex4</module>
+        <module>ssia-ch8-ex1</module>
+        <module>ssia-ch8-ex2</module>
+        <module>ssia-ch8-ex3</module>
+        <module>ssia-ch8-ex4</module>
+        <module>ssia-ch8-ex5</module>
+        <module>ssia-ch8-ex6</module>
+        <module>ssia-ch9-ex1</module>
+        <module>ssia-ch9-ex2</module>
+        <module>ssia-ch9-ex3</module>
+        <module>ssia-ch10-ex1</module>
+        <module>ssia-ch11-ex1</module>
+        <module>ssia-ch11-ex2</module>
+        <module>ssia-ch11-ex3</module>
+        <module>ssia-ch11-ex4</module>
+        <module>ssia-ch11-ex5</module>
+        <module>ssia-ch11-ex6</module>
+        <module>ssia-ch12-ex1</module>
+        <module>ssia-ch12-ex2</module>
+        <module>ssia-ch12-ex3</module>
+        <module>ssia-ch12-ex4</module>
+        <module>ssia-ch12-ex5</module>
+        <module>ssia-ch14-ex1</module>
+        <module>ssia-ch14-ex2</module>
+        <module>ssia-ch14-ex3</module>
+        <module>ssia-ch14-ex4</module>
+        <module>ssia-ch15-ex1</module>
+        <module>ssia-ch15-ex2</module>
+        <module>ssia-ch15-ex3</module>
+        <module>ssia-ch15-ex4</module>
+    </modules>
+
+</project>
