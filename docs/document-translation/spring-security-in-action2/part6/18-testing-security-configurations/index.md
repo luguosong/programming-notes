@@ -122,7 +122,7 @@ pom.xml 文件中。依赖如下：
 
 	在本章的示例中，我们使用 JUnit 5 来编写测试。不过，如果你现在仍在使用 JUnit 4，也完全不用担心。从 Spring Security 的集成角度来看，本章将介绍的这些注解和其他类在 JUnit 4 与 JUnit 5 中的用法基本相同。
 
-	Cătălin Tudose 等人编写的《JUnit in Action》（Manning，2020）第 4 章专门讨论了如何从 JUnit 4 迁移到 JUnit 5，其中包含一些非常有用的表格，展示了 JUnit 4 和 JUnit 5 各类与注解之间的对照关系。你可以通过这个链接查看相关内容：[http://mng.bz/OPJn](https://livebook.manning.com/book/junit-in-action-third-edition/chapter-4)。
+	Cătălin Tudose 等人编写的《JUnit in Action》（Manning，2020）「密码管理」专门讨论了如何从 JUnit 4 迁移到 JUnit 5，其中包含一些非常有用的表格，展示了 JUnit 4 和 JUnit 5 各类与注解之间的对照关系。你可以通过这个链接查看相关内容：[http://mng.bz/OPJn](https://livebook.manning.com/book/junit-in-action-third-edition/chapter-4)。
 
 在这个 Spring Boot Maven 项目的 test 目录下，我们新建一个名为 MainTests 的类。我们将这个类写在应用程序的主包下面，主包名为
 com.laurentiuspilca.ssia。下面的代码示例中，可以看到用于测试的空类定义。我们使用了 @SpringBootTest 注解，它提供了一种方便的方式来为整个测试套件管理

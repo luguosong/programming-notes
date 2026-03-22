@@ -5,13 +5,13 @@
 - 实现并使用 PasswordEncoder
 - 利用 Spring Security Crypto 模块提供的工具。
 
-在第3章中，我们讨论了如何在使用 Spring Security 实现的应用程序中管理用户。那么，密码该如何处理呢？密码无疑是认证流程中至关重要的一环。本章将带你了解如何在基于
+在「用户管理」中，我们讨论了如何在使用 Spring Security 实现的应用程序中管理用户。那么，密码该如何处理呢？密码无疑是认证流程中至关重要的一环。本章将带你了解如何在基于
 Spring Security 的应用中管理密码和密钥。我们将探讨 PasswordEncoder 接口，以及 Spring Security Crypto 模块（SSCM）为密码管理提供的相关工具。
 
 ## 使用密码编码器
 
-通过第三章的学习，你现在应该已经清楚了解了 UserDetails
-接口的作用，以及多种实现方式。正如你在第二章中所学，不同的组件在认证和授权过程中负责管理用户信息。你还了解到，其中一些组件有默认实现，比如
+通过「用户管理」的学习，你现在应该已经清楚了解了 UserDetails
+接口的作用，以及多种实现方式。正如你在「Spring Security 入门」中所学，不同的组件在认证和授权过程中负责管理用户信息。你还了解到，其中一些组件有默认实现，比如
 UserDetailsService 和 PasswordEncoder。现在你已经知道可以自定义这些默认实现。接下来，我们将深入探讨这些 Bean 及其实现方式，本节将重点分析
 PasswordEncoder。图 4.1 展示了 PasswordEncoder 在认证流程中的位置。
 
@@ -141,7 +141,7 @@ private String hashWithSHA512(String input) {
 - SCryptPasswordEncoder —— 使用 scrypt 哈希函数对密码进行加密。
 
 关于哈希算法及其原理，你可以参考 David Wong 所著《Real-World Cryptography》（Manning,
-2021）第二章，网址：[http://mng.bz/QRJw。](https://livebook.manning.com/book/real-world-cryptography/chapter-2/)
+2021）的哈希函数章节，网址：[http://mng.bz/QRJw。](https://livebook.manning.com/book/real-world-cryptography/chapter-2/)
 
 让我们来看一些如何创建这些类型的 PasswordEncoder 实现类实例的例子。NoOpPasswordEncoder 并不会对密码进行编码，它的实现方式类似于我们在示例
 4.1 中提到的 PlainTextPasswordEncoder。因此，这种密码编码器只适用于理论上的示例。此外，NoOpPasswordEncoder

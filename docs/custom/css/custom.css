@@ -116,4 +116,21 @@ article > p, .admonition > p:not(.admonition-title) {
     --md-code-hl-punctuation-color: #BBBBBB;
     --md-code-hl-comment-color: #5C6370;
     --md-code-hl-variable-color: #FF8998;
+
+    /* Mermaid 深色模式适配：覆盖默认引用 --md-code-fg-color（蓝色）的变量，
+       改为高对比度的浅色，确保图表文字和连线在深色背景下清晰可见 */
+    --md-mermaid-edge-color:       #adbac7;
+    --md-mermaid-label-fg-color:   #adbac7;
+    --md-mermaid-node-fg-color:    #539bf5;
+    --md-mermaid-label-bg-color:   #2d333b;
+    /* Sequence 图专项覆盖 */
+    --md-mermaid-sequence-actor-fg-color:     #adbac7;
+    --md-mermaid-sequence-message-fg-color:   #adbac7;
+    --md-mermaid-sequence-loop-fg-color:      #adbac7;
+    --md-mermaid-sequence-note-fg-color:      #adbac7;
+    --md-mermaid-sequence-label-fg-color:     #adbac7;
+    --md-mermaid-sequence-box-fg-color:       #adbac7;
+    --md-mermaid-sequence-actor-bg-color:     #2d333b;
+    --md-mermaid-sequence-note-bg-color:      #373e47;
+    --md-mermaid-sequence-box-bg-color:       #2d333b;
 }

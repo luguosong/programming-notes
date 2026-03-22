@@ -8,26 +8,26 @@
 
 ## 路线图
 
-本书共 4 个部分、16 章。第一部分为第 1、2 章，提供 OAuth 2.0 协议概览，属于核心必读内容。第二部分为第 3～6 章，展示如何构建一个完整的 OAuth 2.0 生态系统。第三部分为第 7～10 章，讨论 OAuth 2.0 生态各环节可能遭遇的漏洞以及如何规避。最后一部分为第 11～16 章，超越 OAuth 2.0 核心协议，延伸到更广泛的标准与规范生态，并对全书进行总结收束。
+本书共 4 个部分、16 章。第一部分为「什么是 OAuth 2.0，以及你为什么需要关注？」和「OAuth 之舞」两章，提供 OAuth 2.0 协议概览，属于核心必读内容。第二部分为「构建一个简单的OAuth客户端」至「真实世界中的 OAuth 2.0」，展示如何构建一个完整的 OAuth 2.0 生态系统。第三部分为「常见客户端漏洞」至「常见的 OAuth 令牌漏洞」，讨论 OAuth 2.0 生态各环节可能遭遇的漏洞以及如何规避。最后一部分为「OAuth 令牌」至「总结与结语」，超越 OAuth 2.0 核心协议，延伸到更广泛的标准与规范生态，并对全书进行总结收束。
 
-- 第 1 章概述 OAuth 2.0 协议及其研发动机，并介绍 OAuth 之前的 API 安全方案。  
-- 第 2 章深入讲解授权码（authorization code）授权类型——OAuth 2.0 核心授权类型中最常见、最具代表性的一种。  
-- 第 3～5 章分别演示如何构建一个简单但功能完整的 OAuth 2.0 客户端、受保护资源服务器与授权服务器。  
-- 第 6 章探讨 OAuth 2.0 协议的多种变体，包括授权码之外的其他授权类型，以及原生应用的相关考量。  
-- 第 7～9 章分别讨论 OAuth 2.0 客户端、受保护资源与授权服务器中常见的漏洞，以及如何预防。  
-- 第 10 章讨论针对 OAuth 2.0 Bearer Token 与授权码的漏洞与攻击方式，以及如何防护。  
-- 第 11 章介绍 JSON Web Token（JWT）以及用于其编码的 JOSE 机制，并讲解 token 自省（introspection）与吊销（revocation），以补全 token 的生命周期。  
-- 第 12 章介绍动态客户端注册（dynamic client registration），以及它如何影响 OAuth 2.0 生态系统的特性。  
-- 第 13 章说明 OAuth 2.0 并不是一个认证（authentication）协议，并进一步展示如何在其之上使用 OpenID Connect 构建认证协议。  
-- 第 14 章介绍构建于 OAuth 2.0 之上的 UMA（User Managed Access）协议，它支持用户对用户的资源共享；同时介绍 OAuth 2.0 与 OpenID Connect 的 HEART 与 iGov Profile，以及这些协议在特定行业垂直领域中的应用方式。  
-- 第 15 章跳出 OAuth 2.0 核心规范中常见的 Bearer Token，讲解持有证明（Proof of Possession, PoP）token 与 TLS token 绑定如何与 OAuth 2.0 协同工作。  
-- 第 16 章对全书进行总结，并引导读者在未来如何应用这些知识，包括对相关库与更广泛 OAuth 2.0 社区的讨论。
+- 「什么是 OAuth 2.0，以及你为什么需要关注？」概述 OAuth 2.0 协议及其研发动机，并介绍 OAuth 之前的 API 安全方案。  
+- 「OAuth 之舞」深入讲解授权码（authorization code）授权类型——OAuth 2.0 核心授权类型中最常见、最具代表性的一种。  
+- 「构建一个简单的OAuth客户端」、「构建一个简单的 OAuth 受保护资源」和「构建一个简单的 OAuth 授权服务器」分别演示如何构建一个简单但功能完整的 OAuth 2.0 客户端、受保护资源服务器与授权服务器。
+- 「真实世界中的 OAuth 2.0」探讨 OAuth 2.0 协议的多种变体，包括授权码之外的其他授权类型，以及原生应用的相关考量。  
+- 「常见客户端漏洞」、「常见的受保护资源漏洞」和「常见的授权服务器漏洞」分别讨论 OAuth 2.0 客户端、受保护资源与授权服务器中常见的漏洞，以及如何预防。
+- 「常见的 OAuth 令牌漏洞」讨论针对 OAuth 2.0 Bearer Token 与授权码的漏洞与攻击方式，以及如何防护。  
+- 「OAuth 令牌」介绍 JSON Web Token（JWT）以及用于其编码的 JOSE 机制，并讲解 token 自省（introspection）与吊销（revocation），以补全 token 的生命周期。  
+- 「动态客户端注册」介绍动态客户端注册（dynamic client registration），以及它如何影响 OAuth 2.0 生态系统的特性。  
+- 「使用 OAuth 2.0 进行用户认证」说明 OAuth 2.0 并不是一个认证（authentication）协议，并进一步展示如何在其之上使用 OpenID Connect 构建认证协议。  
+- 「基于 OAuth 2.0 的协议与配置文件」介绍构建于 OAuth 2.0 之上的 UMA（User Managed Access）协议，它支持用户对用户的资源共享；同时介绍 OAuth 2.0 与 OpenID Connect 的 HEART 与 iGov Profile，以及这些协议在特定行业垂直领域中的应用方式。  
+- 「bearer 令牌以外的选择」跳出 OAuth 2.0 核心规范中常见的 Bearer Token，讲解持有证明（Proof of Possession, PoP）token 与 TLS token 绑定如何与 OAuth 2.0 协同工作。  
+- 「总结与结语」对全书进行总结，并引导读者在未来如何应用这些知识，包括对相关库与更广泛 OAuth 2.0 社区的讨论。
 
 我们不要求你按顺序阅读本书——当然你也完全可以这么做，我们也尽量按可顺读的方式组织内容。我们建议你把前两章连着读完，因为它们会提供对 OAuth 2.0 非常全面的概览，并深入剖析关键概念与组件。不过坦白说，你很可能是在寻找某些特定信息：你可能会先读客户端开发与客户端漏洞相关章节，然后跳到用户认证或 token 管理章节，再去看看授权服务器的内部机制。基于此，我们也尽力让每一章都能自成体系；同时在全书中加入了指向其他内容的引用，方便你按主题快速定位与串联阅读。
 
 ## 关于代码
 
-本书所有代码均以 Apache 2.0 许可证开源。我们认为，鼓励读者使用、改编并贡献这些代码非常重要，即便它们只是练习与示例。OAuth 这类开放标准与开源软件相辅相成，我们也希望为此生态尽一份力。源码托管于 GitHub：[https://github.com/oauthinaction/oauth-in-action-code/](https://github.com/oauthinaction/oauth-in-action-code/) 。我们鼓励你 fork、clone、创建分支，甚至通过 Pull Request 一起把它完善得更好。第 3～13 章与第 15 章配有代码练习；附录 A 提供框架概览，附录 B 收录部分代码清单。你也可以在出版社网站下载代码：[www.manning.com/books/oauth-2-in-action](http://www.manning.com/books/oauth-2-in-action) 。
+本书所有代码均以 Apache 2.0 许可证开源。我们认为，鼓励读者使用、改编并贡献这些代码非常重要，即便它们只是练习与示例。OAuth 这类开放标准与开源软件相辅相成，我们也希望为此生态尽一份力。源码托管于 GitHub：[https://github.com/oauthinaction/oauth-in-action-code/](https://github.com/oauthinaction/oauth-in-action-code/) 。我们鼓励你 fork、clone、创建分支，甚至通过 Pull Request 一起把它完善得更好。「构建一个简单的OAuth客户端」至「bearer 令牌以外的选择」配有代码练习；附录 A 提供框架概览，附录 B 收录部分代码清单。你也可以在出版社网站下载代码：[www.manning.com/books/oauth-2-in-action](http://www.manning.com/books/oauth-2-in-action) 。
 
 本书所有代码使用 Node.js 的 JavaScript 编写。作为主要示例的 Web 应用使用 Express.js 以及多种其他库来实现功能。由于本书目标并非让你掌握某一特定语言或平台，我们尽可能帮读者避开 JavaScript 的一些“怪癖”。如果你使用过任何 Web 框架（例如 Java Spring 或 Ruby on Rails），你会对大部分概念与结构感到熟悉。此外，我们还尽量提供带文档的工具函数，用于处理 OAuth 协议之外的一些辅助细节，例如构建包含查询参数且格式/编码正确的 URL，或生成 HTTP Basic 认证字符串。关于本书所用代码环境的更多信息（包括一个用于演示如何启动运行的简单练习），请参见附录 A。
 
