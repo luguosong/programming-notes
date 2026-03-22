@@ -124,15 +124,31 @@ sequenceDiagram
     participant 用户浏览器
     participant 客户端服务端
     participant 授权服务器
+    participant 资源服务器
 
-    客户端服务端->>用户浏览器: 重定向至授权端点（含 scope=openid profile&nonce=xyz）
-    用户浏览器->>授权服务器: 用户登录并同意授权
-    授权服务器-->>用户浏览器: 重定向回 redirect_uri（携带授权码）
-    用户浏览器->>客户端服务端: 转发授权码
-    客户端服务端->>授权服务器: Token 请求（授权码换 Token）
-    授权服务器-->>客户端服务端: Access Token + **ID Token**（含 nonce=xyz）
+    用户浏览器->>授权服务器: 1. 重定向至授权端点<br/>?response_type=code&scope=openid profile email&nonce=xyz&state=...
+    授权服务器-->>用户浏览器: 2. 展示登录/授权页面
+    用户浏览器->>授权服务器: 3. 用户登录并同意授权
+    授权服务器-->>用户浏览器: 4. 重定向回 redirect_uri（携带授权码）
+    用户浏览器->>客户端服务端: 5. 转发授权码
+    客户端服务端->>授权服务器: 6. POST /token（授权码换 Token）
+    授权服务器-->>客户端服务端: 7. Access Token + Refresh Token + **ID Token**（含 nonce=xyz）
     Note over 客户端服务端: 验证 ID Token 签名、iss、aud、exp、nonce
+    客户端服务端->>资源服务器: 8. GET /api/resource<br/>Authorization: Bearer <access_token>
+    资源服务器-->>客户端服务端: 9. 返回受保护资源
 ```
+
+**执行过程说明：**
+
+1. **发起 OIDC 授权请求**：与普通 OAuth2 授权码流程的关键区别在于 `scope` 参数**必须包含 `openid`**，这是告知授权服务器启用 OIDC 模式的信号。可额外附加 `profile`、`email` 等 scope 来请求用户资料信息。`nonce` 是客户端生成的随机值，用于防止 ID Token 重放攻击。
+2. **展示授权页面**：授权服务器展示登录/同意页面，用户认证过程完全在授权服务器侧进行。
+3. **用户完成认证授权**：用户登录并同意授权。由于 `openid` scope 的存在，授权服务器知道此次需要返回身份信息。
+4. **颁发授权码**：与标准 OAuth2 流程相同，返回一次性短效授权码。
+5. **转发授权码**：浏览器访问回调地址，客户端服务端取出授权码，并验证 `state` 防 CSRF。
+6. **凭码换 Token**：客户端服务端在后端向 Token 端点发起请求，流程与 OAuth2 相同。
+7. **额外颁发 ID Token**：OIDC 的核心差异在于 Token 端点**除了返回 Access Token 和 Refresh Token，还额外返回 ID Token**。ID Token 是一个 JWT，内嵌用户身份信息（`sub`、`email`、`name` 等）和安全验证字段（`iss`、`aud`、`exp`、`nonce`）。客户端服务端**必须**完整验证 ID Token（见[ID Token 验证步骤](#id-token-验证步骤)），确认其来自可信授权服务器且是对本次请求的响应（nonce 一致性检验防重放）。
+8. **携带 Access Token 访问受保护 API**：获取用户身份后，客户端可用 Access Token 正常访问资源服务器。ID Token 用于**认证**（知道用户是谁），Access Token 用于**授权**（访问受保护的资源）。
+9. **返回资源**：资源服务器验证 Access Token 后返回数据。
 
 ## 标准 Scope 对应的 Claim
 
