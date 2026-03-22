@@ -64,6 +64,16 @@ nav = [
             "topic/zensical/index.md",
             { "基本使用" = "topic/zensical/basic/index.md" },
             { "数学公式" = "topic/zensical/math/index.md" }
+        ] },
+        { "OAuth2 & OIDC" = [
+            "topic/oauth/index.md",
+            { "核心概念" = "topic/oauth/core-concepts/index.md" },
+            { "授权类型" = "topic/oauth/grant-types/index.md" },
+            { "OpenID Connect" = "topic/oauth/openid-connect/index.md" },
+            { "JWT 令牌" = "topic/oauth/jwt/index.md" },
+            { "安全实践" = "topic/oauth/security/index.md" },
+            { "实战：授权服务器" = "topic/oauth/spring-auth-server/index.md" },
+            { "实战：客户端与资源服务器" = "topic/oauth/spring-client-resource/index.md" }
         ] }
     ] },
     { "数学" = [
