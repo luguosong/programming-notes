@@ -7,7 +7,7 @@
     <!-- 聚合 POM：统一管理 code/java 下的所有知识点演示模块 -->
     <!-- 在 IntelliJ IDEA 中打开此文件即可导入全部子模块 -->
     <groupId>com.luguosong</groupId>
-    <artifactId>java-examples</artifactId>
+    <artifactId>java</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>Java 知识点演示合集</name>

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * 演示建立数据库连接的各种方式
  */
-class ConnectionTest {
+class   ConnectionTest {
 
     private static final String URL = "jdbc:h2:mem:testdb_conn;DB_CLOSE_DELAY=-1";
     private static final String USER = "sa";
