@@ -21,6 +21,8 @@ sequenceDiagram
     授权服务器-->>客户端服务端: 7. 返回 Access Token + Refresh Token
 ```
 
+授权完成后，客户端携带获得的 Access Token 向资源服务器发起请求，资源服务器验证 Token 后返回受保护的资源，完整流程可参考[专题概述](../index.md)中的全景图。
+
 **关键参数说明：**
 
 | 参数 | 位置 | 说明 |
@@ -54,6 +56,9 @@ sequenceDiagram
 ```
 
 PKCE 用 `code_verifier`/`code_challenge` 绑定替代 `client_secret`，即使授权码被截获，攻击者也无法在 Token 端点使用（因为不知道 `code_verifier`）。
+
+!!! tip "OAuth 2.1 草案变化"
+    OAuth 2.1 草案已将 PKCE 对所有授权码流程设为强制（包括机密客户端），即使今天使用 OAuth 2.0 实现，也建议始终开启 PKCE。
 
 ## 客户端凭证流程（Client Credentials）
 
