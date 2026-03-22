@@ -80,14 +80,41 @@ sequenceDiagram
 
 隐式流程曾经是 SPA 应用的标准方案，但 **OAuth 2.0 Security Best Current Practice（BCP）已将其标为不推荐**。
 
-**问题所在：** Access Token 直接通过 URL fragment 返回给浏览器，暴露在浏览器历史记录和 Referrer 头中，存在泄露风险。
+``` mermaid
+sequenceDiagram
+    participant 用户浏览器（SPA）
+    participant 授权服务器
+
+    用户浏览器（SPA）->>授权服务器: 1. 重定向至授权端点<br/>?response_type=token&client_id=...&redirect_uri=...&scope=...&state=...
+    授权服务器-->>用户浏览器（SPA）: 2. 展示登录/授权页面
+    用户浏览器（SPA）->>授权服务器: 3. 用户登录并同意授权
+    授权服务器-->>用户浏览器（SPA）: 4. 重定向回 redirect_uri<br/>#access_token=...&token_type=Bearer&expires_in=3600&state=...
+    Note over 用户浏览器（SPA）: Token 暴露在 URL fragment 中<br/>浏览器历史记录、Referrer 头均可见
+```
+
+**问题所在：** `response_type=token` 导致 Access Token 直接出现在 URL 的 `#fragment` 部分——浏览器历史记录、服务器日志（Referrer 头）、页面内 JavaScript 均可读取，存在泄露风险。此外，隐式流程无法颁发 Refresh Token，且无法验证 Token 的接收方（缺少 `aud` 绑定）。
 
 !!! danger "请使用授权码流程 + PKCE 替代"
-    现代 SPA 应用应使用**授权码流程 + PKCE**，而非隐式流程。
+    现代 SPA 应用应使用**授权码流程 + PKCE**，而非隐式流程。授权码流程中 Token 仅在后端与授权服务器之间交换，不经过浏览器 URL。
 
 ## 资源所有者密码凭证（ROPC）— 已不推荐
 
 ROPC 允许客户端直接收集用户名和密码后发送给授权服务器换取 Token。**OAuth 2.1 草案已将其移除。**
+
+``` mermaid
+sequenceDiagram
+    participant 用户
+    participant 客户端应用
+    participant 授权服务器
+
+    用户->>客户端应用: 1. 直接在应用界面输入用户名和密码
+    Note over 客户端应用: 客户端明文持有用户凭证
+    客户端应用->>授权服务器: 2. POST /token<br/>grant_type=password&username=...&password=...&client_id=...&scope=...
+    授权服务器-->>客户端应用: 3. 返回 Access Token + Refresh Token
+    Note over 用户,客户端应用: 用户从未直接与授权服务器交互<br/>无法通过授权服务器集中管理会话或撤销
+```
+
+**问题所在：** 用户必须将凭证直接交给客户端应用，这破坏了 OAuth2 的核心设计原则——用户凭证只应由授权服务器处理。客户端应用可以记录密码，也无法使用 MFA（多因素认证）或 SSO（单点登录）等高级认证方式。
 
 !!! danger "强烈不推荐"
     ROPC 破坏了 OAuth2 的核心设计原则：用户凭证不应暴露给客户端应用。仅在无法使用其他流程的遗留系统迁移场景中考虑。
