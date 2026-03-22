@@ -222,23 +222,27 @@ public class ConsentController {
 使用 `OAuth2TokenCustomizer` 向 Access Token 或 ID Token 中添加自定义声明：
 
 ``` java title="TokenCustomizerConfig.java"
-@Bean
-public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
-    return context -> {
-        if (context.getTokenType().equals(OAuth2TokenType.ACCESS_TOKEN)) {
-            // 向 Access Token 添加用户角色
-            Authentication principal = context.getPrincipal();
-            Set<String> authorities = principal.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-            context.getClaims().claim("roles", authorities);
-        }
+@Configuration
+public class TokenCustomizerConfig {
 
-        if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
-            // 向 ID Token 添加额外用户信息
-            context.getClaims().claim("custom_claim", "custom_value");
-        }
-    };
+    @Bean
+    public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
+        return context -> {
+            if (context.getTokenType().equals(OAuth2TokenType.ACCESS_TOKEN)) {
+                // 向 Access Token 添加用户角色
+                Authentication principal = context.getPrincipal();
+                Set<String> authorities = principal.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toSet());
+                context.getClaims().claim("roles", authorities);
+            }
+
+            if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
+                // 向 ID Token 添加额外用户信息
+                context.getClaims().claim("custom_claim", "custom_value");
+            }
+        };
+    }
 }
 ```
 
@@ -267,10 +271,10 @@ spring:
 |--------|-------|------|
 | 依赖 artifactId | `spring-security-oauth2-authorization-server` | `spring-boot-starter-oauth2-authorization-server` |
 | `OAuth2AuthorizationServerConfigurer` | 独立类 | 集成进 Spring Security DSL |
-| `@Import(OAuth2AuthorizationServerConfiguration.class)` | 常用 | 通过 Security Filter Chain 配置 |
+| `@Import(OAuth2AuthorizationServerConfiguration.class)` | 极简场景可用（不推荐生产使用） | 通过 Security Filter Chain 配置 |
 
 !!! tip "关注官方迁移指南"
-    Spring Security 7.0 发布后，请参考官方迁移文档：[Spring Authorization Server 迁移至 Spring Security 7.0](../../../document-translation/spring-authorization-server-153/moving-to-spring-security-70/index.md)
+    Spring Security 7.0 发布后，请参考官方迁移文档（本笔记站持续更新中）以及 [Spring Security 官方 Release Notes](https://github.com/spring-projects/spring-security/releases)。
 
 ---
 
