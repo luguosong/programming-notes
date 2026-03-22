@@ -8,6 +8,12 @@
     - Spring Security 7.0 起，直接引入 `spring-boot-starter-oauth2-authorization-server`
     - 本文以 1.5.x 为主，文末提供 7.0 迁移要点
 
+!!! info "配置方式说明"
+    Spring Authorization Server 提供两种配置方式：
+
+    - **方式一（推荐）**：手动创建授权服务器 Filter Chain，灵活可扩展，本文采用此方式
+    - **方式二（快速体验）**：使用 `@Import(OAuth2AuthorizationServerConfiguration.class)` 自动配置，仅适合无需自定义的极简场景，但不能与手动 Filter Chain 同时使用
+
 ## 快速入门
 
 ### Maven 依赖
@@ -34,15 +40,14 @@
 
 ``` java title="AuthorizationServerConfig.java"
 @Configuration
-@Import(OAuth2AuthorizationServerConfiguration.class) // (1)!
 public class AuthorizationServerConfig {
 
-    // (2)!
+    // (1)!
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient client = RegisteredClient.withId(UUID.randomUUID().toString())
             .clientId("my-client")
-            .clientSecret("{noop}my-secret") // (3)!
+            .clientSecret("{noop}my-secret") // (2)!
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -52,18 +57,18 @@ public class AuthorizationServerConfig {
             .scope(OidcScopes.PROFILE)
             .scope("read")
             .clientSettings(ClientSettings.builder()
-                .requireProofKey(true) // (4)!
+                .requireProofKey(true) // (3)!
                 .build())
             .tokenSettings(TokenSettings.builder()
                 .accessTokenTimeToLive(Duration.ofMinutes(30))
                 .refreshTokenTimeToLive(Duration.ofDays(7))
-                .reuseRefreshTokens(false) // (5)!
+                .reuseRefreshTokens(false) // (4)!
                 .build())
             .build();
         return new InMemoryRegisteredClientRepository(client);
     }
 
-    // (6)!
+    // (5)!
     @Bean
     public JWKSource<SecurityContext> jwkSource() {
         RSAKey rsaKey = generateRsa();
@@ -94,19 +99,18 @@ public class AuthorizationServerConfig {
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder()
-            .issuer("http://localhost:9000") // (7)!
+            .issuer("http://localhost:9000") // (6)!
             .build();
     }
 }
 ```
 
-1. 导入 OAuth2 授权服务器的默认安全配置
-2. 注册客户端仓库（生产环境应使用 `JdbcRegisteredClientRepository`）
-3. `{noop}` 表示明文密码，生产环境必须使用 BCrypt 编码
-4. 强制要求 PKCE，适用于公开客户端
-5. 禁用 Refresh Token 复用，启用 Rotation 机制
-6. JWK 密钥源，生产环境应从文件或 KMS 加载固定密钥
-7. Issuer 必须与客户端配置的 issuer-uri 一致
+1. 注册客户端仓库（生产环境应使用 `JdbcRegisteredClientRepository`）
+2. `{noop}` 表示明文密码，生产环境必须使用 BCrypt 编码
+3. 强制要求 PKCE，适用于公开客户端
+4. 禁用 Refresh Token 复用，启用 Rotation 机制
+5. JWK 密钥源，生产环境应从文件或 KMS 加载固定密钥
+6. Issuer 必须与客户端配置的 issuer-uri 一致
 
 ### 配置 Spring Security 以开放授权服务器端点
 
@@ -251,6 +255,9 @@ spring:
       name: admin
       password: password
 ```
+
+!!! note "UserDetailsService Bean 的优先级"
+    若已在代码中定义了 `UserDetailsService` Bean（如上方的 `InMemoryUserDetailsManager`），Spring Boot Auto-configuration 会**忽略** `spring.security.user` 属性配置。`application.yml` 中的 `spring.security.user` 仅在没有 `UserDetailsService` Bean 时生效，用于快速测试。
 
 ## Spring Security 7.0 迁移要点
 
