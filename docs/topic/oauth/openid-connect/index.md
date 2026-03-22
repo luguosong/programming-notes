@@ -122,16 +122,16 @@ OIDC 授权码流程在 OAuth2 授权码流程基础上，有以下变化：
 ``` mermaid
 sequenceDiagram
     participant 用户浏览器
-    participant 客户端
+    participant 客户端服务端
     participant 授权服务器
 
-    客户端->>用户浏览器: 重定向至授权端点（含 scope=openid profile&nonce=xyz）
+    客户端服务端->>用户浏览器: 重定向至授权端点（含 scope=openid profile&nonce=xyz）
     用户浏览器->>授权服务器: 用户登录并同意授权
     授权服务器-->>用户浏览器: 重定向回 redirect_uri（携带授权码）
-    用户浏览器->>客户端: 转发授权码
-    客户端->>授权服务器: Token 请求（授权码换 Token）
-    授权服务器-->>客户端: Access Token + **ID Token**（含 nonce=xyz）
-    Note over 客户端: 验证 ID Token 签名、iss、aud、exp、nonce
+    用户浏览器->>客户端服务端: 转发授权码
+    客户端服务端->>授权服务器: Token 请求（授权码换 Token）
+    授权服务器-->>客户端服务端: Access Token + **ID Token**（含 nonce=xyz）
+    Note over 客户端服务端: 验证 ID Token 签名、iss、aud、exp、nonce
 ```
 
 ## 标准 Scope 对应的 Claim
