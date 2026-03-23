@@ -27,4 +27,143 @@
   <!-- ===== 卡片区（Task 4 填充） ===== -->
 
 </div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---- 配置参数 ---- */
+  var CONFIG = {
+    nodeCountDesktop: 60,   // 桌面节点数
+    nodeCountMobile: 30,    // 移动端节点数
+    speed: 0.3,             // 漂移速度 px/frame
+    linkDistance: 120,      // 连线距离阈值 px
+    linkOpacityMax: 0.4,    // 连线最大透明度
+    colorDark: '19, 145, 252',    // 深色模式 RGB
+    colorLight: '19, 145, 252',   // 浅色模式 RGB（透明度降低）
+  };
+
+  var canvas, ctx, nodes, animId, observer;
+
+  /* ---- 工具函数 ---- */
+  function isDark() {
+    return document.documentElement.getAttribute('data-md-color-scheme') !== 'default';
+  }
+
+  function getColor(opacity) {
+    var rgb = isDark() ? CONFIG.colorDark : CONFIG.colorLight;
+    var alpha = isDark() ? opacity : opacity * 0.5;
+    return 'rgba(' + rgb + ', ' + alpha + ')';
+  }
+
+  function resize() {
+    if (!canvas) return;
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
+  /* ---- 节点初始化 ---- */
+  function createNodes() {
+    var count = window.innerWidth < 768 ? CONFIG.nodeCountMobile : CONFIG.nodeCountDesktop;
+    nodes = [];
+    for (var i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * CONFIG.speed * 2,
+        vy: (Math.random() - 0.5) * CONFIG.speed * 2,
+      });
+    }
+  }
+
+  /* ---- 动画主循环 ---- */
+  function draw() {
+    if (!canvas || !ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 更新节点位置，边界反弹
+    nodes.forEach(function (n) {
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+    });
+
+    // 绘制连线
+    for (var i = 0; i < nodes.length; i++) {
+      for (var j = i + 1; j < nodes.length; j++) {
+        var dx = nodes[i].x - nodes[j].x;
+        var dy = nodes[i].y - nodes[j].y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONFIG.linkDistance) {
+          var opacity = CONFIG.linkOpacityMax * (1 - dist / CONFIG.linkDistance);
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = getColor(opacity);
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // 绘制节点
+    nodes.forEach(function (n) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = getColor(0.6);
+      ctx.fill();
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  /* ---- 初始化 ---- */
+  function init() {
+    canvas = document.getElementById('home-canvas');
+    if (!canvas) return; // 非主页，退出
+
+    ctx = canvas.getContext('2d');
+
+    // 停止旧动画（instant navigation 返回主页时）
+    if (animId) cancelAnimationFrame(animId);
+
+    // 停止旧 observer
+    if (observer) observer.disconnect();
+
+    // 清理旧 resize 监听器（instant navigation 多次执行防内存泄漏）
+    if (window._homeResizeHandler) {
+      window.removeEventListener('resize', window._homeResizeHandler);
+    }
+    window._homeResizeHandler = function () { resize(); createNodes(); };
+    window.addEventListener('resize', window._homeResizeHandler);
+
+    resize();
+    createNodes();
+    draw();
+
+    // 监听深/浅色主题切换（MutationObserver）
+    observer = new MutationObserver(function () { /* 颜色在 draw() 中实时读取，无需额外操作 */ });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-md-color-scheme'],
+    });
+  }
+
+  /* ---- 兼容 navigation.instant（MkDocs Material） ---- */
+  // document$ 是 MkDocs Material 暴露的 RxJS Observable，每次页面内容更新时触发
+  if (typeof document$ !== 'undefined') {
+    document$.subscribe(function () {
+      init();
+    });
+  } else {
+    // 降级：普通页面加载
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  }
+})();
+</script>
 {% endblock %}
