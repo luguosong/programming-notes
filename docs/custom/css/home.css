@@ -148,3 +148,166 @@
 [data-md-color-scheme="default"] .home-hero {
   background: #f8faff;
 }
+
+/* ============================================================
+   卡片区
+   ============================================================ */
+
+.home-cards {
+  padding: 4rem 2rem 5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-cards__header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.home-cards__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  /* 覆盖 custom.css 中 h2 的蓝色和计数器 */
+  counter-increment: none !important;
+  color: inherit !important;
+}
+
+/* 覆盖 custom.css 的 h2::before 计数器内容 */
+.home-cards .home-cards__title::before {
+  content: '' !important;
+}
+
+/* 覆盖 custom.css 的 h2::after 装饰线 */
+.home-cards .home-cards__title::after {
+  display: none !important;
+}
+
+.home-cards__subtitle {
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  text-indent: 0 !important;
+}
+
+/* 卡片网格 */
+.home-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+/* 单张卡片 */
+.home-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-decoration: none !important;
+  border: 1px solid rgba(19, 145, 252, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(19, 145, 252, 0.5);
+  box-shadow: 0 8px 24px rgba(19, 145, 252, 0.15);
+}
+
+/* 顶部装饰线（各卡片颜色略有差异） */
+.home-card__top-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 10px 10px 0 0;
+}
+
+.home-card--java      .home-card__top-line { background: linear-gradient(90deg, #f89820, #e76f00); }
+.home-card--frontend  .home-card__top-line { background: linear-gradient(90deg, #61dafb, #0070f3); }
+.home-card--security  .home-card__top-line { background: linear-gradient(90deg, #ff6b6b, #c0392b); }
+.home-card--topic     .home-card__top-line { background: linear-gradient(90deg, #a29bfe, #6c5ce7); }
+.home-card--math      .home-card__top-line { background: linear-gradient(90deg, #55efc4, #00b894); }
+.home-card--english   .home-card__top-line { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+
+/* 卡片图标 */
+.home-card__icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+/* 卡片标题 */
+.home-card__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--md-typeset-color) !important;
+  /* 覆盖 custom.css h3 样式 */
+  counter-increment: none !important;
+}
+
+.home-card .home-card__title::before,
+.home-card .home-card__title::after {
+  content: '' !important;
+  display: none !important;
+}
+
+/* 子主题标签 */
+.home-card__tags {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  flex: 1;
+  text-indent: 0 !important;
+}
+
+/* 查看链接 */
+.home-card__link {
+  font-size: 0.85rem;
+  color: #1391fc;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.home-card:hover .home-card__link {
+  color: #00d4ff;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 1023px) {
+  .home-cards__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .home-cards {
+    padding: 2.5rem 1rem 3rem;
+  }
+  .home-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .home-card {
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* ---------- 浅色模式微调 ---------- */
+[data-md-color-scheme="default"] .home-card {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-md-color-scheme="default"] .home-card:hover {
+  border-color: rgba(19, 145, 252, 0.4);
+  box-shadow: 0 8px 24px rgba(19, 145, 252, 0.1);
+}
