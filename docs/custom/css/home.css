@@ -13,7 +13,7 @@
 .home-hero {
   position: relative;
   width: 100%;
-  height: calc(100vh - var(--md-header-height, 48px)); /* 减去导航栏高度，含 tabs */
+  height: 100vh; /* 导航栏和页脚已隐藏，直接全屏 */
   min-height: 500px;
   display: flex;
   align-items: center;
