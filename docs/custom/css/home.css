@@ -1,1 +1,150 @@
-/* 主页专用样式 - 后续 Task 填充 */
+/* ============================================================
+   主页专用样式
+   作用域：.home-page（仅对主页生效，不影响其他页面）
+   ============================================================ */
+
+/* ---------- 重置主页容器，撑满全宽 ---------- */
+.home-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ---------- Hero Section ---------- */
+.home-hero {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--md-header-height, 48px)); /* 减去导航栏高度，含 tabs */
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--md-default-bg-color);
+}
+
+/* Canvas 绝对定位，铺满 Hero，点击穿透 */
+#home-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 文字层，z-index 高于 Canvas */
+.home-hero__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+/* 主标题：渐变色 */
+.home-hero__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #1391fc, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 副标题 */
+.home-hero__subtitle {
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  opacity: 0.75;
+  margin-bottom: 2rem;
+  /* 覆盖 custom.css 中 article > p 的首行缩进 */
+  text-indent: 0 !important;
+}
+
+/* CTA 按钮组 */
+.home-hero__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 按钮基础 */
+.home-btn {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* 实色主按钮 */
+.home-btn--primary {
+  background: #1391fc;
+  color: #fff !important;
+  border: 2px solid #1391fc;
+}
+.home-btn--primary:hover {
+  background: #0d72cc;
+  border-color: #0d72cc;
+  box-shadow: 0 0 16px rgba(19, 145, 252, 0.5);
+  transform: translateY(-1px);
+}
+
+/* 描边次按钮 */
+.home-btn--outline {
+  background: transparent;
+  color: #1391fc !important;
+  border: 2px solid #1391fc;
+}
+.home-btn--outline:hover {
+  background: #1391fc;
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+/* 向下箭头提示 */
+.home-hero__scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  opacity: 0.4;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ---------- 响应式：移动端 ---------- */
+@media (max-width: 767px) {
+  .home-hero {
+    height: 70vh;
+  }
+  .home-hero__title {
+    font-size: 1.6rem;
+  }
+  .home-hero__subtitle {
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
+  }
+  .home-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .home-hero__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ---------- 浅色模式微调 ---------- */
+[data-md-color-scheme="default"] .home-hero {
+  background: #f8faff;
+}

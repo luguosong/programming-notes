@@ -2,9 +2,29 @@
 
 {% block container %}
 <div class="home-page">
-  <!-- Hero 区（Task 2 填充） -->
+
+  <!-- ===== Hero Section ===== -->
   <section class="home-hero">
-    <p style="color:white;text-align:center;padding:4rem">主页模板加载成功 ✓</p>
+    <!-- Canvas 粒子背景（Task 3 填充 JS） -->
+    <canvas id="home-canvas"></canvas>
+
+    <!-- 文字层 -->
+    <div class="home-hero__content">
+      <h1 class="home-hero__title">陆国松的编程笔记</h1>
+      <p class="home-hero__subtitle">── 沉淀技术 · 持续成长 ──</p>
+      <div class="home-hero__actions">
+        <a href="{{ 'java/' | url }}" class="home-btn home-btn--primary">开始阅读</a>
+        <a href="https://github.com/luguosong" target="_blank" rel="noopener" class="home-btn home-btn--outline">
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 向下箭头 -->
+    <div class="home-hero__scroll-hint">▼</div>
   </section>
+
+  <!-- ===== 卡片区（Task 4 填充） ===== -->
+
 </div>
 {% endblock %}
