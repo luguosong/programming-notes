@@ -79,6 +79,21 @@ nav = [
         { "Windows" = [
             "topic/windows/index.md",
             { "DOS 命令" = "topic/windows/dos/index.md" }
+        ] },
+        { "Docker" = [
+            "topic/docker/index.md",
+            { "基础入门" = [
+                "topic/docker/getting-started/index.md",
+                { "Docker 基础" = "topic/docker/basics/index.md" },
+                { "Docker Compose" = "topic/docker/compose/index.md" }
+            ] },
+            { "生产实践" = [
+                "topic/docker/production/index.md",
+                { "Docker Swarm" = "topic/docker/swarm/index.md" },
+                { "私有仓库 Harbor" = "topic/docker/harbor/index.md" },
+                { "镜像安全扫描" = "topic/docker/security/index.md" },
+                { "CI/CD 流水线" = "topic/docker/cicd/index.md" }
+            ] }
         ] }
     ] },
     { "数学" = [
