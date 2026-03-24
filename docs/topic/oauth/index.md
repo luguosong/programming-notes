@@ -2,7 +2,7 @@
 icon: lucide/shield-check
 ---
 
-# OAuth2 & OpenID Connect 专题
+# OAuth2
 
 OAuth2 和 OpenID Connect 是现代互联网应用中最重要的授权与认证标准。无论是第三方登录（"使用 GitHub 登录"）、API 访问控制，还是微服务间的安全调用，背后都离不开这两套协议。
 
