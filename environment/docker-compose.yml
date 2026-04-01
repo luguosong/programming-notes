@@ -1,0 +1,110 @@
+# 本地开发基础环境
+# 用途：为 code/ 下所有 Java 示例提供运行时依赖
+# 启动：docker compose up -d
+# 停止：docker compose down
+# 数据持久化：各服务数据挂载到 ./data/ 目录
+
+services:
+
+  # ─────────────────────────────────────────────
+  # MySQL 8.0
+  # 宿主机端口：23306（容器内部仍为 3306，前缀 2 避免与本机已有服务冲突）
+  # 账号：root / 12345678（与各示例 application.properties 一致）
+  # ─────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: dev-mysql
+    restart: unless-stopped
+    ports:
+      - "23306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345678"
+      # 字符集 & 时区
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-time-zone=+08:00
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./init/mysql:/docker-entrypoint-initdb.d   # 放置初始化 SQL（按需使用）
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p12345678"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # Redis 7
+  # 宿主机端口：26379（容器内部仍为 6379）
+  # 默认无密码（如需密码取消 requirepass 注释）
+  # ─────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: dev-redis
+    restart: unless-stopped
+    ports:
+      - "26379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+    # command: redis-server --requirepass 123456 --save 60 1
+    volumes:
+      - ./data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # RabbitMQ 3（带管理控制台）
+  # AMQP 宿主机端口：25672（容器内部 5672）
+  # 管理控制台：http://localhost:35672  (guest/guest)  → 容器内部 15672
+  # ─────────────────────────────────────────────
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: dev-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "25672:5672"
+      - "35672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # Nacos 2.3（单机模式，内嵌 Derby 数据库）
+  # 控制台：http://localhost:28848/nacos  (nacos/nacos)
+  # 服务注册/配置中心宿主机端口：28848
+  # gRPC 宿主机端口：29848、29849
+  # ─────────────────────────────────────────────
+  nacos:
+    image: nacos/nacos-server:v2.3.2
+    container_name: dev-nacos
+    restart: unless-stopped
+    ports:
+      - "28848:8848"
+      - "29848:9848"
+      - "29849:9849"
+    environment:
+      MODE: standalone
+      NACOS_AUTH_ENABLE: "false"      # 本地开发关闭鉴权，生产环境务必开启
+      TZ: Asia/Shanghai
+      JVM_XMS: 256m
+      JVM_XMX: 256m
+      JVM_XMN: 128m
+    volumes:
+      - ./data/nacos:/home/nacos/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8848/nacos/actuator/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
