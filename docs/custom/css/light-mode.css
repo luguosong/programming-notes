@@ -1,0 +1,21 @@
+/* ==================== 浅色模式优化 ==================== */
+/* 设计参考：Linear — 正文降噪 · 细腻边框 · 标题与正文层级分明 */
+
+/* 正文文字：略微降低灰度，与深色标题拉开层级 */
+:root {
+    --md-default-fg-color: rgba(0, 0, 0, 0.76);
+    --md-default-fg-color--light: rgba(0, 0, 0, 0.54);
+}
+
+/* === 细腻边框 === */
+
+/* 行内代码边框 */
+.md-typeset :not(pre) > code {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* 代码块边框 */
+.md-typeset pre > code {
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+}

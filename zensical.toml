@@ -15,6 +15,7 @@ extra_css = [
     "custom/css/font.css",
     "custom/css/custom.css",
     "custom/css/heading.css",
+    "custom/css/light-mode.css",
     "custom/css/dark-mode.css",
     "custom/css/sidebar-width.css",
     "custom/css/home.css",

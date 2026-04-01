@@ -42,22 +42,24 @@
     content: counter(section-1) "." counter(section-2) "." counter(section-3) "." counter(section-4) " ";
 }
 
-/* === 浅色模式标题色：深色调，白底高对比 === */
+/* === 浅色模式标题色：中性深色，白底高对比 === */
 
 .md-typeset h2 {
-    color: #1e3a5f;
+    color: #1a1a1a;
+    font-weight: 700;
 }
 
 .md-typeset h3 {
-    color: #1e3a5f;
+    color: #252525;
+    font-weight: 600;
 }
 
 .md-typeset h4 {
-    color: #2d4a6f;
+    color: #333333;
 }
 
 .md-typeset h5 {
-    color: #3d5a80;
+    color: #444444;
 }
 
 /* === 深色模式标题色：纯白系，与正文灰度拉开层级 === */
@@ -93,31 +95,31 @@
     margin-top: 8px;
 }
 
-/* 浅色模式横线 */
+/* 浅色模式横线：中性色 */
 
 .md-typeset h2::after {
     width: 100%;
-    background: linear-gradient(to right, rgba(30, 58, 95, 0.2), transparent);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
 }
 
 .md-typeset h3::after {
     width: 75%;
-    background: linear-gradient(to right, rgba(30, 58, 95, 0.15), transparent);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
 }
 
 .md-typeset h4::after {
     width: 50%;
-    background: linear-gradient(to right, rgba(45, 74, 111, 0.12), transparent);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.06), transparent);
 }
 
 .md-typeset h5::after {
     width: 33%;
-    background: linear-gradient(to right, rgba(61, 90, 128, 0.1), transparent);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.05), transparent);
 }
 
 .md-typeset h6::after {
     width: 15%;
-    background: linear-gradient(to right, rgba(61, 90, 128, 0.08), transparent);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
 }
 
 /* 深色模式横线：极细微，Linear 风格 */
