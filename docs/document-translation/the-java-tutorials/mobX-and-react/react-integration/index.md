@@ -9,7 +9,7 @@ import {observer} from "mobx-react-lite" // Or "mobx-react".
 const MyComponent = observer(props => ReactElement)
 ```
 
-虽然 **MobX** 可以脱离 **React** 独立工作，但它们最常见的用法还是搭配在一起。你在《MobX 精要》里已经看到这种集成里最关键的一环：
+虽然 `MobX` 可以脱离 `React` 独立工作，但它们最常见的用法还是搭配在一起。你在《MobX 精要》里已经看到这种集成里最关键的一环：
 `observer` 这个高阶组件（HOC），可以用来包裹一个 React 组件。
 
 `observer` 由一个单独的 React 绑定（bindings）包提供，你会在安装时自行选择。这个例子里，我们将使用更轻量的 `mobx-react-lite`

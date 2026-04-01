@@ -1028,7 +1028,7 @@ curl -u natalie:12345 http://localhost:8080/hello
 }
 ```
 
-你可以在项目 **ssia-ch9-ex6** 中找到一个完整示例，展示如何使用 @RolesAllowed 和 @Secured 注解。
+你可以在项目 `ssia-ch9-ex6` 中找到一个完整示例，展示如何使用 @RolesAllowed 和 @Secured 注解。
 
 ## 总结
 

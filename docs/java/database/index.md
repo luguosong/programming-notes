@@ -52,10 +52,10 @@ graph TB
 !!! tip "推荐学习顺序"
     理解底层原理对掌握上层框架至关重要：
 
-    1. **JDBC 基础** → 理解连接、Statement、事务、连接池的底层机制
-    2. **JdbcTemplate** → 体验 Spring 如何简化 JDBC 操作
-    3. **MyBatis** → 掌握 SQL 映射框架，适合国内企业开发
-    4. **JPA / Hibernate** → 掌握 ORM 思想，与 Spring Data JPA 配合使用
+    1. `JDBC 基础` → 理解连接、Statement、事务、连接池的底层机制
+    2. `JdbcTemplate` → 体验 Spring 如何简化 JDBC 操作
+    3. `MyBatis` → 掌握 SQL 映射框架，适合国内企业开发
+    4. `JPA / Hibernate` → 掌握 ORM 思想，与 Spring Data JPA 配合使用
 
 ## 本节内容
 

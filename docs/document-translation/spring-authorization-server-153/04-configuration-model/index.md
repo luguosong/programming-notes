@@ -273,15 +273,15 @@ OAuth2ClientAuthenticationConfigurer 用于配置 OAuth2ClientAuthenticationFilt
 
 OAuth2ClientAuthenticationFilter 的默认配置如下：
 
-- **AuthenticationConverter** —— 一个 `DelegatingAuthenticationConverter`，由以下组件组成：  
+- `AuthenticationConverter` —— 一个 `DelegatingAuthenticationConverter`，由以下组件组成：  
   `JwtClientAssertionAuthenticationConverter`、`X509ClientCertificateAuthenticationConverter`、`ClientSecretBasicAuthenticationConverter`、`ClientSecretPostAuthenticationConverter` 和 `PublicClientAuthenticationConverter`。
 
-- **AuthenticationManager** —— 一个由以下组件构成的 `AuthenticationManager`：  
+- `AuthenticationManager` —— 一个由以下组件构成的 `AuthenticationManager`：  
   `JwtClientAssertionAuthenticationProvider`、`X509ClientCertificateAuthenticationProvider`、`ClientSecretAuthenticationProvider` 和 `PublicClientAuthenticationProvider`。
 
-- **AuthenticationSuccessHandler** —— 一个内部实现，用于将已通过认证的 `OAuth2ClientAuthenticationToken`（当前的 `Authentication`）绑定到 `SecurityContext`。
+- `AuthenticationSuccessHandler` —— 一个内部实现，用于将已通过认证的 `OAuth2ClientAuthenticationToken`（当前的 `Authentication`）绑定到 `SecurityContext`。
 
-- **AuthenticationFailureHandler** —— 一个内部实现，会使用 `OAuth2AuthenticationException` 中携带的 `OAuth2Error` 来返回 OAuth2 错误响应。
+- `AuthenticationFailureHandler` —— 一个内部实现，会使用 `OAuth2AuthenticationException` 中携带的 `OAuth2Error` 来返回 OAuth2 错误响应。
 
 ### 自定义JWT客户端声明校验
 

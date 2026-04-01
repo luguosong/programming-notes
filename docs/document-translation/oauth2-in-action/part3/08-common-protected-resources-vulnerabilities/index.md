@@ -421,7 +421,7 @@ Connection: keep-alive
 
 > Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:9002/helloWorld. (Reason: CORS header ‘Access-Control-Allow-Origin’ missing).
 
-那么，这到底是怎么回事？浏览器是在告诉我们：我们正在做一件不被允许的事情——试图用 `JavaScript` 去调用一个**不同源**的 `URL`，从而触犯了浏览器强制执行的 `Same Origin Policy`（同源策略）[^9]。具体来说，从运行在 `http://127.0.0.1:9000` 的隐式客户端，我们发起了一个指向 `http://127.0.0.1:9002` 的 `AJAX` 请求。本质上，同源策略的含义是：“只有当浏览器窗口来自同一个基础 `URL`（由 `protocol://domain:port` 组成）时，彼此之间才能在对方的上下文中工作。”在这里我们显然违反了这一规则，因为端口不一致：`9000` 对 `9002`。在实际的 Web 场景中，更常见的是：客户端应用部署在一个域名下，而受保护资源部署在另一个域名下，就像我们照片打印的例子一样。
+那么，这到底是怎么回事？浏览器是在告诉我们：我们正在做一件不被允许的事情——试图用 `JavaScript` 去调用一个`不同源`的 `URL`，从而触犯了浏览器强制执行的 `Same Origin Policy`（同源策略）[^9]。具体来说，从运行在 `http://127.0.0.1:9000` 的隐式客户端，我们发起了一个指向 `http://127.0.0.1:9002` 的 `AJAX` 请求。本质上，同源策略的含义是：“只有当浏览器窗口来自同一个基础 `URL`（由 `protocol://domain:port` 组成）时，彼此之间才能在对方的上下文中工作。”在这里我们显然违反了这一规则，因为端口不一致：`9000` 对 `9002`。在实际的 Web 场景中，更常见的是：客户端应用部署在一个域名下，而受保护资源部署在另一个域名下，就像我们照片打印的例子一样。
 
 [^9]: [https://en.wikipedia.org/wiki/Same-origin_policy](https://zh.wikipedia.org/wiki/%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5)
 

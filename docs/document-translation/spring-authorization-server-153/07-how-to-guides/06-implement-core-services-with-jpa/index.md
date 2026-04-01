@@ -108,7 +108,7 @@ CREATE TABLE authorizationConsent (
 
 ### 客户端实体
 
-下面的代码清单展示了 **Client** 实体，用于持久化从 **RegisteredClient** 领域对象映射而来的信息。
+下面的代码清单展示了 `Client` 实体，用于持久化从 `RegisteredClient` 领域对象映射而来的信息。
 
 ``` java
 import java.time.Instant;

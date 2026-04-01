@@ -2,7 +2,7 @@
 
 !!! warning "版本迁移重要说明"
 
-    **Spring Authorization Server 1.5.x 是最后一代独立版本。** 从 Spring Security 7.0 起，Spring Authorization Server 的功能已合并进 Spring Security 主项目，不再作为单独的依赖存在。
+    `Spring Authorization Server 1.5.x 是最后一代独立版本。` 从 Spring Security 7.0 起，Spring Authorization Server 的功能已合并进 Spring Security 主项目，不再作为单独的依赖存在。
 
     - 1.5.x 对应 Spring Boot 3.5.x，artifactId 为 `spring-security-oauth2-authorization-server`
     - Spring Security 7.0 起，直接引入 `spring-boot-starter-oauth2-authorization-server`
@@ -11,8 +11,8 @@
 !!! info "配置方式说明"
     Spring Authorization Server 提供两种配置方式：
 
-    - **方式一（推荐）**：手动创建授权服务器 Filter Chain，灵活可扩展，本文采用此方式
-    - **方式二（快速体验）**：使用 `@Import(OAuth2AuthorizationServerConfiguration.class)` 自动配置，仅适合无需自定义的极简场景，但不能与手动 Filter Chain 同时使用
+    - `方式一（推荐）`：手动创建授权服务器 Filter Chain，灵活可扩展，本文采用此方式
+    - `方式二（快速体验）`：使用 `@Import(OAuth2AuthorizationServerConfiguration.class)` 自动配置，仅适合无需自定义的极简场景，但不能与手动 Filter Chain 同时使用
 
 ## 快速入门
 
@@ -261,7 +261,7 @@ spring:
 ```
 
 !!! note "UserDetailsService Bean 的优先级"
-    若已在代码中定义了 `UserDetailsService` Bean（如上方的 `InMemoryUserDetailsManager`），Spring Boot Auto-configuration 会**忽略** `spring.security.user` 属性配置。`application.yml` 中的 `spring.security.user` 仅在没有 `UserDetailsService` Bean 时生效，用于快速测试。
+    若已在代码中定义了 `UserDetailsService` Bean（如上方的 `InMemoryUserDetailsManager`），Spring Boot Auto-configuration 会`忽略` `spring.security.user` 属性配置。`application.yml` 中的 `spring.security.user` 仅在没有 `UserDetailsService` Bean 时生效，用于快速测试。
 
 ## Spring Security 7.0 迁移要点
 
@@ -278,5 +278,5 @@ spring:
 
 ---
 
-**上一篇：** [安全实践](../security/index.md)
-**下一篇：** [实战：客户端与资源服务器](../spring-client-resource/index.md)
+`上一篇：` [安全实践](../security/index.md)
+`下一篇：` [实战：客户端与资源服务器](../spring-client-resource/index.md)

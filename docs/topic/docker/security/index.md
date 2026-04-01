@@ -8,12 +8,12 @@
 
 | 工具 | 特点 |
 |------|------|
-| **Trivy** | CNCF 项目，扫描速度快，支持 OS 包、语言依赖、IaC、Secret |
-| **Docker Scout** | Docker 官方内置，与 Docker Desktop / Hub 集成 |
-| **Grype** | Anchore 出品，支持多种格式 |
-| **Snyk** | SaaS + CLI，商业支持好 |
+| `Trivy` | CNCF 项目，扫描速度快，支持 OS 包、语言依赖、IaC、Secret |
+| `Docker Scout` | Docker 官方内置，与 Docker Desktop / Hub 集成 |
+| `Grype` | Anchore 出品，支持多种格式 |
+| `Snyk` | SaaS + CLI，商业支持好 |
 
-本文重点介绍 **Trivy** 和 **Docker Scout**。
+本文重点介绍 `Trivy` 和 `Docker Scout`。
 
 ---
 

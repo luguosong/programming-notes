@@ -471,19 +471,19 @@ password: secret
 
 <div class="grid cards" markdown>
 
-- :fontawesome-brands-java: **Java 基础**
+- :fontawesome-brands-java: `Java 基础`
 
     面向对象、集合框架、并发编程
 
-- :fontawesome-brands-react: **React**
+- :fontawesome-brands-react: `React`
 
     组件化开发、Hooks、状态管理
 
-- :lucide-shield: **Spring Security**
+- :lucide-shield: `Spring Security`
 
     认证、授权、OAuth2
 
-- :lucide-database: **数据库**
+- :lucide-database: `数据库`
 
     MySQL、Redis、JPA
 
@@ -670,16 +670,16 @@ hide:
 # 页面内容...
 ```
 
-**`status` 可用值**（需在 `zensical.toml` 的 `extra.status` 中定义）：
+`status` 可用值（需在 `zensical.toml` 的 `extra.status` 中定义）：
 
 | 值 | 含义 |
 | -- | ---- |
 | `new` | 新增内容 |
 | `deprecated` | 已废弃 |
 
-**`icon` 图标短码**：使用 `lucide/名称`、`fontawesome/brands/名称` 等格式。
+`icon` 图标短码：使用 `lucide/名称`、`fontawesome/brands/名称` 等格式。
 
-**`hide` 可隐藏的元素**：`navigation`（左侧导航栏）、`toc`（右侧目录）。
+`hide` 可隐藏的元素：`navigation`（左侧导航栏）、`toc`（右侧目录）。
 
 ---
 

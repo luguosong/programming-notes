@@ -475,8 +475,7 @@ public class OAuth2AuthorizationCodeGrantAuthorization extends OAuth2Authorizati
 
 ### 授权码授权实体（OpenID Connect 1.0）
 
-下面的代码清单展示了 **OidcAuthorizationCodeGrantAuthorization** 实体。它继承自 *
-*OAuth2AuthorizationCodeGrantAuthorization**，并为 OpenID Connect 1.0 的 **authorization_code** 授权类型定义了额外的属性。
+下面的代码清单展示了 `OidcAuthorizationCodeGrantAuthorization` 实体。它继承自 `OAuth2AuthorizationCodeGrantAuthorization`，并为 OpenID Connect 1.0 的 `authorization_code` 授权类型定义了额外的属性。
 
 ```java
 import java.security.Principal;
@@ -523,8 +522,8 @@ public class OidcAuthorizationCodeGrantAuthorization extends OAuth2Authorization
 
 ### 客户端凭据授权实体
 
-下面的代码清单展示了适用于 **client_credentials** 授权类型的 **OAuth2ClientCredentialsGrantAuthorization** 实体，它继承自
-**OAuth2AuthorizationGrantAuthorization**。
+下面的代码清单展示了适用于 `client_credentials` 授权类型的 `OAuth2ClientCredentialsGrantAuthorization` 实体，它继承自
+`OAuth2AuthorizationGrantAuthorization`。
 
 ```java
 import java.util.Set;

@@ -4,12 +4,12 @@
 
 将 Docker 镜像构建、扫描、推送集成到 CI/CD 流水线，实现：
 
-- **代码合并时自动构建镜像**
-- **自动扫描漏洞，阻断不安全的镜像**
-- **自动推送到镜像仓库**
-- **自动部署到测试/生产环境**
+- `代码合并时自动构建镜像`
+- `自动扫描漏洞，阻断不安全的镜像`
+- `自动推送到镜像仓库`
+- `自动部署到测试/生产环境`
 
-本文介绍 **GitHub Actions** 和 **Jenkins** 两种主流方案。
+本文介绍 `GitHub Actions` 和 `Jenkins` 两种主流方案。
 
 ---
 
@@ -340,15 +340,15 @@ pipeline {
 
 ### Jenkins 配置要求
 
-1. **安装插件**：
+1. `安装插件`：
    - Docker Pipeline
    - SSH Agent
    - Credentials Binding
 
-2. **配置 Credentials**：
+2. `配置 Credentials`：
    Jenkins → Manage Jenkins → Credentials → 新建 "Username with password"，ID 填 `harbor-credentials`。
 
-3. **Jenkins 节点需要**：
+3. `Jenkins 节点需要`：
    - 安装 Docker CLI（与 Jenkins 进程在同一节点）
    - Jenkins 用户加入 `docker` 组：`sudo usermod -aG docker jenkins`
    - 安装 Trivy：`sudo apt-get install trivy`
@@ -380,7 +380,7 @@ pipeline {
 
 ### 利用层缓存加速构建
 
-在 Dockerfile 中，**将变化频率低的层放在前面**，充分利用构建缓存：
+在 Dockerfile 中，`将变化频率低的层放在前面`，充分利用构建缓存：
 
 ``` dockerfile
 # ✅ 先复制依赖文件（变化少），再复制源码（变化多）

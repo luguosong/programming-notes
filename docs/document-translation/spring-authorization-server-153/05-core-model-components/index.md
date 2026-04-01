@@ -91,7 +91,7 @@ public class RegisteredClient implements Serializable {
 RegisteredClientRepository 是用于注册新客户端和查询已有客户端的核心组件。其他组件在执行特定协议流程时（例如客户端认证、授权码处理、令牌自省、动态客户端注册等）都会使用到它。
 
 目前提供的 RegisteredClientRepository 实现有 InMemoryRegisteredClientRepository 和 JdbcRegisteredClientRepository。  
-InMemoryRegisteredClientRepository 会将 RegisteredClient 实例存储在内存中，**只建议在开发和测试阶段使用**。  
+InMemoryRegisteredClientRepository 会将 RegisteredClient 实例存储在内存中，`只建议在开发和测试阶段使用`。  
 JdbcRegisteredClientRepository 是基于 JDBC 的实现，通过 JdbcOperations 将 RegisteredClient 实例持久化到数据库中。
 
 !!! note
@@ -185,7 +185,7 @@ OAuth2Authorization.Token 还提供了 getClaims() 方法，用于返回与该 O
 OAuth2AuthorizationService 是用于存储新授权并查询已有授权的核心组件。其他组件在执行特定协议流程时都会用到它，例如客户端认证、授权码处理、令牌自省、令牌吊销、动态客户端注册等。
 
 提供的 OAuth2AuthorizationService 实现包括 InMemoryOAuth2AuthorizationService 和 JdbcOAuth2AuthorizationService。  
-InMemoryOAuth2AuthorizationService 会将 OAuth2Authorization 实例存储在内存中，**仅推荐在开发和测试阶段使用**。  
+InMemoryOAuth2AuthorizationService 会将 OAuth2Authorization 实例存储在内存中，`仅推荐在开发和测试阶段使用`。  
 JdbcOAuth2AuthorizationService 是基于 JDBC 的实现，通过使用 JdbcOperations 将 OAuth2Authorization 实例持久化存储。
 
 !!! note

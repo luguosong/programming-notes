@@ -2,7 +2,7 @@
 
 ## 概述
 
-Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主机组成一个**集群（Swarm）**，以**服务（Service）**为单位统一管理和调度容器，提供高可用、负载均衡与滚动更新能力。
+Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主机组成一个`集群（Swarm）`，以`服务（Service）`为单位统一管理和调度容器，提供高可用、负载均衡与滚动更新能力。
 
 ???+ tip "Swarm vs Kubernetes"
     Swarm 配置简单、与 Docker 原生集成；Kubernetes 功能更全、生态更大。小规模项目或已有 Docker Compose 经验的团队可优先考虑 Swarm。
@@ -13,13 +13,13 @@ Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主
 
 | 概念 | 说明 |
 |------|------|
-| **Node（节点）** | 集群中的一台 Docker 主机，分为 Manager 和 Worker |
-| **Manager Node** | 负责集群管理、调度和 Raft 共识，可同时运行工作负载 |
-| **Worker Node** | 只负责运行容器，不参与调度决策 |
-| **Service（服务）** | 定义要运行的镜像、副本数、端口映射等，是 Swarm 的部署单位 |
-| **Task（任务）** | Service 的最小调度单元，对应一个容器实例 |
-| **Stack（栈）** | 多个 Service 的组合，通过 `docker stack deploy` 部署 Compose 文件 |
-| **Overlay Network** | 跨节点的虚拟网络，Service 间通信的基础 |
+| `Node（节点）` | 集群中的一台 Docker 主机，分为 Manager 和 Worker |
+| `Manager Node` | 负责集群管理、调度和 Raft 共识，可同时运行工作负载 |
+| `Worker Node` | 只负责运行容器，不参与调度决策 |
+| `Service（服务）` | 定义要运行的镜像、副本数、端口映射等，是 Swarm 的部署单位 |
+| `Task（任务）` | Service 的最小调度单元，对应一个容器实例 |
+| `Stack（栈）` | 多个 Service 的组合，通过 `docker stack deploy` 部署 Compose 文件 |
+| `Overlay Network` | 跨节点的虚拟网络，Service 间通信的基础 |
 
 ```mermaid
 graph TB
@@ -314,10 +314,10 @@ docker service create \
 
 ## 高可用建议
 
-- **Manager 节点数量**：推荐 3 或 5 个（奇数保证 Raft 多数派）
-- **容错能力**：3 个 Manager 可容忍 1 个故障，5 个可容忍 2 个
-- **不要在生产环境只有 1 个 Manager**
-- **Worker 节点**：按业务负载水平扩展，不参与共识，扩展无上限
+- `Manager 节点数量`：推荐 3 或 5 个（奇数保证 Raft 多数派）
+- `容错能力`：3 个 Manager 可容忍 1 个故障，5 个可容忍 2 个
+- `不要在生产环境只有 1 个 Manager`
+- `Worker 节点`：按业务负载水平扩展，不参与共识，扩展无上限
 
 ``` bash
 # 查看 Raft 共识状态

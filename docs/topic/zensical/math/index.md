@@ -1,6 +1,6 @@
 # 数学公式
 
-Zensical 使用 **MathJax** 渲染 LaTeX 数学公式，需在 `zensical.toml` 中启用 `pymdownx.arithmatex` 扩展。
+Zensical 使用 `MathJax` 渲染 LaTeX 数学公式，需在 `zensical.toml` 中启用 `pymdownx.arithmatex` 扩展。
 
 ## 基础运算
 

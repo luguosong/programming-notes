@@ -1,6 +1,6 @@
 # 实战：OAuth2 客户端与资源服务器
 
-本文介绍如何使用 Spring Security 配置 OAuth2 **客户端应用**（让用户通过 OAuth2 登录）和 **资源服务器**（保护 API 端点并验证 Token）。
+本文介绍如何使用 Spring Security 配置 OAuth2 `客户端应用`（让用户通过 OAuth2 登录）和 `资源服务器`（保护 API 端点并验证 Token）。
 
 授权服务器的配置见[实战：授权服务器](../spring-auth-server/index.md)。
 
@@ -72,7 +72,7 @@ public class ClientSecurityConfig {
 
 1. 登录成功后重定向到 `/dashboard`
 
-**在 Controller 中获取已认证用户信息：**
+`在 Controller 中获取已认证用户信息：`
 
 ``` java title="DashboardController.java"
 @GetMapping("/dashboard")
@@ -87,7 +87,7 @@ public String dashboard(@AuthenticationPrincipal OidcUser oidcUser, Model model)
 
 ### oauth2Client()：客户端代调 API（Client Credentials）
 
-当客户端需要以**自身身份**（而非用户身份）调用后端 API 时，使用客户端凭证流程：
+当客户端需要以`自身身份`（而非用户身份）调用后端 API 时，使用客户端凭证流程：
 
 ``` yaml title="application.yml"
 spring:
@@ -143,7 +143,7 @@ public class ApiClientConfig {
 ```
 
 !!! tip "纯服务端应用（无用户登录）的注意点"
-    上面示例的 `DefaultOAuth2AuthorizedClientManager` 依赖 `HttpServletRequest`/`HttpServletResponse`，适用于**有用户会话的 Web 应用**。若是纯后台服务（如批处理任务、定时任务），需改用不依赖 Servlet 上下文的 `AuthorizedClientServiceOAuth2AuthorizedClientManager`：
+    上面示例的 `DefaultOAuth2AuthorizedClientManager` 依赖 `HttpServletRequest`/`HttpServletResponse`，适用于`有用户会话的 Web 应用`。若是纯后台服务（如批处理任务、定时任务），需改用不依赖 Servlet 上下文的 `AuthorizedClientServiceOAuth2AuthorizedClientManager`：
 
     ``` java
     @Bean
@@ -215,7 +215,7 @@ public class ResourceServerConfig {
 
 1. Spring Security 自动将 JWT 中的 `scope` claim 映射为 `SCOPE_xxx` 权限
 
-**在 Controller 中提取 Token 信息：**
+`在 Controller 中提取 Token 信息：`
 
 ``` java title="ApiController.java"
 @RestController
@@ -308,5 +308,5 @@ class ApiControllerTest {
 
 ---
 
-**上一篇：** [实战：授权服务器](../spring-auth-server/index.md)
-**返回专题：** [OAuth2 & OpenID Connect](../index.md)
+`上一篇：` [实战：授权服务器](../spring-auth-server/index.md)
+`返回专题：` [OAuth2 & OpenID Connect](../index.md)

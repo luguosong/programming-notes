@@ -351,7 +351,7 @@ https://victim.com/authorize?response_type=code&client_id=bc88FitX1298KPj2WS259
 BBMa9_KCfL3&scope=WRONG_SCOPE&redirect_uri=https://attacker.com
 ```
 
-这应该会在**无需任何用户交互**的情况下，直接重定向回 `https://attacker.com`，并符合开放重定向器（open redirector）的定义。[^10] 那接下来呢？对许多攻击而言，拿到一个开放重定向器通常只是攻击链中的一小环，但却是至关重要的一环。从攻击者的角度看，还有什么比“开箱即用”地从一个受信任的 `OAuth` 提供商那里拿到这个能力更妙的呢？
+这应该会在`无需任何用户交互`的情况下，直接重定向回 `https://attacker.com`，并符合开放重定向器（open redirector）的定义。[^10] 那接下来呢？对许多攻击而言，拿到一个开放重定向器通常只是攻击链中的一小环，但却是至关重要的一环。从攻击者的角度看，还有什么比“开箱即用”地从一个受信任的 `OAuth` 提供商那里拿到这个能力更妙的呢？
 
 [^10]: [https://www.owasp.org/index.php/Top_10_2013-A10-Unvalidated_Redirects_and_Forwards](https://owasp.org/www-project-top-ten/)
 
@@ -396,7 +396,7 @@ http://localhost:9001/authorize?client_id=oauth-client-1&redirect_uri=http://loc
 在保护 `Authorization Server` 时需要承担许多职责，因为它是 `OAuth` 安全生态系统的中枢。
 
 - 授权码一旦被使用，就应立即作废（`burn`）。
-- 对于 `redirect_uri`，`Authorization Server` 应采用的**唯一**安全校验方式是**精确匹配**（`exact matching`）。
+- 对于 `redirect_uri`，`Authorization Server` 应采用的`唯一`安全校验方式是`精确匹配`（`exact matching`）。
 - 若完全照搬 `OAuth` 核心规范实现，可能会让 `Authorization Server` 变成一个开放重定向器（`open redirector`）。如果这是一个被妥善监控的重定向器，那问题不大；但若实现不当，则可能带来风险。
 - 在错误报告过程中，要警惕通过 `fragment` 或 `Referer` 头泄露信息的可能。
 
