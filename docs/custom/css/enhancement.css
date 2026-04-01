@@ -1,0 +1,131 @@
+/* ==================== 交互与细节打磨 ==================== */
+/* 滚动条 · 导航状态 · 链接动画 · 表格美化 · 选中色 · 平滑滚动 */
+
+/* === 平滑滚动 === */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* === 自定义滚动条 === */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+}
+
+[data-md-color-scheme="slate"] * {
+    scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+/* Webkit (Chrome/Edge/Safari) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* === 导航链接 hover/active 状态 === */
+
+.md-nav__link {
+    transition: color 0.15s ease, background-color 0.15s ease;
+    border-radius: 4px;
+}
+
+.md-nav__link:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+[data-md-color-scheme="slate"] .md-nav__link:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.md-nav__link--active {
+    font-weight: 600;
+}
+
+/* === 内容区链接 hover 动画 === */
+
+.md-typeset a {
+    transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.md-typeset a:hover {
+    opacity: 0.85;
+}
+
+/* 深色模式链接颜色 */
+[data-md-color-scheme="slate"] .md-content a:not([class]) {
+    color: #7dd3fc;
+}
+
+[data-md-color-scheme="slate"] .md-content a:not([class]):hover {
+    color: #bae6fd;
+    opacity: 1;
+}
+
+/* === 表格美化 === */
+
+.md-typeset__table {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+    background-color: rgba(0, 0, 0, 0.03);
+    font-weight: 600;
+}
+
+.md-typeset table:not([class]) tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-md-color-scheme="slate"] .md-typeset__table {
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* === 选中文字高亮 === */
+
+::selection {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: inherit;
+}
+
+[data-md-color-scheme="slate"] ::selection {
+    background-color: rgba(56, 189, 248, 0.2);
+    color: inherit;
+}

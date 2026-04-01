@@ -20,6 +20,7 @@ extra_css = [
     "custom/css/sidebar-width.css",
     "custom/css/home.css",
     "custom/css/toc.css",
+    "custom/css/enhancement.css",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css",
     "https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"
 ]
