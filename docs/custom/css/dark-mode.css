@@ -1,13 +1,17 @@
 /* ==================== 深色模式变量定制 ==================== */
+/* 设计参考：Tailwind v2 docs — 深背景 + 高对比文字，护眼且清晰 */
 
 [data-md-color-scheme="slate"] {
-    --md-default-bg-color: #20252c;
-    --md-code-bg-color: rgba(20, 23, 31, 0.4);
-    --md-code-fg-color: #477cef;
+    /* 背景色：更深的中性色调，参考 Tailwind gray-900，提升文字对比度 */
+    --md-default-bg-color: #111827;
+
+    /* 代码块配色（One Dark 风格，适配深背景） */
+    --md-code-bg-color: rgba(30, 41, 59, 0.5);
+    --md-code-fg-color: #93c5fd;
     --md-code-hl-number-color: #BBBBBB;
     --md-code-hl-special-color: #BBBBBB;
     --md-code-hl-function-color: #61AFEF;
-    --md-code-hl-constant-color: #0779f8;
+    --md-code-hl-constant-color: #60a5fa;
     --md-code-hl-keyword-color: #CDBEFD;
     --md-code-hl-string-color: #89CA78;
     --md-code-hl-name-color: #D19A66;
@@ -21,7 +25,7 @@
     --md-mermaid-edge-color:       #adbac7;
     --md-mermaid-label-fg-color:   #adbac7;
     --md-mermaid-node-fg-color:    #539bf5;
-    --md-mermaid-label-bg-color:   #2d333b;
+    --md-mermaid-label-bg-color:   #1e293b;
     /* Sequence 图专项覆盖 */
     --md-mermaid-sequence-actor-fg-color:     #adbac7;
     --md-mermaid-sequence-message-fg-color:   #adbac7;
@@ -29,7 +33,7 @@
     --md-mermaid-sequence-note-fg-color:      #adbac7;
     --md-mermaid-sequence-label-fg-color:     #adbac7;
     --md-mermaid-sequence-box-fg-color:       #adbac7;
-    --md-mermaid-sequence-actor-bg-color:     #2d333b;
-    --md-mermaid-sequence-note-bg-color:      #373e47;
-    --md-mermaid-sequence-box-bg-color:       #2d333b;
+    --md-mermaid-sequence-actor-bg-color:     #1e293b;
+    --md-mermaid-sequence-note-bg-color:      #334155;
+    --md-mermaid-sequence-box-bg-color:       #1e293b;
 }

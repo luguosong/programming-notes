@@ -1,5 +1,7 @@
 /* ==================== 标题自动编号 + 装饰横线 ==================== */
 
+/* === 编号计数器 === */
+
 .md-typeset {
     counter-reset: section-1;
 }
@@ -7,25 +9,21 @@
 .md-typeset h2 {
     counter-increment: section-1;
     counter-reset: section-2 section-3 section-4;
-    color: #1391fc;
 }
 
 .md-typeset h3 {
     counter-increment: section-2;
     counter-reset: section-3 section-4;
-    color: #1f98ff;
 }
 
 .md-typeset h4 {
     counter-increment: section-3;
     counter-reset: section-4;
-    color: #1f98ff;
 }
 
 .md-typeset h5 {
     text-transform: none;
     counter-increment: section-4;
-    color: #309efc;
 }
 
 .md-typeset h2:before {
@@ -44,7 +42,44 @@
     content: counter(section-1) "." counter(section-2) "." counter(section-3) "." counter(section-4) " ";
 }
 
-/*标题下方横线*/
+/* === 浅色模式标题色：深色调，白底高对比 === */
+
+.md-typeset h2 {
+    color: #1e3a5f;
+}
+
+.md-typeset h3 {
+    color: #1e3a5f;
+}
+
+.md-typeset h4 {
+    color: #2d4a6f;
+}
+
+.md-typeset h5 {
+    color: #3d5a80;
+}
+
+/* === 深色模式标题色：浅色调，深底高对比 === */
+
+[data-md-color-scheme="slate"] .md-typeset h2 {
+    color: #e0f2fe;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h3 {
+    color: #bae6fd;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h4 {
+    color: #7dd3fc;
+}
+
+[data-md-color-scheme="slate"] .md-typeset h5 {
+    color: #38bdf8;
+}
+
+/* === 标题下方渐变横线 === */
+
 .md-typeset h2::after,
 .md-typeset h3::after,
 .md-typeset h4::after,
@@ -56,27 +91,51 @@
     margin-top: 8px;
 }
 
+/* 浅色模式横线 */
+
 .md-typeset h2::after {
     width: 100%;
-    background: linear-gradient(to right, #0d68b340, transparent);
+    background: linear-gradient(to right, rgba(30, 58, 95, 0.2), transparent);
 }
 
 .md-typeset h3::after {
     width: 75%;
-    background: linear-gradient(to right, #0a518b40, transparent);
+    background: linear-gradient(to right, rgba(30, 58, 95, 0.15), transparent);
 }
 
 .md-typeset h4::after {
     width: 50%;
-    background: linear-gradient(to right, #08416f40, transparent);
+    background: linear-gradient(to right, rgba(45, 74, 111, 0.12), transparent);
 }
 
 .md-typeset h5::after {
     width: 33%;
-    background: linear-gradient(to right, #54617440, transparent);
+    background: linear-gradient(to right, rgba(61, 90, 128, 0.1), transparent);
 }
 
 .md-typeset h6::after {
     width: 15%;
-    background: linear-gradient(to right, #414b5940, transparent);
+    background: linear-gradient(to right, rgba(61, 90, 128, 0.08), transparent);
+}
+
+/* 深色模式横线 */
+
+[data-md-color-scheme="slate"] .md-typeset h2::after {
+    background: linear-gradient(to right, rgba(224, 242, 254, 0.15), transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h3::after {
+    background: linear-gradient(to right, rgba(186, 230, 253, 0.12), transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h4::after {
+    background: linear-gradient(to right, rgba(125, 211, 252, 0.1), transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h5::after {
+    background: linear-gradient(to right, rgba(56, 189, 248, 0.08), transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset h6::after {
+    background: linear-gradient(to right, rgba(56, 189, 248, 0.06), transparent);
 }
