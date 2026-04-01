@@ -1,12 +1,18 @@
 /* ==================== 深色模式变量定制 ==================== */
-/* 设计参考：Tailwind v2 docs — 深背景 + 高对比文字，护眼且清晰 */
+/* 设计参考：Linear — #101010 深底 · 磨砂玻璃 · 文字层级降噪 */
 
 [data-md-color-scheme="slate"] {
-    /* 背景色：更深的中性色调，参考 Tailwind gray-900，提升文字对比度 */
-    --md-default-bg-color: #111827;
+    /* 背景色：纯粹深色 */
+    --md-default-bg-color: #101010;
+
+    /* 文字层级：正文灰度略低的白色，视觉降噪 */
+    --md-default-fg-color: hsla(0, 0%, 74%, 1);
+    --md-default-fg-color--light: hsla(0, 0%, 55%, 0.76);
+    --md-default-fg-color--lighter: hsla(0, 0%, 100%, 0.12);
+    --md-default-fg-color--lightest: hsla(0, 0%, 100%, 0.08);
 
     /* 代码块配色（One Dark 风格，适配深背景） */
-    --md-code-bg-color: rgba(30, 41, 59, 0.5);
+    --md-code-bg-color: rgba(255, 255, 255, 0.04);
     --md-code-fg-color: #93c5fd;
     --md-code-hl-number-color: #BBBBBB;
     --md-code-hl-special-color: #BBBBBB;
@@ -20,20 +26,56 @@
     --md-code-hl-comment-color: #5C6370;
     --md-code-hl-variable-color: #FF8998;
 
-    /* Mermaid 深色模式适配：覆盖默认引用 --md-code-fg-color（蓝色）的变量，
-       改为高对比度的浅色，确保图表文字和连线在深色背景下清晰可见 */
-    --md-mermaid-edge-color:       #adbac7;
-    --md-mermaid-label-fg-color:   #adbac7;
-    --md-mermaid-node-fg-color:    #539bf5;
-    --md-mermaid-label-bg-color:   #1e293b;
-    /* Sequence 图专项覆盖 */
-    --md-mermaid-sequence-actor-fg-color:     #adbac7;
-    --md-mermaid-sequence-message-fg-color:   #adbac7;
-    --md-mermaid-sequence-loop-fg-color:      #adbac7;
-    --md-mermaid-sequence-note-fg-color:      #adbac7;
-    --md-mermaid-sequence-label-fg-color:     #adbac7;
-    --md-mermaid-sequence-box-fg-color:       #adbac7;
-    --md-mermaid-sequence-actor-bg-color:     #1e293b;
-    --md-mermaid-sequence-note-bg-color:      #334155;
-    --md-mermaid-sequence-box-bg-color:       #1e293b;
+    /* Mermaid 深色模式适配 */
+    --md-mermaid-edge-color: #adbac7;
+    --md-mermaid-label-fg-color: #adbac7;
+    --md-mermaid-node-fg-color: #539bf5;
+    --md-mermaid-label-bg-color: #1a1a1a;
+    --md-mermaid-sequence-actor-fg-color: #adbac7;
+    --md-mermaid-sequence-message-fg-color: #adbac7;
+    --md-mermaid-sequence-loop-fg-color: #adbac7;
+    --md-mermaid-sequence-note-fg-color: #adbac7;
+    --md-mermaid-sequence-label-fg-color: #adbac7;
+    --md-mermaid-sequence-box-fg-color: #adbac7;
+    --md-mermaid-sequence-actor-bg-color: #1a1a1a;
+    --md-mermaid-sequence-note-bg-color: #222222;
+    --md-mermaid-sequence-box-bg-color: #1a1a1a;
+}
+
+/* === 磨砂玻璃（Frosted Glass） === */
+
+/* Header */
+[data-md-color-scheme="slate"] .md-header {
+    background-color: rgba(16, 16, 16, 0.7) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Tabs 导航栏 */
+[data-md-color-scheme="slate"] .md-tabs {
+    background-color: rgba(16, 16, 16, 0.65) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* === 细腻边框与阴影 === */
+
+/* 搜索框 */
+[data-md-color-scheme="slate"] .md-search__form {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 行内代码细腻边框 */
+[data-md-color-scheme="slate"] .md-typeset :not(pre) > code {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* 代码块细腻边框 */
+[data-md-color-scheme="slate"] .md-typeset pre > code {
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
 }
