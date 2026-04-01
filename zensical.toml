@@ -94,6 +94,22 @@ nav = [
                 { "镜像安全扫描" = "topic/docker/security/index.md" },
                 { "CI/CD 流水线" = "topic/docker/cicd/index.md" }
             ] }
+        ] },
+        { "AI 工具" = [
+            "topic/ai/index.md",
+            { "GitHub Copilot CLI" = [
+                "topic/ai/github-copilot-cli/index.md",
+                { "安装与快速入门" = "topic/ai/github-copilot-cli/basic/index.md" },
+                { "交互模式" = "topic/ai/github-copilot-cli/modes/index.md" },
+                { "上下文与会话管理" = "topic/ai/github-copilot-cli/context/index.md" },
+                { "开发工作流" = "topic/ai/github-copilot-cli/workflows/index.md" },
+                { "自定义指令" = "topic/ai/github-copilot-cli/instructions/index.md" },
+                { "Agent 系统" = "topic/ai/github-copilot-cli/agents/index.md" },
+                { "Skills 技能系统" = "topic/ai/github-copilot-cli/skills/index.md" },
+                { "MCP 服务器" = "topic/ai/github-copilot-cli/mcp/index.md" },
+                { "插件与 Hook" = "topic/ai/github-copilot-cli/plugins-hooks/index.md" },
+                { "推荐扩展" = "topic/ai/github-copilot-cli/practices/index.md" }
+            ] }
         ] }
     ] },
     { "数学" = [

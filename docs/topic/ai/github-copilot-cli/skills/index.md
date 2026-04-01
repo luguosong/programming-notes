@@ -1,0 +1,203 @@
+# Skills 技能系统
+
+Skills 是指令、脚本和资源的文件夹集合，用于在 Copilot 处理特定任务时自动增强其行为。与手动激活的 Agent 不同，Skill 会根据你的 prompt 自动匹配并加载。
+
+---
+
+## Skills 与指令的区别
+
+!!! quote "简单判断"
+
+    - **自定义指令**：几乎每次对话都需要的规则（如编码规范、项目结构）
+    - **Skills**：只在相关任务出现时才需要的详细工作流（如"生成 Playwright 测试"）
+
+---
+
+## 自动触发机制
+
+Skill 的核心特性是**自动触发**。当你的 prompt 与 Skill 的 `description` 语义匹配时，Copilot 会自动加载该 Skill：
+
+``` text
+# SKILL.md 中 description: "为 Web 应用生成端到端测试，使用 Playwright 框架"
+
+# 以下 prompt 会自动触发该 Skill：
+> 为登录页面生成 Playwright 测试
+> 写一个端到端测试覆盖购物车流程
+
+# 以下 prompt 不会触发：
+> 修复 CSS 样式问题
+> 优化数据库查询
+```
+
+!!! tip "description 是关键"
+
+    Skill 是否被触发完全取决于 `description` 字段的描述质量。写清楚 Skill 的功能和适用场景，能显著提高自动匹配的准确性。
+
+---
+
+## 创建 Skill
+
+### 目录结构
+
+每个 Skill 拥有独立目录，目录名使用**小写字母加连字符**：
+
+``` text
+.github/skills/webapp-testing/
+├── SKILL.md          # 必须命名为 SKILL.md（大写）
+├── example-test.ts   # 可选：示例文件
+├── templates/        # 可选：模板目录
+└── config.json       # 可选：配置文件
+```
+
+### SKILL.md 格式
+
+由 YAML Frontmatter 和 Markdown 正文两部分组成：
+
+``` markdown title=".github/skills/webapp-testing/SKILL.md"
+---
+name: webapp-testing
+description: 为 Web 应用生成端到端测试，使用 Playwright 框架。当用户要求生成 E2E 测试、集成测试或 UI 测试时使用此技能。
+---
+
+# Web 应用端到端测试
+
+## 测试结构
+- 使用 Page Object 模式组织测试
+- 每个页面对应一个 Page Object 类
+- 测试文件放在 `tests/e2e/` 目录
+
+## 测试规范
+- 每个测试用例独立运行，不依赖其他测试的状态
+- 使用 `test.describe` 按功能分组
+- 使用 `test.beforeEach` 做通用初始化
+
+## 示例
+参考 `example-test.ts` 中的写法。
+```
+
+### Frontmatter 字段
+
+| 字段 | 必需 | 说明 |
+|------|:----:|------|
+| `name` | ✅ | 唯一标识符，小写字母加连字符，通常与目录名一致 |
+| `description` | ✅ | 描述功能和适用场景，用于自动匹配 |
+| `license` | ❌ | 许可证说明 |
+
+---
+
+## Skills 存放位置
+
+=== "项目级"
+
+    团队共享，提交到 Git：
+
+    - `.github/skills/`
+    - `.claude/skills/`（兼容 Claude Code）
+    - `.agents/skills/`
+
+=== "个人级"
+
+    仅本机可用：
+
+    - `~/.copilot/skills/`
+    - `~/.claude/skills/`（兼容 Claude Code）
+    - `~/.agents/skills/`
+
+---
+
+## 使用 Skill
+
+### 自动触发
+
+大多数情况下，只需要正常写 prompt，Copilot 会自动判断是否需要加载某个 Skill：
+
+``` text
+# 如果你有一个 webapp-testing Skill
+> 为用户注册流程生成端到端测试
+# Copilot 自动加载 webapp-testing Skill 并按照其规范生成测试
+```
+
+### 显式调用
+
+也可以通过 `/skill-name` 语法显式调用：
+
+``` text
+> 使用 /webapp-testing 为登录页面生成测试
+```
+
+---
+
+## Skill 管理命令
+
+| 命令 | 功能 |
+|------|------|
+| `/skills list` | 列出当前可用的所有技能 |
+| `/skills info <name>` | 查看某个技能的详细信息 |
+| `/skills add <path>` | 添加一个额外的技能搜索路径 |
+| `/skills reload <name>` | 重新加载技能（修改后无需重启 CLI） |
+| `/skills remove <dir>` | 移除技能目录 |
+
+---
+
+## 实战示例
+
+### 创建代码审查 Skill
+
+``` markdown title=".github/skills/python-review/SKILL.md"
+---
+name: python-review
+description: Python 代码审查技能。当用户要求审查 Python 代码、检查代码质量或进行安全审计时自动激活。
+---
+
+# Python 代码审查
+
+## 审查清单
+1. **类型安全**：检查类型注解是否完整和正确
+2. **错误处理**：是否有未处理的异常、空的 except 块
+3. **安全性**：SQL 注入、路径遍历、不安全的反序列化
+4. **性能**：N+1 查询、不必要的循环、内存泄漏
+5. **可维护性**：函数长度、圈复杂度、命名规范
+
+## 输出格式
+对每个问题，说明：
+- 📍 位置（文件:行号）
+- 🏷️ 类别（类型安全/错误处理/安全性/性能/可维护性）
+- 📝 问题描述
+- ✅ 修复建议
+```
+
+### 创建文档生成 Skill
+
+``` markdown title=".github/skills/doc-generator/SKILL.md"
+---
+name: doc-generator
+description: API 文档生成器。当用户要求生成 API 文档、写 README 或创建使用说明时自动激活。
+---
+
+# API 文档生成
+
+## 文档结构
+每个 API 端点的文档包含：
+- 端点路径和 HTTP 方法
+- 请求参数（路径参数、查询参数、请求体）
+- 响应格式和状态码
+- 使用示例（curl 命令）
+- 错误处理说明
+
+## 风格要求
+- 使用 Markdown 格式
+- 代码示例使用代码块并标注语言
+- 参数说明使用表格
+```
+
+---
+
+## Skills vs Agent vs 指令 vs MCP
+
+| 维度 | Skills | Agent | Instructions | MCP |
+|------|--------|-------|-------------|-----|
+| **核心功能** | 任务增强工作流 | 专业角色扮演 | 全局规则 | 外部数据源 |
+| **激活方式** | 自动（prompt 匹配） | 手动（`/agent`） | 始终生效 | 自动（需要时调用） |
+| **定义方式** | `SKILL.md` + 资源文件 | `.agent.md` | `.instructions.md` | JSON 配置 |
+| **包含资源** | ✅ 示例、模板、配置 | ❌ 仅 Markdown | ❌ 仅 Markdown | ✅ 外部工具 |
+| **典型用例** | 测试生成、代码审查 | 安全专家、DBA | 编码规范 | GitHub API、数据库 |
