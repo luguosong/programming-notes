@@ -1,0 +1,34 @@
+/* ==================== TOC（右侧目录）层级可视化优化 ==================== */
+/* 方案：左侧缩进参考线 + 渐变透明度，使多层级 TOC 层次分明 */
+
+/* 嵌套列表：左侧缩进参考线（类似 IDE 缩进辅助线） */
+.md-nav--secondary .md-nav__list .md-nav__list {
+    border-left: 1.5px solid var(--md-default-fg-color--lightest);
+    margin-left: 0.1em;
+    padding-left: 0.6em;
+}
+
+/* H3 层级：轻微降低透明度 */
+.md-nav--secondary .md-nav .md-nav__link {
+    opacity: 0.78;
+}
+
+/* H4 层级：进一步降低 */
+.md-nav--secondary .md-nav .md-nav .md-nav__link {
+    opacity: 0.62;
+}
+
+/* H5+ 层级：明显降低 */
+.md-nav--secondary .md-nav .md-nav .md-nav .md-nav__link {
+    opacity: 0.48;
+}
+
+/* 悬停时恢复完全可见 */
+.md-nav--secondary .md-nav .md-nav__link:hover {
+    opacity: 1;
+}
+
+/* 当前激活项：始终完全可见 */
+.md-nav--secondary .md-nav__link--active {
+    opacity: 1 !important;
+}
