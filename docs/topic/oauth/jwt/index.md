@@ -141,6 +141,48 @@ flowchart TD
 !!! tip "选择建议"
     大多数场景下选 JWT。若有严格的即时撤销需求（如高安全场景），考虑 Opaque Token 配合 Introspection，或使用 JWT + 短有效期策略。
 
+## JWT Access Token 规范（RFC 9068）
+
+RFC 9068 为 OAuth 2.0 Access Token 定义了标准的 JWT 编码方式（JWT Profile for Access Tokens），规定了一组`必须包含的声明`，使不同授权服务器颁发的 JWT Access Token 具有统一结构，资源服务器可以用一致的方式验证和解析。
+
+`RFC 9068 必须包含的声明：`
+
+| 声明 | 说明 |
+|------|------|
+| `iss` | 颁发者标识（授权服务器的 URL） |
+| `exp` | 过期时间（Unix 时间戳） |
+| `aud` | 受众（令牌预期的资源服务器标识） |
+| `sub` | 主体（用户标识或客户端标识） |
+| `client_id` | 请求该令牌的客户端标识 |
+| `iat` | 签发时间 |
+| `jti` | 令牌唯一标识（用于防重放） |
+
+`Header 中的额外要求：`
+
+- `typ` 必须设为 `at+jwt`，用于将 JWT Access Token 与其他类型的 JWT（如 ID Token）区分开
+
+``` json title="JWT Access Token 示例（RFC 9068 格式）"
+// Header
+{
+  "alg": "RS256",
+  "typ": "at+jwt",
+  "kid": "key-id-1"
+}
+// Payload
+{
+  "iss": "https://auth.example.com",
+  "exp": 1753123200,
+  "aud": "https://api.example.com",
+  "sub": "user-123",
+  "client_id": "my-client-app",
+  "iat": 1753119600,
+  "jti": "unique-token-id-abc123",
+  "scope": "read write"
+}
+```
+
+`RFC 9068 的价值：` 在此规范之前，各授权服务器的 JWT Access Token 格式各不相同，资源服务器需要针对每个授权服务器编写专门的解析逻辑。RFC 9068 通过统一声明集和 `typ: at+jwt` 标识，让资源服务器可以用`通用逻辑`验证来自不同授权服务器的 Access Token。同时，将令牌信息全部编码在 JWT 自身中，无需查询数据库即可验证，适合高并发场景。
+
 ---
 
 `上一篇：` [OpenID Connect](../openid-connect/index.md)

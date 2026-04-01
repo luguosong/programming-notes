@@ -79,7 +79,8 @@ nav = [
             { "JWT 令牌" = "topic/oauth/jwt/index.md" },
             { "安全实践" = "topic/oauth/security/index.md" },
             { "实战：授权服务器" = "topic/oauth/spring-auth-server/index.md" },
-            { "实战：客户端与资源服务器" = "topic/oauth/spring-client-resource/index.md" }
+            { "实战：客户端与资源服务器" = "topic/oauth/spring-client-resource/index.md" },
+            { "OAuth 2.1 演进" = "topic/oauth/oauth2-1/index.md" }
         ] },
         { "Windows" = [
             "topic/windows/index.md",

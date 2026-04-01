@@ -91,4 +91,10 @@ sequenceDiagram
 
     [→ 实战：客户端与资源服务器](spring-client-resource/index.md)
 
+- :lucide-arrow-up-circle: `OAuth 2.1 演进`
+
+    OAuth 2.1 规范整合：七大关键变化与迁移指南
+
+    [→ OAuth 2.1 演进](oauth2-1/index.md)
+
 </div>
