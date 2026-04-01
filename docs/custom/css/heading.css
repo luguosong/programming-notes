@@ -63,21 +63,21 @@
 /* === 深色模式标题色：纯白系，与正文灰度拉开层级 === */
 
 [data-md-color-scheme="slate"] .md-typeset h2 {
-    color: #ffffff;
+    color: #DADADA;
     font-weight: 700;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h3 {
-    color: #f0f0f0;
+    color: #CACACA;
     font-weight: 600;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h4 {
-    color: #e0e0e0;
+    color: #BABABA;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h5 {
-    color: #d0d0d0;
+    color: #AAAAAA;
 }
 
 /* === 标题下方渐变横线 === */
