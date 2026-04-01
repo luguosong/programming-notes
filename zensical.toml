@@ -14,6 +14,8 @@ dev_addr = "localhost:7000"
 extra_css = [
     "custom/css/font.css",
     "custom/css/custom.css",
+    "custom/css/heading.css",
+    "custom/css/dark-mode.css",
     "custom/css/sidebar-width.css",
     "custom/css/home.css",
     "custom/css/toc.css",
