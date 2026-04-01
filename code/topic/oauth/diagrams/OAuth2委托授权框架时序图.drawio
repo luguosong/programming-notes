@@ -1,0 +1,243 @@
+<mxGraphModel adaptiveColors="auto" dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- 标题 -->
+    <mxCell id="title" value="OAuth 2.0 委托授权框架 - 时序图" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1" vertex="1" parent="1">
+      <mxGeometry x="520" y="20" width="400" height="40" as="geometry"/>
+    </mxCell>
+
+    <!-- 泳道容器 -->
+    <mxCell id="swimlane" value="" style="swimlane;startSize=0;horizontal=1;container=1;pointerEvents=0;fillColor=none;strokeColor=#666666;" vertex="1" parent="1">
+      <mxGeometry x="80" y="80" width="1280" height="1020" as="geometry"/>
+    </mxCell>
+
+    <!-- 泳道1: 资源所有者 -->
+    <mxCell id="lane1" value="资源所有者&#xa;(Resource Owner)" style="swimlane;startSize=50;horizontal=0;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" vertex="1" parent="swimlane">
+      <mxGeometry width="320" height="1020" as="geometry"/>
+    </mxCell>
+    <mxCell id="actor1" value="" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="lane1">
+      <mxGeometry x="140" y="70" width="40" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="lifeline1" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="lane1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="160" y="160" as="sourcePoint"/>
+        <mxPoint x="160" y="960" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 泳道2: 客户端 -->
+    <mxCell id="lane2" value="客户端&#xa;(Client)" style="swimlane;startSize=50;horizontal=0;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1" vertex="1" parent="swimlane">
+      <mxGeometry x="320" width="320" height="1020" as="geometry"/>
+    </mxCell>
+    <mxCell id="actor2" value="📱" style="shape=rect;html=1;whiteSpace=wrap;rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=24;" vertex="1" parent="lane2">
+      <mxGeometry x="110" y="75" width="100" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="lifeline2" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;strokeColor=#d6b656;" edge="1" parent="lane2">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="160" y="160" as="sourcePoint"/>
+        <mxPoint x="160" y="960" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 泳道3: 授权服务器 -->
+    <mxCell id="lane3" value="授权服务器&#xa;(Authorization Server)" style="swimlane;startSize=50;horizontal=0;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1" vertex="1" parent="swimlane">
+      <mxGeometry x="640" width="320" height="1020" as="geometry"/>
+    </mxCell>
+    <mxCell id="actor3" value="🔐" style="shape=rect;html=1;whiteSpace=wrap;rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=24;" vertex="1" parent="lane3">
+      <mxGeometry x="110" y="75" width="100" height="60" as="geometry"/>
+    </mxCell>
+    <mxCell id="lifeline3" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;strokeColor=#9673a6;" edge="1" parent="lane3">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="160" y="160" as="sourcePoint"/>
+        <mxPoint x="160" y="960" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 泳道4: 受保护资源 -->
+    <mxCell id="lane4" value="受保护资源&#xa;(Protected Resource)" style="swimlane;startSize=50;horizontal=0;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1" vertex="1" parent="swimlane">
+      <mxGeometry x="960" width="320" height="1020" as="geometry"/>
+    </mxCell>
+    <mxCell id="actor4" value="🗄️" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f8cecc;strokeColor=#b85450;fontSize=20;" vertex="1" parent="lane4">
+      <mxGeometry x="110" y="65" width="100" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="lifeline4" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;strokeColor=#b85450;" edge="1" parent="lane4">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="160" y="160" as="sourcePoint"/>
+        <mxPoint x="160" y="960" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 阶段1: 请求客户端代理 -->
+    <mxCell id="phase1" value="阶段一：资源所有者发起请求" style="text;html=1;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="180" width="220" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- 消息1: 资源所有者 -> 客户端 -->
+    <mxCell id="msg1" value="1. 请帮我获取照片并打印" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;fillColor=#dae8fc;" edge="1" parent="1" source="actor1" target="actor2">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="240" y="230" as="sourcePoint"/>
+        <mxPoint x="560" y="230" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 阶段2: 引导至授权服务器 -->
+    <mxCell id="phase2" value="阶段二：引导至授权服务器" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="260" width="220" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- 消息2: 客户端 -> 资源所有者 (重定向) -->
+    <mxCell id="msg2" value="2. 请前往授权服务器进行授权" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#d6b656;fillColor=#fff2cc;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="560" y="310" as="sourcePoint"/>
+        <mxPoint x="240" y="310" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息3: 资源所有者 -> 授权服务器 -->
+    <mxCell id="msg3" value="3. 发起授权请求" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;fillColor=#dae8fc;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="240" y="360" as="sourcePoint"/>
+        <mxPoint x="880" y="360" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 阶段3: 身份认证 -->
+    <mxCell id="phase3" value="阶段三：身份认证与授权" style="text;html=1;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="390" width="220" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- 消息4: 授权服务器 -> 资源所有者 (认证请求) -->
+    <mxCell id="msg4" value="4. 请进行身份认证" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#9673a6;fillColor=#e1d5e7;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="880" y="440" as="sourcePoint"/>
+        <mxPoint x="240" y="440" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息5: 资源所有者 -> 授权服务器 (认证信息) -->
+    <mxCell id="msg5" value="5. 提供认证凭据" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;fillColor=#dae8fc;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="240" y="490" as="sourcePoint"/>
+        <mxPoint x="880" y="490" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息6: 授权服务器 -> 资源所有者 (授权确认) -->
+    <mxCell id="msg6" value="6. 是否授权客户端访问您的资源？&#xa;   (可指定 scope 范围)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#9673a6;fillColor=#e1d5e7;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="880" y="540" as="sourcePoint"/>
+        <mxPoint x="240" y="540" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息7: 资源所有者 -> 授权服务器 (授权决定) -->
+    <mxCell id="msg7" value="7. 同意授权（指定范围）" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#6c8ebf;fillColor=#dae8fc;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="240" y="610" as="sourcePoint"/>
+        <mxPoint x="880" y="610" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 阶段4: 获取令牌 -->
+    <mxCell id="phase4" value="阶段四：获取访问令牌" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="640" width="220" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- 消息8: 授权服务器 -> 客户端 (授权码) -->
+    <mxCell id="msg8" value="8. 返回授权许可 (Authorization Code)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#9673a6;fillColor=#e1d5e7;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="880" y="700" as="sourcePoint"/>
+        <mxPoint x="560" y="700" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息9: 客户端 -> 授权服务器 (申请令牌) -->
+    <mxCell id="msg9" value="9. 使用授权码申请访问令牌" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#d6b656;fillColor=#fff2cc;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="560" y="750" as="sourcePoint"/>
+        <mxPoint x="880" y="750" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息10: 授权服务器 -> 客户端 (返回令牌) -->
+    <mxCell id="msg10" value="10. 返回访问令牌 (Access Token)" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#9673a6;fillColor=#e1d5e7;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="880" y="800" as="sourcePoint"/>
+        <mxPoint x="560" y="800" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 阶段5: 使用令牌访问资源 -->
+    <mxCell id="phase5" value="阶段五：使用令牌访问受保护资源" style="text;html=1;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+      <mxGeometry x="80" y="830" width="250" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- 消息11: 客户端 -> 受保护资源 -->
+    <mxCell id="msg11" value="11. 携带令牌访问 API" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#d6b656;fillColor=#fff2cc;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="560" y="890" as="sourcePoint"/>
+        <mxPoint x="1200" y="890" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 消息12: 受保护资源 -> 客户端 -->
+    <mxCell id="msg12" value="12. 返回受保护资源数据" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;strokeWidth=2;strokeColor=#b85450;fillColor=#f8cecc;dashed=1;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1200" y="940" as="sourcePoint"/>
+        <mxPoint x="560" y="940" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- 注释框: 令牌不透明性 -->
+    <mxCell id="note1" value="💡 令牌中的授权信息对大部分组件不透明&#xa;只有受保护资源需要理解令牌内容" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="1040" y="1000" width="260" height="60" as="geometry"/>
+    </mxCell>
+
+    <!-- 图例 -->
+    <mxCell id="legend" value="" style="group;" vertex="1" parent="1">
+      <mxGeometry x="80" y="1080" width="440" height="80" as="geometry"/>
+    </mxCell>
+    <mxCell id="legend_title" value="图例" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;" vertex="1" parent="legend">
+      <mxGeometry width="40" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="legend1" value="" style="endArrow=block;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="legend">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="10" y="40" as="sourcePoint"/>
+        <mxPoint x="100" y="40" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="legend1_text" value="请求/响应消息" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="legend">
+      <mxGeometry x="110" y="30" width="100" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="legend2" value="" style="endArrow=block;strokeWidth=2;strokeColor=#9673a6;dashed=1;" edge="1" parent="legend">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="220" y="40" as="sourcePoint"/>
+        <mxPoint x="310" y="40" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="legend2_text" value="返回/重定向" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="legend">
+      <mxGeometry x="320" y="30" width="80" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="legend3" value="" style="endArrow=block;strokeWidth=2;strokeColor=#d6b656;" edge="1" parent="legend">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="10" y="65" as="sourcePoint"/>
+        <mxPoint x="100" y="65" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="legend3_text" value="客户端主动请求" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="legend">
+      <mxGeometry x="110" y="55" width="100" height="20" as="geometry"/>
+    </mxCell>
+    <mxCell id="legend4" value="" style="endArrow=block;strokeWidth=2;strokeColor=#b85450;dashed=1;" edge="1" parent="legend">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="220" y="65" as="sourcePoint"/>
+        <mxPoint x="310" y="65" as="targetPoint"/>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="legend4_text" value="资源返回" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="legend">
+      <mxGeometry x="320" y="55" width="80" height="20" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>
