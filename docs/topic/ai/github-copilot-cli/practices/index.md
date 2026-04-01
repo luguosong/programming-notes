@@ -10,9 +10,9 @@ MCP 服务器为 Copilot 连接外部数据源和工具。以下是常用的 MCP
 
 ### GitHub MCP 服务器（内置）
 
-内置于 Copilot CLI，**无需安装**。提供对 GitHub 平台的完整访问。
+内置于 Copilot CLI，`无需安装`。提供对 GitHub 平台的完整访问。
 
-**提供的能力**：
+`提供的能力`：
 
 - 搜索 Issue、PR、代码
 - 查看仓库文件和 commit 历史
@@ -43,7 +43,7 @@ MCP 服务器为 Copilot 连接外部数据源和工具。以下是常用的 MCP
 }
 ```
 
-**使用场景**：
+`使用场景`：
 
 ``` text
 > 使用 Context7 查询 React 19 的 use() hook 用法
@@ -95,7 +95,7 @@ MCP 服务器为 Copilot 连接外部数据源和工具。以下是常用的 MCP
 }
 ```
 
-**使用场景**：
+`使用场景`：
 
 ``` text
 > 打开 http://localhost:3000 并截图，检查页面布局
@@ -174,12 +174,12 @@ MCP 服务器为 Copilot 连接外部数据源和工具。以下是常用的 MCP
 
 | 服务器 | 功能 | 安装方式 |
 |--------|------|---------|
-| **GitHub**（内置） | GitHub API 完整访问 | 无需安装 |
-| **Context7** | 实时库文档查询 | `npx @upstash/context7-mcp` |
-| **Filesystem** | 受控文件系统访问 | `npx @modelcontextprotocol/server-filesystem` |
-| **Playwright** | 浏览器自动化 | `npx @playwright/mcp@latest` |
-| **Microsoft Learn** | 微软技术文档 | `npx @nicobailon/mcp-microsoft-learn` |
-| **PostgreSQL** | PostgreSQL 数据库 | `npx @modelcontextprotocol/server-postgres` |
+| `GitHub`（内置） | GitHub API 完整访问 | 无需安装 |
+| `Context7` | 实时库文档查询 | `npx @upstash/context7-mcp` |
+| `Filesystem` | 受控文件系统访问 | `npx @modelcontextprotocol/server-filesystem` |
+| `Playwright` | 浏览器自动化 | `npx @playwright/mcp@latest` |
+| `Microsoft Learn` | 微软技术文档 | `npx @nicobailon/mcp-microsoft-learn` |
+| `PostgreSQL` | PostgreSQL 数据库 | `npx @modelcontextprotocol/server-postgres` |
 
 !!! tip "发现更多 MCP 服务器"
 
@@ -209,25 +209,25 @@ MCP 服务器为 Copilot 连接外部数据源和工具。以下是常用的 MCP
 
 | 插件 | 功能 | 安装命令 |
 |------|------|---------|
-| **advanced-security** | GitHub Advanced Security（GHAS），密钥扫描、代码安全分析 | `/plugin install advanced-security@copilot-plugins` |
-| **java-springboot** | Spring Boot 开发最佳实践、Agent 和 Skill | `/plugin install java-springboot@copilot-plugins` |
-| **java-junit** | JUnit 5 单元测试最佳实践 | `/plugin install java-junit@copilot-plugins` |
-| **java-docs** | Java 文档（Javadoc）生成 | `/plugin install java-docs@copilot-plugins` |
-| **csharp-nunit** | NUnit 测试最佳实践 | `/plugin install csharp-nunit@copilot-plugins` |
-| **javascript-typescript-jest** | Jest 测试最佳实践 | `/plugin install javascript-typescript-jest@copilot-plugins` |
+| `advanced-security` | GitHub Advanced Security（GHAS），密钥扫描、代码安全分析 | `/plugin install advanced-security@copilot-plugins` |
+| `java-springboot` | Spring Boot 开发最佳实践、Agent 和 Skill | `/plugin install java-springboot@copilot-plugins` |
+| `java-junit` | JUnit 5 单元测试最佳实践 | `/plugin install java-junit@copilot-plugins` |
+| `java-docs` | Java 文档（Javadoc）生成 | `/plugin install java-docs@copilot-plugins` |
+| `csharp-nunit` | NUnit 测试最佳实践 | `/plugin install csharp-nunit@copilot-plugins` |
+| `javascript-typescript-jest` | Jest 测试最佳实践 | `/plugin install javascript-typescript-jest@copilot-plugins` |
 
 ### 社区插件市场（awesome-copilot）
 
 | 插件 | 功能 | 安装命令 |
 |------|------|---------|
-| **context-engineering** | 上下文工程，提升 Copilot 上下文感知能力 | `/plugin install context-engineering@awesome-copilot` |
-| **database-data-management** | 数据库管理（PostgreSQL、MySQL、SQL Server） | `/plugin install database-data-management@awesome-copilot` |
-| **cloud-design-patterns** | 42 种云架构设计模式参考 | `/plugin install cloud-design-patterns@awesome-copilot` |
-| **documentation-writer** | 基于 Diátaxis 框架的技术文档写作 | `/plugin install documentation-writer@awesome-copilot` |
-| **quality-playbook** | 质量体系：测试协议、代码审查、规范审计 | `/plugin install quality-playbook@awesome-copilot` |
-| **multi-stage-dockerfile** | 优化的多阶段 Dockerfile 生成 | `/plugin install multi-stage-dockerfile@awesome-copilot` |
-| **polyglot-test-agent** | 多语言测试生成（Python、Java、Go、Rust 等） | `/plugin install polyglot-test-agent@awesome-copilot` |
-| **secret-scanning** | 密钥扫描和推送保护配置 | `/plugin install secret-scanning@awesome-copilot` |
+| `context-engineering` | 上下文工程，提升 Copilot 上下文感知能力 | `/plugin install context-engineering@awesome-copilot` |
+| `database-data-management` | 数据库管理（PostgreSQL、MySQL、SQL Server） | `/plugin install database-data-management@awesome-copilot` |
+| `cloud-design-patterns` | 42 种云架构设计模式参考 | `/plugin install cloud-design-patterns@awesome-copilot` |
+| `documentation-writer` | 基于 Diátaxis 框架的技术文档写作 | `/plugin install documentation-writer@awesome-copilot` |
+| `quality-playbook` | 质量体系：测试协议、代码审查、规范审计 | `/plugin install quality-playbook@awesome-copilot` |
+| `multi-stage-dockerfile` | 优化的多阶段 Dockerfile 生成 | `/plugin install multi-stage-dockerfile@awesome-copilot` |
+| `polyglot-test-agent` | 多语言测试生成（Python、Java、Go、Rust 等） | `/plugin install polyglot-test-agent@awesome-copilot` |
+| `secret-scanning` | 密钥扫描和推送保护配置 | `/plugin install secret-scanning@awesome-copilot` |
 
 !!! tip "浏览更多插件"
 

@@ -4,7 +4,7 @@
 
 !!! info "即时生效"
 
-    修改指令文件后**无需重启 CLI**，保存后即可在下次提交提示时生效。
+    修改指令文件后`无需重启 CLI`，保存后即可在下次提交提示时生效。
 
 ---
 
@@ -21,9 +21,9 @@
 
 ## 仓库级指令
 
-适用于在仓库上下文中发起的**所有请求**，是最常用的指令类型。
+适用于在仓库上下文中发起的`所有请求`，是最常用的指令类型。
 
-**位置**：仓库根目录下 `.github/copilot-instructions.md`
+`位置`：仓库根目录下 `.github/copilot-instructions.md`
 
 ``` markdown title=".github/copilot-instructions.md"
 # 项目约定
@@ -51,7 +51,7 @@
 
 当 prompt 涉及与指定路径匹配的文件时，对应的路径指令会被自动加载。
 
-**位置**：`.github/instructions/` 目录下，文件名必须以 `.instructions.md` 结尾。
+`位置`：`.github/instructions/` 目录下，文件名必须以 `.instructions.md` 结尾。
 
 ### applyTo 匹配规则
 
@@ -120,9 +120,9 @@ project-root/
 
 ## 本地指令
 
-适用于特定的本地环境，**不随仓库提交**。适合存放个人偏好、本地路径、API Key 位置等信息。
+适用于特定的本地环境，`不随仓库提交`。适合存放个人偏好、本地路径、API Key 位置等信息。
 
-**位置**：`$HOME/.copilot/copilot-instructions.md`
+`位置`：`$HOME/.copilot/copilot-instructions.md`
 
 ``` markdown title="~/.copilot/copilot-instructions.md"
 # 个人偏好
@@ -179,10 +179,10 @@ Copilot 会扫描项目结构、依赖文件、已有配置等，然后提议创
 
 ### 内容建议
 
-- **简洁具体**：明确说明规则和偏好，避免模糊描述
-- **结构化**：使用标题和列表组织内容，方便 Copilot 解析
-- **包含示例**：展示正确和错误的做法
-- **列出命令**：包含构建、测试、部署等常用命令
+- `简洁具体`：明确说明规则和偏好，避免模糊描述
+- `结构化`：使用标题和列表组织内容，方便 Copilot 解析
+- `包含示例`：展示正确和错误的做法
+- `列出命令`：包含构建、测试、部署等常用命令
 
 ### 避免的问题
 

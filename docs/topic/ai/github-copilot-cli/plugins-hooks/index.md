@@ -51,8 +51,8 @@ Copilot CLI 自带两个默认插件市场：
 
 | 市场 | 说明 |
 |------|------|
-| **copilot-plugins** | 官方插件市场 |
-| **awesome-copilot** | 社区插件市场 |
+| `copilot-plugins` | 官方插件市场 |
+| `awesome-copilot` | 社区插件市场 |
 
 | 命令 | 功能 |
 |------|------|
@@ -63,10 +63,10 @@ Copilot CLI 自带两个默认插件市场：
 
 插件可以为 Copilot CLI 添加：
 
-- **Agent**：新的专业角色（如数据库管理 Agent）
-- **Skills**：新的自动触发技能
-- **MCP 服务器**：新的外部数据源连接
-- **Slash 命令**：新的斜杠命令
+- `Agent`：新的专业角色（如数据库管理 Agent）
+- `Skills`：新的自动触发技能
+- `MCP 服务器`：新的外部数据源连接
+- `Slash 命令`：新的斜杠命令
 
 ---
 
@@ -171,9 +171,9 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 
 | 维度 | Copilot Hook | Git Hook |
 |------|-------------|----------|
-| **触发时机** | Copilot Agent 生命周期事件 | Git 操作事件（commit、push 等） |
-| **配置方式** | `.github/hooks/*.json` | `.git/hooks/*`（或 Husky 等工具） |
-| **提交到 Git** | ✅ | ❌（`.git/hooks/` 不跟踪） |
-| **用途** | 扩展 Copilot 行为 | 代码质量门禁 |
+| `触发时机` | Copilot Agent 生命周期事件 | Git 操作事件（commit、push 等） |
+| `配置方式` | `.github/hooks/*.json` | `.git/hooks/*`（或 Husky 等工具） |
+| `提交到 Git` | ✅ | ❌（`.git/hooks/` 不跟踪） |
+| `用途` | 扩展 Copilot 行为 | 代码质量门禁 |
 
 两者可以互补：Git Hook 确保提交质量，Copilot Hook 增强 AI 辅助体验。

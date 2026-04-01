@@ -229,6 +229,16 @@ programming-notes/
 
 带图注统一用 `<figure>` 格式（见下方语法速查），图片托管在 `https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/`，图注格式为"图 章节号.图号 说明"。
 
+### 行内强调与说明约定
+
+- **强调 / 重点内容**：使用反引号 `` ` `` 包裹，而非加粗或斜体。例如：`RegisteredClient`、`Authorization Code`
+- **补充说明**：在被说明内容后紧跟半角括号 `(说明文字)`。例如：JDBC（Java Database Connectivity）、H2（内存数据库）
+
+| ✅ 正确 | ❌ 避免 |
+|--------|--------|
+| `Authorization Code` 是最常用的授权方式 | **Authorization Code** 是最常用的授权方式 |
+| JDBC（Java Database Connectivity） | JDBC - Java Database Connectivity |
+
 ### 标题架构规范（TOC 知识大纲化）
 
 **核心原则**：标题层级 = 知识脉络。读者**只读右侧 TOC** 就能还原文章的推进逻辑，无需点击跳转。

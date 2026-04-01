@@ -97,7 +97,7 @@ tools:
 
 ### 命名约定
 
-- 使用**小写字母加连字符**：`security-reviewer`，不用 `SecurityReviewer`
+- 使用`小写字母加连字符`：`security-reviewer`，不用 `SecurityReviewer`
 - 名称应自描述功能：`pytest-helper` 而非 `test-agent`
 
 ---
@@ -183,18 +183,18 @@ tools:
 
 ## Agent vs Skill vs 指令
 
-三者容易混淆，核心区别在于**激活方式**：
+三者容易混淆，核心区别在于`激活方式`：
 
 | 维度 | Agent | Skill | Custom Instructions |
 |------|-------|-------|---------------------|
-| **激活方式** | 手动：`/agent` 或 `--agent` | 自动：根据 prompt 匹配 `description` | 始终生效 |
-| **定义文件** | `.agent.md` | `SKILL.md` + 资源文件夹 | `.instructions.md` / `AGENTS.md` |
-| **适用场景** | 专业角色审查/分析 | 特定任务的工作流（如测试生成） | 全局规范和偏好 |
-| **能否生成代码** | ✅ | ✅ | 间接影响（引导 Copilot 行为） |
-| **团队共享** | ✅（提交 `.github/agents/`） | ✅（提交 `.github/skills/`） | ✅（提交 `.github/`） |
+| `激活方式` | 手动：`/agent` 或 `--agent` | 自动：根据 prompt 匹配 `description` | 始终生效 |
+| `定义文件` | `.agent.md` | `SKILL.md` + 资源文件夹 | `.instructions.md` / `AGENTS.md` |
+| `适用场景` | 专业角色审查/分析 | 特定任务的工作流（如测试生成） | 全局规范和偏好 |
+| `能否生成代码` | ✅ | ✅ | 间接影响（引导 Copilot 行为） |
+| `团队共享` | ✅（提交 `.github/agents/`） | ✅（提交 `.github/skills/`） | ✅（提交 `.github/`） |
 
 !!! tip "选择建议"
 
-    - **每次都需要的规则** → Custom Instructions
-    - **特定任务自动触发** → Skill
-    - **需要手动切换专家视角** → Agent
+    - `每次都需要的规则` → Custom Instructions
+    - `特定任务自动触发` → Skill
+    - `需要手动切换专家视角` → Agent

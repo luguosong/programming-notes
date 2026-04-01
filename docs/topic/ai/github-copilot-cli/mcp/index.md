@@ -18,7 +18,7 @@ Copilot CLI ←→ MCP 协议 ←→ MCP 服务器 ←→ 外部系统
 
 !!! info "自动调用"
 
-    添加 MCP 服务器后，Copilot 会在与你的 prompt 相关时**自动使用**它提供的工具。你也可以在 prompt 中显式提及 MCP 工具名称来确保调用。
+    添加 MCP 服务器后，Copilot 会在与你的 prompt 相关时`自动使用`它提供的工具。你也可以在 prompt 中显式提及 MCP 工具名称来确保调用。
 
 ---
 
