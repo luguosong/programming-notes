@@ -21,6 +21,7 @@ extra_css = [
     "custom/css/home.css",
     "custom/css/toc.css",
     "custom/css/enhancement.css",
+    "custom/css/pronunciation.css",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css",
     "https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"
 ]
@@ -28,7 +29,8 @@ extra_javascript = [
     "custom/js/mathjax.js",
     "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
     "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js",
-    "custom/js/viewer-js-init.js"
+    "custom/js/viewer-js-init.js",
+    "custom/js/pronunciation.js"
 ]
 nav = [
     { "主页" = "index.md" },
@@ -65,15 +67,29 @@ nav = [
         ] },
         { "数据库" = [
             "java/database/index.md",
-            { "JDBC" = "java/database/jdbc/index.md" }
+            { "JDBC" = [
+                "java/database/jdbc/index.md",
+                { "建立连接" = "java/database/jdbc/connection/index.md" },
+                { "Statement 与 CRUD" = "java/database/jdbc/statement/index.md" },
+                { "ResultSet 数据读取" = "java/database/jdbc/resultset/index.md" },
+                { "PreparedStatement" = "java/database/jdbc/preparedstatement/index.md" },
+                { "事务管理" = "java/database/jdbc/transaction/index.md" },
+                { "批处理" = "java/database/jdbc/batch/index.md" },
+                { "数据库元数据" = "java/database/jdbc/metadata/index.md" },
+                { "连接池" = "java/database/jdbc/connection-pool/index.md" },
+                { "异常处理" = "java/database/jdbc/exception/index.md" },
+                { "存储过程" = "java/database/jdbc/stored-procedure/index.md" },
+                { "CLOB 大对象" = "java/database/jdbc/clob/index.md" },
+                { "高级数据类型" = "java/database/jdbc/advanced-types/index.md" },
+                { "最佳实践" = "java/database/jdbc/best-practices/index.md" }
+            ] }
         ] }
     ] },
     { "专题研究" = [
         "topic/index.md",
         { "Zensical" = [
             "topic/zensical/index.md",
-            { "基本使用" = "topic/zensical/basic/index.md" },
-            { "数学公式" = "topic/zensical/math/index.md" }
+            { "基本使用" = "topic/zensical/basic/index.md" }
         ] },
         { "OAuth2" = [
             "topic/oauth/index.md",
@@ -125,14 +141,22 @@ nav = [
     ] },
     { "数学" = [
         "math/index.md",
-        { "初中数学" = "math/junior-high-school-maths/index.md" }
+        { "初中数学" = "math/junior-high-school-maths/index.md" },
+        { "LaTeX 公式指南" = [
+            "math/latex-guide/index.md",
+            { "基础语法" = "math/latex-guide/basic-syntax/index.md" },
+            { "微积分" = "math/latex-guide/calculus/index.md" },
+            { "矩阵与线性代数" = "math/latex-guide/linear-algebra/index.md" },
+            { "符号参考" = "math/latex-guide/symbols/index.md" }
+        ]}
     ] },
     { "英语" = [
         "english/index.md",
         { "新概念英语" = [
             "english/new-concept-english/index.md",
             { "第一册" = "english/new-concept-english/01/index.md" }
-        ] }
+        ] },
+        { "自然拼读" = "english/natural-phonetic/index.md" }
     ] },
     { "文档书籍翻译" = [
         "document-translation/index.md",
