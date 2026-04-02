@@ -16,5 +16,9 @@
         <module>jdbc-transaction-batch</module>
         <module>jdbc-pool</module>
         <module>jdbc-metadata</module>
+        <module>jdbc-advanced-types</module>
+        <module>jdbc-stored-procedure</module>
+        <module>jdbc-clob</module>
+        <module>jdbc-exception</module>
     </modules>
 </project>

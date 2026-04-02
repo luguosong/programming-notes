@@ -129,40 +129,54 @@ class StoredProcedureTest {
      * 演示 INOUT 参数（输入输出参数）
      *
      * <p>INOUT 参数同时承担输入和输出角色：调用前设置值，执行后获取修改后的值。
-     * 在 MySQL 中用 INOUT 关键字声明，Oracle 中同样支持。
-     * H2 通过 String[] 数组模拟此行为：先设值，过程内部修改，执行后取回新值。</p>
+     * 在 MySQL 中用 INOUT 关键字声明，Oracle 中同样支持。</p>
+     *
+     * <p>H2 数据库没有原生 INOUT 参数支持，这里使用返回 {@link ResultSet} 的函数来模拟。
+     * 在真实数据库中的用法：</p>
+     * <pre>
+     * // MySQL 原生 INOUT 参数示例
+     * CREATE PROCEDURE modify_value(INOUT val VARCHAR(100), IN suffix VARCHAR(50))
+     * BEGIN
+     *     SET val = CONCAT(val, ' ', suffix);
+     * END
+     * // JDBC 调用
+     * cs.setString(1, "Hello");      // 设置 INOUT 初始值
+     * cs.setString(2, "World");       // 设置 IN 参数
+     * cs.registerOutParameter(1, Types.VARCHAR);  // 注册 INOUT 输出类型
+     * cs.execute();
+     * String result = cs.getString(1);  // 获取修改后的值
+     * </pre>
      */
     @Test
-    @DisplayName("INOUT 参数：调用输入输出参数的存储过程")
+    @DisplayName("INOUT 参数：模拟输入输出参数的存储过程")
     void testInOutParams() throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL)) {
-            // 创建存储过程：接收 INOUT 参数，在原值基础上追加后缀
+            // H2 中使用返回 ResultSet 的函数模拟 INOUT 参数
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute("CREATE ALIAS modify_value AS $$\n"
-                        + "void modifyValue(String[] inout, String suffix) {\n"
-                        + "    inout[0] = inout[0] + \" \" + suffix;\n"
+                        + "ResultSet modifyValue(Connection conn, String initialValue, String suffix) throws SQLException {\n"
+                        + "    String modified = initialValue + \" \" + suffix;\n"
+                        + "    return conn.createStatement().executeQuery(\n"
+                        + "        \"SELECT '\" + modified + \"' AS modified_value\");\n"
                         + "}\n"
                         + "$$");
             }
 
-            // 使用 CallableStatement 调用带 INOUT 参数的存储过程
-            // call modify_value(?, ?) — 第一个 ? 是 INOUT 参数，第二个 ? 是 IN 参数
+            // 使用 CallableStatement 调用
             try (CallableStatement cs = conn.prepareCall("{call modify_value(?, ?)}")) {
                 // 设置 INOUT 参数的初始值（索引 1）
                 cs.setString(1, "Hello");
                 // 设置 IN 参数（索引 2）
                 cs.setString(2, "World");
-                // 注册 INOUT 参数的输出类型（索引 1）
-                cs.registerOutParameter(1, Types.VARCHAR);
 
-                // 执行存储过程
-                cs.execute();
+                // 执行并获取模拟的 INOUT 返回值
+                try (ResultSet rs = cs.executeQuery()) {
+                    assertTrue(rs.next(), "应返回一行结果");
+                    String modifiedValue = rs.getString("modified_value");
+                    System.out.println("INOUT 参数修改后的值: " + modifiedValue);
 
-                // 获取 INOUT 参数被修改后的值
-                String modifiedValue = cs.getString(1);
-                System.out.println("INOUT 参数修改后的值: " + modifiedValue);
-
-                assertEquals("Hello World", modifiedValue, "INOUT 参数应被追加后缀");
+                    assertEquals("Hello World", modifiedValue, "INOUT 参数应被追加后缀");
+                }
             }
         }
     }
