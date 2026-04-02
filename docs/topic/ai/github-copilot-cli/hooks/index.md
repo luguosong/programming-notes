@@ -1,80 +1,8 @@
-# 插件与 Hook
-
-插件（Plugins）和 Hook 是 Copilot CLI 的两种扩展机制。插件为 Copilot 添加新的 Agent 和 Skill，Hook 在 Agent 执行过程中的关键节点注入自定义逻辑。
-
----
-
-## 插件系统
-
-### 安装插件
-
-=== "从应用市场安装"
-
-    ``` text
-    /plugin install PLUGIN-NAME@MARKETPLACE-NAME
-    ```
-
-    例如：
-
-    ``` text
-    /plugin install database-data-management@awesome-copilot
-    ```
-
-=== "从 GitHub 仓库安装"
-
-    ``` text
-    # 从 GitHub.com 上的仓库
-    /plugin install OWNER/REPO
-
-    # 从任意在线 Git 仓库
-    /plugin install URL-OF-GIT-REPO
-    ```
-
-=== "从本地路径安装"
-
-    ``` text
-    /plugin install ./PATH/TO/PLUGIN
-    ```
-
-### 管理插件
-
-| 命令 | 功能 |
-|------|------|
-| `/plugin list` | 显示已安装的所有插件及其状态 |
-| `/plugin uninstall <name>` | 卸载指定插件 |
-| `/plugin enable <name>` | 启用插件 |
-| `/plugin disable <name>` | 禁用插件 |
-
-### 插件市场
-
-Copilot CLI 自带两个默认插件市场：
-
-| 市场 | 说明 |
-|------|------|
-| `copilot-plugins` | 官方插件市场 |
-| `awesome-copilot` | 社区插件市场 |
-
-| 命令 | 功能 |
-|------|------|
-| `/plugin marketplace list` | 列出可用的市场 |
-| `/plugin marketplace browse <name>` | 浏览指定市场中的插件 |
-
-### 插件提供的内容
-
-插件可以为 Copilot CLI 添加：
-
-- `Agent`：新的专业角色（如数据库管理 Agent）
-- `Skills`：新的自动触发技能
-- `MCP 服务器`：新的外部数据源连接
-- `Slash 命令`：新的斜杠命令
-
----
-
-## Hook 扩展
+# Hook 扩展
 
 Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 shell 命令，实现自动化和质量控制。
 
-### 生命周期事件
+## 生命周期事件
 
 | 事件 | 触发时机 | 典型用途 |
 |------|---------|---------|
@@ -85,7 +13,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 | `postToolUse` | 工具调用后 | 结果检查、格式化 |
 | `errorOccurred` | 发生错误时 | 错误通知、自动恢复 |
 
-### 创建 Hook
+## 创建 Hook
 
 在仓库的 `.github/hooks/` 文件夹中创建 JSON 文件（文件名可自由选择）：
 
@@ -110,7 +38,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 ]
 ```
 
-### Hook 配置字段
+## Hook 配置字段
 
 | 字段 | 说明 |
 |------|------|
@@ -118,9 +46,9 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 | `steps` | 步骤数组，每步包含一个 `command` |
 | `steps[].command` | 要执行的 shell 命令 |
 
-### 实战示例
+## 实战示例
 
-#### 工具调用后运行脚本
+### 工具调用后运行脚本
 
 ``` json title=".github/hooks/post-tool.json"
 [
@@ -135,7 +63,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 ]
 ```
 
-#### 自动格式化代码
+### 自动格式化代码
 
 ``` json title=".github/hooks/format.json"
 [
@@ -150,7 +78,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 ]
 ```
 
-#### 错误时发送通知
+### 错误时发送通知
 
 ``` json title=".github/hooks/notify.json"
 [
@@ -165,9 +93,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 ]
 ```
 
----
-
-## Hook vs 手动 Git Hook
+## Hook vs Git Hook
 
 | 维度 | Copilot Hook | Git Hook |
 |------|-------------|----------|
