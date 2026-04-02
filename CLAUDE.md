@@ -502,12 +502,18 @@ graph LR
 }
 ```
 
-**flowchart 硬编码颜色规范**：使用 `style` 指令指定节点颜色时，必须同时指定 `stroke`，
-否则节点边框在深色模式下轮廓模糊：
+**Mermaid 图表样式生成规范**：
+
+1. **禁止颜色填充**：节点一律使用 `fill:transparent`，不使用颜色填充背景，确保文字在各种模式下清晰可读
+2. **通过边框颜色区分类别**：使用 `stroke` 颜色和粗细来区分不同类型的节点（如 LTS 版本用蓝色粗边框，普通版本用灰色细边框）
+3. 使用 `classDef` 定义样式类，避免逐个节点重复写 `style` 指令
+4. 使用 `style` 指令指定节点颜色时，必须同时指定 `stroke`，否则节点边框在深色模式下轮廓模糊
 
 ```markdown
-style A fill:#4A90D9,stroke:#6aaee8,color:#fff   ✅ 正确
-style A fill:#4A90D9,color:#fff                   ❌ 缺少 stroke
+classDef regular fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+classDef lts fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+class v1,v2,v3 regular
+class v4,v6,v7,v8 lts
 ```
 
 **⚠️ 禁止的错误方案**：

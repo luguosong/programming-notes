@@ -1,5 +1,79 @@
 # Docker 基础
 
+## Docker 架构原理
+
+Docker 采用 `client-server`（客户端-服务端）架构，通过 REST API 通信：
+
+``` mermaid
+graph LR
+    CLI[docker CLI] -->|REST API| D[Docker Daemon<br>docketd]
+    Compose["Docker Compose"] -->|REST API| D
+    D --> C[containerd]
+    C --> R[runc]
+    R --> Container[容器进程]
+    D --> |管理| Images[镜像存储]
+    D --> |管理| Networks[网络]
+    D --> |管理| Volumes[卷]
+    style CLI fill:#4A90D9,stroke:#6aaee8,color:#fff
+    style D fill:#5B9F49,stroke:#7ab86a,color:#fff
+    style C fill:#E09145,stroke:#eaaa6b,color:#fff
+    style R fill:#C0392B,stroke:#d45d52,color:#fff
+```
+
+| 组件 | 说明 |
+|------|------|
+| `Docker Client`（docker CLI） | 用户与 Docker 交互的入口，将命令通过 REST API 发送给 Daemon |
+| `Docker Daemon`（dockerd） | 后台服务进程，负责构建、运行、管理容器和镜像 |
+| `containerd` | 容器运行时管理器，负责镜像拉取、容器生命周期管理 |
+| `runc` | OCI 标准的底层运行时，实际创建和运行容器进程 |
+
+???+ tip "理解调用链的价值"
+    排错时，这个调用链能帮你快速定位问题层级：
+    - `docker run` 报错 → 检查 Client 与 Daemon 的通信（权限、TCP/Socket）
+    - 容器启动失败 → 检查 containerd 日志（`journalctl -u containerd`）
+    - 运行时崩溃 → 检查 runc 和内核（cgroup/namespace 限制）
+
+### Docker 与虚拟机的区别
+
+| 对比维度 | Docker 容器 | 虚拟机（VM） |
+|---------|------------|-------------|
+| 隔离级别 | 进程级（共享宿主内核） | 硬件级（独立内核） |
+| 启动速度 | 秒级 | 分钟级 |
+| 镜像大小 | MB 级（分层共享） | GB 级（完整 OS） |
+| 资源开销 | 接近原生性能 | 有虚拟化损耗（5-10%） |
+| 安全隔离 | 较弱（共享内核，需注意逃逸风险） | 较强（硬件级隔离） |
+| 适用场景 | 微服务、CI/CD、快速伸缩 | 强隔离需求、异构 OS |
+
+``` mermaid
+graph TB
+    subgraph 容器方案
+        H1[Host OS 内核] --> D1[Docker Engine]
+        D1 --> C1[App A + 依赖]
+        D1 --> C2[App B + 依赖]
+        D1 --> C3[App C + 依赖]
+    end
+
+    subgraph 虚拟机方案
+        H2[Host OS] --> VMM[Hypervisor]
+        VMM --> G1[Guest OS + App A]
+        VMM --> G2[Guest OS + App B]
+        VMM --> G3[Guest OS + App C]
+    end
+
+    style D1 fill:#4A90D9,stroke:#6aaee8,color:#fff
+    style VMM fill:#C0392B,stroke:#d45d52,color:#fff
+```
+
+### 镜像分层原理
+
+Docker 镜像由多个`只读层`叠加而成，每层只记录与上一层的差异。容器运行时，在镜像顶部添加一个`可写层`（Container Layer）：
+
+- `分层存储`使得多个镜像可以共享相同的底层，节省磁盘空间
+- `构建缓存`利用分层机制——未变化的层直接复用，加速后续构建
+- `联合文件系统`（Union File System，如 OverlayFS）将所有层合并为统一视图
+
+---
+
 ## 核心概念
 
 Docker 的核心概念围绕三个对象展开：`镜像（Image）`、`容器（Container）`、`仓库（Registry）`。
@@ -272,6 +346,29 @@ docker run -d -v "${PWD}:/app" myapp
     - 宿主机路径必须使用`绝对路径`
     - 挂载后容器内该路径的原有文件会被宿主机内容`覆盖`
     - 生产环境推荐使用 Volume，开发环境可使用 bind mount
+
+### tmpfs 挂载（临时文件系统）
+
+tmpfs 将数据存储在`宿主机内存`中，容器停止后数据自动消失。适用于存储临时敏感数据（如会话缓存、加密密钥），避免写入磁盘。
+
+``` bash
+# 运行容器时挂载 tmpfs
+docker run -d \
+  --name myapp \
+  --tmpfs /app/tmp:rw,size=100m,mode=1777 \
+  myapp:1.0
+```
+
+| 参数 | 说明 |
+|------|------|
+| `size` | tmpfs 最大容量（如 `100m`、`1g`） |
+| `mode` | 文件权限模式（如 `1777` 表示所有用户可读写） |
+| `rw` / `ro` | 读写 / 只读 |
+
+??? warning "tmpfs 限制"
+    - 仅在 **Linux** 上可用
+    - 数据存储在内存中，容器停止即丢失——不能替代持久化存储
+    - 大量写入可能影响宿主机可用内存
 
 ---
 

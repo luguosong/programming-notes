@@ -597,3 +597,145 @@ DB_PASSWORD=your-password
 DB_ROOT_PASSWORD=your-root-password
 REDIS_PASSWORD=your-redis-password
 ```
+
+---
+
+## Watch 模式（实时开发）
+
+Docker Compose V2.22+ 引入了 `watch` 功能，监听本地文件变更后自动同步或重建容器，无需手动重启。
+
+### 基本配置
+
+在服务的 `develop.watch` 中定义监听规则：
+
+``` yaml title="compose.yaml"
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    develop:
+      watch:
+        # 同步文件变更（无需重建，适合前端资源、配置文件）
+        - action: sync
+          path: ./src/main/resources/static
+          target: /app/static
+
+        # 同步并触发容器内命令（如热重载）
+        - action: sync+restart
+          path: ./src/main/resources/application.yml
+          target: /app/config/application.yml
+
+        # 重建镜像（依赖变化时才需要）
+        - action: rebuild
+          path: ./pom.xml
+```
+
+| action | 行为 | 适用场景 |
+|--------|------|---------|
+| `sync` | 将变更文件直接复制到运行中的容器 | 静态资源、模板文件 |
+| `sync+restart` | 复制文件后重启容器进程 | 配置文件变更 |
+| `rebuild` | 重新构建镜像并替换容器 | 依赖变更（`pom.xml`、`package.json`） |
+
+### 启动 Watch
+
+``` bash
+# 启动服务并开启文件监听
+docker compose watch
+
+# 仅监听指定服务
+docker compose watch web
+
+# 服务已在运行时，仅开启监听（不重新启动）
+docker compose watch --no-up
+
+# 静默模式（不显示构建输出）
+docker compose watch --quiet
+```
+
+???+ tip "Watch vs volume bind mount"
+    | 方式 | 优势 | 劣势 |
+    |------|------|------|
+    | `bind mount`（`-v ./src:/app/src`） | 简单，即时生效 | 无法按文件类型区分行为、无法自动重建 |
+    | `watch` | 声明式配置，区分 sync/rebuild | 需要 Compose V2.22+，初次配置稍复杂 |
+
+    开发环境推荐使用 `watch`，精确控制每种文件变更的处理方式。
+
+---
+
+## Profiles（按环境选择性启动）
+
+当不同环境需要不同的服务集合时，可以用 `profiles` 给服务打标签，按需启动。
+
+### 基本用法
+
+``` yaml title="compose.yaml"
+services:
+  # 核心服务（始终启动）
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+
+  # 调试工具（仅 debug profile 时启动）
+  adminer:
+    image: adminer
+    ports:
+      - "8888:8080"
+    profiles:
+      - debug
+
+  # Redis（仅 cache profile 时启动）
+  redis:
+    image: redis:7-alpine
+    profiles:
+      - cache
+
+  # 监控栈（仅 monitoring profile 时启动）
+  prometheus:
+    image: prom/prometheus
+    profiles:
+      - monitoring
+  grafana:
+    image: grafana/grafana
+    profiles:
+      - monitoring
+```
+
+``` bash
+# 默认启动：只运行 app 和 db（无 profile 标签的服务）
+docker compose up -d
+
+# 同时启动 debug profile 的服务
+docker compose --profile debug up -d
+# → app + db + adminer
+
+# 启动多个 profile
+docker compose --profile debug --profile cache up -d
+# → app + db + adminer + redis
+
+# 只启动某个 profile 的服务（不含无标签服务）
+docker compose --profile monitoring up -d --no-deps prometheus grafana
+```
+
+### 自动激活 Profile
+
+也可以通过环境变量自动激活：
+
+``` bash
+# 设置默认激活的 profile
+export COMPOSE_PROFILES=debug,cache
+docker compose up -d
+# 等同于 docker compose --profile debug --profile cache up -d
+```
+
+???+ tip "Profiles vs 多个 Compose 文件"
+    - `Profiles`：适合少量服务的开关（如调试工具、监控组件），一个文件搞定
+    - `多个 Compose 文件叠加`：适合整个服务配置的大幅差异（如开发 vs 生产的不同端口、资源限制）
+
+    两者可以组合使用：基础配置 + Profile 切换调试工具 + 文件叠加覆盖环境参数。

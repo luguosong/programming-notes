@@ -59,6 +59,10 @@ nav = [
     ] },
     { "Java" = [
         "java/index.md",
+        { "JavaSE" = [
+            "java/javase/index.md",
+            { "Java 概述" = "java/javase/overview/index.md" }
+        ] },
         { "数据库" = [
             "java/database/index.md",
             { "JDBC" = "java/database/jdbc/index.md" }
@@ -113,7 +117,8 @@ nav = [
                 { "Agent 系统" = "topic/ai/github-copilot-cli/agents/index.md" },
                 { "Skills 技能系统" = "topic/ai/github-copilot-cli/skills/index.md" },
                 { "MCP 服务器" = "topic/ai/github-copilot-cli/mcp/index.md" },
-                { "插件与 Hook" = "topic/ai/github-copilot-cli/plugins-hooks/index.md" },
+                { "插件" = "topic/ai/github-copilot-cli/plugins/index.md" },
+                { "Hook 扩展" = "topic/ai/github-copilot-cli/hooks/index.md" },
                 { "推荐扩展" = "topic/ai/github-copilot-cli/practices/index.md" }
             ] }
         ] }
