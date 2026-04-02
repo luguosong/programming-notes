@@ -92,10 +92,14 @@ graph LR
     A[快速上手<br>5 分钟体验] --> B[Docker 基础<br>核心概念与命令]
     B --> C[Docker Compose<br>多容器编排]
     C --> D[生产实践<br>安全、CI/CD、集群]
-    style A fill:#4A90D9,stroke:#6aaee8,color:#fff
-    style B fill:#5B9F49,stroke:#7ab86a,color:#fff
-    style C fill:#E09145,stroke:#eaaa6b,color:#fff
-    style D fill:#C0392B,stroke:#d45d52,color:#fff
+    classDef step1 fill:transparent,stroke:#57ab5a,color:#adbac7,stroke-width:2px
+    classDef step2 fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+    classDef step3 fill:transparent,stroke:#e3b341,color:#adbac7,stroke-width:2px
+    classDef step4 fill:transparent,stroke:#e5534b,color:#adbac7,stroke-width:2px
+    class A step1
+    class B step2
+    class C step3
+    class D step4
 ```
 
 | 阶段 | 内容 | 适合人群 |

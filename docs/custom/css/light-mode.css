@@ -19,3 +19,21 @@
     border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 6px;
 }
+
+/* === Mermaid 浅色模式适配 === */
+/* 与 Linear 设计语言对齐：slate 灰阶 + 高对比度文字 */
+:root {
+    --md-mermaid-edge-color: #94a3b8;
+    --md-mermaid-label-fg-color: #334155;
+    --md-mermaid-node-fg-color: #1e293b;
+    --md-mermaid-label-bg-color: #f8fafc;
+    --md-mermaid-sequence-actor-fg-color: #334155;
+    --md-mermaid-sequence-message-fg-color: #64748b;
+    --md-mermaid-sequence-loop-fg-color: #64748b;
+    --md-mermaid-sequence-note-fg-color: #334155;
+    --md-mermaid-sequence-label-fg-color: #334155;
+    --md-mermaid-sequence-box-fg-color: #334155;
+    --md-mermaid-sequence-actor-bg-color: #f1f5f9;
+    --md-mermaid-sequence-note-bg-color: #fffbeb;
+    --md-mermaid-sequence-box-bg-color: #f1f5f9;
+}

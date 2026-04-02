@@ -126,6 +126,14 @@ flowchart TD
     H -->|不匹配| E
     H -->|匹配| I[提取 scope/sub 等声明进行业务授权]
     I --> J[返回受保护资源]
+    classDef step fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:1px
+    classDef decision fill:transparent,stroke:#e3b341,color:#adbac7,stroke-width:1px
+    classDef error fill:transparent,stroke:#e5534b,color:#adbac7,stroke-width:1px
+    classDef success fill:transparent,stroke:#57ab5a,color:#adbac7,stroke-width:2px
+    class A,B,C step
+    class D,F,G,H decision
+    class E error
+    class I,J success
 ```
 
 ## Opaque Token vs JWT

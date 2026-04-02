@@ -1,0 +1,52 @@
+/* ==================== 发音按钮 ==================== */
+
+/* 内联发音按钮 */
+.md-pronounce-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0 2px;
+    padding: 0;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--md-primary-fg-color);
+    cursor: pointer;
+    vertical-align: middle;
+    font-size: 11px;
+    line-height: 1;
+    transition: all 0.15s ease;
+    /* 去掉按钮默认样式 */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.md-pronounce-btn:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: var(--md-primary-fg-color);
+}
+
+.md-pronounce-btn:active,
+.md-pronounce-btn.md-pronounce--playing {
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-default-bg-color);
+    border-color: var(--md-primary-fg-color);
+    transform: scale(0.9);
+}
+
+/* 深色模式适配 */
+[data-md-color-scheme="slate"] .md-pronounce-btn {
+    border-color: rgba(255, 255, 255, 0.12);
+    color: var(--md-primary-fg-color);
+}
+
+[data-md-color-scheme="slate"] .md-pronounce-btn:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 发音容器（可选，用于包裹单词和按钮） */
+.md-pronounce {
+    display: inline;
+}

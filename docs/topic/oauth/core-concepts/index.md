@@ -25,6 +25,10 @@ graph LR
     AS -->|颁发 Token| Client[客户端]
     Client -->|携带 Token| RS[资源服务器]
     RS -->|返回资源| Client
+    classDef role fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+    classDef server fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+    class RO,Client role
+    class AS,RS server
 ```
 
 ## 客户端类型与注册

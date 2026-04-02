@@ -14,10 +14,16 @@ graph LR
     D --> |管理| Images[镜像存储]
     D --> |管理| Networks[网络]
     D --> |管理| Volumes[卷]
-    style CLI fill:#4A90D9,stroke:#6aaee8,color:#fff
-    style D fill:#5B9F49,stroke:#7ab86a,color:#fff
-    style C fill:#E09145,stroke:#eaaa6b,color:#fff
-    style R fill:#C0392B,stroke:#d45d52,color:#fff
+    classDef client fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+    classDef engine fill:transparent,stroke:#57ab5a,color:#adbac7,stroke-width:2px
+    classDef runtime fill:transparent,stroke:#e3b341,color:#adbac7,stroke-width:1px
+    classDef process fill:transparent,stroke:#e5534b,color:#adbac7,stroke-width:2px
+    classDef resource fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+    class CLI,Compose client
+    class D engine
+    class C,R runtime
+    class Container process
+    class Images,Networks,Volumes resource
 ```
 
 | 组件 | 说明 |
@@ -60,8 +66,12 @@ graph TB
         VMM --> G3[Guest OS + App C]
     end
 
-    style D1 fill:#4A90D9,stroke:#6aaee8,color:#fff
-    style VMM fill:#C0392B,stroke:#d45d52,color:#fff
+    classDef engine fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+    classDef hypervisor fill:transparent,stroke:#e5534b,color:#adbac7,stroke-width:2px
+    classDef app fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+    class D1 engine
+    class VMM hypervisor
+    class C1,C2,C3,G1,G2,G3 app
 ```
 
 ### 镜像分层原理
@@ -85,6 +95,14 @@ graph LR
     C -->|docker pull| B
     B -->|docker run| D[容器 Container]
     D -->|docker commit| B
+    classDef source fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+    classDef image fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+    classDef registry fill:transparent,stroke:#57ab5a,color:#adbac7,stroke-width:1px
+    classDef container fill:transparent,stroke:#e3b341,color:#adbac7,stroke-width:1px
+    class A source
+    class B image
+    class C registry
+    class D container
 ```
 
 ### 镜像（Image）
