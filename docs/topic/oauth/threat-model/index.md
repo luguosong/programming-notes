@@ -140,7 +140,7 @@ sequenceDiagram
 - 授权服务器`将授权码绑定到 redirect_uri`——令牌请求中的 `redirect_uri` 必须与授权时的完全匹配
 - 强制使用预注册的 `redirect_uri`
 - 使用部署特定的客户端密钥
-- 使用 PKCE（详见「授权类型 · PKCE」和「安全实践 · PKCE」）
+- 使用 PKCE（详见「授权流程 · PKCE」和「安全实践 · PKCE」）
 
 ### 令牌端点面临的威胁
 
