@@ -1,27 +1,39 @@
 # JWT 令牌
 
-JWT（JSON Web Token，RFC 7519）是 OAuth2 和 OIDC 中最常用的令牌格式。它是一种`自描述的、紧凑的、URL 安全的`令牌，能在各方之间传递声明（Claims）。
+JWT（JSON Web Token，RFC 7519）是 OAuth2 和 OIDC 中最常用的令牌格式。
+
+**把它想象成一封透明的密封信件**：信封上写着收件人、发件人、过期时间（Header + Payload 里的 Claims），信封口盖有一个蜡封（Signature）。任何人拿起这封信都能透过透明信封看到里面的内容（Base64url 编码，不是加密），但只有拿到信封的人无法伪造蜡封——除非他偷到了发信人的印章（私钥）。
+
+JWT 是一种`自描述的、紧凑的、URL 安全的`令牌，能在各方之间传递声明（Claims）。
+
+**本文你会学到：**
+- JWT 的三段式结构分别是什么，各自包含什么信息
+- JWS（签名）和 JWE（加密）的区别
+- 常见签名算法的适用场景
+- 资源服务器验证 JWT 的完整流程
+- Opaque Token 与 JWT 的选择依据
+- RFC 9068 对 JWT Access Token 的标准化要求
 
 ## JWT 结构
 
-JWT 由三部分组成，用 `.` 分隔：
+JWT 由三部分组成，用 `.` 分隔。继续用密封信件的类比——Header 是信封信息，Payload 是信件内容，Signature 是蜡封：
 
 ```
 Header.Payload.Signature
 ```
 
-例如：
+例如（先有个直观感受，后面逐段解释）：
 ```
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
 .eyJzdWIiOiIxMjM0NTYiLCJzY29wZSI6InJlYWQiLCJleHAiOjE3NTMxMjMyMDB9
 .SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
 ```
 
-每部分均为 `Base64url 编码`（非加密，可解码查看）。
+每部分均为 `Base64url 编码`——注意，这只是编码，不是加密！就像把中文翻译成拼音，任何人都能还原，只是方便在 URL 里传输。
 
 ### Header（头部）
 
-声明令牌类型和签名算法：
+声明令牌类型和签名算法——信封上的基本信息：
 
 ``` json
 {
@@ -33,7 +45,7 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
 
 ### Payload（载荷）
 
-包含实际的声明数据（Claims）：
+包含实际的声明数据（Claims）——信件里的内容：
 
 ``` json
 {
@@ -47,11 +59,11 @@ eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9
 ```
 
 !!! warning "Payload 是 Base64url 编码，不是加密"
-    JWT Payload 中的内容任何人都可以解码查看。`不要在 Payload 中存放敏感信息`（如密码、信用卡号）。若需要加密，应使用 JWE。
+    JWT Payload 中的内容任何人都可以 Base64url 解码查看——就像透明信封，谁都能看里面写了什么。`不要在 Payload 中存放敏感信息`（如密码、信用卡号）。若需要加密，应使用 JWE（也就是换成不透明的信封）。
 
 ### Signature（签名）
 
-签名是对 `Header.Payload` 的数字签名，用于`防止篡改`：
+签名是对 `Header.Payload` 的数字签名——信封上的蜡封，用于`防止篡改`：
 
 ```
 RSASSA-PKCS1-v1_5(
@@ -60,9 +72,11 @@ RSASSA-PKCS1-v1_5(
 )
 ```
 
-验证者持有公钥，可以验证签名，但无法伪造。
+验证者持有公钥，可以验证签名，但无法伪造——就像你有发信人的印章图案（公钥），可以核对蜡封是不是真的，但没有印章本身（私钥）就盖不出新的。
 
 ## JWS vs JWE
+
+既然提到了 JWE，简单说一下两者的区别：
 
 | 格式 | 全称 | 作用 | 常见场景 |
 |------|------|------|---------|
@@ -73,6 +87,8 @@ RSASSA-PKCS1-v1_5(
 
 ## 签名算法对比
 
+签名算法决定了蜡封的「防伪级别」。核心区别在于密钥的管理方式：
+
 | 算法 | 类型 | 密钥 | 适用场景 |
 |------|------|------|---------|
 | `RS256` | 非对称（RSA） | 私钥签名，公钥验证 | 生产环境推荐，资源服务器只需公钥即可验证 |
@@ -80,11 +96,13 @@ RSASSA-PKCS1-v1_5(
 | `HS256` | 对称（HMAC） | 同一密钥签名和验证 | 仅适合单体应用，微服务场景中需共享密钥存在安全风险 |
 
 !!! tip "生产环境推荐 RS256 或 ES256"
-    非对称算法允许授权服务器私钥签名，任何持有公钥的资源服务器都可以验证，且不需要共享私钥，安全性更高。
+    非对称算法允许授权服务器私钥签名，任何持有公钥的资源服务器都可以验证，且不需要共享私钥——就像银行用私钥盖章，所有分行用公钥验证，谁都不需要把印章实物送来送去，安全性更高。
 
 ## JWKS 端点（公钥集合）
 
-授权服务器通过 `JWKS（JSON Web Key Set）端点`发布公钥，资源服务器可以动态获取用于验证 Token 的公钥。
+问题来了：资源服务器怎么拿到授权服务器的公钥来验证签名？不可能硬编码在代码里——密钥会轮换。
+
+答案是**JWKS（JSON Web Key Set）端点**——授权服务器通过这个端点`公开发布`自己的公钥，资源服务器可以动态获取。
 
 ``` http
 GET /oauth2/jwks
@@ -138,6 +156,8 @@ flowchart TD
 
 ## Opaque Token vs JWT
 
+除了 JWT，OAuth2 中还有另一种常见的令牌格式：Opaque Token。它们怎么选？简单来说：
+
 | 维度 | Opaque Token | JWT |
 |------|-------------|-----|
 | `格式` | 随机字符串（无信息） | 结构化 JSON（含声明） |
@@ -151,7 +171,9 @@ flowchart TD
 
 ## JWT Access Token 规范（RFC 9068）
 
-RFC 9068 为 OAuth 2.0 Access Token 定义了标准的 JWT 编码方式（JWT Profile for Access Tokens），规定了一组`必须包含的声明`，使不同授权服务器颁发的 JWT Access Token 具有统一结构，资源服务器可以用一致的方式验证和解析。
+前面提到的 Opaque Token vs JWT 对比，其实反映了一个现实问题：**各家授权服务器颁发的 JWT Access Token 格式各不相同**。资源服务器需要针对每个授权服务器写专门的解析逻辑，很麻烦。
+
+RFC 9068 就是来解决这个问题——它为 OAuth 2.0 Access Token 定义了`标准的 JWT 编码方式`（JWT Profile for Access Tokens），规定了一组`必须包含的声明`，让不同授权服务器颁发的 JWT Access Token 具有统一结构，资源服务器可以用一致的方式验证和解析。
 
 `RFC 9068 必须包含的声明：`
 
@@ -190,6 +212,8 @@ RFC 9068 为 OAuth 2.0 Access Token 定义了标准的 JWT 编码方式（JWT Pr
 ```
 
 `RFC 9068 的价值：` 在此规范之前，各授权服务器的 JWT Access Token 格式各不相同，资源服务器需要针对每个授权服务器编写专门的解析逻辑。RFC 9068 通过统一声明集和 `typ: at+jwt` 标识，让资源服务器可以用`通用逻辑`验证来自不同授权服务器的 Access Token。同时，将令牌信息全部编码在 JWT 自身中，无需查询数据库即可验证，适合高并发场景。
+
+> **小结**：JWT 的核心优势是自包含 + 本地验证，劣势是撤销有延迟。大多数场景选 JWT + 短有效期就够了。如果有严格的即时撤销需求，考虑 Opaque Token 配合 Introspection。
 
 ---
 

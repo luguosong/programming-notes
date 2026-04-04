@@ -1,8 +1,19 @@
 # OAuth2 授权类型
 
-OAuth2 规范定义了多种`授权类型（Grant Type）`，对应不同的应用场景。本文详细介绍各授权类型的流程机制，安全威胁分析见[安全实践](../security/index.md)。
+OAuth2 的核心思想是"让应用代替你访问数据，但不交出你的密码"。为此它设计了几种不同的`授权类型（Grant Type）`，每种都针对不同的场景——有的需要用户亲自参与授权，有的纯粹是机器之间的对话。安全威胁分析见[安全实践](../security/index.md)。
+
+**本文你会学到：**
+
+- `授权码流程（Authorization Code）`——最主流、最安全的授权方式，适用于 Web 应用、SPA 和移动端
+- `客户端凭证流程（Client Credentials）`——机器对机器（M2M）场景，不需要用户参与
+- `隐式流程（Implicit）`——曾经给 SPA 用的方案，因安全问题已被废弃
+- `资源所有者密码凭证（ROPC）`——直接传密码的方案，OAuth 2.1 中已被移除
+- `设备授权流程（Device Flow）`——给智能电视、CLI 工具等输入受限的设备用的
+- `令牌交换流程（Token Exchange）`——把已有令牌换成另一个令牌，适用于跨服务身份传播
 
 ## 授权码流程（Authorization Code）
+
+> 把授权码流程想象成去银行办理代办业务——你不能让代办人直接拿到你的身份证原件（Access Token），而是先让银行给你一张排号条（授权码），代办人拿排号条去柜台，出示自己的员工证（client_secret），才能换取你要办的凭证。排号条即使丢了也没关系，因为没有员工证的陌生人拿着它也办不了业务。
 
 授权码流程是 `OAuth2 最推荐`的标准流程，适用于有服务端的 Web 应用。其核心设计思想是将授权过程拆分为`前端通道（Front Channel）`和`后端通道（Back Channel）`两个阶段：
 
@@ -81,6 +92,31 @@ sequenceDiagram
 
 11. `返回资源`：资源服务器验证 Token 有效（签名、过期时间、scope 权限）后，根据 Token 携带的 scope 决定返回哪些数据，最终返回受保护的资源。
 
+### 授权端点错误响应（RFC 6749 Section 4.1.2.1）
+
+当授权请求失败时，授权服务器通过 `redirect_uri` 的 **query component** 返回错误信息。错误响应包含三个字段：
+
+| 字段 | 必需性 | 说明 |
+|------|--------|------|
+| `error` | 必须 | ASCII 错误码（见下表） |
+| `error_description` | 可选 | 人类可读的 ASCII 错误描述（辅助调试） |
+| `error_uri` | 可选 | 包含错误详细信息网页的 URI |
+
+七个标准错误码：
+
+| 错误码 | 含义 |
+|--------|------|
+| `invalid_request` | 缺少必需参数、参数值无效、参数重复、请求格式错误 |
+| `unauthorized_client` | Client 无权使用此方法请求授权码 |
+| `access_denied` | Resource Owner 或授权服务器拒绝了请求 |
+| `unsupported_response_type` | 授权服务器不支持用此方法获取授权码 |
+| `invalid_scope` | 请求的 scope 无效、未知或格式错误 |
+| `server_error` | 授权服务器遇到意外条件（内部错误） |
+| `temporarily_unavailable` | 授权服务器暂时过载或维护中 |
+
+!!! info inline end "ABNF（RFC 6749 Appendix A）"
+    `code = 1*VSCHAR`（一个或多个可见 ASCII 字符），`state = 1*VSCHAR`
+
 ### Token 响应格式
 
 ``` json
@@ -100,6 +136,27 @@ sequenceDiagram
 | `expires_in` | Access Token 有效期（秒） |
 | `refresh_token` | 刷新令牌，用于在 Access Token 过期后获取新 Token |
 | `scope` | 实际授权的权限范围。当与客户端请求的范围一致时为 RECOMMENDED，不一致时为 REQUIRED |
+
+!!! info "Token 响应的 HTTP 要求（RFC 6749 Section 5.1）"
+
+    - `Content-Type` 必须为 `application/json;charset=UTF-8`
+    - 必须包含 `Cache-Control: no-store` 和 `Pragma: no-cache` 响应头（`禁止缓存` Token 响应）
+    - 如果颁发的 scope 与客户端请求的不同，响应中`必须`包含 `scope` 参数明确告知实际授权范围（即 scope 缩窄时必须显式返回）
+
+### 令牌端点错误响应（RFC 6749 Section 5.2）
+
+令牌端点的错误响应与授权端点不同：错误信息以 `application/json` 格式在响应体中返回（非 URL 参数），默认 HTTP 状态码为 400（Bad Request）。
+
+| 错误码 | 含义 | 特殊状态码 |
+|--------|------|-----------|
+| `invalid_request` | 缺少必需参数、参数重复、多种认证机制、格式错误 | 400 |
+| `invalid_client` | Client 认证失败（未知 client、无认证、不支持的方法） | **可能返回 401** + `WWW-Authenticate` 头 |
+| `invalid_grant` | 授权码/凭证/refresh token 无效、过期、被撤销或不匹配 | 400 |
+| `unauthorized_client` | 已认证的 Client 无权使用此授权类型 | 400 |
+| `unsupported_grant_type` | 授权服务器不支持此授权类型 | 400 |
+| `invalid_scope` | 请求的 scope 无效、未知或超出 Resource Owner 授权范围 | 400 |
+
+与授权端点错误码的主要差异：令牌端点多 `invalid_client`（客户端认证失败）和 `invalid_grant`（授权凭证无效），但没有 `access_denied`（由用户拒绝授权，只在授权端点发生）和 `unsupported_response_type`（与授权类型选择相关）。
 
 ### 关键参数一览
 
@@ -192,6 +249,8 @@ sequenceDiagram
 
 ## 客户端凭证流程（Client Credentials）
 
+> 想象两个公司之间的 API 调用——没有用户参与，纯粹是系统对系统。客户端凭证流程就像公司之间交换的"企业通行证"，用自己公司的公章（client_secret）去对方的门卫那里换一张临时工牌（Access Token）。没有员工需要到场签字，全程都是公司对公司的业务往来。
+
 适用于`没有用户参与的机器对机器（M2M）调用`，如微服务间互相调用 API。
 
 ``` mermaid
@@ -244,7 +303,7 @@ sequenceDiagram
 5. `直接请求资源`：SPA 的 JavaScript 代码从 URL fragment 中解析出 Token，然后直接携带 Token 请求资源服务器。
 6. `返回资源`：资源服务器验证 Token 后返回数据。
 
-`问题所在：` `response_type=token` 导致 Access Token 直接出现在 URL 的 `#fragment` 部分——浏览器历史记录、服务器日志（Referrer 头）、页面内 JavaScript 均可读取，存在泄露风险。此外，隐式流程无法颁发 Refresh Token，且无法验证 Token 的接收方（缺少 `aud` 绑定）。
+`问题所在：` `response_type=token` 导致 Access Token 直接出现在 URL 的 `#fragment` 部分——浏览器历史记录、服务器日志（Referrer 头）、页面内 JavaScript 均可读取，存在泄露风险。此外，隐式流程无法颁发 Refresh Token，且无法验证 Token 的接收方（缺少 `aud` 绑定）。一句话总结：Token 就这么赤裸裸地塞在了 URL 里，谁都能看到——这不是安全漏洞，而是设计本身就有缺陷。
 
 !!! danger "请使用授权码流程 + PKCE 替代"
     现代 SPA 应用应使用`授权码流程 + PKCE`，而非隐式流程。授权码流程中 Token 仅在后端与授权服务器之间交换，不经过浏览器 URL。
@@ -277,7 +336,7 @@ sequenceDiagram
 4. `访问资源服务器`：客户端携带 Access Token 请求资源服务器。
 5. `返回资源`：资源服务器返回数据。
 
-`问题所在：` 用户必须将凭证直接交给客户端应用，这破坏了 OAuth2 的核心设计原则——用户凭证只应由授权服务器处理。客户端应用可以记录密码，也无法使用 MFA（多因素认证）或 SSO（单点登录）等高级认证方式。
+`问题所在：` 用户必须将凭证直接交给客户端应用，这破坏了 OAuth2 的核心设计原则——用户凭证只应由授权服务器处理。客户端应用可以记录密码，也无法使用 MFA（多因素认证）或 SSO（单点登录）等高级认证方式。打个比方：这就像你把家门钥匙直接交给快递员，而不是通过物业代为确认身份——你根本不知道他会不会偷偷配一把。
 
 !!! danger "强烈不推荐"
     ROPC 破坏了 OAuth2 的核心设计原则：用户凭证不应暴露给客户端应用。仅在无法使用其他流程的遗留系统迁移场景中考虑。
@@ -356,6 +415,8 @@ sequenceDiagram
 - `委托访问`：服务 A 代表用户调用服务 B，使用 `actor_token` 标识代理方身份
 
 ## 适用场景对比
+
+这么多授权类型，实际开发中该选哪个？下表帮你快速决策：
 
 | 授权类型 | 适用场景 | 推荐程度 | 需要用户参与 |
 |---------|---------|---------|------------|

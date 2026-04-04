@@ -6,6 +6,8 @@ icon: lucide/shield-check
 
 OAuth2 和 OpenID Connect 是现代互联网应用中最重要的授权与认证标准。无论是第三方登录（"使用 GitHub 登录"）、API 访问控制，还是微服务间的安全调用，背后都离不开这两套协议。
 
+**打个比方**：OAuth2 就像一个**门禁卡系统**——你（用户）授权给谁（应用）进入哪些区域（资源），完全由你决定，而且你可以随时收回门禁卡，不需要交出原始钥匙（密码）。
+
 ## 为什么需要 OAuth2
 
 在 OAuth2 出现之前，第三方应用若要访问用户在其他服务上的资源，通常要求用户直接提交用户名和密码。这带来了严重问题：
@@ -78,6 +80,12 @@ sequenceDiagram
     PKCE、Refresh Token Rotation 与常见攻击防护
 
     [→ 安全实践](security/index.md)
+
+- :lucide-shield-alert: `威胁模型与攻击面`
+
+    RFC 6819 威胁模型：攻击面分析、令牌安全设计原则、凭证保护策略
+
+    [→ 威胁模型与攻击面](threat-model/index.md)
 
 - :lucide-server: `实战：授权服务器`
 
