@@ -317,5 +317,5 @@ sequenceDiagram
 
 ---
 
-← 上一篇：[核心概念](../core-concepts/index.md)
-→ 下一篇：[令牌体系](../token-system/index.md)
+`上一篇：` [核心概念](../core-concepts/index.md)
+`下一篇：` [令牌体系](../token-system/index.md)

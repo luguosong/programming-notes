@@ -341,5 +341,5 @@ Logout Token 是一个签名的 JWT，包含以下声明：
 
 ---
 
-← 上一篇：[授权类型](../grant-types/index.md)
-→ 下一篇：[JWT 令牌](../jwt/index.md)
+`上一篇：` [端点与发现](../endpoints/index.md)
+`下一篇：` [扩展协议](../extensions/index.md)

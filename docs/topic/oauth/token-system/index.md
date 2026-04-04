@@ -138,5 +138,5 @@ Refresh Token 的存在使授权服务器可以为 Access Token 设置`较短的
 
 ---
 
-`上一篇：` [核心概念](../core-concepts/index.md)
+`上一篇：` [授权流程](../authorization-flows/index.md)
 `下一篇：` [JWT 令牌](../jwt/index.md)

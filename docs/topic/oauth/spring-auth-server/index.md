@@ -291,5 +291,5 @@ spring:
 
 ---
 
-← `上一篇：` [安全实践](../security/index.md)
-→ `下一篇：` [实战：客户端与资源服务器](../spring-client-resource/index.md)
+`上一篇：` [威胁模型与攻击面](../threat-model/index.md)
+`下一篇：` [实战：客户端与资源服务器](../spring-client-resource/index.md)

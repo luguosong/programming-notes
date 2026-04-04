@@ -1,5 +1,4 @@
 ---
-icon: lucide/shield-alert
 ---
 
 # OAuth2 威胁模型与攻击面
@@ -252,5 +251,5 @@ Access Token 也可以限制使用次数，迫使客户端重新获取新的 Tok
 
 ---
 
-`← 上一篇：` [安全实践](../security/index.md)
-`返回专题：` [OAuth2 & OpenID Connect](../index.md)
+`上一篇：` [安全实践](../security/index.md)
+`下一篇：` [实战：授权服务器](../spring-auth-server/index.md)

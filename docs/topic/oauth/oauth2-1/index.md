@@ -191,5 +191,4 @@ OAuth 2.1 与 OAuth 2.0 保持`向后兼容`：
 
 ---
 
-← 上一篇：[实战：客户端与资源服务器](../spring-client-resource/index.md)
-← 返回专题：[OAuth2 & OpenID Connect](../index.md)
+`上一篇：` [实战：客户端与资源服务器](../spring-client-resource/index.md)
