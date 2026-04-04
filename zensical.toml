@@ -94,10 +94,12 @@ nav = [
         { "OAuth2" = [
             "topic/oauth/index.md",
             { "核心概念" = "topic/oauth/core-concepts/index.md" },
-            { "授权类型" = "topic/oauth/grant-types/index.md" },
+            { "动态客户端注册" = "topic/oauth/dynamic-registration/index.md" },
+            { "授权流程" = "topic/oauth/authorization-flows/index.md" },
             { "OpenID Connect" = "topic/oauth/openid-connect/index.md" },
             { "JWT 令牌" = "topic/oauth/jwt/index.md" },
             { "安全实践" = "topic/oauth/security/index.md" },
+            { "扩展协议" = "topic/oauth/extensions/index.md" },
             { "威胁模型与攻击面" = "topic/oauth/threat-model/index.md" },
             { "实战：授权服务器" = "topic/oauth/spring-auth-server/index.md" },
             { "实战：客户端与资源服务器" = "topic/oauth/spring-client-resource/index.md" },
@@ -137,6 +139,25 @@ nav = [
                 { "插件" = "topic/ai/github-copilot-cli/plugins/index.md" },
                 { "Hook 扩展" = "topic/ai/github-copilot-cli/hooks/index.md" },
                 { "推荐扩展" = "topic/ai/github-copilot-cli/practices/index.md" }
+            ] },
+            { "Claude Code" = [
+                "topic/ai/claude-code/index.md",
+                { "快速入门" = "topic/ai/claude-code/getting-started/index.md" },
+                { "工作原理" = "topic/ai/claude-code/how-it-works/index.md" },
+                { "多平台支持" = "topic/ai/claude-code/platforms/index.md" },
+                { "配置体系" = "topic/ai/claude-code/configuration/index.md" },
+                { "扩展体系" = [
+                    "topic/ai/claude-code/extensions/index.md",
+                    { "Skills" = "topic/ai/claude-code/skills/index.md" },
+                    { "Hooks" = "topic/ai/claude-code/hooks/index.md" },
+                    { "Sub-agents" = "topic/ai/claude-code/sub-agents/index.md" },
+                    { "MCP" = "topic/ai/claude-code/mcp/index.md" },
+                    { "插件" = "topic/ai/claude-code/plugins/index.md" },
+                ] },
+                { "自动化" = "topic/ai/claude-code/automation/index.md" },
+                { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
+                { "企业管理" = "topic/ai/claude-code/enterprise/index.md" },
+                { "最佳实践" = "topic/ai/claude-code/best-practices/index.md" }
             ] }
         ] }
     ] },
