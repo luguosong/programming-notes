@@ -4,7 +4,7 @@
 
 授权服务器的配置见[实战：授权服务器](../spring-auth-server/index.md)。
 
-## OAuth2 客户端
+## 🧩 OAuth2 客户端
 
 ### Maven 依赖
 
@@ -166,7 +166,7 @@ public class ApiClientConfig {
 
 ---
 
-## OAuth2 资源服务器
+## 🔒 OAuth2 资源服务器
 
 ### Maven 依赖
 
@@ -306,7 +306,51 @@ class ApiControllerTest {
 
 1. `jwt()` 来自 `org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors`
 
+## 联合运行指南
+
+三个服务同时启动时，需要确保它们的配置正确对齐。
+
+### 端口规划
+
+| 服务 | 端口 | 配置项 |
+|------|------|-------|
+| 授权服务器 | 9000 | `server.port=9000` |
+| 客户端（Web 应用） | 8080 | `server.port=8080` |
+| 资源服务器 | 8081 | `server.port=8081` |
+
+### 关键配置对齐
+
+- 客户端的 `spring.security.oauth2.client.provider.my-provider.issuer-uri` 必须指向授权服务器（如 `http://localhost:9000`）
+- 资源服务器的 `spring.security.oauth2.resourceserver.jwt.issuer-uri` 也必须指向授权服务器
+- 授权服务器 `RegisteredClient` 中的 `redirect-uri` 必须与客户端实际的回调地址一致
+
+### CORS 配置
+
+如果客户端前端页面需要调用资源服务器 API，需要在资源服务器上配置 CORS，允许客户端的来源访问：
+
+``` java title="ResourceServerConfig.java（CORS 配置片段）"
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of("http://localhost:8080"));
+    configuration.setAllowedMethods(List.of("GET", "POST"));
+    configuration.setAllowedHeaders(List.of("Authorization"));
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+}
+```
+
+### 端到端流程
+
+1. 用户访问客户端 `http://localhost:8080`
+2. 点击登录，重定向到授权服务器 `http://localhost:9000/oauth2/authorize`
+3. 用户登录并授权
+4. 授权服务器回调客户端，携带授权码
+5. 客户端用授权码换取 Access Token
+6. 客户端用 Access Token 调用资源服务器 API `http://localhost:8081/api/...`
+
 ---
 
-`上一篇：` [实战：授权服务器](../spring-auth-server/index.md)
+← `上一篇：` [实战：授权服务器](../spring-auth-server/index.md)
 `返回专题：` [OAuth2 & OpenID Connect](../index.md)

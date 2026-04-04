@@ -14,7 +14,20 @@
     - `方式一（推荐）`：手动创建授权服务器 Filter Chain，灵活可扩展，本文采用此方式
     - `方式二（快速体验）`：使用 `@Import(OAuth2AuthorizationServerConfiguration.class)` 自动配置，仅适合无需自定义的极简场景，但不能与手动 Filter Chain 同时使用
 
-## 快速入门
+## 理论回顾
+
+在使用 Spring Authorization Server 之前，先回顾「核心概念」中的四个角色如何映射到 Spring 的组件：
+
+| 核心概念 | Spring 组件 | 说明 |
+|---------|------------|------|
+| Client | `RegisteredClient` | 定义客户端的 ID、Secret、授权类型、Scope、Redirect URI 等 |
+| Authorization Server | `AuthorizationServerSettings` | 配置授权端点、令牌端点、JWKS 端点的 URL |
+| 签名能力 | `JWKSource` | 提供 JWT 签名所需的密钥对 |
+| Resource Owner | `UserDetailsService` | 提供用户认证信息（用户名、密码、角色） |
+
+这三个 Bean 加上 SecurityFilterChain 就构成了一个最小可用的授权服务器。下面通过"快速入门"演示如何配置。
+
+## 🚀 快速入门
 
 ### Maven 依赖
 
@@ -174,7 +187,7 @@ public class SecurityConfig {
 2. 启用 OpenID Connect 1.0 支持
 3. 默认使用表单登录，生产环境可自定义登录页
 
-## 自定义授权页面
+## 🎨 自定义授权页面
 
 默认情况下 Spring Authorization Server 提供一个简单的授权确认页面。通过 `authorizationEndpoint()` 可以替换为自定义页面：
 
@@ -217,7 +230,7 @@ public class ConsentController {
 
 1. `required = false` 防止 scope 参数为 null 时抛出 `MissingServletRequestParameterException`
 
-## 自定义令牌 Claims
+## 🏷️ 自定义令牌 Claims
 
 使用 `OAuth2TokenCustomizer` 向 Access Token 或 ID Token 中添加自定义声明：
 
@@ -246,7 +259,7 @@ public class TokenCustomizerConfig {
 }
 ```
 
-## 配置 application.yml
+## ⚙️ 配置 application.yml
 
 ``` yaml title="application.yml"
 server:
@@ -263,7 +276,7 @@ spring:
 !!! note "UserDetailsService Bean 的优先级"
     若已在代码中定义了 `UserDetailsService` Bean（如上方的 `InMemoryUserDetailsManager`），Spring Boot Auto-configuration 会`忽略` `spring.security.user` 属性配置。`application.yml` 中的 `spring.security.user` 仅在没有 `UserDetailsService` Bean 时生效，用于快速测试。
 
-## Spring Security 7.0 迁移要点
+## 🔄 Spring Security 7.0 迁移要点
 
 从 Spring Authorization Server 1.5.x 迁移到 Spring Security 7.0 的主要变化：
 
@@ -278,5 +291,5 @@ spring:
 
 ---
 
-`上一篇：` [安全实践](../security/index.md)
-`下一篇：` [实战：客户端与资源服务器](../spring-client-resource/index.md)
+← `上一篇：` [安全实践](../security/index.md)
+→ `下一篇：` [实战：客户端与资源服务器](../spring-client-resource/index.md)
