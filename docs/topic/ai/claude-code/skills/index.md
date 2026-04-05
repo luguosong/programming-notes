@@ -248,19 +248,115 @@ Claude Code 还有一个更早的机制叫 **Commands**，存放在 `.claude/com
 
 ## Skill 最佳实践
 
-### 🎯 写好 description
+### 🎯 写好 description：让模型知道"何时该用我"
 
-description 是 Claude 决定是否加载 Skill 的唯一依据。把它当作 SEO 标题来写：
+description 的核心作用不是告诉模型"我是干什么的"，而是让它知道"**什么时候该用我**"。这两者差很多——前者触发精准，后者触发模糊。
 
 ```yaml
-# ❌ 太模糊
-description: A skill for code review
+# ❌ 描述"做什么"——任何后端工作都可能触发（~45 tokens）
+description: |
+  This skill helps you review code changes.
+  It checks for common issues like unsafe code, error handling...
+  Use this when you want to ensure code quality before merging.
 
-# ✅ 精准描述触发场景
-description: "代码审查。当用户提到 'review'、'审查'、'看看代码' 或要求检查 PR 时触发。关注安全漏洞、性能问题和代码风格"
+# ✅ 描述"何时用"——精准触发（~9 tokens）
+description: Use for PR reviews with focus on correctness.
 ```
 
+⚠️ **每个启用的 Skill，description 都在偷你的上下文空间**。把描述写得短而精准，优化前后差距很大。
+
 关键原则：**把最关键的用例放在前 250 字符内**，因为超出部分会被截断。
+
+### 🏷️ 三种典型 Skill 类型
+
+在实际使用中，Skill 通常可以分为三种类型，每种有不同的设计要点。
+
+#### 类型一：检查清单型（质量门禁）
+
+发布前或提交前跑一遍，确保不漏项：
+
+```yaml title=".claude/skills/release-check/SKILL.md"
+---
+name: release-check
+description: Use before cutting a release to verify build, version, and smoke test.
+---
+
+## Pre-flight（All must pass）
+
+- [ ] `cargo build --release` passes
+- [ ] `cargo clippy -- -D warnings` clean
+- [ ] Version bumped in Cargo.toml
+- [ ] CHANGELOG updated
+- [ ] `kaku doctor` passes on clean env
+
+## Output
+
+Pass / Fail per item. Any Fail must be fixed before release.
+```
+
+#### 类型二：工作流型（标准化操作）
+
+高风险操作显式调用 + 内置回滚步骤：
+
+```yaml title=".claude/skills/config-migration/SKILL.md"
+---
+name: config-migration
+description: Migrate config schema. Run only when explicitly requested.
+disable-model-invocation: true
+---
+
+## Steps
+
+1. Backup: `cp ~/.config/app/config.toml ~/.config/app/config.toml.bak`
+2. Dry run: `app config migrate --dry-run`
+3. Apply: remove `--dry-run` after confirming output
+4. Verify: `app doctor` all pass
+
+## Rollback
+
+`cp ~/.config/app/config.toml.bak ~/.config/app/config.toml`
+```
+
+#### 类型三：领域专家型（封装决策框架）
+
+运行时出问题时让 Claude 按固定路径收集证据，不要瞎猜：
+
+```yaml title=".claude/skills/runtime-diagnosis/SKILL.md"
+---
+name: runtime-diagnosis
+description: Use when app crashes, hangs, or behaves unexpectedly at runtime.
+---
+
+## Evidence Collection
+
+1. Run `app doctor` and capture full output
+2. Last 50 lines of `~/.local/share/app/logs/`
+3. Plugin state: `app --list-plugins`
+
+## Decision Matrix
+
+| Symptom | First Check |
+|---------|-------------|
+| Crash on startup | doctor output → config syntax error |
+| Rendering glitch | GPU backend / terminal capability |
+| Config not applied | Config path + schema version |
+
+## Output Format
+
+Root cause / Blast radius / Fix steps / Verification command
+```
+
+### 📊 频率策略：auto-invoke 还是手动触发
+
+根据 Skill 的使用频率决定触发方式，避免浪费上下文：
+
+| 频率 | 策略 | 说明 |
+|------|------|------|
+| **高频**（>1 次/会话） | 保持 auto-invoke | 优化 description，让它精准触发 |
+| **低频**（<1 次/会话） | `disable-model-invocation: true` | 手动触发，description 完全脱离上下文 |
+| **极低频**（<1 次/月） | 移除 Skill，改为文档 | 放进 CLAUDE.md 或项目文档中 |
+
+💡 **判断标准**：如果一个 Skill 的 description 大部分时候只是白白占着上下文、偶尔才触发一次，那就设为 `disable-model-invocation`。
 
 ### 🧩 保持 SKILL.md 精简
 

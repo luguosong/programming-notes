@@ -157,6 +157,7 @@ nav = [
                 "topic/ai/claude-code/index.md",
                 { "快速入门" = "topic/ai/claude-code/getting-started/index.md" },
                 { "工作原理" = "topic/ai/claude-code/how-it-works/index.md" },
+                { "上下文工程" = "topic/ai/claude-code/context-engineering/index.md" },
                 { "多平台支持" = "topic/ai/claude-code/platforms/index.md" },
                 { "配置体系" = "topic/ai/claude-code/configuration/index.md" },
                 { "扩展体系" = [
@@ -446,6 +447,7 @@ line_spans = "__span"
 pygments_lang_class = true
 [project.markdown_extensions.pymdownx.inlinehilite]
 [project.markdown_extensions.pymdownx.snippets]
+base_path = ["docs", "."]
 [project.markdown_extensions.pymdownx.keys]
 [project.markdown_extensions.pymdownx.mark]
 [project.markdown_extensions.pymdownx.smartsymbols]
