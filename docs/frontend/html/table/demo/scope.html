@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>scope 无障碍属性</title>
+</head>
+<body>
+<!-- scope 无障碍属性：帮助屏幕阅读器定位表头与数据的关系 -->
+<table>
+  <caption>月度销售报表</caption>
+  <thead>
+    <tr>
+      <!-- 该表头是"列"的标题，关联所在列的所有单元格 -->
+      <th scope="col">产品</th>
+      <th scope="col">一月</th>
+      <th scope="col">二月</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <!-- 该表头是"行"的标题，关联所在行的所有单元格 -->
+      <th scope="row">手机</th>
+      <td>2,500</td>
+      <td>2,100</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

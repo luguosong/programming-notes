@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>rowspan 跨行合并</title>
+</head>
+<body>
+<!-- rowspan 跨行合并：左侧分类列共享同一类别名 -->
+<table>
+  <caption>水果分类表</caption>
+  <thead>
+    <tr>
+      <th>类别</th>
+      <th>名称</th>
+      <th>单价（元/斤）</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">热带水果</td>
+      <td>芒果</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td>香蕉</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>菠萝</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td rowspan="2">温带水果</td>
+      <td>苹果</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>梨</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

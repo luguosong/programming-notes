@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>忘了 type 导致意外提交</title>
+</head>
+<body>
+<!-- 忘了 type 导致意外提交：button 在 form 中默认 type 为 submit -->
+<!-- 用户点"取消"却触发了表单提交 -->
+<form action="/api/order">
+  <button>取消</button>
+  <button type="submit">确认下单</button>
+</form>
+</body>
+</html>

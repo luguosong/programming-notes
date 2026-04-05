@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>模态 vs 非模态对话框</title>
+</head>
+<body>
+<!-- 模态 vs 非模态对话框 -->
+<dialog id="modelessDialog">
+  <p>这是非模态对话框——你可以同时操作页面。</p>
+  <button onclick="document.getElementById('modelessDialog').close()">关闭</button>
+</dialog>
+
+<dialog id="modalDialog">
+  <form method="dialog">
+    <p>这是模态对话框——页面被遮罩覆盖。</p>
+    <button>确定</button>
+    <button>取消</button>
+  </form>
+</dialog>
+
+<button onclick="document.getElementById('modelessDialog').show()">打开非模态</button>
+<button onclick="document.getElementById('modalDialog').showModal()">打开模态</button>
+</body>
+</html>

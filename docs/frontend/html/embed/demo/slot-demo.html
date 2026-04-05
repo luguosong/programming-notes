@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>slot 插槽示例</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; padding: 1rem; }
+        .alert {
+            border: 1px solid #f0ad4e;
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            background: #fcf8e3;
+        }
+    </style>
+</head>
+<body>
+    <!-- 组件定义 -->
+    <template id="alert-template">
+      <div class="alert">
+        <slot name="icon">⚠️</slot>
+        <slot>默认提示内容</slot>
+      </div>
+    </template>
+
+    <script>
+        // 演示 slot 概念：用 JS 手动克隆模板并展示效果
+        const template = document.getElementById('alert-template');
+        const clone = template.content.cloneNode(true);
+        document.body.appendChild(clone);
+    </script>
+</body>
+</html>

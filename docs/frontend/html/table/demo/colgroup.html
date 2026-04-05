@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>colgroup 与 col</title>
+</head>
+<body>
+<!-- colgroup 与 col：对整列统一设置样式 -->
+<table>
+  <caption>员工信息表</caption>
+
+  <!-- 列分组：第一列宽 80px，第三列文字居右 -->
+  <colgroup>
+    <col style="width: 80px">
+    <col>
+    <col style="text-align: right">
+  </colgroup>
+
+  <thead>
+    <tr>
+      <th>工号</th>
+      <th>姓名</th>
+      <th>薪资</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>001</td>
+      <td>张三</td>
+      <td>15,000</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

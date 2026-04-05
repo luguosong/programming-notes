@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>video + track 字幕</title>
+</head>
+<body>
+<!-- video + track：为视频添加多语言字幕 -->
+<video controls src="video/intro.mp4">
+  <track src="subtitles-intro-zh.vtt" kind="subtitles" srclang="zh" label="中文字幕" default>
+  <track src="subtitles/intro-en.vtt" kind="subtitles" srclang="en" label="English Subtitles">
+  <p>您的浏览器不支持 video 标签。</p>
+</video>
+</body>
+</html>

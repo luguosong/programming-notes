@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>file 输入的特有属性</title>
+</head>
+<body>
+<!-- file 输入的特有属性：multiple 和 accept -->
+<!-- multiple：允许选择多个文件 -->
+<input type="file" name="files" multiple><br><br>
+
+<!-- accept：限制文件类型 -->
+<input type="file" name="photo" accept="image/png,image/jpeg"><br><br>
+
+<!-- 常见 accept 写法 -->
+<input type="file" accept=".pdf"><br> <!-- 只允许 PDF -->
+<br>
+<input type="file" accept="image/*"><br> <!-- 所有图片 -->
+<br>
+<input type="file" accept="video/*"> <!-- 所有视频 -->
+</body>
+</html>

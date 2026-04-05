@@ -88,6 +88,23 @@ npm run dev
 npm run build
 ```
 
+### 前端 HTML 示例
+
+HTML 笔记的代码示例放在 `docs/frontend/html/*/demo/` 目录（与 `index.md` 同级的 `demo/` 文件夹），以完整 HTML 文档形式存在，同时用于代码引用和效果预览。
+
+**文档中的引用规范**：
+- `--8<--` 使用从项目根目录算起的完整路径：`--8<-- "docs/frontend/html/SECTION/demo/FILE.html"`
+- `<iframe>` 的 `src` 使用相对路径：`src="demo/FILE.html"`（iframe 通过浏览器加载，相对路径即可）
+
+**示例**：
+````markdown
+``` html title="标题标签演示"
+--8<-- "docs/frontend/html/text-content/demo/headings.html"
+```
+
+<iframe class="html-demo" loading="lazy" src="demo/headings.html"></iframe>
+````
+
 ## 架构说明
 
 ### 整体目录结构

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>video 多格式兼容写法</title>
+</head>
+<body>
+<!-- video 多格式兼容写法：使用 source 标签提供多种视频格式 -->
+<video controls width="640" poster="images/video-cover.jpg">
+  <!-- 浏览器优先尝试 WebM（体积更小） -->
+  <source src="video/intro.webm" type="video/webm">
+  <!-- WebM 不支持则回退到 MP4 -->
+  <source src="video/intro.mp4" type="video/mp4">
+  <!-- 都不支持则显示降级文字 -->
+  <p>您的浏览器不支持 video 标签，请<a href="video/intro.mp4">下载视频</a>观看。</p>
+</video>
+</body>
+</html>

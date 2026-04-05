@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>picture 响应式图片</title>
+</head>
+<body>
+<!-- picture + source 响应式图片：根据屏幕宽度选择不同尺寸的图片 -->
+<picture>
+  <!-- 窄屏（手机）使用小图 -->
+  <source media="(max-width: 600px)" srcset="images/hero-small.webp">
+  <!-- 宽屏（桌面）使用大图 -->
+  <source media="(min-width: 601px)" srcset="images/hero-large.webp">
+  <!-- 兜底：不支持 picture 的浏览器显示这张 -->
+  <img src="images/hero-large.webp" alt="首页横幅">
+</picture>
+</body>
+</html>

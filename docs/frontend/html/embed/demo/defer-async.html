@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>defer vs async</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; padding: 1rem; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <p>defer：HTML 解析完毕后按顺序执行</p>
+    <script src="app.js" defer></script>
+
+    <p>async：下载完立即执行，不保证顺序</p>
+    <script src="analytics.js" async></script>
+</body>
+</html>

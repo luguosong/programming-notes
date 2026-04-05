@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>左上原则示例</title>
+</head>
+<body>
+<!-- 左上原则示例：合并前后对比 -->
+<!-- 合并前 -->
+<table>
+  <caption>合并前</caption>
+  <tr>
+    <td>A</td>
+    <td>B</td>  <!-- 删除 -->
+  </tr>
+  <tr>
+    <td>C</td>  <!-- 删除 -->
+    <td>D</td>  <!-- 删除 -->
+  </tr>
+</table>
+
+<!-- 合并后 -->
+<table>
+  <caption>合并后</caption>
+  <tr>
+    <td colspan="2" rowspan="2">A B<br>C D</td>
+  </tr>
+</table>
+</body>
+</html>

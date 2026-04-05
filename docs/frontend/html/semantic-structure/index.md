@@ -17,15 +17,10 @@
 💡 用 `div` 布局就像用纸箱分类物品——虽然能装，但箱子外面没有标签，打开才知道里面是什么。而语义标签就像用带标签的收纳盒——一眼就能看出里面装的是什么。
 
 ``` html title="纯 div 布局——结构不清晰"
-<div class="header">
-  <div class="nav">...</div>
-</div>
-<div class="content">
-  <div class="article">...</div>
-  <div class="sidebar">...</div>
-</div>
-<div class="footer">...</div>
+--8<-- "docs/frontend/html/semantic-structure/demo/div-layout.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/div-layout.html"></iframe>
 
 这段代码能正常显示，但阅读代码的人（以及搜索引擎、屏幕阅读器）需要猜测每个 `div` 的用途。
 
@@ -51,21 +46,10 @@
 `header` 表示介绍性内容，通常是一组介绍性或导航性辅助内容。一个页面可以有多个 `header`——页面级别的 `header` 放在最顶部，`article` 或 `section` 内部也可以有自己的 `header`。
 
 ``` html title="header 示例"
-<!-- 页面级页眉 -->
-<header>
-  <h1>我的技术博客</h1>
-  <p>记录前端学习之路</p>
-</header>
-
-<!-- 文章内页眉 -->
-<article>
-  <header>
-    <h2>HTML 语义化入门</h2>
-    <p>发布于 2025-01-01</p>
-  </header>
-  <p>正文内容...</p>
-</article>
+--8<-- "docs/frontend/html/semantic-structure/demo/header-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/header-example.html"></iframe>
 
 ⚠️ `header` 不等于"页面顶部横幅"。它的语义是"介绍性内容"，放在 `article` 中时表示文章标题和元信息，而不是页面的大横幅图片。
 
@@ -74,14 +58,10 @@
 `nav` 表示导航区域，包含一组到其他页面或页面内锚点的链接。不是所有的链接集合都需要用 `nav` 包裹，通常只用于主要导航区块。
 
 ``` html title="nav 示例"
-<nav>
-  <ul>
-    <li><a href="/">首页</a></li>
-    <li><a href="/blog">博客</a></li>
-    <li><a href="/about">关于</a></li>
-  </ul>
-</nav>
+--8<-- "docs/frontend/html/semantic-structure/demo/nav-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/nav-example.html"></iframe>
 
 💡 页面中一般有 2-3 个 `nav`：顶部主导航、侧边栏分类导航、页脚的辅助链接。面包屑导航（Breadcrumb）也常用 `nav` 包裹。
 
@@ -90,19 +70,10 @@
 `main` 表示页面的主体内容。一个页面只能有一个 `main` 元素，它不应该包含页面中重复出现的内容（如导航栏、页脚、侧边栏）。
 
 ``` html title="main 示例"
-<body>
-  <header>...</header>
-  <nav>...</nav>
-
-  <main>
-    <!-- 页面核心内容放这里 -->
-    <h1>文章标题</h1>
-    <p>文章正文...</p>
-  </main>
-
-  <footer>...</footer>
-</body>
+--8<-- "docs/frontend/html/semantic-structure/demo/main-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/main-example.html"></iframe>
 
 ⚠️ `main` 是页面内容的"舞台"——重复出现的幕布（导航、页脚）不属于舞台的一部分。
 
@@ -111,17 +82,10 @@
 `article` 表示一段独立的、完整的内容，能够脱离上下文独立存在。典型场景：博客文章、新闻条目、论坛帖子、用户评论。
 
 ``` html title="article 示例"
-<article>
-  <header>
-    <h2>学习 HTML 语义化的 5 个理由</h2>
-    <time datetime="2025-01-01">2025 年 1 月 1 日</time>
-  </header>
-  <p>语义化标签让你的代码更易读...</p>
-  <footer>
-    <p>分类：前端基础</p>
-  </footer>
-</article>
+--8<-- "docs/frontend/html/semantic-structure/demo/article-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/article-example.html"></iframe>
 
 💡 判断是否应该用 `article` 的简单方法：这段内容如果单独拿出来放到 RSS 订阅中，是否仍然有意义？如果答案是"是"，那就用 `article`。
 
@@ -130,25 +94,10 @@
 `section` 表示文档中的一个章节或主题分组，通常带有标题。它不像 `article` 那样要求内容独立——`section` 是对相关内容的逻辑分组。
 
 ``` html title="section 示例"
-<article>
-  <h1>CSS Flexbox 完全指南</h1>
-
-  <section>
-    <h2>什么是 Flexbox</h2>
-    <p>Flexbox 是一种一维布局模型...</p>
-  </section>
-
-  <section>
-    <h2>基本用法</h2>
-    <p>通过 display: flex 启用...</p>
-  </section>
-
-  <section>
-    <h2>常见布局模式</h2>
-    <p>居中、等分、侧边栏...</p>
-  </section>
-</article>
+--8<-- "docs/frontend/html/semantic-structure/demo/section-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/section-example.html"></iframe>
 
 ⚠️ 不要把 `section` 当作通用的样式容器——如果只是出于样式目的需要包裹元素，应该用 `div` 而不是 `section`。
 
@@ -159,21 +108,10 @@
 `aside` 表示与主内容间接相关的内容——侧边栏、广告位、相关链接、辅助说明等。`aside` 中的内容如果移除，不应影响主内容的理解。
 
 ``` html title="aside 示例"
-<main>
-  <article>
-    <h1>HTML 入门教程</h1>
-    <p>正文内容...</p>
-  </article>
-
-  <aside>
-    <h2>推荐阅读</h2>
-    <ul>
-      <li><a href="#">CSS 入门教程</a></li>
-      <li><a href="#">JavaScript 入门教程</a></li>
-    </ul>
-  </aside>
-</main>
+--8<-- "docs/frontend/html/semantic-structure/demo/aside-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/aside-example.html"></iframe>
 
 💡 `aside` 可以放在 `main` 内部（作为文章旁边的侧栏），也可以放在 `main` 外部（作为页面级的侧边栏）。
 
@@ -182,24 +120,10 @@
 `footer` 表示其最近的祖先内容的页脚信息。通常包含版权声明、联系方式、相关链接等。和 `header` 一样，页面和 `article`/`section` 都可以有自己的 `footer`。
 
 ``` html title="footer 示例"
-<!-- 页面级页脚 -->
-<footer>
-  <p>&copy; 2025 我的技术博客</p>
-  <nav>
-    <a href="/privacy">隐私政策</a>
-    <a href="/contact">联系方式</a>
-  </nav>
-</footer>
-
-<!-- 文章内页脚 -->
-<article>
-  <h2>文章标题</h2>
-  <p>正文...</p>
-  <footer>
-    <p>作者：张三 | 发布于 2025-01-01</p>
-  </footer>
-</article>
+--8<-- "docs/frontend/html/semantic-structure/demo/footer-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/footer-example.html"></iframe>
 
 ## 🆕 其他语义标签
 
@@ -215,11 +139,10 @@
 `address` 专门用于表示联系信息（邮箱、电话、地址、社交媒体链接等），不应用于表示邮政地址（除非确实是联系用途）。
 
 ``` html title="address 示例"
-<address>
-  <p>作者：张三</p>
-  <a href="mailto:zhangsan@example.com">zhangsan@example.com</a>
-</address>
+--8<-- "docs/frontend/html/semantic-structure/demo/address-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/address-example.html"></iframe>
 
 ⚠️ `address` 只表示"最近的 `article` 或 `body` 的联系信息"，不能用来包裹页面中任意位置的地址。
 
@@ -228,24 +151,20 @@
 `hgroup` 用于将标题和副标题（或标语）组合在一起，避免副标题出现在文档大纲中。
 
 ``` html title="hgroup 示例"
-<hgroup>
-  <h1>HTML 语义化指南</h1>
-  <p>让代码自己说话</p>
-</hgroup>
+--8<-- "docs/frontend/html/semantic-structure/demo/hgroup-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/hgroup-example.html"></iframe>
 
 **`search`**——搜索区域
 
 `search` 标识页面中的搜索功能区域，帮助辅助技术快速定位搜索控件。
 
 ``` html title="search 示例"
-<search>
-  <form action="/search" method="get">
-    <input type="search" name="q" placeholder="搜索文章...">
-    <button type="submit">搜索</button>
-  </form>
-</search>
+--8<-- "docs/frontend/html/semantic-structure/demo/search-example.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/search-example.html"></iframe>
 
 ## 📊 div 布局 vs 语义化标签
 
@@ -264,87 +183,9 @@
 下面是一个完整的 HTML 页面，展示了所有语义标签如何组合使用。注意观察页面骨架——即使不看 CSS，也能从标签名理解整体结构。
 
 ``` html title="完整的语义化页面" linenums="1"
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <title>我的技术博客</title>
-</head>
-<body>
-
-  <!-- 页面级页眉 -->
-  <header>
-    <hgroup>
-      <h1>我的技术博客</h1>
-      <p>记录前端学习之路</p>
-    </hgroup>
-    <search>
-      <form action="/search" method="get">
-        <input type="search" name="q" placeholder="搜索文章...">
-        <button type="submit">搜索</button>
-      </form>
-    </search>
-  </header>
-
-  <!-- 主导航 -->
-  <nav>
-    <ul>
-      <li><a href="/">首页</a></li>
-      <li><a href="/blog">博客</a></li>
-      <li><a href="/about">关于</a></li>
-    </ul>
-  </nav>
-
-  <!-- 页面主体 -->
-  <main>
-    <article>
-      <!-- 文章页眉 -->
-      <header>
-        <h2>HTML 语义化入门</h2>
-        <time datetime="2025-01-01">2025 年 1 月 1 日</time>
-      </header>
-
-      <!-- 文章章节 -->
-      <section>
-        <h3>为什么需要语义化</h3>
-        <p>语义化标签让代码更易读...</p>
-      </section>
-
-      <section>
-        <h3>常用语义标签</h3>
-        <p>header、nav、main、footer 等...</p>
-      </section>
-
-      <!-- 文章页脚 -->
-      <footer>
-        <address>
-          作者：<a href="mailto:zhangsan@example.com">张三</a>
-        </address>
-        <p>分类：前端基础</p>
-      </footer>
-    </article>
-
-    <!-- 侧边栏 -->
-    <aside>
-      <h2>推荐阅读</h2>
-      <ul>
-        <li><a href="#">CSS Flexbox 指南</a></li>
-        <li><a href="#">JavaScript 入门</a></li>
-      </ul>
-    </aside>
-  </main>
-
-  <!-- 页面级页脚 -->
-  <footer>
-    <p>&copy; 2025 我的技术博客</p>
-    <nav>
-      <a href="/privacy">隐私政策</a>
-      <a href="/contact">联系方式</a>
-    </nav>
-  </footer>
-
-</body>
-</html>
+--8<-- "docs/frontend/html/semantic-structure/demo/complete-semantic-page.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/complete-semantic-page.html" style="height:400px"></iframe>
 
 📝 小结：语义化标签的本质是`让 HTML 代码自己"说话"`。`header` 告诉你"这是页眉"，`nav` 告诉你"这是导航"，`article` 告诉你"这是一篇独立文章"——不需要依赖 `class` 名，标签名就是最好的注释。写代码时多问自己一句"这个区域用什么语义标签最合适"，你的代码质量会提升一个台阶。

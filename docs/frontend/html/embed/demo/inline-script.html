@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>内联脚本</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; padding: 1rem; }
+    </style>
+</head>
+<body>
+    <p id="output"></p>
+    <script>
+      console.log('Hello, World!');
+      document.getElementById('output').textContent = 'Hello, World! （已输出到控制台）';
+    </script>
+</body>
+</html>

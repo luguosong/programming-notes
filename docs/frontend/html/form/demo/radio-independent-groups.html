@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>两组独立的 radio</title>
+</head>
+<body>
+<!-- 两组独立的 radio：name 不同则互不影响 -->
+<p>配送方式：</p>
+<label><input type="radio" name="shipping" value="express"> 快递</label>
+<label><input type="radio" name="shipping" value="pickup"> 自提</label>
+
+<p>支付方式：</p>
+<label><input type="radio" name="payment" value="alipay"> 支付宝</label>
+<label><input type="radio" name="payment" value="wechat"> 微信</label>
+<!-- shipping 和 payment 是两个独立的组，互不影响 -->
+</body>
+</html>

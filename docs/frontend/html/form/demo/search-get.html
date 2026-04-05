@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索用 GET</title>
+</head>
+<body>
+<!-- 搜索用 GET：数据附在 URL 上，适合无副作用操作 -->
+<form action="/search" method="GET">
+  <input type="text" name="q" placeholder="搜索...">
+  <button type="submit">搜索</button>
+</form>
+<!-- 提交后 URL 变为 /search?q=用户输入的内容 -->
+</body>
+</html>

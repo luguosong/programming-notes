@@ -17,13 +17,10 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 `iframe`（inline frame）就像在网页中开了一扇窗户——透过这扇窗户，你可以看到另一个完整的网页。浏览器会在 `iframe` 内部独立渲染一个页面，它拥有自己的浏览上下文（browsing context），与父页面相互隔离。
 
 ```html title="iframe 基本用法"
-<iframe
-  src="https://example.com"
-  width="600"
-  height="400"
-  title="示例网站">
-</iframe>
+--8<-- "docs/frontend/html/embed/demo/iframe-basic.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/iframe-basic.html"></iframe>
 
 ⚠️ 始终为 `iframe` 设置 `title` 属性——屏幕阅读器依赖它来告知用户这个框架的内容是什么，缺少 `title` 会导致无障碍访问体验很差。
 
@@ -43,23 +40,18 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 嵌入第三方内容就像允许陌生人进你家——你需要限制他能做什么。`sandbox` 属性正是一种权限控制机制，默认情况下它会施加最严格的限制：
 
 ```html title="sandbox 基本用法——施加最严格限制"
-<iframe
-  src="https://example.com"
-  sandbox
-  title="受限的嵌入内容">
-</iframe>
+--8<-- "docs/frontend/html/embed/demo/sandbox-basic.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/sandbox-basic.html"></iframe>
 
 默认的 `sandbox` 会禁止嵌入页面执行脚本、提交表单、弹出窗口等操作。你可以通过添加空格分隔的值来逐项放行权限：
 
 ```html title="sandbox 逐项放行权限"
-<!-- 允许执行脚本和提交表单 -->
-<iframe
-  src="https://example.com"
-  sandbox="allow-scripts allow-forms"
-  title="允许脚本和表单的嵌入内容">
-</iframe>
+--8<-- "docs/frontend/html/embed/demo/sandbox-permissions.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/sandbox-permissions.html"></iframe>
 
 ⚠️ **安全提醒**：嵌入第三方内容始终存在安全风险（如点击劫持、恶意脚本）。始终使用 `sandbox` 施加最小必要权限，不要使用无限制的 `iframe`。
 
@@ -68,27 +60,20 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 `srcdoc` 让你直接在属性中写 HTML，无需加载外部页面：
 
 ```html title="srcdoc 内联示例"
-<iframe
-  srcdoc="<h1>Hello!</h1><p>这段内容直接写在属性中。</p>"
-  width="300"
-  height="150"
-  title="内联内容">
-</iframe>
+--8<-- "docs/frontend/html/embed/demo/srcdoc-inline.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/srcdoc-inline.html"></iframe>
 
 #### loading 延迟加载
 
 设置 `loading="lazy"` 后，浏览器会在 `iframe` 进入视口时才加载内容，适合页面底部或用户可能不会滚动到的嵌入区域：
 
 ```html title="延迟加载示例"
-<iframe
-  src="https://example.com"
-  loading="lazy"
-  width="600"
-  height="400"
-  title="延迟加载的嵌入内容">
-</iframe>
+--8<-- "docs/frontend/html/embed/demo/loading-lazy.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/loading-lazy.html"></iframe>
 
 ### embed 与 object
 
@@ -99,28 +84,20 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 `embed` 是一个自闭合标签，用法简单直接。它本身没有后备内容的能力——如果浏览器不支持该类型的内容，用户什么都看不到。
 
 ```html title="embed 嵌入 PDF"
-<embed
-  type="application/pdf"
-  src="document.pdf"
-  width="600"
-  height="400">
+--8<-- "docs/frontend/html/embed/demo/embed-pdf.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/embed-pdf.html"></iframe>
 
 #### object
 
 `object` 比 `embed` 更强大，因为它可以在标签内部嵌套后备内容（fallback）。当浏览器无法渲染 `object` 指定的内容时，会显示标签内部的内容：
 
 ```html title="object 嵌套后备内容"
-<object
-  data="report.pdf"
-  type="application/pdf"
-  width="600"
-  height="400">
-  <!-- 浏览器不支持 PDF 时的后备内容 -->
-  <p>你的浏览器不支持嵌入 PDF。</p>
-  <a href="report.pdf">点击此处下载 PDF 文件</a>
-</object>
+--8<-- "docs/frontend/html/embed/demo/object-fallback.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/object-fallback.html"></iframe>
 
 💡 简单来说：`embed` 是"要么显示，要么空白"；`object` 是"要么显示，要么显示你准备好的替代内容"。
 
@@ -139,14 +116,16 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 `script` 标签是 HTML 中引入 JavaScript 的标准方式。你可以在标签内直接写代码，也可以通过 `src` 属性引入外部文件。
 
 ```html title="内联脚本"
-<script>
-  console.log('Hello, World!');
-</script>
+--8<-- "docs/frontend/html/embed/demo/inline-script.html"
 ```
 
+<iframe class="html-demo" loading="lazy" src="demo/inline-script.html"></iframe>
+
 ```html title="引入外部脚本文件"
-<script src="main.js"></script>
+--8<-- "docs/frontend/html/embed/demo/external-script.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/external-script.html"></iframe>
 
 #### 常用属性
 
@@ -161,12 +140,10 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 `defer` 和 `async` 的区别是高频考点：
 
 ```html title="defer vs async"
-<!-- defer：HTML 解析完毕后按顺序执行 -->
-<script src="app.js" defer></script>
-
-<!-- async：下载完立即执行，不保证顺序 -->
-<script src="analytics.js" async></script>
+--8<-- "docs/frontend/html/embed/demo/defer-async.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/defer-async.html"></iframe>
 
 💡 简单来说：`defer` 是"等文档读完再执行，且按书写顺序"，`async` 是"谁先下载完谁先执行"。现代开发中，大多数脚本推荐使用 `defer`。
 
@@ -178,21 +155,18 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 `canvas` 是 HTML5 引入的绘图标签，它本身只是一块空白的矩形画布——所有图形、动画都需要通过 JavaScript 来绘制。
 
 ```html title="canvas 基本结构"
-<canvas id="myCanvas" width="400" height="200">
-  <!-- 浏览器不支持 canvas 时的后备内容 -->
-  你的浏览器不支持 Canvas。
-</canvas>
+--8<-- "docs/frontend/html/embed/demo/canvas-basic.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/canvas-basic.html"></iframe>
 
 配合 JavaScript，你可以在这块画布上绘制各种图形：
 
 ```javascript title="绘制一个矩形"
-const canvas = document.getElementById('myCanvas');
-const ctx = canvas.getContext('2d');
-
-ctx.fillStyle = '#539bf5';   // 填充颜色
-ctx.fillRect(20, 20, 150, 100);  // x, y, width, height
+--8<-- "docs/frontend/html/embed/demo/draw-rectangle.js"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/draw-rectangle.html"></iframe>
 
 💡 `canvas` 的应用场景非常广泛——数据可视化图表（如 Chart.js）、游戏画面、图片处理、动画效果等都依赖它。但它的本质就是一块"让 JavaScript 画画的板子"，标签本身不提供任何绘图能力。
 
@@ -210,35 +184,18 @@ ctx.fillRect(20, 20, 150, 100);  // x, y, width, height
 `template` 标签中的内容在页面加载时`不会渲染`，它只是一段"待用"的 HTML 片段。你可以用 JavaScript 在需要时克隆它、插入到页面中：
 
 ```html title="template 定义与使用"
-<!-- 定义模板（不会渲染到页面上） -->
-<template id="card-template">
-  <div class="card">
-    <h2></h2>
-    <p></p>
-  </div>
-</template>
-
-<!-- JavaScript 克隆并填充内容 -->
-<script>
-  const template = document.getElementById('card-template');
-  const clone = template.content.cloneNode(true);
-  clone.querySelector('h2').textContent = '文章标题';
-  clone.querySelector('p').textContent = '文章摘要内容...';
-  document.body.appendChild(clone);
-</script>
+--8<-- "docs/frontend/html/embed/demo/template-usage.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/template-usage.html"></iframe>
 
 `slot` 则用于定义模板中的"插槽"——让使用模板的人可以在指定位置插入自定义内容：
 
 ```html title="slot 插槽示例"
-<!-- 组件定义 -->
-<template id="alert-template">
-  <div class="alert">
-    <slot name="icon">⚠️</slot>
-    <slot>默认提示内容</slot>
-  </div>
-</template>
+--8<-- "docs/frontend/html/embed/demo/slot-demo.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/slot-demo.html"></iframe>
 
 !!! note "MDN"
     `template` 和 `slot` 是 Web Components 规范的一部分，与 `Custom Elements`、`Shadow DOM` 配合使用可以实现完整的原生组件化方案。这部分内容较为进阶，将在后续独立整理。目前只需了解它们的存在和基本概念即可。

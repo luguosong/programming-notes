@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制一个矩形</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; padding: 1rem; }
+        canvas { border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="200" height="100"></canvas>
+    <script>
+        // 绘制一个矩形
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#539bf5';   // 填充颜色
+        ctx.fillRect(20, 20, 150, 100);  // x, y, width, height
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>常用验证属性</title>
+</head>
+<body>
+<!-- 常用验证属性：required、minlength、maxlength、min、max、pattern、type -->
+<form>
+  <!-- required：必填 -->
+  <input type="text" name="username" required placeholder="用户名（必填）"><br><br>
+
+  <!-- minlength / maxlength：长度限制 -->
+  <input type="text" name="code" minlength="6" maxlength="6" placeholder="6位验证码"><br><br>
+
+  <!-- min / max：数值范围 -->
+  <input type="number" name="age" min="0" max="150" placeholder="年龄（0-150）"><br><br>
+
+  <!-- pattern：正则表达式校验 -->
+  <input type="text" name="phone" pattern="[0-9]{11}" placeholder="11位手机号"><br><br>
+
+  <!-- type 本身就是验证：email 类型会检查邮箱格式 -->
+  <input type="email" name="email" placeholder="邮箱（自动校验格式）"><br><br>
+
+  <button type="submit">提交</button>
+</form>
+</body>
+</html>

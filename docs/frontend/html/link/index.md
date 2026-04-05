@@ -17,9 +17,10 @@
 `href`（Hypertext Reference）指定链接的目标地址，`target` 控制在哪个窗口打开。
 
 ``` html title="基础链接示例"
-<a href="https://example.com">普通链接（当前窗口打开）</a>
-<a href="https://example.com" target="_blank">在新标签页打开</a>
+--8<-- "docs/frontend/html/link/demo/basic-links.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/basic-links.html"></iframe>
 
 `target` 有四种取值：
 
@@ -43,8 +44,10 @@
 当链接还没有确定目标地址时，可以使用空连接占位：
 
 ``` html title="空连接"
-<a href="#">点击没反应的空连接</a>
+--8<-- "docs/frontend/html/link/demo/empty-link.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/empty-link.html"></iframe>
 
 `href="#"` 表示跳转到当前页面顶部。虽然常用来做占位符，但实际开发中更推荐用 JavaScript 来处理未完成的链接，避免点击时页面跳动到顶部。
 
@@ -58,19 +61,10 @@
 2. `创建跳转链接`：用 `#id` 作为 `href` 的值
 
 ``` html title="锚点链接"
-<!-- 第 1 步：定义锚点 -->
-<h2 id="section1">第一章</h2>
-<p>这里是第一章的内容……</p>
-
-<h2 id="section2">第二章</h2>
-<p>这里是第二章的内容……</p>
-
-<!-- 第 2 步：创建跳转链接 -->
-<nav>
-  <a href="#section1">跳转到第一章</a>
-  <a href="#section2">跳转到第二章</a>
-</nav>
+--8<-- "docs/frontend/html/link/demo/anchor-links.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/anchor-links.html"></iframe>
 
 💡 如果想点击后平滑滚动而不是瞬间跳转，可以用 CSS 的 `scroll-behavior: smooth` 实现。
 
@@ -79,9 +73,10 @@
 给 `<a>` 标签添加 `download` 属性后，浏览器会直接下载链接指向的文件，而不是打开它：
 
 ``` html title="下载链接"
-<a href="/files/user-guide.pdf" download>下载用户指南</a>
-<a href="/files/user-guide.pdf" download="我的指南.pdf">下载并重命名</a>
+--8<-- "docs/frontend/html/link/demo/download-links.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/download-links.html"></iframe>
 
 - 不带值的 `download`：使用服务器上的原始文件名
 - 带值的 `download="文件名"`：下载时使用指定的文件名
@@ -93,9 +88,10 @@
 `href` 支持多种协议，不仅能跳转网页，还能唤起系统的邮件客户端或拨号界面：
 
 ``` html title="邮件与电话链接"
-<a href="mailto:contact@example.com">发送邮件</a>
-<a href="tel:+8613800138000">拨打电话</a>
+--8<-- "docs/frontend/html/link/demo/mailto-tel-links.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/mailto-tel-links.html"></iframe>
 
 | 协议 | 效果 | 示例 |
 |------|------|------|
@@ -114,17 +110,10 @@
 `<base>` 标签放在 `<head>` 中，用来`统一指定文档中所有相对 URL 的基础地址`：
 
 ``` html title="base 标签"
-<head>
-  <base href="https://example.com/app/" target="_blank">
-</head>
-<body>
-  <!-- 实际地址：https://example.com/app/about.html，在新窗口打开 -->
-  <a href="about.html">关于我们</a>
-
-  <!-- 实际地址：https://example.com/app/contact.html，在新窗口打开 -->
-  <a href="contact.html">联系方式</a>
-</body>
+--8<-- "docs/frontend/html/link/demo/base-tag.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/base-tag.html"></iframe>
 
 !!! note "MDN"
     `<base>` 标签最多只能出现一次，且必须包含 `href` 或 `target` 属性（或两者都有）。它会影响页面中所有使用相对 URL 的资源，包括 `<a>`、`<img>`、`<link>` 等标签。
@@ -136,14 +125,10 @@
 `rel`（relationship）属性描述当前页面与链接目标之间的关系。最常用的场景是配合 `target="_blank"` 解决安全问题：
 
 ``` html title="安全的 external 链接"
-<a
-  href="https://external-site.com"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  安全地在新标签页打开外部链接
-</a>
+--8<-- "docs/frontend/html/link/demo/safe-external-links.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/safe-external-links.html"></iframe>
 
 | 值 | 作用 | 必要性 |
 |------|------|----------|

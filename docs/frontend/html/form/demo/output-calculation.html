@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>output 显示计算结果</title>
+</head>
+<body>
+<!-- output 显示计算结果：配合 oninput 事件实时计算 -->
+<form oninput="result.value = Number(a.value) + Number(b.value)">
+  <input type="number" name="a" value="10"> +
+  <input type="number" name="b" value="20"> =
+  <output name="result" for="a b">30</output>
+</form>
+</body>
+</html>

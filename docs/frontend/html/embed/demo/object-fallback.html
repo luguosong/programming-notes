@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>object 嵌套后备内容</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; padding: 1rem; }
+    </style>
+</head>
+<body>
+    <object
+      data="report.pdf"
+      type="application/pdf"
+      width="600"
+      height="400">
+      <!-- 浏览器不支持 PDF 时的后备内容 -->
+      <p>你的浏览器不支持嵌入 PDF。</p>
+      <a href="report.pdf">点击此处下载 PDF 文件</a>
+    </object>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>audio 多格式兼容写法</title>
+</head>
+<body>
+<!-- audio 多格式兼容写法：使用 source 标签提供多种音频格式 -->
+<audio controls>
+  <source src="audio/bgm.ogg" type="audio/ogg">
+  <source src="audio/bgm.mp3" type="audio/mpeg">
+  <p>您的浏览器不支持 audio 标签，请<a href="audio/bgm.mp3">下载音频</a>收听。</p>
+</audio>
+</body>
+</html>

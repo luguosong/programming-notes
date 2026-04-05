@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>fieldset 分组表单</title>
+</head>
+<body>
+<!-- fieldset 分组表单：legend 标题，浏览器自动加边框 -->
+<form action="/register" method="POST">
+  <!-- 第一组：个人信息 -->
+  <fieldset>
+    <legend>个人信息</legend>
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name" placeholder="请输入姓名">
+
+    <label for="email">邮箱</label>
+    <input type="email" id="email" name="email" placeholder="请输入邮箱">
+  </fieldset>
+
+  <!-- 第二组：账户设置 -->
+  <fieldset>
+    <legend>账户设置</legend>
+    <label for="password">密码</label>
+    <input type="password" id="password" name="password" placeholder="请输入密码">
+
+    <label for="role">角色</label>
+    <select id="role" name="role">
+      <option value="user">普通用户</option>
+      <option value="admin">管理员</option>
+    </select>
+  </fieldset>
+
+  <button type="submit">注册</button>
+</form>
+</body>
+</html>

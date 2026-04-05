@@ -1,0 +1,82 @@
+<!-- 完整的语义化页面：展示所有语义标签的组合使用 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>我的技术博客</title>
+</head>
+<body>
+
+  <!-- 页面级页眉 -->
+  <header>
+    <hgroup>
+      <h1>我的技术博客</h1>
+      <p>记录前端学习之路</p>
+    </hgroup>
+    <search>
+      <form action="/search" method="get">
+        <input type="search" name="q" placeholder="搜索文章...">
+        <button type="submit">搜索</button>
+      </form>
+    </search>
+  </header>
+
+  <!-- 主导航 -->
+  <nav>
+    <ul>
+      <li><a href="/">首页</a></li>
+      <li><a href="/blog">博客</a></li>
+      <li><a href="/about">关于</a></li>
+    </ul>
+  </nav>
+
+  <!-- 页面主体 -->
+  <main>
+    <article>
+      <!-- 文章页眉 -->
+      <header>
+        <h2>HTML 语义化入门</h2>
+        <time datetime="2025-01-01">2025 年 1 月 1 日</time>
+      </header>
+
+      <!-- 文章章节 -->
+      <section>
+        <h3>为什么需要语义化</h3>
+        <p>语义化标签让代码更易读...</p>
+      </section>
+
+      <section>
+        <h3>常用语义标签</h3>
+        <p>header、nav、main、footer 等...</p>
+      </section>
+
+      <!-- 文章页脚 -->
+      <footer>
+        <address>
+          作者：<a href="mailto:zhangsan@example.com">张三</a>
+        </address>
+        <p>分类：前端基础</p>
+      </footer>
+    </article>
+
+    <!-- 侧边栏 -->
+    <aside>
+      <h2>推荐阅读</h2>
+      <ul>
+        <li><a href="#">CSS Flexbox 指南</a></li>
+        <li><a href="#">JavaScript 入门</a></li>
+      </ul>
+    </aside>
+  </main>
+
+  <!-- 页面级页脚 -->
+  <footer>
+    <p>&copy; 2025 我的技术博客</p>
+    <nav>
+      <a href="/privacy">隐私政策</a>
+      <a href="/contact">联系方式</a>
+    </nav>
+  </footer>
+
+</body>
+</html>

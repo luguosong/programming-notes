@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>novalidate 关闭浏览器验证</title>
+</head>
+<body>
+<!-- novalidate 关闭浏览器验证：完全由 JS 控制验证逻辑 -->
+<form novalidate>
+  <!-- 浏览器不会进行任何验证，全部由 JS 处理 -->
+  <input type="text" name="username" placeholder="用户名"><br><br>
+  <input type="email" name="email" placeholder="邮箱（不会校验格式）"><br><br>
+  <button type="submit">提交</button>
+</form>
+</body>
+</html>

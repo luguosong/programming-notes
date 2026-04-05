@@ -15,16 +15,10 @@
 字符实体以 `&` 开头、`;` 结尾，中间是实体的名称或编号：
 
 ```html title="字符实体语法"
-<!-- 使用实体名称 -->
-&lt;    <!-- 显示为 < -->
-&amp;   <!-- 显示为 & -->
-
-<!-- 使用实体编号（十进制） -->
-&lt;    <!-- 等价于 &#60; -->
-
-<!-- 使用实体编号（十六进制） -->
-&lt;    <!-- 等价于 &#x3C; -->
+--8<-- "docs/frontend/html/misc/demo/character-entity-syntax.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/character-entity-syntax.html"></iframe>
 
 💡 推荐使用实体名称（如 `&lt;`），比编号更易读、更容易记忆。但实体编号的兼容性更好——极少数冷门字符可能没有名称，这时就需要用编号。
 
@@ -70,21 +64,18 @@
 以前实现可折叠内容需要写不少 JavaScript，现在 HTML 原生就支持了——只需要两个标签：
 
 ```html title="details 与 summary 基础用法"
-<details>
-  <summary>点击展开查看详情</summary>
-  <p>这里是被折叠的内容，默认收起，点击标题后展开。</p>
-</details>
+--8<-- "docs/frontend/html/misc/demo/details-basic.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/details-basic.html"></iframe>
 
 💡 `details` 默认收起。加上 `open` 属性可以使其默认展开：
 
 ```html title="默认展开的 details"
-<details open>
-  <summary>常见问题：什么是字符实体？</summary>
-  <p>字符实体是以 &amp; 开头、; 结尾的特殊文本序列，用于在 HTML 中显示
-  保留字符和不可见字符。</p>
-</details>
+--8<-- "docs/frontend/html/misc/demo/details-open.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/details-open.html"></iframe>
 
 !!! note "MDN"
     `<details>` 的 `open` 属性使其默认显示内容。可以通过 JavaScript 的 `toggle` 事件监听展开/收起状态变化。
@@ -92,14 +83,10 @@
 `details` 里面不只能放文字，可以放任意 HTML 内容：
 
 ```html title="details 包含富内容"
-<details>
-  <summary>代码示例</summary>
-  <pre><code>function hello() {
-    console.log("Hello, World!");
-}</code></pre>
-  <p>以上是一个简单的 JavaScript 函数。</p>
-</details>
+--8<-- "docs/frontend/html/misc/demo/details-rich-content.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/details-rich-content.html"></iframe>
 
 ⚠️ 注意：`<details>` 内部**必须**以 `<summary>` 作为第一个子元素。如果没有 `<summary>`，浏览器会自动生成一个默认标题（通常显示为"详细信息"）。
 
@@ -117,41 +104,20 @@
 以前弹窗要么用 `alert()`（简陋且无法自定义样式），要么自己用 `div` 模拟。现在 HTML 提供了原生的 `<dialog>` 标签：
 
 ```html title="dialog 基础用法"
-<!-- 非模态对话框：直接写 open 属性，页面加载时就显示 -->
-<dialog open>
-  <p>这是一个默认显示的对话框。</p>
-</dialog>
-
-<!-- 模态对话框：默认隐藏，通过 JS 控制 -->
-<dialog id="myDialog">
-  <p>操作成功！</p>
-  <button onclick="document.getElementById('myDialog').close()">关闭</button>
-</dialog>
-
-<button onclick="document.getElementById('myDialog').showModal()">打开对话框</button>
+--8<-- "docs/frontend/html/misc/demo/dialog-basic.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/dialog-basic.html"></iframe>
 
 💡 `<dialog>` 有两种显示模式：
 - `非模态`：用 `show()` 方法打开，用户可以同时操作对话框和页面
 - `模态`：用 `showModal()` 方法打开，对话框后面的页面会被遮罩覆盖，用户必须先处理对话框
 
 ```html title="模态 vs 非模态对话框"
-<dialog id="modelessDialog">
-  <p>这是非模态对话框——你可以同时操作页面。</p>
-  <button onclick="document.getElementById('modelessDialog').close()">关闭</button>
-</dialog>
-
-<dialog id="modalDialog">
-  <form method="dialog">
-    <p>这是模态对话框——页面被遮罩覆盖。</p>
-    <button>确定</button>
-    <button>取消</button>
-  </form>
-</dialog>
-
-<button onclick="document.getElementById('modelessDialog').show()">打开非模态</button>
-<button onclick="document.getElementById('modalDialog').showModal()">打开模态</button>
+--8<-- "docs/frontend/html/misc/demo/dialog-modal-vs-modeless.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/dialog-modal-vs-modeless.html"></iframe>
 
 💡 模态对话框中，`<form method="dialog">` 的按钮会自动关闭对话框——不需要手动调用 `close()`。按钮的 `value` 属性会作为 `dialog` 元素的 `returnValue`，方便后续逻辑判断用户点击了哪个按钮。
 

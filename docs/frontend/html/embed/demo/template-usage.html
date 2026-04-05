@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>template 定义与使用</title>
+    <style>
+        body { margin: 0; font-family: sans-serif; padding: 1rem; }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .card h2 { margin: 0 0 0.5rem; }
+        .card p { margin: 0; color: #666; }
+    </style>
+</head>
+<body>
+    <!-- 定义模板（不会渲染到页面上） -->
+    <template id="card-template">
+      <div class="card">
+        <h2></h2>
+        <p></p>
+      </div>
+    </template>
+
+    <!-- JavaScript 克隆并填充内容 -->
+    <script>
+      const template = document.getElementById('card-template');
+      const clone = template.content.cloneNode(true);
+      clone.querySelector('h2').textContent = '文章标题';
+      clone.querySelector('p').textContent = '文章摘要内容...';
+      document.body.appendChild(clone);
+    </script>
+</body>
+</html>

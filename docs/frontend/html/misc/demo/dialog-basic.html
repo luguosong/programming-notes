@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>dialog 基础用法</title>
+</head>
+<body>
+<!-- dialog 基础用法 -->
+<!-- 模态对话框：默认隐藏，通过 JS 控制 -->
+<dialog id="myDialog">
+  <p>操作成功！</p>
+  <button onclick="document.getElementById('myDialog').close()">关闭</button>
+</dialog>
+
+<button onclick="document.getElementById('myDialog').showModal()">打开对话框</button>
+</body>
+</html>

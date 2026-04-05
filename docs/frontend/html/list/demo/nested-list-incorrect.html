@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>错误的嵌套写法</title>
+</head>
+<body>
+<!-- 错误的嵌套写法：内层列表不在 li 内部 -->
+<ul>
+  <li>前端</li>
+  <ul> <!-- ❌ ul 不能作为 ul 的直接子元素 -->
+    <li>HTML</li>
+  </ul>
+</ul>
+</body>
+</html>

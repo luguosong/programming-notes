@@ -30,31 +30,18 @@
 `ul`（Unordered List）是列表容器，`li`（List Item）是列表中的每一项。一个 `ul` 中可以包含任意数量的 `li`。
 
 ``` html title="无序列表基本结构"
-<ul>
-  <li>HTML</li>
-  <li>CSS</li>
-  <li>JavaScript</li>
-</ul>
+--8<-- "docs/frontend/html/list/demo/unordered-basic-structure.html"
 ```
 
-渲染效果：
-
-- HTML
-- CSS
-- JavaScript
+<iframe class="html-demo" loading="lazy" src="demo/unordered-basic-structure.html"></iframe>
 
 💡 `ul` 的子元素只能是 `li`（或脚本/模板元素）。不要在 `ul` 内直接放 `div`、`p` 等其他标签——如果需要更复杂的结构，把内容放在 `li` 内部。
 
 ``` html title="li 内部可以包含其他元素"
-<ul>
-  <li>
-    <strong>HTML</strong> — 定义网页的结构和内容
-  </li>
-  <li>
-    <strong>CSS</strong> — 控制网页的样式和布局
-  </li>
-</ul>
+--8<-- "docs/frontend/html/list/demo/li-contains-other-elements.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/li-contains-other-elements.html"></iframe>
 
 ## 🔢 有序列表
 
@@ -65,18 +52,10 @@
 `ol`（Ordered List）的用法与 `ul` 类似，只是容器标签不同：
 
 ``` html title="有序列表基本结构"
-<ol>
-  <li>打开编辑器</li>
-  <li>编写 HTML 文件</li>
-  <li>在浏览器中打开预览</li>
-</ol>
+--8<-- "docs/frontend/html/list/demo/ordered-basic-structure.html"
 ```
 
-渲染效果：
-
-1. 打开编辑器
-2. 编写 HTML 文件
-3. 在浏览器中打开预览
+<iframe class="html-demo" loading="lazy" src="demo/ordered-basic-structure.html"></iframe>
 
 ⚠️ 有序列表的编号是由浏览器自动生成的。如果用 CSS 去掉了默认样式，但内容本身有顺序语义，`ol` 仍然是正确的选择——语义不会因为样式的改变而消失。
 
@@ -102,30 +81,22 @@
 | `i` | 小写罗马数字 | i, ii, iii |
 
 ``` html title="从第 5 步开始的有序列表"
-<p>接续上文的操作步骤：</p>
-<ol start="5">
-  <li>部署到测试环境</li>
-  <li>执行自动化测试</li>
-  <li>发布上线</li>
-</ol>
+--8<-- "docs/frontend/html/list/demo/ordered-start-attribute.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/ordered-start-attribute.html"></iframe>
 
 ``` html title="使用 type 指定大写字母编号"
-<ol type="A">
-  <li>方案一：自研框架</li>
-  <li>方案二：采用开源方案</li>
-  <li>方案三：混合方案</li>
-</ol>
+--8<-- "docs/frontend/html/list/demo/ordered-type-attribute.html"
 ```
 
+<iframe class="html-demo" loading="lazy" src="demo/ordered-type-attribute.html"></iframe>
+
 ``` html title="倒序列表"
-<p>最新发布的版本：</p>
-<ol reversed>
-  <li>v3.2.0</li>
-  <li>v3.1.0</li>
-  <li>v3.0.0</li>
-</ol>
+--8<-- "docs/frontend/html/list/demo/ordered-reversed.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/ordered-reversed.html"></iframe>
 
 💡 `reversed` + `start` 可以组合使用，例如 `<ol reversed start="10">` 会从 10 倒数到 1。
 
@@ -140,42 +111,18 @@
 ### dl / dt / dd
 
 ``` html title="描述列表基本结构"
-<dl>
-  <dt>HTML</dt>
-  <dd>超文本标记语言，用于定义网页的结构和内容。</dd>
-
-  <dt>CSS</dt>
-  <dd>层叠样式表，用于控制网页的视觉表现。</dd>
-
-  <dt>JavaScript</dt>
-  <dd>脚本语言，用于实现网页的交互行为。</dd>
-</dl>
+--8<-- "docs/frontend/html/list/demo/description-basic-structure.html"
 ```
 
-渲染效果：
-
-:   **HTML**
-    :   超文本标记语言，用于定义网页的结构和内容。
-:   **CSS**
-    :   层叠样式表，用于控制网页的视觉表现。
-:   **JavaScript**
-    :   脚本语言，用于实现网页的交互行为。
+<iframe class="html-demo" loading="lazy" src="demo/description-basic-structure.html"></iframe>
 
 💡 一个 `dt` 可以对应多个 `dd`（一个术语有多个描述），多个 `dt` 也可以共用一个 `dd`（多个术语指向同一描述）。
 
 ``` html title="一对多和多对一的描述列表"
-<dl>
-  <!-- 一个术语，多个描述 -->
-  <dt>cookie</dt>
-  <dd>一种小型文本文件，由服务器发送并存储在浏览器中。</dd>
-  <dd>也指一种 Unix 中的网络请求工具。</dd>
-
-  <!-- 多个术语，一个描述 -->
-  <dt>JavaScript</dt>
-  <dt>JS</dt>
-  <dd>一种动态脚本语言，广泛用于 Web 前端开发。</dd>
-</dl>
+--8<-- "docs/frontend/html/list/demo/description-one-to-many.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/description-one-to-many.html"></iframe>
 
 ⚠️ `dl` 的直接子元素只能是 `dt` 和 `dd`（以及脚本/模板元素）。不要在 `dl` 内直接嵌套其他标签。
 
@@ -184,60 +131,26 @@
 列表可以嵌套使用，即在 `li` 内部再放入一个完整的列表。嵌套时`内层列表必须放在 li 标签内部`，而不是 `li` 之间。
 
 ``` html title="正确的嵌套写法"
-<ul>
-  <li>前端
-    <ul>
-      <li>HTML</li>
-      <li>CSS</li>
-      <li>JavaScript</li>
-    </ul>
-  </li>
-  <li>后端
-    <ul>
-      <li>Java</li>
-      <li>Python</li>
-      <li>Go</li>
-    </ul>
-  </li>
-</ul>
+--8<-- "docs/frontend/html/list/demo/nested-list-correct.html"
 ```
 
-渲染效果：
-
-- 前端
-    - HTML
-    - CSS
-    - JavaScript
-- 后端
-    - Java
-    - Python
-    - Go
+<iframe class="html-demo" loading="lazy" src="demo/nested-list-correct.html"></iframe>
 
 ❌ 以下写法是`错误的`——内层 `ul` 放在了 `li` 的外面：
 
 ``` html title="错误的嵌套写法——内层列表不在 li 内部"
-<ul>
-  <li>前端</li>
-  <ul> <!-- ❌ ul 不能作为 ul 的直接子元素 -->
-    <li>HTML</li>
-  </ul>
-</ul>
+--8<-- "docs/frontend/html/list/demo/nested-list-incorrect.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/nested-list-incorrect.html"></iframe>
 
 💡 不同类型的列表也可以互相嵌套，例如在 `ol` 中嵌套 `ul` 来展示步骤的细节：
 
 ``` html title="有序列表中嵌套无序列表"
-<ol>
-  <li>安装依赖
-    <ul>
-      <li>npm install react</li>
-      <li>npm install react-dom</li>
-    </ul>
-  </li>
-  <li>创建组件</li>
-  <li>启动开发服务器</li>
-</ol>
+--8<-- "docs/frontend/html/list/demo/ordered-nested-unordered.html"
 ```
+
+<iframe class="html-demo" loading="lazy" src="demo/ordered-nested-unordered.html"></iframe>
 
 ⚠️ 嵌套层级建议不超过 3 层。过深的嵌套不仅影响可读性，也会给屏幕阅读器用户带来导航困难。
 

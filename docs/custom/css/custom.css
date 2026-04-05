@@ -16,3 +16,11 @@
 article > p, .admonition > p:not(.admonition-title) {
     text-indent: 2em;
 }
+
+/* HTML 演示 iframe 统一样式 */
+.md-typeset iframe.html-demo {
+    width: 100%;
+    height: 200px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 0.25rem;
+}

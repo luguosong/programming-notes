@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>select 的实用技巧</title>
+</head>
+<body>
+<!-- select 的实用技巧：默认选中、禁用、分组、多选 -->
+<p>默认选中某一项：</p>
+<select>
+  <option value="beijing">北京</option>
+  <option value="shanghai" selected>上海</option>
+  <option value="guangzhou">广州</option>
+</select>
+
+<br><br>
+<p>禁用某一项（置灰不可选）：</p>
+<select>
+  <option value="" disabled>请选择城市</option>
+  <option value="beijing">北京</option>
+  <option value="shanghai">上海</option>
+</select>
+
+<br><br>
+<p>分组显示（optgroup）：</p>
+<select name="province">
+  <optgroup label="华东地区">
+    <option value="shanghai">上海</option>
+    <option value="jiangsu">江苏</option>
+  </optgroup>
+  <optgroup label="华南地区">
+    <option value="guangdong">广东</option>
+    <option value="fujian">福建</option>
+  </optgroup>
+</select>
+
+<br><br>
+<p>多选（按住 Ctrl 点击）：</p>
+<select name="hobbies" multiple size="4">
+  <option value="reading">阅读</option>
+  <option value="coding">编程</option>
+  <option value="gaming">游戏</option>
+  <option value="music">音乐</option>
+</select>
+</body>
+</html>
