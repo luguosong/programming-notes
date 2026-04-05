@@ -57,13 +57,6 @@ PKCE 的详细流程机制见「授权流程」中的 PKCE 章节。
 
 OAuth 2.1 `完全移除`了隐式流程（`response_type=token`）。
 
-`移除原因：`
-
-- Access Token 直接暴露在浏览器 URL 的 `#fragment` 中，易被浏览器历史记录、Referrer 头、页面内 JavaScript 读取
-- 无法使用发送者约束（Sender-Constrained Token），令牌一旦泄露即可被任意方使用
-- 无法颁发 Refresh Token，用户体验差
-- 授权码流程 + PKCE 已能完全覆盖隐式流程的所有场景，且安全性显著提升
-
 移除原因：隐式流程将 Access Token 放在 URL 片段中返回（`response_type=token`），这些 Token 容易通过浏览器历史记录、Referer 头等方式泄露，且无法进行发送者约束（DPoP/mTLS 绑定）。授权码流程 + PKCE 已经完全替代了隐式流程的使用场景。
 
 !!! warning "迁移指引"
@@ -72,13 +65,6 @@ OAuth 2.1 `完全移除`了隐式流程（`response_type=token`）。
 ### 3. 移除资源所有者密码凭证（ROPC）
 
 OAuth 2.1 `完全移除`了密码授权类型（`grant_type=password`）。
-
-`移除原因：`
-
-- 用户密码直接暴露给客户端应用，违背 OAuth 的核心设计原则
-- 无法支持多因素认证（MFA）、单点登录（SSO）等现代认证方式
-- 无法在授权服务器侧集中管理会话和撤销
-- 客户端可以记录和转发用户密码
 
 移除原因：ROPC 要求客户端在内存中明文持有用户密码，无法使用 MFA、SSO 等高级认证方式，且密码一旦泄露会影响用户在授权服务器上的所有账户。应使用授权码流程替代。
 
@@ -169,8 +155,6 @@ OAuth 2.1 与 OAuth 2.0 保持`向后兼容`：
     OAuth 2.1 没有引入新的授权流程或令牌类型。它的价值在于`将分散的安全要求集中为一个文档`，让开发者不再需要同时参考多个 RFC 来实现安全的 OAuth 系统。OAuth 2.0 生态中的扩展规范（如 Token Exchange RFC 8693、Device Authorization Grant RFC 8628 等）不受影响，继续独立适用。
 
 ## ✅ 迁移检查清单
-
-下面这张清单可以帮你逐项检查现有实现是否已对齐 OAuth 2.1：
 
 如果你的现有 OAuth 2.0 实现需要对齐 OAuth 2.1，可按以下清单逐项检查：
 
