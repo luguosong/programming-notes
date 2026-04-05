@@ -14,9 +14,9 @@
 
 ### form 容器
 
-`form` 是所有表单控件的容器，它本身不显示任何内容，但定义了**数据往哪发、怎么发**。
+`form` 是所有表单控件的容器，它本身不显示任何内容，但定义了`数据往哪发、怎么发`。
 
-```html title="form 基本结构"
+``` html title="form 基本结构"
 <form action="/submit" method="POST" enctype="multipart/form-data">
   <!-- 表单控件放在这里 -->
 </form>
@@ -33,10 +33,10 @@
 
 **`method` 怎么选？**
 
-- `GET`：数据附在 URL 上（`?name=value`），适合搜索、筛选等**无副作用**的操作
-- `POST`：数据放在请求体中，适合登录、注册等**有数据修改**的操作
+- `GET`：数据附在 URL 上（`?name=value`），适合搜索、筛选等`无副作用`的操作
+- `POST`：数据放在请求体中，适合登录、注册等`有数据修改`的操作
 
-```html title="搜索用 GET"
+``` html title="搜索用 GET"
 <form action="/search" method="GET">
   <input type="text" name="q" placeholder="搜索...">
   <button type="submit">搜索</button>
@@ -44,7 +44,7 @@
 <!-- 提交后 URL 变为 /search?q=用户输入的内容 -->
 ```
 
-```html title="登录用 POST"
+``` html title="登录用 POST"
 <form action="/login" method="POST">
   <input type="text" name="username" placeholder="用户名">
   <input type="password" name="password" placeholder="密码">
@@ -58,7 +58,7 @@
 
 `input` 是最常用的表单控件——一个自闭合标签，通过 `type` 属性决定它的外观和行为。
 
-```html title="最常用的几种 input"
+``` html title="最常用的几种 input"
 <input type="text" name="username" placeholder="请输入用户名">
 <input type="password" name="pwd" placeholder="请输入密码">
 <input type="email" name="mail" placeholder="请输入邮箱">
@@ -67,11 +67,11 @@
 <input type="file" name="avatar" accept="image/*">
 ```
 
-💡 `type="text"` 是默认值，写不写效果一样，但**显式写出更清晰**。
+💡 `type="text"` 是默认值，写不写效果一样，但`显式写出更清晰`。
 
 `type="file"` 有两个特有属性：
 
-```html title="file 输入的特有属性"
+``` html title="file 输入的特有属性"
 <!-- multiple：允许选择多个文件 -->
 <input type="file" name="files" multiple>
 
@@ -91,7 +91,7 @@
 
 不管 `type` 是什么，以下属性对所有 `input` 都适用：
 
-```html title="input 通用属性演示"
+``` html title="input 通用属性演示"
 <input
   type="text"
   name="username"           <!-- 字段名，提交数据的键 -->
@@ -109,13 +109,13 @@
 | `autocomplete` | 是否允许浏览器自动填充 | `autocomplete="off"` |
 | `accesskey` | 快捷键（按 Alt+字母 聚焦） | `accesskey="u"` → `Alt+U` |
 
-⚠️ **没有 `name` 属性的输入框，数据不会随表单提交。**
+⚠️ `没有 name 属性的输入框，数据不会随表单提交。`
 
 ### textarea 多行文本
 
 `input` 只能输入单行文本。需要输入多行内容（如评论、备注）时，使用 `textarea`。
 
-```html title="textarea 多行文本框"
+``` html title="textarea 多行文本框"
 <textarea
   name="comment"
   rows="5"          <!-- 显示 5 行 -->
@@ -125,9 +125,9 @@
 ></textarea>
 ```
 
-💡 `textarea` 的内容写在**开始标签和结束标签之间**，而不是 `value` 属性里：
+💡 `textarea` 的内容写在`开始标签和结束标签之间`，而不是 `value` 属性里：
 
-```html title="textarea 的默认值"
+``` html title="textarea 的默认值"
 <textarea name="bio">这里写默认内容</textarea>
 
 <!-- ❌ 错误：textarea 没有 value 属性 -->
@@ -140,7 +140,7 @@
 
 `select` + `option` 组合出一个下拉选择框——适合选项较多、占用空间又不能太大的场景。
 
-```html title="select 下拉选择框"
+``` html title="select 下拉选择框"
 <select name="city">
   <option value="">请选择城市</option>
   <option value="beijing">北京</option>
@@ -152,7 +152,7 @@
 
 常用增强属性：
 
-```html title="select 的实用技巧"
+``` html title="select 的实用技巧"
 <!-- 默认选中某一项 -->
 <option value="shanghai" selected>上海</option>
 
@@ -184,14 +184,14 @@
 
 `radio` 是单选按钮——同组（相同 `name`）中只能选一个。`checkbox` 是复选框——可以同时选多个。
 
-```html title="radio 单选"
+``` html title="radio 单选"
 <p>性别：</p>
 <label><input type="radio" name="gender" value="male"> 男</label>
 <label><input type="radio" name="gender" value="female"> 女</label>
 <label><input type="radio" name="gender" value="other"> 其他</label>
 ```
 
-```html title="checkbox 多选"
+``` html title="checkbox 多选"
 <p>爱好：</p>
 <label><input type="checkbox" name="hobby" value="reading"> 阅读</label>
 <label><input type="checkbox" name="hobby" value="coding"> 编程</label>
@@ -200,7 +200,7 @@
 
 ⚠️ `radio` 的分组靠的是 `name` 属性——`name` 相同的 `radio` 互斥：
 
-```html title="两组独立的 radio"
+``` html title="两组独立的 radio"
 <p>配送方式：</p>
 <label><input type="radio" name="shipping" value="express"> 快递</label>
 <label><input type="radio" name="shipping" value="pickup"> 自提</label>
@@ -213,7 +213,7 @@
 
 设置默认选中用 `checked` 属性：
 
-```html title="默认选中"
+``` html title="默认选中"
 <input type="radio" name="gender" value="male" checked>
 <input type="checkbox" name="agree" value="yes" checked>
 ```
@@ -224,7 +224,7 @@
 
 `button` 元素有三种 `type`，行为完全不同：
 
-```html title="button 的三种类型"
+``` html title="button 的三种类型"
 <!-- type="submit"：提交表单（默认值） -->
 <button type="submit">提交</button>
 
@@ -236,17 +236,17 @@
 ```
 
 !!! note "MDN"
-    `<button>` 在 `<form>` 内部时，`type` 默认为 `submit`。这意味着如果忘了写 `type`，点击按钮会**意外提交表单**。最佳实践：**始终显式声明 `type`**。
+    `<button>` 在 `<form>` 内部时，`type` 默认为 `submit`。这意味着如果忘了写 `type`，点击按钮会`意外提交表单`。最佳实践：`始终显式声明 type`。
 
 ✅ 始终声明 `type`：
 
-```html
+``` html
 <button type="button">取消</button>
 ```
 
 ❌ 忘了 `type` 在 form 中会导致意外提交：
 
-```html
+``` html
 <!-- 用户点"取消"却触发了表单提交 -->
 <form action="/api/order">
   <button>取消</button>
@@ -256,7 +256,7 @@
 
 你也可以用 `input` 来创建按钮，但 `button` 更灵活——它支持图标、富文本等内部内容：
 
-```html title="button vs input 按钮"
+``` html title="button vs input 按钮"
 <!-- ✅ button 可以放图标、文字 -->
 <button type="submit">
   <img src="send-icon.png" alt="" width="16"> 发送
@@ -270,12 +270,12 @@
 
 `label` 为表单控件提供可点击的文本标签。它的两个好处：
 
-1. **可访问性**：屏幕阅读器能读出标签，帮助视障用户理解输入框用途
-2. **点击体验**：点击标签文本就能聚焦对应的输入框，点选范围更大
+1. `可访问性`：屏幕阅读器能读出标签，帮助视障用户理解输入框用途
+2. `点击体验`：点击标签文本就能聚焦对应的输入框，点选范围更大
 
 **方式一：`for` + `id` 关联**
 
-```html title="label 方式一：for + id"
+``` html title="label 方式一：for + id"
 <label for="username">用户名</label>
 <input type="text" id="username" name="username">
 <!-- 点击"用户名"三个字，输入框会获得焦点 -->
@@ -283,7 +283,7 @@
 
 **方式二：直接把 `input` 放在 `label` 里面**
 
-```html title="label 方式二：包含 input"
+``` html title="label 方式二：包含 input"
 <label>
   用户名
   <input type="text" name="username">
@@ -299,7 +299,7 @@
 
 当表单字段很多时，用 `fieldset` 把相关的控件分组，再用 `legend` 给每组起个标题。浏览器会自动给 `fieldset` 加上边框。
 
-```html title="fieldset 分组表单"
+``` html title="fieldset 分组表单"
 <form action="/register" method="POST">
   <!-- 第一组：个人信息 -->
   <fieldset>
@@ -331,7 +331,7 @@
 !!! note "MDN"
     `fieldset` 还有一个 `disabled` 属性——设置后，组内**所有**表单控件都会被禁用，无需逐个设置。这在表单分步填写、条件显示等场景下很实用。
 
-```html title="fieldset 禁用整组控件"
+``` html title="fieldset 禁用整组控件"
 <fieldset disabled>
   <legend>高级设置（当前不可编辑）</legend>
   <input type="text" name="api_key" placeholder="API Key">
@@ -343,9 +343,9 @@
 
 ### datalist 输入建议
 
-`datalist` 配合 `input` 提供输入建议列表——用户既可以从列表中选择，也可以自己输入，**灵活性比 `select` 更高**。
+`datalist` 配合 `input` 提供输入建议列表——用户既可以从列表中选择，也可以自己输入，`灵活性比 select 更高`。
 
-```html title="datalist 输入建议"
+``` html title="datalist 输入建议"
 <input type="text" name="browser" list="browser-list" placeholder="输入或选择浏览器">
 <datalist id="browser-list">
   <option value="Chrome">
@@ -364,7 +364,7 @@
 
 **`output`——计算结果输出**
 
-```html title="output 显示计算结果"
+``` html title="output 显示计算结果"
 <form oninput="result.value = Number(a.value) + Number(b.value)">
   <input type="number" name="a" value="10"> +
   <input type="number" name="b" value="20"> =
@@ -374,7 +374,7 @@
 
 **`progress`——进度条**
 
-```html title="progress 进度条"
+``` html title="progress 进度条"
 <!-- 确定性进度（已知百分比） -->
 <label>上传进度：<progress value="70" max="100">70%</progress></label>
 
@@ -384,7 +384,7 @@
 
 **`meter`——度量/标量值**
 
-```html title="meter 度量标签"
+``` html title="meter 度量标签"
 <!-- 磁盘使用量：low/high/optimum 定义区间 -->
 <meter value="0.7" min="0" max="1" low="0.3" high="0.8" optimum="0.5">
   70%
@@ -405,7 +405,7 @@
 
 HTML5 提供了浏览器原生验证——不需要写 JavaScript，直接在标签上加属性就能实现基本的表单校验。
 
-```html title="常用验证属性"
+``` html title="常用验证属性"
 <form>
   <!-- required：必填 -->
   <input type="text" name="username" required placeholder="用户名（必填）">
@@ -440,7 +440,7 @@ HTML5 提供了浏览器原生验证——不需要写 JavaScript，直接在标
 
 💡 `novalidate` 属性可以关闭表单的浏览器验证——当你想完全用 JS 控制验证逻辑时使用：
 
-```html
+``` html
 <form novalidate>
   <!-- 浏览器不会进行任何验证，全部由 JS 处理 -->
 </form>

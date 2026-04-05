@@ -16,7 +16,7 @@
 
 💡 用 `div` 布局就像用纸箱分类物品——虽然能装，但箱子外面没有标签，打开才知道里面是什么。而语义标签就像用带标签的收纳盒——一眼就能看出里面装的是什么。
 
-```html title="纯 div 布局——结构不清晰"
+``` html title="纯 div 布局——结构不清晰"
 <div class="header">
   <div class="nav">...</div>
 </div>
@@ -50,7 +50,7 @@
 
 `header` 表示介绍性内容，通常是一组介绍性或导航性辅助内容。一个页面可以有多个 `header`——页面级别的 `header` 放在最顶部，`article` 或 `section` 内部也可以有自己的 `header`。
 
-```html title="header 示例"
+``` html title="header 示例"
 <!-- 页面级页眉 -->
 <header>
   <h1>我的技术博客</h1>
@@ -73,7 +73,7 @@
 
 `nav` 表示导航区域，包含一组到其他页面或页面内锚点的链接。不是所有的链接集合都需要用 `nav` 包裹，通常只用于主要导航区块。
 
-```html title="nav 示例"
+``` html title="nav 示例"
 <nav>
   <ul>
     <li><a href="/">首页</a></li>
@@ -89,7 +89,7 @@
 
 `main` 表示页面的主体内容。一个页面只能有一个 `main` 元素，它不应该包含页面中重复出现的内容（如导航栏、页脚、侧边栏）。
 
-```html title="main 示例"
+``` html title="main 示例"
 <body>
   <header>...</header>
   <nav>...</nav>
@@ -110,7 +110,7 @@
 
 `article` 表示一段独立的、完整的内容，能够脱离上下文独立存在。典型场景：博客文章、新闻条目、论坛帖子、用户评论。
 
-```html title="article 示例"
+``` html title="article 示例"
 <article>
   <header>
     <h2>学习 HTML 语义化的 5 个理由</h2>
@@ -129,7 +129,7 @@
 
 `section` 表示文档中的一个章节或主题分组，通常带有标题。它不像 `article` 那样要求内容独立——`section` 是对相关内容的逻辑分组。
 
-```html title="section 示例"
+``` html title="section 示例"
 <article>
   <h1>CSS Flexbox 完全指南</h1>
 
@@ -158,7 +158,7 @@
 
 `aside` 表示与主内容间接相关的内容——侧边栏、广告位、相关链接、辅助说明等。`aside` 中的内容如果移除，不应影响主内容的理解。
 
-```html title="aside 示例"
+``` html title="aside 示例"
 <main>
   <article>
     <h1>HTML 入门教程</h1>
@@ -181,7 +181,7 @@
 
 `footer` 表示其最近的祖先内容的页脚信息。通常包含版权声明、联系方式、相关链接等。和 `header` 一样，页面和 `article`/`section` 都可以有自己的 `footer`。
 
-```html title="footer 示例"
+``` html title="footer 示例"
 <!-- 页面级页脚 -->
 <footer>
   <p>&copy; 2025 我的技术博客</p>
@@ -214,7 +214,7 @@
 
 `address` 专门用于表示联系信息（邮箱、电话、地址、社交媒体链接等），不应用于表示邮政地址（除非确实是联系用途）。
 
-```html title="address 示例"
+``` html title="address 示例"
 <address>
   <p>作者：张三</p>
   <a href="mailto:zhangsan@example.com">zhangsan@example.com</a>
@@ -227,7 +227,7 @@
 
 `hgroup` 用于将标题和副标题（或标语）组合在一起，避免副标题出现在文档大纲中。
 
-```html title="hgroup 示例"
+``` html title="hgroup 示例"
 <hgroup>
   <h1>HTML 语义化指南</h1>
   <p>让代码自己说话</p>
@@ -238,7 +238,7 @@
 
 `search` 标识页面中的搜索功能区域，帮助辅助技术快速定位搜索控件。
 
-```html title="search 示例"
+``` html title="search 示例"
 <search>
   <form action="/search" method="get">
     <input type="search" name="q" placeholder="搜索文章...">
@@ -263,7 +263,7 @@
 
 下面是一个完整的 HTML 页面，展示了所有语义标签如何组合使用。注意观察页面骨架——即使不看 CSS，也能从标签名理解整体结构。
 
-```html title="完整的语义化页面" linenums="1"
+``` html title="完整的语义化页面" linenums="1"
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -347,4 +347,4 @@
 </html>
 ```
 
-📝 小结：语义化标签的本质是**让 HTML 代码自己"说话"**。`header` 告诉你"这是页眉"，`nav` 告诉你"这是导航"，`article` 告诉你"这是一篇独立文章"——不需要依赖 `class` 名，标签名就是最好的注释。写代码时多问自己一句"这个区域用什么语义标签最合适"，你的代码质量会提升一个台阶。
+📝 小结：语义化标签的本质是`让 HTML 代码自己"说话"`。`header` 告诉你"这是页眉"，`nav` 告诉你"这是导航"，`article` 告诉你"这是一篇独立文章"——不需要依赖 `class` 名，标签名就是最好的注释。写代码时多问自己一句"这个区域用什么语义标签最合适"，你的代码质量会提升一个台阶。

@@ -15,7 +15,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 `h1` 到 `h6` 是标题标签，数字越小级别越高、文字越大：
 
-```html title="标题标签演示"
+``` html title="标题标签演示"
 <!-- 页面中唯一的大标题 -->
 <h1>HTML 学习笔记</h1>
 
@@ -37,11 +37,11 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 标题不仅是视觉上的大字，更是文档结构的骨架。搜索引擎和屏幕阅读器都依赖标题来理解页面结构，所以使用时要注意以下几点：
 
-✅ **每页只有一个 `h1`**，它是整个页面的主标题
-✅ **层级不能跳跃**——`h1` 下面应该接 `h2`，`h2` 下面接 `h3`，不要从 `h1` 直接跳到 `h3`
-✅ **不要为了改字号而用标题**——字号应该用 CSS 控制，标题只用于表达内容的层次关系
+✅ `每页只有一个 h1`，它是整个页面的主标题
+✅ `层级不能跳跃`——`h1` 下面应该接 `h2`，`h2` 下面接 `h3`，不要从 `h1` 直接跳到 `h3`
+✅ `不要为了改字号而用标题`——字号应该用 CSS 控制，标题只用于表达内容的层次关系
 
-```html title="✅ 正确的标题层级"
+``` html title="✅ 正确的标题层级"
 <h1>主标题</h1>
 <h2>章节一</h2>
 <h3>小节 1.1</h3>
@@ -49,7 +49,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 <h2>章节二</h2>
 ```
 
-```html title="❌ 错误的标题层级"
+``` html title="❌ 错误的标题层级"
 <h1>主标题</h1>
 <h3>跳过了 h2，层级断裂</h3>
 <h1>又来一个 h1，页面不唯一</h1>
@@ -67,7 +67,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 `p`（paragraph，段落）是最基础的文本容器，浏览器会自动在段落前后添加间距，文字显示不开时会自动换行：
 
-```html title="段落演示"
+``` html title="段落演示"
 <p>这是一个段落。段落中的文字会在容器宽度不够时自动换行，
 你不需要手动插入换行符。</p>
 
@@ -81,7 +81,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 !!! note "MDN"
     `br`（break）产生一个换行；`hr`（horizontal rule）在页面中插入一条主题分隔线，用于分隔不同主题的内容区域。
 
-```html title="br 与 hr 演示"
+``` html title="br 与 hr 演示"
 <p>
   第一行文字<br><!-- 这里强制换行 -->
   第二行文字<br>
@@ -95,7 +95,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 <p>下面是另一个主题的内容。</p>
 ```
 
-⚠️ 注意：`br` 只用于**诗歌、地址等确实需要手动换行**的场景。普通段落换行应该用多个 `p`，而不是用 `br` 硬换行。
+⚠️ 注意：`br` 只用于`诗歌、地址等确实需要手动换行`的场景。普通段落换行应该用多个 `p`，而不是用 `br` 硬换行。
 
 ---
 
@@ -105,9 +105,9 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 ### div 块级容器
 
-`div`（division，分区）是一个**块级元素**，默认独占一行，用于搭建页面的布局结构：
+`div`（division，分区）是一个`块级元素`，默认独占一行，用于搭建页面的布局结构：
 
-```html title="div 块级容器"
+``` html title="div 块级容器"
 <div>
   <h2>导航栏</h2>
   <p>这是导航栏区域的内容。</p>
@@ -123,9 +123,9 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 ### span 行内容器
 
-`span` 是一个**行内元素**，不会换行，仅包裹文本或行内元素的某一部分，用于对局部内容设置样式或操作：
+`span` 是一个`行内元素`，不会换行，仅包裹文本或行内元素的某一部分，用于对局部内容设置样式或操作：
 
-```html title="span 行内容器"
+``` html title="span 行内容器"
 <p>
   这段话中，<span style="color: red;">只有这三个字是红色的</span>，
   其余文字保持默认颜色。
@@ -154,21 +154,21 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 ### strong 与 em（推荐）
 
-`strong` 表示**重要性**（important），`em` 表示**语气强调**（emphasis）。两者都有明确的语义，是应该优先使用的标签：
+`strong` 表示`重要性`（important），`em` 表示`语气强调`（emphasis）。两者都有明确的语义，是应该优先使用的标签：
 
-```html title="strong 与 em 演示"
+``` html title="strong 与 em 演示"
 <p><strong>警告：</strong>请务必在截止日期前提交表单。</p>
 
 <p>你必须<em>亲自</em>到现场办理，不能代办。</p>
 ```
 
-💡 浏览器默认将 `strong` 渲染为**加粗**，将 `em` 渲染为**斜体**。但它们的本质不是「粗体/斜体」，而是「重要/强调」——视觉表现只是默认效果，可以通过 CSS 修改。
+💡 浏览器默认将 `strong` 渲染为`加粗`，将 `em` 渲染为`斜体`。但它们的本质不是「粗体/斜体」，而是「重要/强调」——视觉表现只是默认效果，可以通过 CSS 修改。
 
 ### b 与 i（不推荐）
 
-`b`（bold）和 `i`（italic）只是视觉上的加粗和斜体，**不携带任何语义**。在现代 HTML 中应避免使用：
+`b`（bold）和 `i`（italic）只是视觉上的加粗和斜体，`不携带任何语义`。在现代 HTML 中应避免使用：
 
-```html title="b 与 i（不推荐）"
+``` html title="b 与 i（不推荐）"
 <p><b>这段文字是粗体</b>，但浏览器不知道它为什么粗。</p>
 
 <p><i>这段文字是斜体</i>，但浏览器不知道它为什么斜。</p>
@@ -192,7 +192,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 `del`（deleted）标记被删除的内容，`ins`（inserted）标记新增的内容——它们清晰地表达了「这段文字经历过修改」的语义：
 
-```html title="del 与 ins 演示"
+``` html title="del 与 ins 演示"
 <p>会议时间从 <del>周五下午 3 点</del> <ins>周六上午 10 点</ins> 调整。</p>
 
 <p>
@@ -205,9 +205,9 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 ### s 与 u（不推荐）
 
-`s`（strikethrough）是单纯的删除线，`u`（underline）是单纯的下划线，**不携带语义**：
+`s`（strikethrough）是单纯的删除线，`u`（underline）是单纯的下划线，`不携带语义`：
 
-```html title="s 与 u（不推荐）"
+``` html title="s 与 u（不推荐）"
 <p><s>这段文字有删除线</s>，但没有「被删除」的语义。</p>
 <p><u>这段文字有下划线</u>，但没有「被插入」的语义。</p>
 ```
@@ -230,7 +230,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 !!! note "MDN"
     `blockquote` 用于块级长引用，`cite` 属性可指定来源 URL；`q` 用于行内短引用，浏览器会自动添加引号。
 
-```html title="引用演示"
+``` html title="引用演示"
 <!-- 块级引用：独占一块区域，适合引用较长的内容 -->
 <blockquote cite="https://www.w3.org/TR/html52/">
   <p>HTML 是万维网的核心语言。</p>
@@ -242,7 +242,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 
 💡 `blockquote` 默认会缩进显示，`q` 默认会在文字两边加上引号。如果需要标注引用来源，可以配合 `<cite>` 标签（注意与 `cite` 属性区分）：
 
-```html title="cite 标签标注来源"
+``` html title="cite 标签标注来源"
 <blockquote>
   <p>学而不思则罔，思而不学则殆。</p>
   <footer>—— <cite>孔子</cite>《论语》</footer>
@@ -254,12 +254,12 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 !!! note "MDN"
     `code` 用于行内代码片段，默认使用等宽字体；`pre` 用于预格式化文本，会保留源代码中的空格、换行和缩进。
 
-```html title="code 行内代码"
+``` html title="code 行内代码"
 <p>使用 <code>console.log()</code> 在控制台输出调试信息。</p>
 <p>在 HTML 中，<code>&lt;div&gt;</code> 是一个块级容器。</p>
 ```
 
-```html title="pre 预格式化文本"
+``` html title="pre 预格式化文本"
 <pre>
 function greet(name) {
     return 'Hello, ' + name;
@@ -269,7 +269,7 @@ function greet(name) {
 
 💡 实际开发中，`code` 和 `pre` 经常组合使用——`pre` 保持格式，`code` 标记语义：
 
-```html title="pre + code 组合"
+``` html title="pre + code 组合"
 <pre><code>function greet(name) {
     return 'Hello, ' + name;
 }</code></pre>
@@ -282,7 +282,7 @@ function greet(name) {
 !!! note "MDN"
     `kbd` 表示键盘输入，`samp` 表示程序输出示例——它们都是行内语义标签。
 
-```html title="kbd 与 samp 演示"
+``` html title="kbd 与 samp 演示"
 <p>保存文件请按 <kbd>Ctrl</kbd> + <kbd>S</kbd>。</p>
 
 <p>终端输出：<samp>Hello, World!</samp></p>
@@ -301,7 +301,7 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 !!! note "MDN"
     `mark` 用于高亮标记（类似荧光笔效果）；`small` 表示附注或小字；`abbr` 表示缩写；`time` 表示时间，`datetime` 属性提供机器可读格式。
 
-```html title="mark 与 small 演示"
+``` html title="mark 与 small 演示"
 <p>搜索结果中，关键词会被 <mark>高亮显示</mark>。</p>
 
 <p><small>版权所有 &copy; 2024 示例公司。保留所有权利。</small></p>
@@ -309,7 +309,7 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 
 💡 `small` 不是用来缩小字号的——它的语义是「旁注、免责声明、版权声明」等附属信息。
 
-```html title="abbr 缩写演示"
+``` html title="abbr 缩写演示"
 <p>
   <abbr title="HyperText Markup Language">HTML</abbr>
   是构建网页的标准语言。
@@ -318,7 +318,7 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 
 💡 鼠标悬停在 `abbr` 上时，浏览器会显示 `title` 属性的值作为提示，这对缩写术语非常实用。
 
-```html title="time 时间演示"
+``` html title="time 时间演示"
 <p>会议时间：<time datetime="2024-12-25T10:00">2024 年 12 月 25 日上午 10 点</time></p>
 ```
 
@@ -329,12 +329,12 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 !!! note "MDN"
     `sub` 和 `sup` 分别表示下标和上标；`wbr`（word break opportunity）建议浏览器在此处换行；`data` 关联机器可读数据；`var` 表示变量（数学或编程中的变量名）。
 
-```html title="sub 与 sup 演示"
+``` html title="sub 与 sup 演示"
 <p>水的化学式是 H<sub>2</sub>O。</p>
 <p>勾股定理：a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup></p>
 ```
 
-```html title="wbr 与 data 演示"
+``` html title="wbr 与 data 演示"
 <!-- wbr：在超长单词/URL 中建议换行位置 -->
 <p>访问 https://this<wbr>is<wbr>a<wbr>very<wbr>long<wbr>url.com 查看详情。</p>
 
@@ -342,7 +342,7 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 <p>商品价格：<data value="299">299.00 元</data></p>
 ```
 
-```html title="var 变量演示"
+``` html title="var 变量演示"
 <p>在方程 <var>x</var> + 5 = 10 中，<var>x</var> 的值为 5。</p>
 ```
 

@@ -207,7 +207,7 @@ ctx.fillRect(20, 20, 150, 100);  // x, y, width, height
 
 `template` 和 `slot` 是 Web Components 标准的基础标签，它们让开发者可以定义可复用的 HTML 模板。
 
-`template` 标签中的内容在页面加载时**不会渲染**，它只是一段"待用"的 HTML 片段。你可以用 JavaScript 在需要时克隆它、插入到页面中：
+`template` 标签中的内容在页面加载时`不会渲染`，它只是一段"待用"的 HTML 片段。你可以用 JavaScript 在需要时克隆它、插入到页面中：
 
 ```html title="template 定义与使用"
 <!-- 定义模板（不会渲染到页面上） -->
