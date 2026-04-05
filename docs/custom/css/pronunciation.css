@@ -50,3 +50,20 @@
 .md-pronounce {
     display: inline;
 }
+
+/* ==================== 元音字母标记 ==================== */
+
+/* 元音字母标签（小药丸形状） */
+.md-vowel-tag {
+    display: inline-block;
+    background-color: var(--md-primary-fg-color);
+    color: var(--md-default-bg-color);
+    font-size: 0.6em;
+    padding: 1px 5px;
+    border-radius: 3px;
+    vertical-align: middle;
+    margin-left: 3px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
