@@ -1,8 +1,22 @@
 # Hook 扩展
 
-Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 shell 命令，实现自动化和质量控制。
+**本文你会学到**：
+- 🪝 Hook 是什么，解决什么问题
+- ⏱️ 六种生命周期事件及其触发时机
+- 🛠️ 如何编写和配置 Hook
+- ⚖️ Hook 与 Git Hook 的区别
 
-## 生命周期事件
+打个比方：Hook 就像是你给 Copilot 安装的`自动感应器`——在特定时刻（会话开始、工具调用前后、出错时）自动触发你预设的操作。比如，每次 Copilot 修改文件后自动运行格式化工具，每次会话结束时自动记录日志。
+
+---
+
+## ❓ 为什么需要 Hook？
+
+没有 Hook 的情况下，Copilot 的行为只能通过 prompt 和指令来间接影响。但有些操作需要`强制执行`——比如"每次写完代码必须格式化"或"出错时必须通知我"。这些需求超出了 prompt 控制的范围，Hook 正是为此而生。
+
+---
+
+## ⏱️ 生命周期事件
 
 | 事件 | 触发时机 | 典型用途 |
 |------|---------|---------|
@@ -13,9 +27,13 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 | `postToolUse` | 工具调用后 | 结果检查、格式化 |
 | `errorOccurred` | 发生错误时 | 错误通知、自动恢复 |
 
-## 创建 Hook
+## 🛠️ 创建 Hook
 
-在仓库的 `.github/hooks/` 文件夹中创建 JSON 文件（文件名可自由选择）：
+在仓库的 `.github/hooks/` 文件夹中创建 JSON 文件（文件名可自由选择，建议用功能命名如 `format.json`、`notify.json`）：
+
+!!! tip "Hook 可以提交到 Git"
+
+    与 Git Hook 不同（`.git/hooks/` 不被版本控制），Copilot Hook 放在 `.github/hooks/` 中，可以提交到 Git 让团队共享。
 
 ``` json title=".github/hooks/session-log.json - 记录会话"
 [
@@ -38,7 +56,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 ]
 ```
 
-## Hook 配置字段
+## 📋 Hook 配置字段
 
 | 字段 | 说明 |
 |------|------|
@@ -46,7 +64,7 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 | `steps` | 步骤数组，每步包含一个 `command` |
 | `steps[].command` | 要执行的 shell 命令 |
 
-## 实战示例
+## 💡 实战示例
 
 ### 工具调用后运行脚本
 
@@ -93,7 +111,9 @@ Hook 允许你在 Copilot Agent 执行过程中的关键节点注入自定义 sh
 ]
 ```
 
-## Hook vs Git Hook
+## ⚖️ Hook vs Git Hook
+
+你可能已经熟悉 Git Hook（如 `pre-commit`），Copilot Hook 和它类似但作用于不同层面：
 
 | 维度 | Copilot Hook | Git Hook |
 |------|-------------|----------|
