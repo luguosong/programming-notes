@@ -43,6 +43,18 @@ nav = [
     ] },
     { "前端" = [
         "frontend/index.md",
+        { "HTML" = [
+            "frontend/html/index.md",
+            { "文本内容" = "frontend/html/text-content/index.md" },
+            { "语义化结构" = "frontend/html/semantic-structure/index.md" },
+            { "列表" = "frontend/html/list/index.md" },
+            { "超链接" = "frontend/html/link/index.md" },
+            { "媒体" = "frontend/html/media/index.md" },
+            { "表格" = "frontend/html/table/index.md" },
+            { "表单" = "frontend/html/form/index.md" },
+            { "嵌入与脚本" = "frontend/html/embed/index.md" },
+            { "字符实体与交互元素" = "frontend/html/misc/index.md" }
+        ] },
         { "React" = [
             "frontend/react/index.md",
             { "基础" = [
@@ -94,12 +106,13 @@ nav = [
         { "OAuth2" = [
             "topic/oauth/index.md",
             { "核心概念" = "topic/oauth/core-concepts/index.md" },
-            { "动态客户端注册" = "topic/oauth/dynamic-registration/index.md" },
             { "授权流程" = "topic/oauth/authorization-flows/index.md" },
-            { "OpenID Connect" = "topic/oauth/openid-connect/index.md" },
+            { "令牌体系" = "topic/oauth/token-system/index.md" },
             { "JWT 令牌" = "topic/oauth/jwt/index.md" },
-            { "安全实践" = "topic/oauth/security/index.md" },
+            { "端点与发现" = "topic/oauth/endpoints/index.md" },
+            { "OpenID Connect" = "topic/oauth/openid-connect/index.md" },
             { "扩展协议" = "topic/oauth/extensions/index.md" },
+            { "安全实践" = "topic/oauth/security/index.md" },
             { "威胁模型与攻击面" = "topic/oauth/threat-model/index.md" },
             { "实战：授权服务器" = "topic/oauth/spring-auth-server/index.md" },
             { "实战：客户端与资源服务器" = "topic/oauth/spring-client-resource/index.md" },
