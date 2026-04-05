@@ -6,7 +6,7 @@ icon: lucide/database
 
 Java 提供了多种与数据库交互的技术方案，从底层的 `JDBC` API 到高层的 `ORM` 框架，形成了一个完整的生态体系。
 
-## Java 数据库技术栈
+## 🏛️ Java 数据库技术栈
 
 ```mermaid
 graph TB
@@ -33,7 +33,7 @@ graph TB
     Driver --> DB
 ```
 
-## 各技术简介
+## 📚 各技术简介
 
 `JDBC`（Java Database Connectivity）
 :   Java 数据库连接的底层标准 API，由 `java.sql` 包提供。所有上层框架的底层都依赖 JDBC。直接使用 JDBC 代码较繁琐，但能最深入地理解数据库交互原理。
@@ -47,16 +47,16 @@ graph TB
 `MyBatis`
 :   半 ORM 框架，通过 XML 或注解将 SQL 语句与 Java 方法绑定。相比 JPA 更接近 SQL，适合 SQL 复杂、需要精细调优的场景。
 
-## 学习路径建议
+## 🗺️ 学习路径建议
 
 !!! tip "推荐学习顺序"
     理解底层原理对掌握上层框架至关重要：
 
-    1. `JDBC 基础` → 理解连接、Statement、事务、连接池的底层机制
-    2. `JdbcTemplate` → 体验 Spring 如何简化 JDBC 操作
-    3. `MyBatis` → 掌握 SQL 映射框架，适合国内企业开发
-    4. `JPA / Hibernate` → 掌握 ORM 思想，与 Spring Data JPA 配合使用
+    1. 🔗 `JDBC 基础` → 理解连接、Statement、事务、连接池的底层机制
+    2. 🧰 `JdbcTemplate` → 体验 Spring 如何简化 JDBC 操作
+    3. 🗂️ `MyBatis` → 掌握 SQL 映射框架，适合国内企业开发
+    4. 🧩 `JPA / Hibernate` → 掌握 ORM 思想，与 Spring Data JPA 配合使用
 
-## 本节内容
+## 📑 本节内容
 
 - [JDBC](jdbc/index.md)

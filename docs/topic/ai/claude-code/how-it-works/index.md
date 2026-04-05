@@ -1,7 +1,6 @@
 ---
 title: 工作原理
 description: 理解 Claude Code 的核心循环、上下文窗口、内置工具和检查点机制
-icon: lucide/cog
 ---
 
 **本文你会学到**：

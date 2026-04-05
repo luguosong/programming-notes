@@ -6,7 +6,7 @@ icon: material/language-javascript
 
 - [前端工程师学习路线](https://roadmap.sh/frontend)
 
-## HTML
+## 📄 HTML
 
 - [ ] [MDN 文档](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 
@@ -22,7 +22,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## CSS
+## 🎨 CSS
 
 - [ ] [2025版pink老师最新AI+前端入门教程，零基础必看的html5、css3、grid、flex布局、响应式、移动端，bootstrap5框架，AI工具 2025-09-01](https://www.bilibili.com/video/BV1MvaVzUEuz)
 
@@ -39,7 +39,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## JavaScript
+## ⚡ JavaScript
 
 - [ ] [黑马程序员前端JavaScript入门到精通全套视频教程，javascript核心进阶ES6语法、API、js高级等基础知识和实战教程 2023-01-31](https://www.bilibili.com/video/BV1Y84y1L7Nn)
 
@@ -76,7 +76,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## TypeScript
+## 🔷 TypeScript
 
 - [ ] [TypeScript 教程 阮一峰](https://wangdoc.com/typescript/)
 
@@ -85,7 +85,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## NodeJS
+## 🟢 NodeJS
 
 - [ ] [尚硅谷Node.js零基础视频教程，nodejs新手到高手 2023-03-14](https://www.bilibili.com/video/BV1gM411W7ex)
 
@@ -94,7 +94,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## 前端构建工具
+## 🛠️ 前端构建工具
 
 - [ ] [webpack 官方文档](https://webpack.docschina.org/concepts/)
 
@@ -117,7 +117,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## Vue
+## 💚 Vue
 
 - [ ] [Vue 官方文档](https://cn.vuejs.org/guide/introduction.html)
 
@@ -126,7 +126,7 @@ icon: material/language-javascript
   <figcaption></figcaption>
 </figure>
 
-## React
+## ⚛️ React
 
 - [ ] [React 官方文档](https://zh-hans.react.dev/learn)
 
@@ -137,7 +137,7 @@ React和Vue的官方文档都相当优秀，自学的话推荐优先看官方文
   <figcaption></figcaption>
 </figure>
 
-## WebAssembly
+## 🧩 WebAssembly
 
 - [MDN 文档](https://developer.mozilla.org/zh-CN/docs/WebAssembly)
 

@@ -8,7 +8,7 @@
 
 ---
 
-## 五分钟快速上手
+## ⚡ 五分钟快速上手
 
 不需要任何 Docker 基础，跟着以下步骤亲手体验容器的完整生命周期。
 
@@ -85,7 +85,7 @@ docker stop my-nginx-2 && docker rm my-nginx-2
 
 ---
 
-## 学习路线图
+## 🗺️ 学习路线图
 
 ``` mermaid
 graph LR

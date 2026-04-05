@@ -4,7 +4,7 @@ icon: material/cpu-64-bit
 
 # 基础知识
 
-## 计算机组成原理
+## 🖥️ 计算机组成原理
 
 - [ ] [尚硅谷《计算机组成原理》计算机408考研、考试不挂+考研拿下！计组](https://www.bilibili.com/video/BV1vt421L7oc)
 
@@ -29,7 +29,7 @@ icon: material/cpu-64-bit
 
 - [ ] 《计算机硬件系统实验教程》刘卫东 李山山著 清华大学出版社
 
-## 操作系统
+## 💻 操作系统
 
 - [ ] [学堂在线 操作系统](https://www.xuetangx.com/course/THU08091000267/12424484)
 
@@ -38,7 +38,7 @@ icon: material/cpu-64-bit
   <figcaption></figcaption>
 </figure>
 
-## 计算机网络
+## 🌐 计算机网络
 
 - [ ] [计算机网络：自顶向下方法（原书第8版）](https://book.douban.com/subject/36081529/)
 
@@ -68,7 +68,7 @@ icon: material/cpu-64-bit
   <figcaption></figcaption>
 </figure>
 
-## 数据结构与算法
+## 🧮 数据结构与算法
 
 - [ ] 小码哥恋上数据结构与算法
 

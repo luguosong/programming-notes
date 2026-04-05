@@ -1,7 +1,6 @@
 ---
 title: 多平台支持
 description: Claude Code 可在终端、IDE、桌面应用、浏览器和云端运行，本篇梳理各平台的特点、安装方式和适用场景
-icon: lucide/monitor-smartphone
 ---
 
 **本文你会学到**：

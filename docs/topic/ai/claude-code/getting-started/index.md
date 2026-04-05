@@ -1,7 +1,6 @@
 ---
 title: 快速入门
 description: 从安装到第一次使用 Claude Code，掌握交互模式和常用命令
-icon: lucide/rocket
 ---
 
 # 快速入门

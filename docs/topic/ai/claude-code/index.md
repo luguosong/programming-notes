@@ -1,7 +1,6 @@
 ---
 title: Claude Code
 description: Anthropic 推出的终端 AI 编程助手，理解你的整个代码仓库，帮你完成编码、调试、重构等任务
-icon: lucide/terminal
 ---
 
 # Claude Code

@@ -1,7 +1,6 @@
 ---
 title: 配置体系
 description: 理解 Claude Code 的配置层级、权限系统、沙箱安全、模型选择、输出风格等核心配置能力
-icon: lucide/settings
 ---
 
 # 配置体系

@@ -6,7 +6,7 @@ icon: fontawesome/brands/java
 
 - [Java 工程师学习路线](https://roadmap.sh/java)
 
-## JavaSE
+## ☕ JavaSE
 
 - [ ] [The Java™ Tutorials](https://docs.oracle.com/javase/tutorial/tutorialLearningPaths.html)
   
@@ -40,7 +40,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## JVM
+## 🔧 JVM
 
 - [ ] [尚硅谷宋红康JVM全套教程（详解java虚拟机 2020-01-16）](https://www.bilibili.com/video/BV1PJ411n7xZ/)
 
@@ -56,7 +56,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## 日志
+## 📋 日志
 
 - [x] [动力节点Java日志框架实战视频教程_从零玩转Java日志框架（内含：Springboot日志、JUL日志、SLF4J日志、SLF4J日志、Log4j2日志等） 2021-05-31](https://www.bilibili.com/video/BV1Mb4y1Z74W)
 
@@ -65,7 +65,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## 测试
+## 🧪 测试
 
 - [ ] [Junit5官方文档](https://docs.junit.org/5.10.2/user-guide/)
   
@@ -88,7 +88,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## Maven
+## 📦 Maven
 
 - [ ] [尚硅谷Maven教程（maven入门+高深，全网无出其右！）](https://www.bilibili.com/video/BV12q4y147e4/?spm_id_from=333.337.search-card.all.click&vd_source=f0bf6f13ef9720c412e23224083e2d8a)
 
@@ -97,7 +97,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## Spring 框架
+## 🌿 Spring 框架
 
 - [x] [老杜 Spring 视频教程 Spring视频零基础入门到高级，spring全套视频教程详解](https://www.bilibili.com/video/BV1Ft4y1g7Fb)
 
@@ -120,7 +120,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## 数据库开发
+## 🗄️ 数据库开发
 
 - [ ] [The Java™ Tutorials中JDBC部分](https://docs.oracle.com/javase/tutorial/jdbc/index.html)
 
@@ -170,7 +170,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## Web 开发
+## 🌐 Web 开发
 
 - [ ] [Tomcat与Java Web开发技术详解](https://book.douban.com/subject/34780582/)
   
@@ -186,7 +186,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## Spring Boot
+## 🚀 Spring Boot
 
 - [ ] [Spring Boot: Up and Running](https://book.douban.com/subject/35176313/)
   
@@ -202,7 +202,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## 认证鉴权
+## 🔐 认证鉴权
 
 - [ ] [OAuth 2 in Action](https://book.douban.com/subject/26997843/)
 	- [翻译](/document-translation/oauth2-in-action/)
@@ -243,7 +243,7 @@ icon: fontawesome/brands/java
   <figcaption></figcaption>
 </figure>
 
-## 微服务
+## 🏗️ 微服务
 
 ### 服务注册和发现
 
@@ -259,4 +259,4 @@ icon: fontawesome/brands/java
 
 ### 服务链路追踪
 
-## 项目实战
+## 💻 项目实战

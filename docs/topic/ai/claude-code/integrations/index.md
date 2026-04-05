@@ -1,7 +1,6 @@
 ---
 title: 第三方集成
 description: 将 Claude Code 连接到第三方 LLM 提供商、Slack 等外部服务
-icon: lucide/globe
 ---
 
 # 第三方集成

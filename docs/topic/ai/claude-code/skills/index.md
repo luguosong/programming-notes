@@ -1,7 +1,6 @@
 ---
 title: Skills 技能系统
 description: 通过 Skills 为 Claude Code 添加可复用的知识、工作流和参考文档
-icon: lucide/zap
 ---
 
 **本文你会学到：**

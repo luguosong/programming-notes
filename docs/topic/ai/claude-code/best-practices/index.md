@@ -1,7 +1,6 @@
 ---
 title: 最佳实践
 description: 高效使用 Claude Code 的技巧、常用工作流、成本管理与故障排除
-icon: lucide/star
 ---
 
 # 最佳实践

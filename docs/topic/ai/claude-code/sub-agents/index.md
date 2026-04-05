@@ -1,7 +1,6 @@
 ---
 title: Sub-agents 与 Agent Teams
 description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Agent Teams 协调多个独立会话
-icon: lucide/users
 ---
 
 # Sub-agents 与 Agent Teams

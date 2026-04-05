@@ -2,7 +2,7 @@
 
 JDBC（Java Database Connectivity）是 Java 标准 API，用于在 Java 程序中以统一方式连接和操作各种关系型数据库。
 
-## JDBC 概述
+## 🏗️ JDBC 概述
 
 ### 技术栈位置
 

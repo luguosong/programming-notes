@@ -1,6 +1,6 @@
 # Docker Swarm
 
-## 概述
+## 📖 概述
 
 Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主机组成一个`集群（Swarm）`，以`服务（Service）`为单位统一管理和调度容器，提供高可用、负载均衡与滚动更新能力。
 
@@ -9,7 +9,7 @@ Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主
 
 ---
 
-## 核心概念
+## 🧩 核心概念
 
 | 概念 | 说明 |
 |------|------|
@@ -41,7 +41,7 @@ graph TB
 
 ---
 
-## 初始化集群
+## 🚀 初始化集群
 
 ### 创建 Swarm
 
@@ -92,7 +92,7 @@ docker node rm node-id      # 在 Manager 上清理节点记录
 
 ---
 
-## Service 管理
+## 📋 Service 管理
 
 ### 创建服务
 
@@ -153,7 +153,7 @@ docker service update \
 
 ---
 
-## Stack 部署
+## 📦 Stack 部署
 
 Stack 允许用 Docker Compose 文件描述多服务应用，并一次性部署到 Swarm。
 
@@ -235,7 +235,7 @@ docker stack rm myapp
 
 ---
 
-## 节点标签与调度约束
+## 🏷️ 节点标签与调度约束
 
 ``` bash
 # 为节点添加标签（用于定向调度）
@@ -260,7 +260,7 @@ deploy:
 
 ---
 
-## Secret 与 Config
+## 🔑 Secret 与 Config
 
 ### Secret（敏感数据）
 
@@ -312,7 +312,7 @@ docker service create \
 
 ---
 
-## 高可用建议
+## 🛡️ 高可用建议
 
 - `Manager 节点数量`：推荐 3 或 5 个（奇数保证 Raft 多数派）
 - `容错能力`：3 个 Manager 可容忍 1 个故障，5 个可容忍 2 个

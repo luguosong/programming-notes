@@ -1,7 +1,6 @@
 ---
 title: 企业管理与安全合规
 description: 托管设置、认证方式、使用监控、安全架构、法律合规与零数据保留的完整指南
-icon: lucide/shield-check
 ---
 
 # 企业管理与安全合规
