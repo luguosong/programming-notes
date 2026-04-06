@@ -3,18 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <!-- 聚合 POM：统一管理 code/java 下的所有知识点演示模块 -->
-    <!-- 在 IntelliJ IDEA 中打开此文件即可导入全部子模块 -->
     <groupId>com.luguosong</groupId>
-    <artifactId>java</artifactId>
+    <artifactId>io</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>Java 知识点演示合集</name>
+    <name>Java IO 知识点演示合集</name>
 
     <modules>
-        <module>database</module>
-        <module>io</module>
+        <module>io-file</module>
+        <module>io-node-stream</module>
+        <module>io-wrapper-stream</module>
     </modules>
-
 </project>

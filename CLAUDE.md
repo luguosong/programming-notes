@@ -126,17 +126,21 @@ programming-notes/
 │   └── topic/               # 专题研究（含 Zensical 使用说明）
 ├── code/                    # 与笔记对应的示例代码
 │   ├── java/                # Java 知识点演示（聚合 POM：code/java/pom.xml）
-│   │   └── database/        # 数据库相关模块（聚合 POM：code/java/database/pom.xml）
-│   │       ├── jdbc-connection/        # 连接管理
-│   │       ├── jdbc-statement/         # Statement + ResultSet
-│   │       ├── jdbc-preparedstatement/ # PreparedStatement
-│   │       ├── jdbc-transaction-batch/ # 事务 + 批处理
-│   │       ├── jdbc-pool/              # 连接池（HikariCP + Druid）
-│   │       ├── jdbc-metadata/          # 元数据
-│   │       ├── jdbc-advanced-types/    # 高级数据类型
-│   │       ├── jdbc-stored-procedure/  # 存储过程
-│   │       ├── jdbc-clob/              # CLOB/BLOB 大对象
-│   │       └── jdbc-exception/         # 异常处理
+│   │   ├── database/        # 数据库相关模块（聚合 POM：code/java/database/pom.xml）
+│   │   │   ├── jdbc-connection/        # 连接管理
+│   │   │   ├── jdbc-statement/         # Statement + ResultSet
+│   │   │   ├── jdbc-preparedstatement/ # PreparedStatement
+│   │   │   ├── jdbc-transaction-batch/ # 事务 + 批处理
+│   │   │   ├── jdbc-pool/              # 连接池（HikariCP + Druid）
+│   │   │   ├── jdbc-metadata/          # 元数据
+│   │   │   ├── jdbc-advanced-types/    # 高级数据类型
+│   │   │   ├── jdbc-stored-procedure/  # 存储过程
+│   │   │   ├── jdbc-clob/              # CLOB/BLOB 大对象
+│   │   │   └── jdbc-exception/         # 异常处理
+│   │   └── io/              # IO 流相关模块（聚合 POM：code/java/io/pom.xml）
+│   │       ├── io-file/                # File 类操作
+│   │       ├── io-node-stream/         # 节点流（文件字节流、字节数组流、管道流）
+│   │       └── io-wrapper-stream/      # 包装流（转换/缓冲/数据/对象/打印/压缩流）
 │   ├── document-translation/# 书籍配套示例（按书籍/章节组织）
 │   │   ├── oauth2-in-action/            # OAuth 2 in Action（Node.js/Express，12 模块）
 │   │   ├── spring-authorization-server-153/ # Spring Authorization Server 实战（Spring Boot 3.5.8）
@@ -165,6 +169,7 @@ programming-notes/
 `docs/` 中的每篇笔记通常对应 `code/` 中的示例代码。例如：
 - `docs/document-translation/spring-security-in-action2/part1/02-hello/` ↔ `code/document-translation/spring-security-in-action2/ssia-ch2-ex1/`
 - `docs/frontend/react/global-state-management/mobx/` ↔ `code/frontend/react/global-state-management/mobx/mobx-demo/`
+- `docs/java/javase/file-io/` ↔ `code/java/io/`（io-file、io-node-stream、io-wrapper-stream）
 
 ### zensical 站点配置
 
