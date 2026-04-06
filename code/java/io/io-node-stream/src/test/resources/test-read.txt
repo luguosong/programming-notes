@@ -1,3 +1,0 @@
-Hello, IO Stream!
-你好，IO 流！
-This is a test file for reading demonstration.
