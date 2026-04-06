@@ -11,7 +11,8 @@ Java 程序经常需要和文件系统打交道：读写文件内容、创建目
 - ⚡ `Path` 类——更优雅地表示文件路径
 - 🔧 `Files` 工具类——一行代码读写文件、遍历目录
 - 🗂️ 目录遍历与文件查找——`walk()`、`walkFileTree()`、`PathMatcher`
-- 🔄 `File` 与 `Path` 的互转——新旧 API 如何共存
+- 🔄 `File` 与 `Path` 的对比与互转——新旧 API 如何共存
+- 👁️ `WatchService`——监控目录中的文件变化
 
 ## 📁 java.io.File——旧版文件 API
 

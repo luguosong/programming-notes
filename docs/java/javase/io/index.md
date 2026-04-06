@@ -9,9 +9,10 @@
 - 🗺️ IO 流类全景图——为什么有字节流和字符流两套体系，它们之间是什么关系
 - ⚡ 节点流——字节节点流和字符节点流分别怎么用
 - 🎨 装饰器模式如何让 IO 流具备了「即插即用」的扩展能力
-- 🔧 包装流如何在节点流基础上叠加缓冲、编码转换、对象序列化等高级功能
+- 🔧 包装流如何在节点流基础上叠加缓冲、编码转换、格式化输出、对象序列化等高级功能
 - 🎲 RandomAccessFile——如何在文件的任意位置读写数据
 - 🚀 NIO Channel + Buffer 模型与传统 IO 的区别
+- 🖥️ 标准流、Scanner 和 Console——控制台交互的多种方式
 - 🛡️ 如何用 `try-with-resources` 优雅地管理资源
 
 ## 🗂️ IO 流解决什么问题？
@@ -422,7 +423,7 @@ public class User implements Serializable {
 | 支持输出各种数据类型 | ✅ | ✅ |
 | 自动换行（`println`） | ✅ | ✅ |
 | 自动编码 | ✅ | ✅ |
-| 自动刷新 | ✅（默认） | ❌（需手动 `flush()` 或构造时开启） |
+| 自动刷新 | 需构造时传入 `autoFlush=true` | ❌（需手动 `flush()` 或构造时开启） |
 | 构造参数 | `OutputStream` | `OutputStream` 或 `Writer` |
 
 ``` java title="PrintStream 输出重定向"
