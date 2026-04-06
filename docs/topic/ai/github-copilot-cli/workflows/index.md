@@ -152,7 +152,7 @@ fi
 
 !!! note "内置 Hook 替代方案"
 
-    Copilot CLI 提供了内置的 Hook 系统（`copilot hooks`），比手动 Git Hook 更简单。详见「插件与 Hook」页面。
+    Copilot CLI 提供了内置的 Hook 系统，比手动 Git Hook 更简单。详见「Hook 扩展」和「插件系统」页面。
 
 ---
 
