@@ -23,4 +23,5 @@ graph LR
 ## 本节内容
 
 - [Java 概述](overview/index.md)
-- [文件和 IO 流](file-io/index.md)
+- [文件操作](file/index.md)
+- [IO 流](file-io/index.md)

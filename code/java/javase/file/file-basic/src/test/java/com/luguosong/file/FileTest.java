@@ -1,4 +1,4 @@
-package com.luguosong.io;
+package com.luguosong.file;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 演示 File 类的常用操作
+ * 演示 java.io.File 类的常用操作
  */
 class FileTest {
 

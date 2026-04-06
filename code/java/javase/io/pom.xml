@@ -10,7 +10,6 @@
     <name>Java IO 知识点演示合集</name>
 
     <modules>
-        <module>io-file</module>
         <module>io-node-stream</module>
         <module>io-wrapper-stream</module>
     </modules>

@@ -138,8 +138,10 @@ programming-notes/
 │   │   │   ├── jdbc-clob/              # CLOB/BLOB 大对象
 │   │   │   └── jdbc-exception/         # 异常处理
 │   │   └── javase/          # JavaSE 相关模块（聚合 POM：code/java/javase/pom.xml）
+│   │       ├── file/        # 文件操作模块（聚合 POM：code/java/javase/file/pom.xml）
+│   │       │   ├── file-basic/        # java.io.File 类操作
+│   │       │   └── nio-file/          # NIO.2 Path + Files 工具类
 │   │       └── io/          # IO 流模块（聚合 POM：code/java/javase/io/pom.xml）
-│   │           ├── io-file/            # File 类操作
 │   │           ├── io-node-stream/     # 节点流
 │   │           └── io-wrapper-stream/  # 包装流
 │   ├── document-translation/# 书籍配套示例（按书籍/章节组织）
@@ -170,7 +172,8 @@ programming-notes/
 `docs/` 中的每篇笔记通常对应 `code/` 中的示例代码。例如：
 - `docs/document-translation/spring-security-in-action2/part1/02-hello/` ↔ `code/document-translation/spring-security-in-action2/ssia-ch2-ex1/`
 - `docs/frontend/react/global-state-management/mobx/` ↔ `code/frontend/react/global-state-management/mobx/mobx-demo/`
-- `docs/java/javase/file-io/` ↔ `code/java/javase/io/`（io-file、io-node-stream、io-wrapper-stream）
+- `docs/java/javase/file/` ↔ `code/java/javase/file/`（file-basic、nio-file）
+- `docs/java/javase/file-io/` ↔ `code/java/javase/io/`（io-node-stream、io-wrapper-stream）
 
 ### zensical 站点配置
 

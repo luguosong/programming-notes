@@ -10,10 +10,10 @@
         <relativePath/>
     </parent>
     <groupId>com.luguosong</groupId>
-    <artifactId>io-file</artifactId>
+    <artifactId>file-basic</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>io-file</name>
-    <description>File 类与路径操作演示</description>
+    <name>file-basic</name>
+    <description>java.io.File 类与路径操作演示</description>
     <properties>
         <java.version>17</java.version>
     </properties>

@@ -1,10 +1,11 @@
-# 文件和 IO 流
+# IO 流
 
 你的 Java 程序运行在内存中，但数据往往存储在硬盘文件里。当你需要读取一个配置文件、保存用户上传的图片、或者把日志写入磁盘时，就需要 IO（Input/Output）流来充当内存与外部世界之间的「桥梁」。
 
+💡 IO 流解决的是**数据读写**问题。如果你还不了解如何在 Java 中表示文件路径、创建目录等操作，请先阅读「文件操作」。
+
 **🎯 本文你会学到**：
 
-- 📁 如何用 `File` 类在代码中表示文件和目录
 - ⚡ 什么是节点流——直接对接数据源的底层流
 - 🎨 装饰器模式如何让 IO 流具备了「即插即用」的扩展能力
 - 🔧 包装流如何在节点流基础上叠加缓冲、编码转换、对象序列化等高级功能
@@ -61,45 +62,6 @@ graph TD
 ```
 
 它们都实现了 `Closeable` 接口（因此可以用 `try-with-resources` 自动关闭），输出流还额外实现了 `Flushable` 接口（将缓冲区数据强制写出）。
-
-## 📁 File 类——如何在代码中表示文件？
-
-在使用 IO 流之前，你通常需要先用 `File` 类来指定要操作的文件或目录。`File` 是文件路径的**抽象表示**——它可以指向一个文件，也可以指向一个目录，但它本身不负责读写数据。
-
-### 创建 File 对象
-
-``` java title="创建 File 对象的三种方式"
---8<-- "code/java/javase/io/io-file/src/test/java/com/luguosong/io/FileTest.java:create_file_object"
-```
-
-### 常用方法速查
-
-| 方法 | 返回类型 | 说明 |
-|------|---------|------|
-| `exists()` | `boolean` | 文件或目录是否存在 |
-| `isFile()` | `boolean` | 是否为文件 |
-| `isDirectory()` | `boolean` | 是否为目录 |
-| `getName()` | `String` | 获取文件名 |
-| `getAbsolutePath()` | `String` | 获取绝对路径 |
-| `createNewFile()` | `boolean` | 创建新文件（父目录必须已存在） |
-| `mkdir()` | `boolean` | 创建单级目录 |
-| `mkdirs()` | `boolean` | 创建多级目录（推荐） |
-| `delete()` | `boolean` | 删除文件或**空**目录 |
-| `listFiles()` | `File[]` | 列出目录下的所有文件和子目录 |
-
-### 文件路径的三种写法
-
-| 路径类型 | 示例 | 说明 |
-|---------|------|------|
-| 绝对路径 | `D:/test/hello.txt` | 从盘符或根目录开始的完整路径 |
-| 相对路径 | `test/hello.txt` | 相对于项目根目录（IDEA 中是 Project 根目录，不是 Module 根目录） |
-| 类路径 | 通过 `ClassLoader` 获取 | 相对于编译后的 `classes` 目录 |
-
-获取类路径的方式：
-
-``` java title="获取类路径根目录"
---8<-- "code/java/javase/io/io-file/src/test/java/com/luguosong/io/FileTest.java:classpath_resource"
-```
 
 ## ⚡ 节点流——如何直接读写数据源？
 

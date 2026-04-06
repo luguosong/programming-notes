@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.luguosong</groupId>
-    <artifactId>javase</artifactId>
+    <artifactId>file</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>JavaSE 知识点演示合集</name>
+    <name>Java 文件操作知识点演示合集</name>
 
     <modules>
-        <module>io</module>
-        <module>file</module>
+        <module>file-basic</module>
+        <module>nio-file</module>
     </modules>
 </project>
