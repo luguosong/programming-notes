@@ -11,7 +11,7 @@ icon: material/language-html5
 - 💡 学会使用 `meta` 标签设置字符编码和移动端适配
 - 🚀 能够独立编写一个完整的 HTML 页面
 
-## ⚡ 什么是 HTML
+## ⚡ 网页是怎么写出来的？——认识 HTML
 
 `HTML`（HyperText Markup Language，超文本标记语言）是构建网页的标准语言。浏览器会读取 HTML 文件，然后把它渲染成你看到的网页。
 
