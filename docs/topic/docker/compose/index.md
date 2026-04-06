@@ -1,8 +1,8 @@
 # Docker Compose
 
-## 📖 概述
+## 📖 一条命令管好多个容器——Docker Compose 是什么？
 
-Docker Compose 是用于定义和运行`多容器 Docker 应用`的工具。通过一个 `docker-compose.yml` 文件，可以将应用的所有服务、网络、卷统一配置，然后用一条命令启动整个环境。
+当你的应用需要同时运行数据库、缓存、消息队列等多个服务时，逐个 `docker run` 不仅繁琐还容易出错。Docker Compose 就是为这种场景设计的：通过一个 `docker-compose.yml` 文件，将所有服务、网络、卷统一配置，一条命令启动整个环境。
 
 ???+ note "版本说明"
     Docker Compose V2 已内置于 Docker Desktop 和新版 Docker Engine，命令从 `docker-compose`（V1，需单独安装）改为 `docker compose`（V2，空格而非连字符）。本文统一使用 V2 语法。
