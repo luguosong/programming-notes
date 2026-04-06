@@ -53,12 +53,14 @@ description: 安装和管理 Copilot CLI 插件，扩展 Agent、Skill 和斜杠
 
 ## 🔧 管理插件
 
+安装插件后，可以随时查看、启用或禁用它们。`disable` 会保留插件文件但暂时停用其功能，适合调试时临时关闭某个插件。
+
 | 命令 | 功能 |
 |------|------|
 | `/plugin list` | 显示已安装的所有插件及其状态 |
-| `/plugin uninstall <name>` | 卸载指定插件 |
-| `/plugin enable <name>` | 启用插件 |
-| `/plugin disable <name>` | 禁用插件 |
+| `/plugin uninstall <name>` | 卸载指定插件（删除文件） |
+| `/plugin enable <name>` | 启用已禁用的插件 |
+| `/plugin disable <name>` | 暂时禁用插件（保留文件） |
 
 ## 🛒 插件市场
 
@@ -76,9 +78,11 @@ Copilot CLI 自带两个默认插件市场——就像手机的应用商店：
 
 ## 🧩 插件提供的内容
 
-插件可以为 Copilot CLI 添加：
+一个插件可以同时包含以下一种或多种扩展——这也是插件比手动配置更方便的原因：一次安装就能获得完整的能力组合。
 
-- `Agent`：新的专业角色（如数据库管理 Agent）
-- `Skills`：新的自动触发技能
-- `MCP 服务器`：新的外部数据源连接
-- `Slash 命令`：新的斜杠命令
+- `Agent`：新的专业角色（如数据库管理 Agent、安全审计 Agent）
+- `Skills`：新的自动触发技能（如测试生成、代码审查清单）
+- `MCP 服务器`：新的外部数据源连接（如数据库、API 文档服务）
+- `Slash 命令`：新的斜杠命令（如 `/deploy`、`/analyze`）
+
+💡 安装一个 `database-data-management` 插件，你可能同时获得：一个 DBA Agent + 一套 SQL 审查 Skill + 一个 PostgreSQL MCP 服务器。
