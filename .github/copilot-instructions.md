@@ -14,11 +14,10 @@
 
 ## Copilot CLI Skills（`.claude/skills/`）
 
-> 暂无自定义 skill，后续新增时在此登记。
-
 | Skill | 适用场景 |
 |-------|---------|
-| — | — |
+| `word-pronunciation` | 在 Zensical 文档页面中添加点击发音按钮 |
+| `doc-quality-review` | 对 docs/ 下的文档进行内容质量审查（准确性、教学风格、TOC 结构、代码引用等） |
 
 ## Copilot Custom Agents（`.github/agents/`）
 
