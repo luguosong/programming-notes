@@ -173,7 +173,7 @@ programming-notes/
 - `docs/document-translation/spring-security-in-action2/part1/02-hello/` ↔ `code/document-translation/spring-security-in-action2/ssia-ch2-ex1/`
 - `docs/frontend/react/global-state-management/mobx/` ↔ `code/frontend/react/global-state-management/mobx/mobx-demo/`
 - `docs/java/javase/file/` ↔ `code/java/javase/file/`（file-basic、nio-file）
-- `docs/java/javase/file-io/` ↔ `code/java/javase/io/`（io-node-stream、io-wrapper-stream）
+- `docs/java/javase/io/` ↔ `code/java/javase/io/`（io-node-stream、io-wrapper-stream）
 
 ### zensical 站点配置
 
