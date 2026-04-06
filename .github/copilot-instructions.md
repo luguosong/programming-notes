@@ -9,7 +9,7 @@
 | 仓库简介 & 目录结构 | `CLAUDE.md` §仓库简介 / §架构说明 |
 | 常用命令（Docker / zensical / Maven / npm） | `CLAUDE.md` §常用命令 |
 | 新增内容规范 & 文档目录规则 | `CLAUDE.md` §新增内容规范 |
-| Zensical Markdown 语法速查 | `CLAUDE.md` §Zensical 特有 Markdown 语法速查 |
+| Zensical Markdown 语法速查 | `CLAUDE.md` §Zensical 特有语法与项目约定 |
 | Git 提交规范 | `.github/git-commit-instructions.md` |
 
 ## Copilot CLI Skills（`.claude/skills/`）

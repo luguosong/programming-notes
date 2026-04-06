@@ -116,7 +116,7 @@ programming-notes/
 │   │   ├── css/             # 自定义样式（custom.css、font.css、sidebar-width.css 等）
 │   │   └── js/              # 自定义脚本（mathjax.js、viewer-js-init.js 等）
 │   ├── assert/              # 静态资源（logo、favicon 等）
-│   ├── frontend/            # 前端相关笔记（HTML、React、路由、状态管理）
+│   ├── frontend/            # 前端相关笔记（HTML、CSS、React）
 │   ├── java/                # Java 笔记
 │   ├── document-translation/# 书籍翻译（Spring Security、OAuth2、算法等）
 │   ├── math/                # 数学笔记
@@ -127,16 +127,22 @@ programming-notes/
 ├── code/                    # 与笔记对应的示例代码
 │   ├── java/                # Java 知识点演示（聚合 POM：code/java/pom.xml）
 │   │   └── database/        # 数据库相关模块（聚合 POM：code/java/database/pom.xml）
-│   │       ├── jdbc-connection/        # 连接管理演示
-│   │       ├── jdbc-statement/         # Statement + ResultSet 演示
-│   │       ├── jdbc-preparedstatement/ # PreparedStatement 演示
-│   │       ├── jdbc-transaction-batch/ # 事务 + 批处理演示
-│   │       ├── jdbc-pool/              # 连接池演示（HikariCP + Druid）
-│   │       └── jdbc-metadata/          # 元数据演示
+│   │       ├── jdbc-connection/        # 连接管理
+│   │       ├── jdbc-statement/         # Statement + ResultSet
+│   │       ├── jdbc-preparedstatement/ # PreparedStatement
+│   │       ├── jdbc-transaction-batch/ # 事务 + 批处理
+│   │       ├── jdbc-pool/              # 连接池（HikariCP + Druid）
+│   │       ├── jdbc-metadata/          # 元数据
+│   │       ├── jdbc-advanced-types/    # 高级数据类型
+│   │       ├── jdbc-stored-procedure/  # 存储过程
+│   │       ├── jdbc-clob/              # CLOB/BLOB 大对象
+│   │       └── jdbc-exception/         # 异常处理
 │   ├── document-translation/# 书籍配套示例（按书籍/章节组织）
 │   │   ├── oauth2-in-action/            # OAuth 2 in Action（Node.js/Express，12 模块）
 │   │   ├── spring-authorization-server-153/ # Spring Authorization Server 实战（Spring Boot 3.5.8）
 │   │   └── spring-security-in-action2/  # Spring Security in Action 2nd（44 子模块）
+│   ├── topic/               # 专题研究配套代码
+│   │   └── oauth/diagrams/  # OAuth 专题图表资源
 │   └── frontend/            # 前端示例
 │       └── react/           # React 示例
 │           ├── basic/basic-syntax/react-basic-demo/     # 基础语法演示
@@ -146,8 +152,10 @@ programming-notes/
 │   ├── data/                # 各服务数据持久化目录（不提交 git）
 │   └── init/                # 初始化脚本（如 MySQL 建库 SQL，按需放置）
 │       └── mysql/           # MySQL 初始化 SQL（docker 启动时自动执行）
-├── overrides/               # zensical 主题自定义覆盖文件（覆盖内置模板）
-│   └── partials/            # 局部模板覆盖（如 hero.html、header.html 等）
+├── overrides/               # zensical 主题自定义覆盖文件
+│   ├── home.html            # 首页模板覆盖
+│   ├── main.html            # 主模板覆盖
+│   └── partials/            # 局部模板覆盖（如 header.html 等）
 ├── site/                    # zensical build 的输出目录（勿手动修改）
 └── zensical.toml            # 站点配置（导航、主题、Markdown 扩展）
 ```
@@ -188,9 +196,7 @@ programming-notes/
 - **`code/java/pom.xml`** — 顶层聚合 POM，在 IntelliJ IDEA 中打开此文件可一次性导入全部 Java 子模块
 - **`code/java/database/pom.xml`** — database 子聚合 POM，管理所有数据库相关演示模块
 
-每个 Java 演示模块遵循标准 Maven 目录结构（Java 17，Spring Boot 3.5.0），以测试类为主体，**只包含与其主题相关的依赖**：
-- 基础模块（connection / statement / preparedstatement / transaction-batch / metadata）：`H2` + `spring-boot-starter-test`
-- `jdbc-pool`：额外添加 `HikariCP` + `Druid 1.2.23`
+每个 Java 演示模块遵循标准 Maven 目录结构（Java 17，Spring Boot 3.5.0），以测试类为主体，**只包含与其主题相关的依赖**（基础依赖：`H2` + `spring-boot-starter-test`，部分模块按需额外添加如 `HikariCP`、`Druid` 等）。
 
 **新建子模块后**：必须在对应聚合 POM 的 `<modules>` 中添加模块目录名，否则 IDEA 不会感知新模块。
 
@@ -215,7 +221,6 @@ programming-notes/
 
 - 新增文档页面后，必须在 `zensical.toml` 的 `nav` 部分注册，否则页面不会出现在导航中
 - `site/` 目录为构建产物，不应提交到版本库（已在 `.gitignore` 中）
-- Java 知识点示例按功能主题拆分为独立子模块，新建子模块后需在对应聚合 POM（`code/java/pom.xml` 或 `code/java/database/pom.xml`）的 `<modules>` 中注册
 
 ### 文档目录规则（强制）
 
@@ -239,12 +244,11 @@ programming-notes/
 ### 导航图标约定
 
 - **只有二级目录的 `index.md` 在左侧导航中展示图标**，一级目录和三级及以下不设置
-- 图标通过 front matter `icon:` 字段设置，路径用 `/`（如 `lucide/database`、`fontawesome/brands/java`）
-- 正文 Markdown 中使用图标短码时路径用 `-`（如 `:lucide-database:`）——两种写法不同，勿混淆
+- front matter `icon:` 路径用 `/`（如 `lucide/database`），正文图标短码用 `-`（如 `:lucide-database:`）——勿混淆
 
 ### 图片统一格式
 
-带图注统一用 `<figure>` 格式（见下方语法速查），图片托管在 `https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/`，图注格式为"图 章节号.图号 说明"。
+带图注统一用 `<figure>` 格式（见下方「Zensical 特有语法」），图片托管在 `https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/`，图注格式为"图 章节号.图号 说明"。
 
 ### 行内强调与说明约定
 
@@ -260,269 +264,86 @@ programming-notes/
 
 > 以下规范仅适用于 `docs/` 下非翻译类内容。翻译类内容（`docs/document-translation/`）忠于原书风格，不适用。
 
-**原则**：适度使用 Emoji 让笔记更生动、更易扫读，但**不要过度堆砌**——Emoji 是调味料，不是主菜。
+**原则**：Emoji 是调味料，不是主菜——适度使用让笔记更生动，但不要过度堆砌。
 
-#### 适用位置与推荐 Emoji
-
-| 位置 | 用途 | 推荐 Emoji | 示例 |
-|------|------|-----------|------|
-| **「本文你会学到」要点列表** | 每条要点前点缀 | 🎯 💡 🔧 🚀 ⚡ 📦 | 🎯 理解 OAuth 2.0 的四种授权模式 |
-| **H2 标题前** | 为章节增加视觉锚点，帮助快速定位 | ⚙️ 🗂️ 🧱 🔍 🧪 🏗️ 📡 | ## ⚙️ 核心配置 |
-| **H3 标题前** | 标记知识点的性质（慎用，不必每条都加） | ❓ 💡 ⚠️ 🔑 📌 🆕 | ### 🔑 核心概念：Token |
-| **段落开头** | 标记段落语义，降低扫读成本 | ✅ ❌ ⚠️ 💡 📌 🔁 → 🧩 | ⚠️ 注意：生产环境不要使用... |
-| **对比表格** | 表头或单元格中增强可读性 | ✅ ❌ 🆚 📊 | ✅ 使用连接池 → 性能提升 3 倍 |
-| **小结 / 总结段落** | 标记收尾性内容 | 📝 🎯 🧩 ✨ | 📝 小结：本节学习了... |
-| **提示 / 警告性句子** | 引导注意力 | ⚠️ 🚨 💡 🎯 | 🚨 严重：此操作不可逆 |
-| **代码注释说明** | 在 `// ✅` `// ❌` 之外补充语气 | 👇 🔼 ⬇️ 👀 | // 👇 关键配置，勿省略 |
-| **过渡句** | 连接上下文，减少阅读疲劳 | ➡️ ↪️ → | → 接下来看一个实际案例 |
-
-#### 使用规则
-
-1. **每段 / 每条最多 1 个 Emoji**，避免连续多个 Emoji 堆叠（如 `🎯💡🚀`）
-2. **优先在视觉分界处使用**：标题、列表开头、段落首句、表格——这些位置读者快速扫读时最能受益
-3. **语义匹配优先**：Emoji 含义应与上下文一致，不要为了"好看"而放不相关的 Emoji
-4. **保持克制**：一篇文章中 Emoji 总数建议控制在 10-20 个以内，让每个 Emoji 都有存在感
+**核心规则**：
+1. **每段 / 每条最多 1 个 Emoji**，禁止连续堆叠（如 `🎯💡🚀`）
+2. **优先在视觉分界处使用**：H2/H3 标题前、要点列表开头、段落首句、对比表格
+3. **语义匹配优先**：Emoji 含义应与上下文一致
+4. **保持克制**：一篇文章中 Emoji 总数控制在 10-20 个以内
 5. **技术名词不加 Emoji**：`Authorization Code`、`PreparedStatement` 等术语本身不需要修饰
 
-#### 禁止
+**常用 Emoji 参考**：标题 → ⚙️🗂️🧱🔍🧪 | 要点 → 🎯💡🔧🚀📦 | 语义 → ✅❌⚠️💡📌 | 过渡 → ➡️↪️→
 
-- ❌ 标题中连续多个 Emoji：`## 🚀🔥⚡ 快速开始`
-- ❌ 正文中每句话都加 Emoji（变成"Emoji 文"）
-- ❌ 代码块内部使用 Emoji（代码保持干净）
-- ❌ 使用含义模糊或容易引起误解的 Emoji
-
-#### 快速参考
-
-```markdown
-<!-- ✅ 推荐：标题前加一个语义匹配的 Emoji -->
-## ⚙️ 核心配置
-### 🔑 密钥管理
-
-<!-- ✅ 推荐：要点列表中每条一个 -->
-- 🎯 理解什么是连接池
-- 🔧 动手配置 HikariCP
-- 📊 对比不同连接池的性能
-
-<!-- ✅ 推荐：段落开头标记语义 -->
-💡 实际上，JDBC 驱动会自动处理...
-⚠️ 注意：此配置在 Spring Boot 3.x 中已废弃
-
-<!-- ❌ 避免：堆砌 Emoji -->
-## 🚀🔥⚡ 快速开始
-💡🧩🔧 接下来我们来学习配置...
-
-<!-- ❌ 避免：技术术语上叠加 Emoji -->
-使用 `:lucide-database:DataSource` 创建连接  <!-- 技术术语不加 Emoji -->
-```
+**禁止**：标题中连续多个 Emoji、正文每句都加 Emoji、代码块内部使用 Emoji
 
 ### 教学风格约束（仅自编笔记）
 
-> 以下约束仅适用于 `docs/` 下非翻译类内容。翻译类内容（`docs/document-translation/`）忠于原书风格，不适用。
+> 仅适用于 `docs/` 下非翻译类内容。翻译类忠于原书风格，不适用。
 
-**核心目标**：让初学者能读懂、让高手觉得有收获。
+**设计原则——问题驱动**：每个技术决策都从一个具体问题出发。不要先讲理论再讲实现，而是先抛出「你会遇到什么问题」，再引出解决方案。读者带着问题读，吸收效率远高于被动接收知识。
 
-**语言风格**：
-- **类比优先**：用生活常识类比技术概念，再给出精确定义。如「JWT 就像一张盖了公章的纸条，任何人都能读，但伪造不了」
-- **循序渐进**：先给「够用的版本」，再补充完整细节；先给最简示例，再演进到生产级写法
-- **口语化且严谨**：可用「其实」「注意」「换句话说」，但技术术语必须准确
-- **主动语态**：「Spring 会自动注入」> 「Bean 会被自动注入」
-- **术语零门槛**：遇到专有名词先解释，不假设读者已掌握前置概念
+- 一个 H2/H3 的开头应该是「当你需要 X 时，你会发现 Y 问题…」而非「X 是一种 Y 技术」
+- 代码示例先展示「不用这个方案会怎样」（痛点），再给出解决方案（对比更鲜明）
 
-**知识点结构**（每个 H3 按以下脉络展开）：
-1. **是什么（What）** — 一句话定义，用最朴素的语言
-2. **为什么（Why）** — 解释存在的意义 / 解决了什么问题
-3. **怎么用（How）** — 实际代码或操作示例
-4. **注意点（Pitfalls）** — 常见误区或边界情况（可选）
+**语言风格**：类比优先（先用生活常识类比，再给精确定义）→ 循序渐进（先够用版本，再完整细节）→ 口语化但术语准确 → 主动语态 → 术语零门槛（不假设前置知识）
 
-**代码示例**：
-- 每个示例标注语言，关键行加注释
-- 提供最小可运行版本，不堆砌无关配置
-- 错误示例标注 `// ❌`，正确示例标注 `// ✅`
-- 复杂示例前先用自然语言说明「这段代码做了什么」
+**知识点结构**（每个 H3 按此脉络）：遇到什么问题（Problem）→ 是什么（What）→ 怎么用（How）→ 注意点（Pitfalls，可选）
 
-**节奏控制**：
-- 每个 H3 知识点控制在 5 分钟内可读完
-- 每 2-3 个知识点后加小结或对比表格，帮助建立结构感
-- 长文开头加「本文你会学到」的要点列表
+**代码示例**：标注语言、关键行加注释、最小可运行、错误标 `// ❌` 正确标 `// ✅`、复杂示例前先用自然语言说明
 
-**禁止**：
-- 上来就贴大段代码没有任何解释
-- 堆砌官方文档原文
-- 「总之就是这样」式的虎头蛇尾
-- 假设读者已经知道前置概念
+**节奏控制**：每个 H3 控制在 5 分钟内可读完；每 2-3 个知识点后加小结或对比表格；长文开头加「本文你会学到」要点列表
+
+**禁止**：上来就贴大段代码没解释、堆砌官方文档原文、虎头蛇尾、假设读者已知前置概念
 
 ### 标题架构规范（TOC 知识大纲化）
 
-**核心原则**：标题层级 = 知识脉络。读者**只读右侧 TOC** 就能还原文章的推进逻辑，无需点击跳转。
+**核心原则**：标题层级 = 知识脉络。读者**只读右侧 TOC** 就能还原文章的推进逻辑。
 
 #### 修改已有文章时的全局审视原则（强制）
 
-对已有 TOC 结构的文章进行新增或修改时，**禁止简单地在某个位置插入内容**。必须：
+对已有 TOC 结构的文章进行新增或修改时，**禁止简单地在某个位置插入内容**。必须先通读完整标题结构，评估新内容在知识脉络中的位置，必要时重构章节结构，确保 TOC 从上到下仍是一条完整的知识路径。
 
-1. 先通读当前文章的完整标题结构（即 TOC 大纲）
-2. 评估新增/修改的内容在整体知识脉络中的位置
-3. 必要时**重构章节结构**（调整 H2/H3 层级、合并或拆分小节、调整顺序），使修改后的 TOC 仍然保持渐进逻辑
-4. 确保修改后的 TOC 从上到下依然是一条完整的知识路径，而非在某处突兀地插入了不协调的内容
+> **豁免**：`docs/document-translation/` 下的文章忠于原书，不适用重构要求。
 
-> **豁免**：`docs/document-translation/` 下的文章属于原文翻译，标题结构应忠于原书，不适用本规范的重构要求。
+#### 标题层级职责
 
-#### H2 职责：划分知识维度
-
-- 每个 H2 代表一个**独立的知识阶段**
-- H2 从上到下应体现渐进逻辑，常见模式：
-  - **教程型**：为什么 → 是什么 → 怎么做 → 进阶 → 最佳实践
-  - **翻译型**：按原书章节顺序，但 H2 标题需补充语境（不能只写类名）
-  - **参考型**：概述 → 按功能分组 → 配置 → 常见问题
-
-#### H3 职责：拆分具体知识点
-
-- 任何 H2 下涵盖 **≥3 个子概念**时，必须拆出 H3
-- H3 在父级 H2 内同样遵循渐进顺序（如先「为什么」后「怎么做」）
+- **H2**：划分知识维度，从上到下体现渐进逻辑（教程型：为什么→是什么→怎么做→进阶→最佳实践 | 翻译型：按原书顺序，标题补充语境 | 参考型：概述→分组→配置→FAQ）
+- **H3**：拆分具体知识点，H2 下 ≥3 个子概念时必须拆出 H3
 
 #### 命名风格
 
-| 场景 | 推荐 | 避免 |
-|------|------|------|
-| 引出概念 | `### 为什么需要连接池？` | `### 连接池概述` |
-| 操作步骤 | `### 手动事务提交` | `### 事务（二）` |
-| 并列子项 | `### Access Token`（父级 H2 已提供上下文 `## 令牌体系`） | `## Access Token`（孤立术语作 H2） |
-| 对比说明 | `### 连接池 vs 直连对比` | `### 对比` |
-| 语法参考 | `### 根号 — \`sqrt{}\`` | `### 根号`（读者无法从标题回忆语法） |
+| 推荐 | 避免 |
+|------|------|
+| `### 为什么需要连接池？` | `### 连接池概述` |
+| `### 手动事务提交` | `### 事务（二）` |
+| `### 连接池 vs 直连对比` | `### 对比` |
+| `## RegisteredClient：客户端注册信息` | `## RegisteredClient`（孤立术语） |
+| 用动作描述：`## 配置数据源` | 编号代替逻辑：`## 第一步` |
 
-#### 反模式检查表
+#### 反模式
 
-| 反模式 | 症状 | 修正方式 |
-|--------|------|----------|
-| 扁平清单 | ≥5 个连续 H2 且无 H3 | 按逻辑分组，将同类 H2 降级为 H3 并补充分组 H2 |
-| 孤立术语 | H2 标题为纯类名（如 `## RegisteredClient`） | 补充语境：`## RegisteredClient：客户端注册信息` |
-| 万能标题 | `## 概述`、`## 其他`、`## 总结` 反复出现 | 用具体内容替换：`## JDBC 在技术栈中的位置` |
-| 编号代替逻辑 | `## 第一步`、`## 第二步` | 用动作描述：`## 配置数据源`、`## 编写查询` |
+- **扁平清单**：≥5 个连续 H2 且无 H3 → 按逻辑分组降级为 H3
+- **万能标题**：反复出现 `## 概述`、`## 其他`、`## 总结` → 用具体内容替换
 
-#### 文章类型标题骨架模板
+#### 骨架模板
 
-**教程型**（自编笔记、知识点演示）：
+- **教程型**：`# 主题` → `## 为什么需要 X` → `## 核心概念（### A / ### B）` → `## 基础用法（### 最小示例 / ### 常用 API）` → `## 进阶用法` → `## 最佳实践`
+- **翻译型**：`# 章节号. 标题` → `## 主题 A（### 知识点 1/2）` → `## 主题 B` → `## 总结（可选）`
+- **参考型**：`# 模块名` → `## 概述` → `## 分组 A（### 组件 1/2）` → `## 配置参考` → `## 常见问题`
 
-```
-# 主题名
-  ## 为什么需要 X / X 解决什么问题
-  ## 核心概念
-    ### 概念 A
-    ### 概念 B
-  ## 基础用法
-    ### 最小示例
-    ### 常用 API
-  ## 进阶用法
-    ### 场景一
-    ### 场景二
-  ## 最佳实践 / 常见陷阱
-```
+## Zensical 特有语法与项目约定
 
-**翻译型**（书籍章节翻译）：
+> Zensical 基于 Material for MkDocs，支持 Admonitions、Content Tabs、代码块增强、文本格式化扩展（高亮/下划线/上下标/键位）、图标 Emoji、网格布局等标准功能。以下仅记录**项目特有约定**和 **AI 易错点**。
 
-```
-# 章节号. 章节标题
-  ## 核心主题 A（对应原书小节，标题补充语境）
-    ### 具体知识点 1
-    ### 具体知识点 2
-  ## 核心主题 B
-    ### 具体知识点 3
-  ## 总结（可选，简短回顾本章要点）
-```
+### 代码块空格规则（易错）
 
-**参考型**（API / 组件文档）：
+带 `title=` 等属性时，`` ``` `` 与语言标识符之间**必须有空格**：
 
-```
-# 模块名
-  ## 概述与适用场景
-  ## 分组 A：XXX 类组件
-    ### 组件 1：一句话说明
-    ### 组件 2：一句话说明
-  ## 分组 B：YYY 类组件
-    ### 组件 3
-  ## 配置参考
-  ## 常见问题
-```
+- ✅ `` ``` java title="示例" ``
+- ❌ `` ```java title="示例" ``
 
-## Zensical 特有 Markdown 语法速查
-
-> 以下语法均为 Zensical/Material 扩展语法，标准 Markdown 不支持。
-
-### 提醒框（Admonitions）
-
-```markdown
-!!! note "可选自定义标题"
-    内容（缩进 4 空格）
-
-??? tip "可折叠，默认收起"
-    内容
-
-???+ warning "可折叠，默认展开"
-    内容
-
-!!! info inline end "右侧浮动"
-    内容
-```
-
-**类型关键字**：`note` `abstract` `info` `tip` `success` `question` `warning` `failure` `danger` `bug` `example` `quote`
-
-### 内容选项卡（Content Tabs）
-
-```markdown
-=== "标签一"
-    内容（可嵌套代码块、admonitions）
-
-=== "标签二"
-    ``` python
-    print("hello")
-    ```
-```
-
-### 代码块增强
-
-> **规范**：带 `title=` 等属性时，` ``` ` 与语言标识符之间**必须有空格**，正确写法：`` ``` java title="..." ``，错误写法：`` ```java title="..." ``
-
-````markdown
-``` python title="文件名.py" linenums="1" hl_lines="2 3"
-def foo():
-    pass  # 高亮此行
-```
-
-```yaml
-# (1)!
-key: value
-```
-1. 代码注解文字（需启用 `content.code.annotate` feature）
-````
-
-行内语法高亮：`` `#!python range()` ``
-
-嵌入外部文件片段：
-```markdown
---8<-- "相对路径/文件名"
-```
-
-### 文本格式化扩展
-
-| 效果 | 语法 |
-| ---- | ---- |
-| ==高亮== | `==文本==` |
-| ^^下划线^^ | `^^文本^^` |
-| ~~删除线~~ | `~~文本~~` |
-| H~2~O 下标 | `H~2~O` |
-| A^2^ 上标 | `A^2^` |
-| ++ctrl+s++ 键位 | `++ctrl+s++` |
-
-### 图标与 Emoji
-
-```markdown
-:smile:                              <!-- Twemoji emoji -->
-:fontawesome-brands-github:          <!-- FontAwesome 图标 -->
-:lucide-check:                       <!-- Lucide 图标 -->
-:material-information:{ title="提示" }  <!-- 图标 + tooltip -->
-:fontawesome-brands-youtube:{ .youtube }  <!-- 图标 + 自定义 CSS 类 -->
-```
-
-### 图片增强
+### 图片统一格式
 
 ```markdown
 <!-- 带图注（项目统一格式） -->
@@ -530,106 +351,41 @@ key: value
   ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/xxx.png){ loading=lazy }
   <figcaption>图 1.1 图注说明文字</figcaption>
 </figure>
-
-<!-- 简单图片（无图注） -->
-![描述](url){ loading=lazy }
-
-<!-- 图片对齐 -->
-![描述](url){ align=left }
-![描述](url){ align=right }
-
-<!-- 深色/浅色模式不同图片 -->
-![描述](url#only-light)
-![描述](url#only-dark)
 ```
 
-### 网格布局（Grids）
+### 图标路径写法差异
+
+- Front matter `icon:` 字段用 `/`：`icon: lucide/database`
+- 正文 Markdown 图标短码用 `-`：`:lucide-database:`
+
+### 嵌入外部文件
 
 ```markdown
-<div class="grid cards" markdown>
-
-- :lucide-book: **标题一**
-
-    说明文字
-
-- :lucide-code: **标题二**
-
-    说明文字
-
-</div>
+--8<-- "相对路径/文件名"
 ```
 
-### Front Matter
+### Front Matter 常用字段
 
 ```markdown
 ---
-title: 页面标题
-description: 页面描述
-icon: lucide/book
-status: new      # 需在 zensical.toml extra.status 中定义
-hide:
-  - navigation   # 隐藏左侧导航
-  - toc          # 隐藏右侧目录
+icon: lucide/book          # 仅二级目录 index.md 设置
+status: new                # 需在 zensical.toml extra.status 中定义
+hide: [navigation, toc]    # 可选：隐藏左侧导航或右侧目录
 ---
 ```
 
-### Mermaid 图表
+### Mermaid 图表样式规范
 
-> **注意**：Mermaid 渲染依赖 `zensical.toml` 中 `pymdownx.superfences` 的 `custom_fences` 配置，若缺失则代码块显示为纯文本。配置已就绪，勿删除。
+Mermaid 在 Shadow DOM 内渲染，外部 CSS 无法穿透，只能通过 CSS 变量继承。深色模式适配已在 `docs/custom/css/custom.css` 的 `[data-md-color-scheme="slate"]` 中配置 `--md-mermaid-*` 变量，**勿删除**。
 
-````markdown
-``` mermaid
-graph LR
-  A[开始] --> B{条件};
-  B -->|是| C[处理];
-  B -->|否| D[结束];
+**样式生成规则**：
+1. 节点一律 `fill:transparent`，通过 `stroke` 颜色和粗细区分类别
+2. 使用 `classDef` 定义样式类，避免逐个节点写 `style`
+3. 使用 `style` 指令时必须同时指定 `stroke`，否则深色模式下边框模糊
+
 ```
-````
-
-#### Mermaid 深色模式适配原理（重要经验）
-
-**Zensical 的 Mermaid 渲染机制**：
-- 框架通过 `mermaid.initialize({ themeCSS })` 将一套 CSS 注入 Mermaid
-- 图表最终在 **Shadow DOM**（`mode: "closed"`）内渲染
-- 外部 CSS 选择器**无法穿透** Shadow DOM，但 **CSS 变量可以继承进去**
-
-**问题根因**：项目将 `--md-code-fg-color` 覆盖为蓝色 `#477cef`，而 Mermaid 的
-`--md-mermaid-edge-color`、`--md-mermaid-label-fg-color` 等变量默认引用它，
-导致深色模式下连线/文字均为低对比度的蓝色。
-
-**解决方案**：在 `docs/custom/css/custom.css` 的 `[data-md-color-scheme="slate"]` 块中，
-单独覆盖 `--md-mermaid-*` 变量为高对比度颜色（已配置，勿删除）：
-
-```css
-[data-md-color-scheme="slate"] {
-    /* ... 其他变量 ... */
-
-    /* Mermaid 深色模式适配 */
-    --md-mermaid-edge-color:       #adbac7;
-    --md-mermaid-label-fg-color:   #adbac7;
-    --md-mermaid-node-fg-color:    #539bf5;
-    --md-mermaid-label-bg-color:   #2d333b;
-    /* Sequence 图专项覆盖 */
-    --md-mermaid-sequence-actor-fg-color:     #adbac7;
-    /* ... */
-}
-```
-
-**Mermaid 图表样式生成规范**：
-
-1. **禁止颜色填充**：节点一律使用 `fill:transparent`，不使用颜色填充背景，确保文字在各种模式下清晰可读
-2. **通过边框颜色区分类别**：使用 `stroke` 颜色和粗细来区分不同类型的节点（如 LTS 版本用蓝色粗边框，普通版本用灰色细边框）
-3. 使用 `classDef` 定义样式类，避免逐个节点重复写 `style` 指令
-4. 使用 `style` 指令指定节点颜色时，必须同时指定 `stroke`，否则节点边框在深色模式下轮廓模糊
-
-```markdown
 classDef regular fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
 classDef lts fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
-class v1,v2,v3 regular
-class v4,v6,v7,v8 lts
 ```
 
-**⚠️ 禁止的错误方案**：
-- ❌ 在 `extra_javascript` 中引入脚本调用 `mermaid.run()` 重新渲染——Shadow DOM 关闭后外部无法操作
-- ❌ 在 `extra_javascript` 中调用 `mermaid.initialize({ theme: 'dark' })`——框架已完成初始化，不会重新渲染
-- ✅ 唯一有效方式：通过 CSS 变量继承影响 Shadow DOM 内部样式
+**禁止**：通过 `extra_javascript` 调用 `mermaid.run()` 或 `mermaid.initialize()` 试图修复样式——Shadow DOM 关闭后外部无法操作，唯一有效方式是 CSS 变量继承。
