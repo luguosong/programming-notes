@@ -1,3 +1,8 @@
+---
+title: Agent 系统
+description: 理解 Copilot CLI 的 Agent 架构，掌握内置 Agent 使用和自定义 Agent 创建
+---
+
 # Agent 系统
 
 **本文你会学到**：

@@ -1,3 +1,8 @@
+---
+title: 安装与快速入门
+description: 从安装认证到快捷键命令，快速上手 GitHub Copilot CLI
+---
+
 # 安装与快速入门
 
 **本文你会学到**：

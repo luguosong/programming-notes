@@ -1,3 +1,8 @@
+---
+title: GitHub Copilot CLI
+description: 了解 GitHub Copilot CLI 的核心理念、与传统 Copilot 的区别及 AI 与人类的职责分工
+---
+
 # GitHub Copilot CLI
 
 想象你雇了一个什么都会的实习生：他读过整个代码仓库、精通各种编程语言、24 小时待命——你只需要用自然语言告诉他"做什么"，他就帮你做完。这就是 `GitHub Copilot CLI` 的核心理念。

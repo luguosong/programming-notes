@@ -1,3 +1,8 @@
+---
+title: Hook 扩展
+description: 通过 Hook 系统在工具调用生命周期中注入自定义逻辑
+---
+
 # Hook 扩展
 
 **本文你会学到**：
