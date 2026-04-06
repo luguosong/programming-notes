@@ -75,7 +75,8 @@ nav = [
         "java/index.md",
         { "JavaSE" = [
             "java/javase/index.md",
-            { "Java 概述" = "java/javase/overview/index.md" }
+            { "Java 概述" = "java/javase/overview/index.md" },
+            { "文件和 IO 流" = "java/javase/file-io/index.md" }
         ] },
         { "数据库" = [
             "java/database/index.md",
