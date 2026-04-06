@@ -4,9 +4,9 @@ icon: lucide/code-2
 
 # JavaSE
 
-JavaSE（Java Platform, Standard Edition）是 Java 平台的基础版本，提供了 Java 语言核心 API 和运行环境，是学习 Java 的起点。
+Java 分 SE / EE / ME 三大平台，日常开发中最基础也最关键的就是 JavaSE（Standard Edition）。无论你后续做 Web 后端（Spring）还是 Android，SE 的核心 API 和语言特性都是绕不开的基石。
 
-## 学习路径
+## 🗺️ 从哪里开始？——学习路径
 
 ```mermaid
 graph LR

@@ -5,7 +5,7 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 
 # ResultSet 数据读取
 
-### 游标概念
+### ResultSet 怎么读数据？——游标机制
 
 `ResultSet` 内部维护一个`游标`，初始位置在第一行之前。调用 `next()` 将游标前移一行，返回 `true` 表示当前行有数据，`false` 表示已越过最后一行。
 
@@ -39,7 +39,7 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 --8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/ResultSetTest.java:result_set_metadata_in_rs"
 ```
 
-### 可滚动 ResultSet
+### 只能往前遍历？——可滚动 ResultSet
 
 默认 `ResultSet` 只能向前遍历（`TYPE_FORWARD_ONLY`）。通过 `createStatement` 时指定类型，可获得支持双向滚动的 `ResultSet`。
 

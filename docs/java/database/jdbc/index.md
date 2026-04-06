@@ -1,10 +1,10 @@
 # JDBC
 
-JDBC（Java Database Connectivity）是 Java 标准 API，用于在 Java 程序中以统一方式连接和操作各种关系型数据库。
+想从 Java 程序访问数据库，却发现 MySQL、PostgreSQL、Oracle 各家的连接方式完全不同？JDBC（Java Database Connectivity）就是为解决这个问题而生的——它提供一套统一 API，让你的代码`不因切换数据库而重写`。
 
-## 🏗️ JDBC 概述
+## 🏗️ 为什么需要 JDBC？——统一数据库访问的标准层
 
-### 技术栈位置
+### JDBC 在技术栈中的位置
 
 JDBC 充当 Java 应用程序与底层数据库驱动之间的标准抽象层，屏蔽了不同数据库的实现差异。
 
@@ -24,7 +24,7 @@ graph TB
     class D db
 ```
 
-### 核心接口
+### 一次数据库操作涉及哪些接口？
 
 | 接口 / 类 | 所在包 | 职责说明 |
 |-----------|--------|---------|
@@ -35,9 +35,9 @@ graph TB
 | `ResultSet` | `java.sql` | 保存查询结果，提供游标逐行读取数据 |
 | `DataSource` | `javax.sql` | 连接池的标准接口，生产环境推荐使用 |
 
-### 驱动注册
+### 驱动是怎么加载的？——三代注册方式演进
 
-在调用 `DriverManager.getConnection()` 之前，JDBC 驱动必须先完成注册。JDBC 经历了三个演进阶段：
+在调用 `DriverManager.getConnection()` 之前，JDBC 驱动必须先完成注册。从手动注册到全自动，JDBC 经历了三个演进阶段：
 
 | 方式 | 写法 | 说明 |
 |------|------|------|
