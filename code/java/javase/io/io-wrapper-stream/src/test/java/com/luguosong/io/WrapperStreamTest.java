@@ -6,8 +6,10 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -337,4 +339,125 @@ class WrapperStreamTest {
         System.out.println("ResourceBundle 读取 db.host: " + bundle.getString("db.host"));
     }
     // --8<-- [end:properties_resource_bundle]
+
+    // --8<-- [start:scanner_basic]
+    /**
+     * Scanner 基本用法：从字符串中解析不同数据类型
+     */
+    @Test
+    void testScannerBasic() {
+        String input = "张三 25 3.14 true";
+
+        try (Scanner scanner = new Scanner(input)) {
+            String name = scanner.next();       // 读取字符串 token
+            int age = scanner.nextInt();         // 读取 int
+            double pi = scanner.nextDouble();    // 读取 double
+            boolean flag = scanner.nextBoolean();// 读取 boolean
+
+            assertEquals("张三", name);
+            assertEquals(25, age);
+            assertEquals(3.14, pi, 0.001);
+            assertTrue(flag);
+        }
+    }
+    // --8<-- [end:scanner_basic]
+
+    // --8<-- [start:scanner_lines]
+    /**
+     * Scanner 按行读取 + hasNext 判断
+     */
+    @Test
+    void testScannerLines() {
+        String input = "第一行\n第二行\n第三行";
+        StringBuilder result = new StringBuilder();
+
+        try (Scanner scanner = new Scanner(input)) {
+            int lineNum = 0;
+            while (scanner.hasNextLine()) {
+                lineNum++;
+                result.append(lineNum).append(": ").append(scanner.nextLine()).append("\n");
+            }
+            assertEquals(3, lineNum);
+        }
+        System.out.println(result);
+    }
+    // --8<-- [end:scanner_lines]
+
+    // --8<-- [start:scanner_delimiter]
+    /**
+     * Scanner 自定义分隔符
+     */
+    @Test
+    void testScannerDelimiter() {
+        // CSV 格式数据，用逗号分隔
+        String csv = "苹果,5.5,香蕉,3.2,橙子,8.0";
+
+        try (Scanner scanner = new Scanner(csv)) {
+            scanner.useDelimiter(","); // 使用逗号作为分隔符
+            while (scanner.hasNext()) {
+                String name = scanner.next();
+                double price = scanner.nextDouble();
+                System.out.println(name + " -> " + price + " 元");
+            }
+        }
+    }
+    // --8<-- [end:scanner_delimiter]
+
+    // --8<-- [start:scanner_file]
+    /**
+     * Scanner 从文件读取
+     */
+    @Test
+    void testScannerFromFile(@TempDir Path tempDir) throws IOException {
+        // 准备测试文件
+        File file = tempDir.resolve("scores.txt").toFile();
+        try (PrintWriter pw = new PrintWriter(file)) {
+            pw.println("张三 90");
+            pw.println("李四 85");
+            pw.println("王五 95");
+        }
+
+        // 从文件扫描
+        try (Scanner scanner = new Scanner(file)) {
+            int count = 0;
+            int total = 0;
+            while (scanner.hasNext()) {
+                String name = scanner.next();
+                int score = scanner.nextInt();
+                total += score;
+                count++;
+            }
+            assertEquals(3, count);
+            assertEquals(270, total);
+            System.out.println("平均分: " + (total / count));
+        }
+    }
+    // --8<-- [end:scanner_file]
+
+    // --8<-- [start:format_output]
+    /**
+     * 格式化输出：format() / printf() 和 String.format()
+     */
+    @Test
+    void testFormatOutput() {
+        // %d 整数，%f 浮点数，%s 字符串，%n 换行
+        String result = String.format("姓名: %s, 年龄: %d, 成绩: %.1f", "张三", 25, 92.567);
+        assertEquals("姓名: 张三, 年龄: 25, 成绩: 92.6", result);
+
+        // 宽度与对齐：%10d 右对齐补空格，%-10s 左对齐
+        String aligned = String.format("|%10d|%-10s|", 42, "hello");
+        assertEquals("|        42|hello     |", aligned);
+
+        // 补零：%05d
+        assertEquals("00042", String.format("%05d", 42));
+
+        // 千位分隔符（需要 Locale）
+        String grouped = String.format(Locale.US, "%,d", 1234567);
+        assertEquals("1,234,567", grouped);
+
+        // 十六进制和八进制
+        assertEquals("ff", String.format("%x", 255));
+        assertEquals("377", String.format("%o", 255));
+    }
+    // --8<-- [end:format_output]
 }

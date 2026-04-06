@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -358,4 +359,43 @@ class NioFileTest {
         assertEquals("转换测试", Files.readString(backToPath));
     }
     // --8<-- [end:file_vs_path]
+
+    // --8<-- [start:watch_service]
+    /**
+     * WatchService：监控目录变化
+     */
+    @Test
+    void testWatchService(@TempDir Path tempDir) throws IOException, InterruptedException {
+        // 创建 WatchService 并注册要监控的目录
+        try (WatchService watcher = FileSystems.getDefault().newWatchService()) {
+            tempDir.register(watcher,
+                    StandardWatchEventKinds.ENTRY_CREATE,
+                    StandardWatchEventKinds.ENTRY_MODIFY,
+                    StandardWatchEventKinds.ENTRY_DELETE);
+
+            // 在被监控的目录中创建一个文件
+            Path newFile = tempDir.resolve("hello.txt");
+            Files.writeString(newFile, "WatchService 演示");
+
+            // 等待事件（poll 最多等 2 秒）
+            WatchKey key = watcher.poll(2, TimeUnit.SECONDS);
+            assertNotNull(key, "应该收到文件创建事件");
+
+            boolean foundCreate = false;
+            for (WatchEvent<?> event : key.pollEvents()) {
+                WatchEvent.Kind<?> kind = event.kind();
+                Path fileName = (Path) event.context();
+                System.out.println("事件: " + kind.name() + " -> " + fileName);
+                if (kind == StandardWatchEventKinds.ENTRY_CREATE
+                        && fileName.toString().equals("hello.txt")) {
+                    foundCreate = true;
+                }
+            }
+            assertTrue(foundCreate, "应该检测到 hello.txt 的创建事件");
+
+            // 重置 key 以继续监听（不重置则不会收到后续事件）
+            key.reset();
+        }
+    }
+    // --8<-- [end:watch_service]
 }

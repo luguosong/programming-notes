@@ -429,6 +429,35 @@ public class User implements Serializable {
 --8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:print_stream"
 ```
 
+#### format() / printf()——格式化输出
+
+除了 `print()` / `println()`，打印流还提供了 `format()` 方法（`printf()` 是它的别名），通过格式说明符控制输出格式：
+
+| 说明符 | 含义 | 示例 | 输出 |
+|--------|------|------|------|
+| `%d` | 十进制整数 | `format("%d", 42)` | `42` |
+| `%f` | 浮点数 | `format("%.2f", 3.14159)` | `3.14` |
+| `%s` | 字符串 | `format("%s", "hello")` | `hello` |
+| `%n` | 跨平台换行 | `format("line1%nline2")` | `line1\nline2` |
+| `%x` | 十六进制 | `format("%x", 255)` | `ff` |
+| `%o` | 八进制 | `format("%o", 255)` | `377` |
+| `%b` | 布尔值 | `format("%b", true)` | `true` |
+
+**常用格式控制**：
+
+| 格式 | 含义 | 示例 | 输出 |
+|------|------|------|------|
+| `%10d` | 右对齐，宽度 10 | `format("\|%10d\|", 42)` | `\|        42\|` |
+| `%-10s` | 左对齐，宽度 10 | `format("\|%-10s\|", "hi")` | `\|hi        \|` |
+| `%05d` | 补零，宽度 5 | `format("%05d", 42)` | `00042` |
+| `%,d` | 千位分隔符 | `format(Locale.US, "%,d", 1234567)` | `1,234,567` |
+
+``` java title="格式化输出示例"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:format_output"
+```
+
+💡 `String.format()` 和 `System.out.format()` 使用完全相同的格式语法，区别是前者返回格式化后的字符串，后者直接输出到控制台。
+
 ### 压缩流——如何压缩和解压文件？
 
 Java 内置了对 GZIP 和 ZIP 格式的支持，通过包装流实现：
@@ -595,6 +624,70 @@ System.setIn(new FileInputStream("input.txt"));
 // 此后 System.in.read() 从文件读取，而非键盘
 ```
 
+### Scanner——更便捷的输入解析器
+
+前面用 `BufferedReader` + `InputStreamReader` 读控制台输入，代码比较啰嗦。`java.util.Scanner` 提供了更友好的 API，它内部用**正则表达式**做分词，能直接解析出各种类型的数据：
+
+| 方法 | 说明 |
+|------|------|
+| `nextInt()` / `nextDouble()` / `nextBoolean()` | 读取下一个对应类型的值 |
+| `nextLine()` | 读取整行（含空格） |
+| `hasNextInt()` / `hasNextLine()` | 判断是否还有下一个值 |
+| `useDelimiter(pattern)` | 自定义分隔符（默认为空白字符） |
+
+#### 基本类型解析
+
+``` java title="Scanner 基本类型解析"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_basic"
+```
+
+#### 逐行读取
+
+``` java title="Scanner 逐行读取"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_lines"
+```
+
+#### 自定义分隔符
+
+``` java title="Scanner 自定义分隔符"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_delimiter"
+```
+
+#### 从文件扫描
+
+`Scanner` 不只能读控制台——它能接受任何 `InputStream`、`File`、`Path` 或 `Readable` 作为输入源：
+
+``` java title="Scanner 从文件扫描"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_file"
+```
+
+💡 `Scanner` 实现了 `AutoCloseable`，使用 `try-with-resources` 关闭时会自动关闭底层的输入源。
+
+### Console——安全的密码输入
+
+`System.console()` 返回一个 `Console` 对象，它提供了一项 `Scanner` 做不到的功能——**隐藏密码输入**：
+
+| 方法 | 说明 |
+|------|------|
+| `readLine(String fmt, Object... args)` | 显示提示后读取一行 |
+| `readPassword(String fmt, Object... args)` | 隐藏回显地读取密码，返回 `char[]` |
+| `format()` / `printf()` | 格式化输出 |
+
+``` java
+Console console = System.console();
+if (console != null) {
+    String username = console.readLine("用户名：");
+    // readPassword() 返回 char[] 而非 String，用完后可立即覆盖清除
+    char[] password = console.readPassword("密码：");
+    // 验证完成后，擦除密码
+    java.util.Arrays.fill(password, ' ');
+}
+```
+
+⚠️ 在 IDE 和测试环境中 `System.console()` 返回 `null`（因为没有真正的终端），所以只能在命令行直接运行时使用。
+
+💡 `readPassword()` 返回 `char[]` 而不是 `String`，是出于安全考虑——`char[]` 用完后可以立即覆盖清除，而 `String` 会留在字符串常量池中，直到被 GC 回收前都可能被内存转储读取。
+
 ## 🛡️ Try-With-Resources——如何优雅关闭资源？
 
 IO 流使用完毕后必须关闭，否则会导致资源泄漏（文件句柄耗尽、内存泄漏等）。传统写法需要在 `finally` 中手动关闭，代码冗长且容易遗漏。
@@ -672,6 +765,8 @@ graph TD
 | 保存/读取 Java 对象 | `ObjectOutputStream` 包装 `BufferedOutputStream` | `new ObjectOutputStream(new BufferedOutputStream(fos))` |
 | 日志输出 | `PrintWriter` 包装 `BufferedWriter` | `new PrintWriter(new BufferedWriter(fw))` |
 | 文件压缩 | `GZIPOutputStream` / `ZipOutputStream` | `new GZIPOutputStream(new FileOutputStream(...))` |
+| 解析控制台/文件输入 | `Scanner` | `new Scanner(System.in)` / `new Scanner(path)` |
+| 安全密码输入 | `Console` | `System.console().readPassword("密码：")` |
 | 随机读写文件 | `RandomAccessFile` | `new RandomAccessFile(file, "rw")` |
 | 大文件高性能读写 | `FileChannel` + `ByteBuffer` | `new FileInputStream(f).getChannel()` |
 | 超大文件映射 | `MappedByteBuffer` | `channel.map(READ_WRITE, 0, size)` |
