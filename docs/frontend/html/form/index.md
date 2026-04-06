@@ -10,7 +10,7 @@
 - 🆕 HTML5 新增控件（`datalist`、`output`、`progress`、`meter`）
 - ✅ 浏览器内置表单验证的使用方式
 
-## 📋 表单概述
+## 📋 form 标签做了什么？
 
 ### form 容器
 
@@ -48,7 +48,7 @@
 
 <iframe class="html-demo" loading="lazy" src="demo/login-post.html" style="height:150px"></iframe>
 
-## 📝 基础输入控件
+## 📝 用户怎么填数据？——基础输入控件
 
 ### input 标签与 type 属性
 
@@ -111,7 +111,7 @@
 
 <iframe class="html-demo" loading="lazy" src="demo/textarea-default-value.html" style="height:200px"></iframe>
 
-## 🔘 选择控件
+## 🔘 怎么让用户做选择？
 
 ### select 下拉选择
 
@@ -163,7 +163,7 @@
 
 <iframe class="html-demo" loading="lazy" src="demo/default-checked.html" style="height:120px"></iframe>
 
-## 🖱️ 按钮与标签
+## 🖱️ 点击按钮时发生了什么？
 
 ### button 三种类型
 
@@ -227,7 +227,7 @@
 
 💡 方式二代码更简洁，但方式一更灵活——`label` 和 `input` 不需要在 DOM 结构上相邻。实际项目中两种都很常见，选择适合当前场景的即可。
 
-## 📦 表单分组
+## 📦 表单太长怎么分组？
 
 ### fieldset 与 legend
 
@@ -248,7 +248,7 @@
 
 <iframe class="html-demo" loading="lazy" src="demo/fieldset-disabled.html" style="height:200px"></iframe>
 
-## 🆕 HTML5 新增控件
+## 🆕 HTML5 带来了哪些新控件？
 
 ### datalist 输入建议
 
@@ -299,7 +299,7 @@
 | **方向** | 只会从低到高 | 可以高也可以低 |
 | **颜色变化** | 统一样式 | 根据 `low`/`high`/`optimum` 自动变色 |
 
-## ✅ 表单验证
+## ✅ 不写 JavaScript 也能验证？——内置表单验证
 
 ### 内置验证属性
 

@@ -9,7 +9,7 @@ description: JDBC SQLException 异常处理机制，包括异常链遍历、SQLS
 
 JDBC 操作可能因多种原因失败：数据库服务不可达、认证失败、SQL 语法错误、约束违反、连接超时等。`SQLException` 不仅携带了错误描述信息，还提供了 `SQLState`（标准化的 5 字符错误码）、`ErrorCode`（数据库厂商私有码）以及异常链，使得开发者可以精确诊断问题根因，并根据错误类型采取不同的恢复策略。
 
-## 📋 SQLException 包含的诊断信息
+## 📋 出错了能拿到哪些诊断信息？
 
 ### 错误描述与 SQLState
 
@@ -42,7 +42,7 @@ JDBC 操作可能因多种原因失败：数据库服务不可达、认证失败
 
 在实际排查中，建议**两种链都遍历**，确保不遗漏任何诊断信息。
 
-## 🔍 SQLState 过滤实践
+## 🔍 怎样区分致命与非致命错误？——SQLState 过滤
 
 通过 `SQLState` 类别码可以区分错误严重程度，对非致命错误执行特殊处理（如自动建表、跳过已存在的索引等），而非直接向上抛出异常。
 
@@ -63,7 +63,7 @@ JDBC 操作可能因多种原因失败：数据库服务不可达、认证失败
 !!! tip "编码建议"
     判断 `SQLState` 时优先使用 `startsWith("42")` 按类别匹配，而非精确匹配完整的 5 字符代码。这样同一类别下的不同子错误都能被覆盖，同时保持代码的数据库兼容性。
 
-## ⚠️ SQLWarning：非致命警告
+## ⚠️ 操作成功了但有隐患？——SQLWarning
 
 `SQLWarning` 是 `SQLException` 的子类，表示数据库操作产生的非致命警告。与 `SQLException` 不同，警告**不会中断程序执行**，也不会被 `try-catch` 捕获，必须主动调用 `getWarnings()` 获取。
 
@@ -75,7 +75,7 @@ JDBC 操作可能因多种原因失败：数据库服务不可达、认证失败
 --8<-- "code/java/database/jdbc-exception/src/test/java/com/luguosong/jdbc/ExceptionTest.java:sql_warning"
 ```
 
-## 🌳 SQLException 分类子类体系
+## 🌳 哪些异常值得重试？——异常子类体系
 
 JDBC 4.0（Java 6）引入了更细粒度的异常子类，按错误性质分为两大分支：
 
