@@ -583,7 +583,7 @@ ZIP 比 GZIP 更复杂，它支持多个文件条目（`ZipEntry`），可以把
 | **网络编程**（Selector） | 非阻塞 IO，一个线程处理多个连接 |
 | **需要随机访问 + 高性能** | Channel 的 `position()` + 内存映射 |
 
-## 🖥️ 标准流——System.in 和 System.out 是什么？
+## 🖥️ 标准流——System.in / out / err
 
 Java 预定义了三个标准流，它们在程序启动时就已初始化：
 
@@ -593,22 +593,18 @@ Java 预定义了三个标准流，它们在程序启动时就已初始化：
 | `System.out` | `PrintStream` | 控制台 | 标准输出流 |
 | `System.err` | `PrintStream` | 控制台 | 标准错误流 |
 
-### 从控制台读取输入
+最基本的控制台读取方式是用 `BufferedReader` 包装 `System.in`：
 
 ``` java
-// 方式一：直接使用 System.in（底层，不方便）
 try (BufferedReader br = new BufferedReader(
         new InputStreamReader(System.in))) {
     System.out.print("请输入你的名字：");
     String name = br.readLine();
     System.out.println("你好，" + name);
 }
-
-// 方式二：使用 Scanner（更方便，底层也是包装 System.in）
-Scanner scanner = new Scanner(System.in);
-System.out.print("请输入一个整数：");
-int num = scanner.nextInt();
 ```
+
+→ 这种写法比较啰嗦，更方便的方式是使用后文介绍的 `Scanner`。
 
 ### 重定向标准流
 
@@ -623,45 +619,6 @@ System.out.println("这句话不会出现在控制台，而是写入 output.log"
 System.setIn(new FileInputStream("input.txt"));
 // 此后 System.in.read() 从文件读取，而非键盘
 ```
-
-### Scanner——更便捷的输入解析器
-
-前面用 `BufferedReader` + `InputStreamReader` 读控制台输入，代码比较啰嗦。`java.util.Scanner` 提供了更友好的 API，它内部用**正则表达式**做分词，能直接解析出各种类型的数据：
-
-| 方法 | 说明 |
-|------|------|
-| `nextInt()` / `nextDouble()` / `nextBoolean()` | 读取下一个对应类型的值 |
-| `nextLine()` | 读取整行（含空格） |
-| `hasNextInt()` / `hasNextLine()` | 判断是否还有下一个值 |
-| `useDelimiter(pattern)` | 自定义分隔符（默认为空白字符） |
-
-#### 基本类型解析
-
-``` java title="Scanner 基本类型解析"
---8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_basic"
-```
-
-#### 逐行读取
-
-``` java title="Scanner 逐行读取"
---8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_lines"
-```
-
-#### 自定义分隔符
-
-``` java title="Scanner 自定义分隔符"
---8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_delimiter"
-```
-
-#### 从文件扫描
-
-`Scanner` 不只能读控制台——它能接受任何 `InputStream`、`File`、`Path` 或 `Readable` 作为输入源：
-
-``` java title="Scanner 从文件扫描"
---8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_file"
-```
-
-💡 `Scanner` 实现了 `AutoCloseable`，使用 `try-with-resources` 关闭时会自动关闭底层的输入源。
 
 ### Console——安全的密码输入
 
@@ -687,6 +644,43 @@ if (console != null) {
 ⚠️ 在 IDE 和测试环境中 `System.console()` 返回 `null`（因为没有真正的终端），所以只能在命令行直接运行时使用。
 
 💡 `readPassword()` 返回 `char[]` 而不是 `String`，是出于安全考虑——`char[]` 用完后可以立即覆盖清除，而 `String` 会留在字符串常量池中，直到被 GC 回收前都可能被内存转储读取。
+
+## 📖 Scanner——如何方便地解析输入？
+
+`java.util.Scanner` 是 Java 5 引入的通用输入解析器，它内部用**正则表达式**做分词，能直接解析出各种类型的数据。虽然最常见的用法是 `new Scanner(System.in)` 读控制台，但它能接受任何 `InputStream`、`File`、`Path` 或 `Readable` 作为输入源。
+
+| 方法 | 说明 |
+|------|------|
+| `nextInt()` / `nextDouble()` / `nextBoolean()` | 读取下一个对应类型的值 |
+| `nextLine()` | 读取整行（含空格） |
+| `hasNextInt()` / `hasNextLine()` | 判断是否还有下一个值 |
+| `useDelimiter(pattern)` | 自定义分隔符（默认为空白字符） |
+
+### 基本类型解析
+
+``` java title="Scanner 基本类型解析"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_basic"
+```
+
+### 逐行读取
+
+``` java title="Scanner 逐行读取"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_lines"
+```
+
+### 自定义分隔符
+
+``` java title="Scanner 自定义分隔符"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_delimiter"
+```
+
+### 从文件扫描
+
+``` java title="Scanner 从文件扫描"
+--8<-- "code/java/javase/io/io-wrapper-stream/src/test/java/com/luguosong/io/WrapperStreamTest.java:scanner_file"
+```
+
+💡 `Scanner` 实现了 `AutoCloseable`，使用 `try-with-resources` 关闭时会自动关闭底层的输入源。
 
 ## 🛡️ Try-With-Resources——如何优雅关闭资源？
 
