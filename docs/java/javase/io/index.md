@@ -11,6 +11,7 @@
 - 🎨 装饰器模式如何让 IO 流具备了「即插即用」的扩展能力
 - 🔧 包装流如何在节点流基础上叠加缓冲、编码转换、对象序列化等高级功能
 - 🎲 RandomAccessFile——如何在文件的任意位置读写数据
+- 🚀 NIO Channel + Buffer 模型与传统 IO 的区别
 - 🛡️ 如何用 `try-with-resources` 优雅地管理资源
 
 ## 🗂️ IO 流解决什么问题？
@@ -470,6 +471,89 @@ ZIP 比 GZIP 更复杂，它支持多个文件条目（`ZipEntry`），可以把
 
 ⚠️ 使用 `RandomAccessFile` 时，你需要自己管理每条记录的位置和长度。如果写入的数据长度不固定（如字符串），定位起来会比较麻烦。所以它更适合**定长记录**的场景。
 
+## 🚀 NIO——Channel 与 Buffer
+
+前面介绍的所有 IO 类都基于`流`模型——数据像水流一样从头到尾顺序流过。Java 1.4 引入的 NIO（New I/O，`java.nio` 包）采用了完全不同的`通道 + 缓冲区`模型，目标只有一个：**速度**。
+
+→ 实际上，Java 1.4 之后「旧」IO 库已经用 NIO 重新实现过了，所以即使你不直接使用 NIO，也已经在享受它带来的性能提升。
+
+### 流模型 vs 通道模型
+
+| | 传统 IO（流） | NIO（通道 + 缓冲区） |
+|---|---|---|
+| 数据流向 | 单向（InputStream 只读，OutputStream 只写） | 双向（Channel 可读可写） |
+| 数据操作 | 直接操作字节/字符 | 必须通过 Buffer 中转 |
+| 阻塞模式 | 始终阻塞 | 支持非阻塞（用于网络 IO） |
+| 核心类比 | 水管（水从一头流到另一头） | 矿井 + 手推车（Channel 是矿井，Buffer 是手推车） |
+
+### ByteBuffer——核心数据容器
+
+`ByteBuffer` 是 NIO 的核心——它是唯一能和 Channel 直接通信的缓冲区类型。理解它的关键在于 3 个指针：
+
+| 指针 | 含义 |
+|------|------|
+| `position` | 下一个要读/写的位置 |
+| `limit` | 可读/可写的边界 |
+| `capacity` | 缓冲区总容量（不可变） |
+
+最重要的两个操作：
+
+- `flip()`：写完切读——将 `limit` 设为当前 `position`，`position` 归零。调用后 Buffer 进入「可读状态」
+- `clear()`：读完切写——将 `position` 归零，`limit` 恢复为 `capacity`。调用后 Buffer 进入「可写状态」
+
+``` java title="ByteBuffer 基本操作"
+--8<-- "code/java/javase/io/io-nio/src/test/java/com/luguosong/io/NioTest.java:bytebuffer_basics"
+```
+
+### FileChannel——文件的 NIO 通道
+
+`FileChannel` 通过传统 IO 流的 `getChannel()` 方法获取：
+
+- `FileInputStream.getChannel()` → 只读通道
+- `FileOutputStream.getChannel()` → 只写通道
+- `RandomAccessFile.getChannel()` → 读写通道
+
+``` java title="FileChannel + ByteBuffer 读写文件"
+--8<-- "code/java/javase/io/io-nio/src/test/java/com/luguosong/io/NioTest.java:filechannel_write_read"
+```
+
+### transferTo——通道间直接传输
+
+复制文件时，传统 IO 需要 `Buffer` 做中转（读进来 → 写出去）。NIO 的 `transferTo()` / `transferFrom()` 可以让两个 Channel **直接对接**，省去中间 Buffer，操作系统层面可能使用零拷贝优化：
+
+``` java title="Channel 间直接传输"
+--8<-- "code/java/javase/io/io-nio/src/test/java/com/luguosong/io/NioTest.java:channel_transfer"
+```
+
+### 内存映射文件——把文件当数组操作
+
+当文件非常大（几百 MB 甚至 GB）时，内存映射文件（Memory-mapped File）是最快的读写方式。它通过 `FileChannel.map()` 将文件的一段区域直接映射到内存，之后就可以像操作数组一样读写文件，由操作系统负责在内存和磁盘之间自动同步：
+
+``` java title="内存映射文件"
+--8<-- "code/java/javase/io/io-nio/src/test/java/com/luguosong/io/NioTest.java:memory_mapped_file"
+```
+
+⚠️ `MappedByteBuffer` 映射的内存区域由操作系统管理，Java 没有提供显式释放的 API。在 Windows 上，映射期间文件会被锁定，无法删除。因此内存映射更适合**长时间运行的服务端程序**，而非短生命周期的脚本。
+
+### 视图缓冲区——用不同视角看 ByteBuffer
+
+`ByteBuffer` 只能存字节，但通过 `asIntBuffer()`、`asFloatBuffer()` 等方法可以创建「视图缓冲区」，以更高级的类型操作底层字节数据——所有修改会直接反映到原始 `ByteBuffer`：
+
+``` java title="视图缓冲区"
+--8<-- "code/java/javase/io/io-nio/src/test/java/com/luguosong/io/NioTest.java:bytebuffer_view"
+```
+
+### 什么时候该用 NIO？
+
+对于日常文件读写，传统 IO（特别是 `BufferedReader` / `BufferedWriter`）已经足够好用，代码也更简洁。NIO 更适合以下场景：
+
+| 场景 | 原因 |
+|------|------|
+| **大文件处理**（GB 级） | 内存映射文件避免一次性加载整个文件 |
+| **高性能文件复制** | `transferTo()` 零拷贝优化 |
+| **网络编程**（Selector） | 非阻塞 IO，一个线程处理多个连接 |
+| **需要随机访问 + 高性能** | Channel 的 `position()` + 内存映射 |
+
 ## 🖥️ 标准流——System.in 和 System.out 是什么？
 
 Java 预定义了三个标准流，它们在程序启动时就已初始化：
@@ -589,6 +673,8 @@ graph TD
 | 日志输出 | `PrintWriter` 包装 `BufferedWriter` | `new PrintWriter(new BufferedWriter(fw))` |
 | 文件压缩 | `GZIPOutputStream` / `ZipOutputStream` | `new GZIPOutputStream(new FileOutputStream(...))` |
 | 随机读写文件 | `RandomAccessFile` | `new RandomAccessFile(file, "rw")` |
+| 大文件高性能读写 | `FileChannel` + `ByteBuffer` | `new FileInputStream(f).getChannel()` |
+| 超大文件映射 | `MappedByteBuffer` | `channel.map(READ_WRITE, 0, size)` |
 | 单元测试模拟输入 | `StringReader` / `CharArrayReader` | `new BufferedReader(new StringReader(testData))` |
 
 💡 **组合规律**：实际开发中很少直接使用裸节点流，典型的组合模式是 `节点流 → 缓冲流 → 功能流`，例如 `FileOutputStream → BufferedOutputStream → DataOutputStream`。缓冲层几乎总是值得加上。

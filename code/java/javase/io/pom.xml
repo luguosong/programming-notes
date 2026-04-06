@@ -12,5 +12,6 @@
     <modules>
         <module>io-node-stream</module>
         <module>io-wrapper-stream</module>
+        <module>io-nio</module>
     </modules>
 </project>
