@@ -161,7 +161,13 @@ nav = [
                 { "工作原理" = "topic/ai/claude-code/how-it-works/index.md" },
                 { "上下文工程" = "topic/ai/claude-code/context-engineering/index.md" },
                 { "多平台支持" = "topic/ai/claude-code/platforms/index.md" },
-                { "配置体系" = "topic/ai/claude-code/configuration/index.md" },
+                { "配置体系" = [
+                    "topic/ai/claude-code/configuration/index.md",
+                    { "CLAUDE.md 记忆文件" = "topic/ai/claude-code/configuration/claude-md/index.md" },
+                    { "Settings 与权限" = "topic/ai/claude-code/configuration/settings-permissions/index.md" },
+                    { "模型与输出风格" = "topic/ai/claude-code/configuration/model-output/index.md" },
+                    { "高级配置" = "topic/ai/claude-code/configuration/advanced/index.md" },
+                ] },
                 { "扩展体系" = [
                     "topic/ai/claude-code/extensions/index.md",
                     { "Skills" = "topic/ai/claude-code/skills/index.md" },
