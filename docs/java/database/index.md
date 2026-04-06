@@ -4,7 +4,7 @@ icon: lucide/database
 
 # 数据库
 
-Java 提供了多种与数据库交互的技术方案，从底层的 `JDBC` API 到高层的 `ORM` 框架，形成了一个完整的生态体系。
+Java 生态有 JDBC、JdbcTemplate、MyBatis、JPA/Hibernate 等多种数据库技术——什么场景用哪个？理解它们的层次关系是选择的前提。
 
 ## 🏛️ Java 数据库技术栈
 
@@ -33,7 +33,7 @@ graph TB
     Driver --> DB
 ```
 
-## 📚 各技术简介
+## 📚 JDBC / ORM / MyBatis 怎么选？
 
 `JDBC`（Java Database Connectivity）
 :   Java 数据库连接的底层标准 API，由 `java.sql` 包提供。所有上层框架的底层都依赖 JDBC。直接使用 JDBC 代码较繁琐，但能最深入地理解数据库交互原理。

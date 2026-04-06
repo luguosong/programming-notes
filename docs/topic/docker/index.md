@@ -5,7 +5,7 @@ icon: simple/docker
 
 # Docker
 
-Docker 是一个开源的容器化平台，允许开发者将应用及其依赖打包进轻量、可移植的容器中，实现"一次构建，到处运行"。
+「在我电脑上跑得好好的」——这句话你一定听过。Docker 通过容器化技术，把应用和依赖打包在一起，彻底消除环境不一致的问题。
 
 <div class="grid cards" markdown>
 
