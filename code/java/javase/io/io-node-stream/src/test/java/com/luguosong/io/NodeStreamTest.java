@@ -181,4 +181,133 @@ class NodeStreamTest {
         System.out.println("管道流接收到: " + sb);
     }
     // --8<-- [end:piped_stream]
+
+    // --8<-- [start:char_array_reader_writer]
+    /**
+     * CharArrayReader / CharArrayWriter：内存中的字符流
+     */
+    @Test
+    void testCharArrayReaderWriter() throws IOException {
+        // CharArrayWriter：写入内存字符数组
+        char[] result;
+        try (CharArrayWriter caw = new CharArrayWriter()) {
+            caw.write("你好，");
+            caw.write("世界！");
+            result = caw.toCharArray();
+        }
+        assertEquals("你好，世界！", new String(result));
+
+        // CharArrayReader：从字符数组读取
+        try (CharArrayReader car = new CharArrayReader(result)) {
+            StringBuilder sb = new StringBuilder();
+            int ch;
+            while ((ch = car.read()) != -1) {
+                sb.append((char) ch);
+            }
+            assertEquals("你好，世界！", sb.toString());
+        }
+    }
+    // --8<-- [end:char_array_reader_writer]
+
+    // --8<-- [start:string_reader_writer]
+    /**
+     * StringReader / StringWriter：以 String 为数据源的字符流
+     */
+    @Test
+    void testStringReaderWriter() throws IOException {
+        // StringReader：从字符串读取
+        String source = "Java IO 流是个大家族\n字节流和字符流各有用武之地";
+        try (StringReader sr = new StringReader(source);
+             BufferedReader br = new BufferedReader(sr)) {
+            // 包装成 BufferedReader 后可以按行读取
+            assertEquals("Java IO 流是个大家族", br.readLine());
+            assertEquals("字节流和字符流各有用武之地", br.readLine());
+            assertNull(br.readLine()); // 没有更多内容
+        }
+
+        // StringWriter：写入后得到字符串
+        try (StringWriter sw = new StringWriter()) {
+            sw.write("第一部分");
+            sw.write(" + ");
+            sw.write("第二部分");
+            assertEquals("第一部分 + 第二部分", sw.toString());
+        }
+    }
+    // --8<-- [end:string_reader_writer]
+
+    // --8<-- [start:random_access_file]
+    /**
+     * RandomAccessFile：随机读写文件
+     */
+    @Test
+    void testRandomAccessFile(@TempDir Path tempDir) throws IOException {
+        File file = tempDir.resolve("random.dat").toFile();
+
+        // 写入数据：3 个 int（每个占 4 字节）
+        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+            raf.writeInt(100);  // 位置 0~3
+            raf.writeInt(200);  // 位置 4~7
+            raf.writeInt(300);  // 位置 8~11
+            raf.writeUTF("你好"); // 位置 12 开始，writeUTF 会先写 2 字节长度
+        }
+
+        // 随机读取：直接跳到第 2 个 int 的位置
+        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+            raf.seek(4); // 跳过第 1 个 int（4 字节），定位到第 2 个
+            assertEquals(200, raf.readInt());
+
+            // 回到开头读取第 1 个
+            raf.seek(0);
+            assertEquals(100, raf.readInt());
+
+            // 跳到第 3 个
+            raf.seek(8);
+            assertEquals(300, raf.readInt());
+
+            // 读取字符串
+            assertEquals("你好", raf.readUTF());
+        }
+
+        // 随机修改：只改第 2 个 int，其他不动
+        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
+            raf.seek(4);
+            raf.writeInt(999); // 覆盖位置 4~7 的数据
+        }
+
+        // 验证修改结果
+        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+            assertEquals(100, raf.readInt());  // 第 1 个未变
+            assertEquals(999, raf.readInt());  // 第 2 个已修改
+            assertEquals(300, raf.readInt());  // 第 3 个未变
+        }
+    }
+    // --8<-- [end:random_access_file]
+
+    // --8<-- [start:sequence_input_stream]
+    /**
+     * SequenceInputStream：将多个流串联成一个流
+     */
+    @Test
+    void testSequenceInputStream() throws IOException {
+        InputStream s1 = new ByteArrayInputStream("Hello ".getBytes());
+        InputStream s2 = new ByteArrayInputStream("World".getBytes());
+        InputStream s3 = new ByteArrayInputStream("!".getBytes());
+
+        // 方式一：串联两个流
+        try (SequenceInputStream sis = new SequenceInputStream(s1, s2)) {
+            byte[] result = sis.readAllBytes();
+            assertEquals("Hello World", new String(result));
+        }
+
+        // 方式二：串联多个流（通过 Enumeration）
+        java.util.Vector<InputStream> streams = new java.util.Vector<>();
+        streams.add(new ByteArrayInputStream("A".getBytes()));
+        streams.add(new ByteArrayInputStream("B".getBytes()));
+        streams.add(new ByteArrayInputStream("C".getBytes()));
+
+        try (SequenceInputStream sis = new SequenceInputStream(streams.elements())) {
+            assertEquals("ABC", new String(sis.readAllBytes()));
+        }
+    }
+    // --8<-- [end:sequence_input_stream]
 }

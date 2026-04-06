@@ -6,9 +6,11 @@
 
 **🎯 本文你会学到**：
 
-- ⚡ 什么是节点流——直接对接数据源的底层流
+- 🗺️ IO 流类全景图——为什么有字节流和字符流两套体系，它们之间是什么关系
+- ⚡ 节点流——字节节点流和字符节点流分别怎么用
 - 🎨 装饰器模式如何让 IO 流具备了「即插即用」的扩展能力
 - 🔧 包装流如何在节点流基础上叠加缓冲、编码转换、对象序列化等高级功能
+- 🎲 RandomAccessFile——如何在文件的任意位置读写数据
 - 🛡️ 如何用 `try-with-resources` 优雅地管理资源
 
 ## 🗂️ IO 流解决什么问题？
@@ -62,6 +64,69 @@ graph TD
 ```
 
 它们都实现了 `Closeable` 接口（因此可以用 `try-with-resources` 自动关闭），输出流还额外实现了 `Flushable` 接口（将缓冲区数据强制写出）。
+
+## 🗺️ IO 流类全景图——为什么有这么多类？
+
+初学 IO 时最头疼的问题是：为什么类这么多？`FileInputStream`、`BufferedReader`、`InputStreamReader`、`PrintWriter`…… 光名字就让人眼花缭乱。
+
+这是因为 Java IO 库**经历了两次重大演进**：
+
+1. **Java 1.0**：只有`字节流`（`InputStream` / `OutputStream`）。所有数据都按字节处理，读取文本需要自己处理编码转换
+2. **Java 1.1**：为了更好地支持 Unicode 国际化，新增了`字符流`（`Reader` / `Writer`）。每个字节流类几乎都有一个对应的字符流版本
+3. 两套体系再加上「节点流 + 包装流」的装饰器设计，类的数量自然就翻倍了
+
+→ 理解了这个演进脉络，你只需要掌握字节流体系，字符流就能举一反三。
+
+### 字节流 InputStream 家族
+
+| 类 | 功能 | 分类 |
+|---|---|---|
+| `ByteArrayInputStream` | 从内存字节数组读取 | 节点流 |
+| `FileInputStream` | 从文件读取 | 节点流 |
+| `PipedInputStream` | 从管道读取（线程间通信） | 节点流 |
+| `SequenceInputStream` | 将多个 `InputStream` 串联为一个流 | 节点流 |
+| `FilterInputStream` | 所有过滤型包装流的基类 | 包装流（基类） |
+| ├─ `BufferedInputStream` | 添加缓冲功能，减少磁盘 IO 次数 | 包装流 |
+| ├─ `DataInputStream` | 读取基本数据类型（`int`、`double` 等） | 包装流 |
+| └─ `PushbackInputStream` | 支持「退回」已读字节 | 包装流 |
+| `ObjectInputStream` | 反序列化——将字节流还原为 Java 对象 | 包装流 |
+
+### 字节流 OutputStream 家族
+
+| 类 | 功能 | 分类 |
+|---|---|---|
+| `ByteArrayOutputStream` | 写入内存字节数组 | 节点流 |
+| `FileOutputStream` | 写入文件 | 节点流 |
+| `PipedOutputStream` | 写入管道（线程间通信） | 节点流 |
+| `FilterOutputStream` | 所有过滤型包装流的基类 | 包装流（基类） |
+| ├─ `BufferedOutputStream` | 添加缓冲功能 | 包装流 |
+| ├─ `DataOutputStream` | 写入基本数据类型 | 包装流 |
+| └─ `PrintStream` | 格式化输出（`System.out` 就是它） | 包装流 |
+| `ObjectOutputStream` | 序列化——将 Java 对象转为字节流 | 包装流 |
+
+### 字节流 ↔ 字符流对应关系
+
+Java 1.1 引入字符流时，几乎为每个字节流类都提供了一个对应的字符版本。下表展示了核心的对应关系：
+
+| 字节流（Java 1.0） | 字符流（Java 1.1） | 说明 |
+|---|---|---|
+| `InputStream` | `Reader` | 输入流抽象基类 |
+| `OutputStream` | `Writer` | 输出流抽象基类 |
+| `FileInputStream` | `FileReader` | 文件读取 |
+| `FileOutputStream` | `FileWriter` | 文件写入 |
+| `ByteArrayInputStream` | `CharArrayReader` | 内存数组读取 |
+| `ByteArrayOutputStream` | `CharArrayWriter` | 内存数组写入 |
+| —（无对应） | `StringReader` | 从字符串读取 |
+| —（无对应） | `StringWriter` | 写入到字符串 |
+| `PipedInputStream` | `PipedReader` | 管道输入 |
+| `PipedOutputStream` | `PipedWriter` | 管道输出 |
+| `BufferedInputStream` | `BufferedReader` | 缓冲读取 |
+| `BufferedOutputStream` | `BufferedWriter` | 缓冲写入 |
+| `PrintStream` | `PrintWriter` | 格式化打印输出 |
+| —（无对应） | `InputStreamReader` | 字节→字符的桥梁（指定编码） |
+| —（无对应） | `OutputStreamWriter` | 字符→字节的桥梁（指定编码） |
+
+💡 `StringReader` / `StringWriter` 和 `InputStreamReader` / `OutputStreamWriter` 是字符流独有的，在字节流中没有对应物。`InputStreamReader` 和 `OutputStreamWriter` 是连接两套体系的`桥梁`——后文「转换流」会详细介绍。
 
 ## ⚡ 节点流——如何直接读写数据源？
 
@@ -121,6 +186,36 @@ graph TD
 ```
 
 ⚠️ 管道流必须在**不同线程**中使用，否则会死锁。实际开发中更常用 `BlockingQueue` 等并发工具替代。
+
+### SequenceInputStream——将多个流串联为一个流
+
+有时候你需要将多个文件或数据源按顺序拼接起来处理，就像把几段水管接成一根长管。`SequenceInputStream` 正是干这个的——它将多个 `InputStream` 串联成一个流，读完第一个自动切到第二个：
+
+``` java title="SequenceInputStream 串联多个流"
+--8<-- "code/java/javase/io/io-node-stream/src/test/java/com/luguosong/io/NodeStreamTest.java:sequence_input_stream"
+```
+
+### 字符节点流——字节节点流的字符版本
+
+前面介绍的都是`字节`节点流。对于文本数据，Java 提供了对应的`字符`节点流版本，它们直接以 `char` 为单位读写，不会出现中文乱码问题。
+
+#### CharArrayReader / CharArrayWriter——内存中的字符流
+
+`CharArrayReader` / `CharArrayWriter` 是 `ByteArrayInputStream` / `ByteArrayOutputStream` 的字符版本，数据源是内存中的 `char[]` 数组：
+
+``` java title="CharArrayReader / CharArrayWriter 基本使用"
+--8<-- "code/java/javase/io/io-node-stream/src/test/java/com/luguosong/io/NodeStreamTest.java:char_array_reader_writer"
+```
+
+#### StringReader / StringWriter——以字符串为数据源
+
+`StringReader` 从一个 `String` 读取字符，`StringWriter` 将字符写入内部的 `StringBuffer`。它们在**单元测试**中特别有用——你不需要创建临时文件，直接用字符串模拟输入：
+
+``` java title="StringReader / StringWriter 基本使用"
+--8<-- "code/java/javase/io/io-node-stream/src/test/java/com/luguosong/io/NodeStreamTest.java:string_reader_writer"
+```
+
+💡 `StringReader` 经常被包装成 `BufferedReader` 来获得 `readLine()` 的按行读取能力。这再次体现了装饰器模式的威力——不管底层数据源是文件还是字符串，包装流的用法完全一致。
 
 ## 🎨 装饰器模式——包装流的设计思想
 
@@ -347,6 +442,34 @@ Java 内置了对 GZIP 和 ZIP 格式的支持，通过包装流实现：
 
 ZIP 比 GZIP 更复杂，它支持多个文件条目（`ZipEntry`），可以把多个文件打包成一个 `.zip` 文件。使用 `ZipInputStream` / `ZipOutputStream` 配合 `ZipEntry` 操作。
 
+## 🎲 RandomAccessFile——如何随机读写文件？
+
+前面介绍的所有流都是`顺序`访问的——只能从头读到尾，不能回头。但有些场景需要**跳到文件的任意位置**读写数据，比如数据库索引文件、大文件的局部修改等。
+
+`RandomAccessFile` 就是为这种需求设计的。它不属于 `InputStream` / `OutputStream` 体系，而是一个**独立的类**，同时实现了 `DataInput` 和 `DataOutput` 接口，兼具读写能力。
+
+### 核心方法
+
+| 方法 | 说明 |
+|------|------|
+| `seek(long pos)` | 将文件指针移动到指定位置（字节偏移量） |
+| `getFilePointer()` | 获取当前文件指针位置 |
+| `length()` | 获取文件长度 |
+| `readInt()` / `writeInt()` | 读写 `int`（4 字节），类似 `DataInputStream` / `DataOutputStream` |
+| `readUTF()` / `writeUTF()` | 读写 UTF-8 编码的字符串 |
+
+构造方法的第二个参数 `mode` 控制访问模式：`"r"` 只读、`"rw"` 读写、`"rws"` 读写+同步内容和元数据、`"rwd"` 读写+同步内容。
+
+### 随机读写示例
+
+``` java title="RandomAccessFile 随机读写"
+--8<-- "code/java/javase/io/io-node-stream/src/test/java/com/luguosong/io/NodeStreamTest.java:random_access_file"
+```
+
+💡 `RandomAccessFile` 使用 `seek()` 移动文件指针后，`readXxx()` / `writeXxx()` 就从该位置开始操作。这就像一个可以随意拨动的**磁带播放器**——你可以快进、倒带到任意位置。
+
+⚠️ 使用 `RandomAccessFile` 时，你需要自己管理每条记录的位置和长度。如果写入的数据长度不固定（如字符串），定位起来会比较麻烦。所以它更适合**定长记录**的场景。
+
 ## 🖥️ 标准流——System.in 和 System.out 是什么？
 
 Java 预定义了三个标准流，它们在程序启动时就已初始化：
@@ -456,12 +579,16 @@ graph TD
 
 📝 **简单记忆**：
 
-| 场景 | 推荐组合 |
-|------|---------|
-| 拷贝任意文件 | `BufferedInputStream` + `BufferedOutputStream` |
-| 读写文本（已知编码） | `BufferedReader`(包装 `InputStreamReader`) |
-| 读写文本（默认编码） | `BufferedReader`(包装 `FileReader`) |
-| 保存/读取基本类型 | `DataInputStream` / `DataOutputStream` |
-| 保存/读取 Java 对象 | `ObjectInputStream` / `ObjectOutputStream` |
-| 日志输出 | `PrintStream` / `PrintWriter` |
-| 文件压缩 | `GZIPOutputStream` / `ZipOutputStream` |
+| 场景 | 推荐组合 | 代码骨架 |
+|------|---------|---------|
+| 拷贝任意文件 | `BufferedInputStream` + `BufferedOutputStream` | `new BufferedInputStream(new FileInputStream(...))` |
+| 读写文本（已知编码） | `BufferedReader` 包装 `InputStreamReader` | `new BufferedReader(new InputStreamReader(fis, UTF_8))` |
+| 读写文本（默认编码） | `BufferedReader` 包装 `FileReader` | `new BufferedReader(new FileReader(...))` |
+| 保存/读取基本类型 | `DataOutputStream` 包装 `BufferedOutputStream` | `new DataOutputStream(new BufferedOutputStream(fos))` |
+| 保存/读取 Java 对象 | `ObjectOutputStream` 包装 `BufferedOutputStream` | `new ObjectOutputStream(new BufferedOutputStream(fos))` |
+| 日志输出 | `PrintWriter` 包装 `BufferedWriter` | `new PrintWriter(new BufferedWriter(fw))` |
+| 文件压缩 | `GZIPOutputStream` / `ZipOutputStream` | `new GZIPOutputStream(new FileOutputStream(...))` |
+| 随机读写文件 | `RandomAccessFile` | `new RandomAccessFile(file, "rw")` |
+| 单元测试模拟输入 | `StringReader` / `CharArrayReader` | `new BufferedReader(new StringReader(testData))` |
+
+💡 **组合规律**：实际开发中很少直接使用裸节点流，典型的组合模式是 `节点流 → 缓冲流 → 功能流`，例如 `FileOutputStream → BufferedOutputStream → DataOutputStream`。缓冲层几乎总是值得加上。
