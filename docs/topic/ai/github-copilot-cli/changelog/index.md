@@ -10,8 +10,24 @@ description: GitHub Copilot CLI 各版本更新内容汇总，追踪新功能、
 💡 建议保持 Copilot CLI 更新到最新版本，新版本通常包含性能改进和 Bug 修复：
 
 ``` bash
-npm update -g @anthropic-ai/claude-code
+npm update -g @github/copilot
 ```
+
+---
+
+## 📦 1.0.19（2026-04-06）
+
+### 🔧 改进
+
+- `/mcp enable` 和 `/mcp disable` 现在跨会话持久化
+- OpenTelemetry 监控：子 Agent span 使用 `INTERNAL` span kind，聊天 span 新增 `github.copilot.time_to_first_chunk` 属性（仅流式传输）
+- 会话已被其他客户端使用时跳过 IDE 自动连接
+- 斜杠命令时间线条目现在包含命令名称（如 "Review"、"Plan"），提供更好的上下文
+
+### 🐛 修复
+
+- macOS 上缺少执行权限的 Plugin Hook 脚本现在能正确运行
+- 恢复会话时，显示名称与文件名不同的自定义 Agent 能正确恢复
 
 ---
 

@@ -146,6 +146,10 @@ tools:
 
     通过 GitHub 组织设置共享 Agent，所有组织成员自动获得。
 
+!!! warning "文件名与显示名称"
+
+    自定义 Agent 的文件名（如 `security-reviewer.agent.md`）和 frontmatter 中的 `name` 字段可以不同。恢复会话时，Copilot CLI 会正确识别两者的映射关系（1.0.19 修复）。建议保持文件名和 `name` 字段一致，避免混淆。
+
 ---
 
 ## 💼 实战示例
