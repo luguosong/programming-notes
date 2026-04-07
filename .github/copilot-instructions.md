@@ -18,6 +18,7 @@
 |-------|---------|
 | `word-pronunciation` | 在 Zensical 文档页面中添加点击发音按钮 |
 | `doc-quality-review` | 对 docs/ 下的文档进行内容质量审查（准确性、教学风格、TOC 结构、代码引用等） |
+| `sync-changelog` | 将 changelog 新版本变更同步到对应主题笔记页面并标注版本号（Copilot CLI + Claude Code） |
 
 ## Copilot Custom Agents（`.github/agents/`）
 

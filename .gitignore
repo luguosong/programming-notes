@@ -260,3 +260,10 @@ environment/data/
 
 # TernJS 端口文件
 .tern-port
+
+# ============================================
+# AI 助手本地配置
+# ============================================
+
+# Claude/Copilot CLI 本地权限配置（含用户级 allow 规则，不提交）
+.claude/settings.local.json
