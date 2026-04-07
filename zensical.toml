@@ -442,6 +442,12 @@ toggle.name = "切换到深色模式"
 [project.markdown_extensions.md_in_html]
 [project.markdown_extensions.toc]
 permalink = true
+
+[project.markdown_extensions.toc.slugify]
+object = "pymdownx.slugs.slugify"
+
+[project.markdown_extensions.toc.slugify.kwds]
+case = "lower"
 [project.markdown_extensions.pymdownx.arithmatex]
 generic = true
 [project.markdown_extensions.pymdownx.betterem]

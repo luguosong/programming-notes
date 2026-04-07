@@ -17,7 +17,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.19（2026-04-06）
 
-> 📝 **笔记定位**：[MCP 持久化](../mcp/index.md#mcp_4) · [Hook macOS 权限](../hooks/index.md#_2) · [Agent 文件名映射](../agents/index.md#agent_6)
+> 📝 **笔记定位**：[MCP 持久化](../mcp/index.md#-管理-mcp-服务器) · [Hook macOS 权限](../hooks/index.md#-实战示例) · [Agent 文件名映射](../agents/index.md#-agent-存放位置)
 
 ### 🔧 改进
 
@@ -35,7 +35,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.18（2026-04-04）
 
-> 📝 **笔记定位**：[Critic Agent](../agents/index.md#agent_2) · [Notification Hook](../hooks/index.md#_1)
+> 📝 **笔记定位**：[Critic Agent](../agents/index.md#-内置-agent) · [Notification Hook](../hooks/index.md#-生命周期事件)
 
 ### ✨ 新功能
 
@@ -51,7 +51,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.17（2026-04-03）
 
-> 📝 **笔记定位**：[内置 Skills](../skills/index.md#skills_2) · [MCP OAuth HTTPS](../mcp/index.md#mcp-oauth)
+> 📝 **笔记定位**：[内置 Skills](../skills/index.md#-skills-存放位置) · [MCP OAuth HTTPS](../mcp/index.md#-mcp-oauth-认证)
 
 ### ✨ 新功能
 
@@ -66,7 +66,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.16（2026-04-02）
 
-> 📝 **笔记定位**：[PermissionRequest Hook](../hooks/index.md#_1) · [MCP 工具显示](../mcp/index.md#mcp_4)
+> 📝 **笔记定位**：[PermissionRequest Hook](../hooks/index.md#-生命周期事件) · [MCP 工具显示](../mcp/index.md#-管理-mcp-服务器)
 
 ### ✨ 新功能
 
@@ -91,7 +91,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.15（2026-04-01）
 
-> 📝 **笔记定位**：[MCP OAuth 认证](../mcp/index.md#mcp-oauth) · [postToolUseFailure Hook](../hooks/index.md#_1) · [/share 导出](../workflows/index.md#share) · [配置 camelCase](../instructions/index.md#_9)
+> 📝 **笔记定位**：[MCP OAuth 认证](../mcp/index.md#-mcp-oauth-认证) · [postToolUseFailure Hook](../hooks/index.md#-生命周期事件) · [/share 导出](../workflows/index.md#导出会话share) · [配置 camelCase](../instructions/index.md#-配置文件补充)
 
 ### ✨ 新功能
 
@@ -165,7 +165,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.13（2026-03-30）
 
-> 📝 **笔记定位**：[/rewind 时间线回滚](../context/index.md#undo-rewind) · [MCP Sampling](../mcp/index.md#mcp-sampling)
+> 📝 **笔记定位**：[/rewind 时间线回滚](../context/index.md#undo-和-rewind撤销操作) · [MCP Sampling](../mcp/index.md#-mcp-sampling)
 
 ### ✨ 新功能
 
@@ -187,7 +187,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.12（2026-03-26）
 
-> 📝 **笔记定位**：[settings.json 配置源](../instructions/index.md#_9) · [/rename 自动命名](../context/index.md#_7) · [/allow-all 子命令](../basic/index.md#_8)
+> 📝 **笔记定位**：[settings.json 配置源](../instructions/index.md#-配置文件补充) · [/rename 自动命名](../context/index.md#-会话管理) · [/allow-all 子命令](../basic/index.md#-常用斜杠命令速查)
 
 ### ✨ 新功能
 
@@ -230,7 +230,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.11（2026-03-23）
 
-> 📝 **笔记定位**：[个人 Skills 目录](../skills/index.md#skills_2) · [/clear vs /new](../context/index.md#clear) · [Monorepo 支持](../instructions/index.md#_4) · [Hook 合并](../hooks/index.md#hook_2)
+> 📝 **笔记定位**：[个人 Skills 目录](../skills/index.md#-skills-存放位置) · [/clear vs /new](../context/index.md#clear清除上下文) · [Monorepo 支持](../instructions/index.md#-仓库级指令) · [Hook 合并](../hooks/index.md#-创建-hook)
 
 ### ✨ 新功能
 
@@ -261,7 +261,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.10（2026-03-20）
 
-> 📝 **笔记定位**：[/undo 撤销](../context/index.md#undo-rewind) · [/copy HTML 格式](../basic/index.md#_8)
+> 📝 **笔记定位**：[/undo 撤销](../context/index.md#undo-和-rewind撤销操作) · [/copy HTML 格式](../basic/index.md#-常用斜杠命令速查)
 
 ### ✨ 新功能
 
@@ -311,7 +311,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.8（2026-03-18）
 
-> 📝 **笔记定位**：[Hook 配置位置](../hooks/index.md#hook_2) · [MCP Allowlist](../mcp/index.md#mcp_5) · [Extension 模式](../plugins/index.md#extensions)
+> 📝 **笔记定位**：[Hook 配置位置](../hooks/index.md#-创建-hook) · [MCP Allowlist](../mcp/index.md#-mcp-安全策略) · [Extension 模式](../plugins/index.md#-extensions实验性)
 
 ### ✨ 新功能
 
@@ -340,7 +340,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.7（2026-03-17）
 
-> 📝 **笔记定位**：[subagentStart Hook](../hooks/index.md#_1) · [System Prompt 自定义](../instructions/index.md#_9)
+> 📝 **笔记定位**：[subagentStart Hook](../hooks/index.md#-生命周期事件) · [System Prompt 自定义](../instructions/index.md#-配置文件补充)
 
 ### ✨ 新功能
 
@@ -367,7 +367,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.6（2026-03-16）
 
-> 📝 **笔记定位**：[Hook 跨工具兼容](../hooks/index.md#hook_3) · [子 Agent 可读 ID](../agents/index.md#agent_3) · [applyTo 数组写法](../instructions/index.md#_5) · [Extensions 权限](../plugins/index.md#extensions)
+> 📝 **笔记定位**：[Hook 跨工具兼容](../hooks/index.md#-hook-配置字段) · [子 Agent 可读 ID](../agents/index.md#-使用-agent) · [applyTo 数组写法](../instructions/index.md#-路径特定指令) · [Extensions 权限](../plugins/index.md#-extensions实验性)
 
 ### ✨ 新功能
 
@@ -415,7 +415,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.5（2026-03-13）
 
-> 📝 **笔记定位**：[preCompact Hook](../hooks/index.md#_1) · [write_agent 工具](../agents/index.md#agent_3) · [/pr 命令](../workflows/index.md#pr) · [新增命令](../basic/index.md#_8)
+> 📝 **笔记定位**：[preCompact Hook](../hooks/index.md#-生命周期事件) · [write_agent 工具](../agents/index.md#-使用-agent) · [/pr 命令](../workflows/index.md#pr-操作) · [新增命令](../basic/index.md#-常用斜杠命令速查)
 
 ### ✨ 新功能
 
@@ -451,7 +451,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.4（2026-03-11）
 
-> 📝 **笔记定位**：[Hook 权限控制](../hooks/index.md#hook_3) · [configure-copilot Agent](../agents/index.md#agent_2) · [--reasoning-effort](../modes/index.md#programmatic)
+> 📝 **笔记定位**：[Hook 权限控制](../hooks/index.md#-hook-配置字段) · [configure-copilot Agent](../agents/index.md#-内置-agent) · [--reasoning-effort](../modes/index.md#-programmatic-模式)
 
 ### ✨ 新功能
 
@@ -487,7 +487,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.3（2026-03-09）
 
-> 📝 **笔记定位**：[DevContainer MCP](../mcp/index.md#_4) · [Extensions 实验性](../plugins/index.md#extensions) · [/restart 命令](../basic/index.md#_8)
+> 📝 **笔记定位**：[DevContainer MCP](../mcp/index.md#-配置文件层级) · [Extensions 实验性](../plugins/index.md#-extensions实验性) · [/restart 命令](../basic/index.md#-常用斜杠命令速查)
 
 ### ✨ 新功能
 
@@ -522,7 +522,7 @@ npm update -g @github/copilot
 
 ## 📦 1.0.2（2026-03-06）— 🎉 GA 正式发布
 
-> 📝 **笔记定位**：[Hook 配置别名](../hooks/index.md#hook_3)
+> 📝 **笔记定位**：[Hook 配置别名](../hooks/index.md#-hook-配置字段)
 
 !!! success "General Availability"
     此版本标志着 GitHub Copilot CLI 正式发布（GA），从 0.x 预览阶段进入稳定版本。
@@ -542,7 +542,7 @@ npm update -g @github/copilot
 
 ## 📦 0.0.423（2026-03-06）— 最终预览版
 
-> 📝 **笔记定位**：[MCP 带外交互](../mcp/index.md#mcp-oauth)
+> 📝 **笔记定位**：[MCP 带外交互](../mcp/index.md#-mcp-oauth-认证)
 
 !!! info "最终 Pre-GA 版本"
     这是 GA 正式发布前的最后预览版本之一。
@@ -566,7 +566,7 @@ npm update -g @github/copilot
 
 ## 📦 0.0.422（2026-03-05）— 最终预览版
 
-> 📝 **笔记定位**：[个人 Hook 目录](../hooks/index.md#hook_2) · [快捷键增强](../basic/index.md#_6) · [enabledPlugins](../plugins/index.md#extensions)
+> 📝 **笔记定位**：[个人 Hook 目录](../hooks/index.md#-创建-hook) · [快捷键增强](../basic/index.md#-快捷键) · [enabledPlugins](../plugins/index.md#-extensions实验性)
 
 !!! info "最终 Pre-GA 版本"
     这是 GA 正式发布前的最后预览版本之一。
