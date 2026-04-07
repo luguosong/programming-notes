@@ -57,8 +57,8 @@ Claude Code 的默认上下文窗口为 200K tokens（部分模型支持通过 `
 
 | 层级 | 加载方式 | 放什么 | 示例 |
 |------|---------|--------|------|
-| **始终常驻** | 每次自动加载 | 项目契约、构建命令、禁止事项 | `CLAUDE.md` |
-| **按路径加载** | 匹配到对应文件时加载 | 语言/目录/文件类型特定规则 | `.claude/rules/` |
+| **始终常驻** | 每次自动加载 | 项目契约、构建命令、禁止事项 | `CLAUDE.md`（支持通过 `--add-dir` 加载额外目录的 CLAUDE.md，v2.1.20 新增） |
+| **按路径加载** | 匹配到对应文件时加载 | 语言/目录/文件类型特定规则 | `.claude/rules/`（v2.0.64 新增，v2.1.84 支持 `paths:` YAML glob 列表） |
 | **按需加载** | 触发相关场景时加载 | 工作流、领域知识 | `Skills` |
 | **隔离加载** | 独立上下文，只返回摘要 | 大量探索、并行研究 | `Subagents` |
 | **不进上下文** | 确定性脚本，不占用空间 | 审计、阻断、校验 | `Hooks` |
@@ -70,8 +70,8 @@ Claude Code 的默认上下文窗口为 200K tokens（部分模型支持通过 `
 | 机制 | 上下文占用 | 说明 |
 |------|-----------|------|
 | `CLAUDE.md` | 每次加载，2-5K tokens | 越短越好，只放最关键的 |
-| `.claude/rules/` | 匹配到路径时加载 | 按需加载，比全放 CLAUDE.md 省空间 |
-| `Skills`（auto-invoke） | description 常驻，完整内容按需加载 | description 控制在 50 字符以内 |
+| `.claude/rules/` | 匹配到路径时加载 | 按需加载，比全放 CLAUDE.md 省空间（v2.0.64 新增，v2.1.84 支持 YAML glob 路径匹配） |
+| `Skills`（auto-invoke） | description 常驻，完整内容按需加载 | description 预算为上下文窗口的 2%（v2.1.32 改进） |
 | `Skills`（disabled） | 零占用 | 只有你调用时才加载，最适合低频 Skill |
 | `Hooks` | 零成本（除非返回内容） | 正常放行时不输出内容 = 不占空间 |
 | `MCP`（defer_loading） | 工具名常驻，完整定义按需加载 | Claude 需要时才加载工具 schema |
@@ -99,7 +99,7 @@ cargo test 2>&1 | head -30
 
 ## 🗜️ 压缩机制的陷阱
 
-当上下文接近上限时，Claude Code 会自动触发压缩（Compaction）。默认压缩算法按"可重新读取"判断——早期的 Tool Output 和文件内容会被优先删掉，但**顺带把架构决策和约束理由也一起扔了**。
+当上下文接近上限时，Claude Code 会自动触发压缩（Compaction）。v2.0.64 起 auto-compacting 变为即时完成，不再阻塞交互。默认压缩算法按"可重新读取"判断——早期的 Tool Output 和文件内容会被优先删掉，但**顺带把架构决策和约束理由也一起扔了**。
 
 两小时后再改代码，Claude 可能根本不记得两小时前定了什么。莫名其妙的 Bug 就是这么来的。
 
@@ -125,9 +125,11 @@ When compressing, preserve in priority order:
 
 | 情况 | 操作 | 说明 |
 |------|------|------|
-| 同一任务，进入新阶段 | `/compact` | 压缩但保留重点 |
+| 同一任务，进入新阶段 | `/compact` | 压缩但保留重点（v2.1.32 新增"Summarize from here"支持局部压缩） |
 | 被纠偏两次以上 | `/clear` | 开新会话，别反复调 prompt |
 | 长时间工作，需要换人接手 | 先写 HANDOFF.md，再开新会话 | 见下方 HANDOFF.md 模式 |
+
+💡 **自动记忆**（v2.1.32 新增）：Claude 现在会在工作过程中自动记录和回忆有价值的上下文，v2.1.59 进一步强化为 auto-memory 自动保存。你可以用 `/memory` 管理这些记忆。
 
 ## 📋 HANDOFF.md：跨会话传递进度
 
@@ -193,7 +195,7 @@ Prompt 缓存是**模型唯一**的。假如你已经和 Opus 对话了 100K tok
 
 ### defer_loading：工具的延迟加载
 
-Claude Code 有数十个内置工具和 MCP 工具，每次请求全量包含会很贵。但中途移除工具又会破坏缓存（见上方陷阱）。解决方案是发送轻量级 **stub**——只有工具名，标记 `defer_loading: true`。模型通过 `ToolSearch` 工具"发现"它们，完整的工具 schema 只在模型选择后才加载。
+Claude Code 有数十个内置工具和 MCP 工具，每次请求全量包含会很贵。但中途移除工具又会破坏缓存（见上方陷阱）。解决方案是发送轻量级 **stub**——只有工具名，标记 `defer_loading: true`。模型通过 `ToolSearch` 工具"发现"它们，完整的工具 schema 只在模型选择后才加载。v2.1.84 修复了 `ToolSearch` 启用时全局系统提示缓存的兼容问题，同时改进了 p90 prompt 缓存命中率。
 
 这样，缓存前缀保持稳定，同时避免了加载全部工具定义的开销。
 
