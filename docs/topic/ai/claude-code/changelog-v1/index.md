@@ -41,7 +41,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.123
 
-> 📝 **笔记定位**：[SlashCommand 工具](../skills/index.md#-自定义斜杠命令)
+> 📝 **笔记定位**：[SlashCommand 工具](../skills/index.md#-自定义命令commands)
 
 ### ✨ 新功能
 
@@ -236,7 +236,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.88
 
-> 📝 **笔记定位**：[模型别名环境变量](../how-it-works/index.md#-模型选择与配置)
+> 📝 **笔记定位**：[模型别名环境变量](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
 
 ### 🔧 改进
 
@@ -263,7 +263,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.85
 
-> 📝 **笔记定位**：[SessionEnd 事件](../hooks/index.md#-hook-事件类型)
+> 📝 **笔记定位**：[SessionEnd 事件](../hooks/index.md#-hook-能在哪些时机触发)
 
 ### 🔧 改进
 
@@ -274,7 +274,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.84
 
-> 📝 **笔记定位**：[@-mention ~/.claude/ 文件](../skills/index.md#-mention-机制)
+> 📝 **笔记定位**：[@-mention ~/.claude/ 文件](../skills/index.md#-skill-的加载与触发)
 
 ### 🔧 改进
 
@@ -340,7 +340,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.77
 
-> 📝 **笔记定位**：[Opus Plan Mode](../how-it-works/index.md#-模型选择与配置)
+> 📝 **笔记定位**：[Opus Plan Mode](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
 
 ### ✨ 新功能
 
@@ -417,7 +417,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.68
 
-> 📝 **笔记定位**：[disableAllHooks 配置](../hooks/index.md#-hook-配置详解) · [/doctor 诊断 MCP](../mcp/index.md#-管理-mcp-服务器)
+> 📝 **笔记定位**：[disableAllHooks 配置](../hooks/index.md#-怎么配置-hook) · [/doctor 诊断 MCP](../mcp/index.md#-管理-mcp-服务器)
 
 ### ✨ 新功能
 
@@ -451,7 +451,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.64
 
-> 📝 **笔记定位**：[Agent 模型自定义](../sub-agents/index.md#-如何创建-sub-agents) · [Hook systemMessage 字段](../hooks/index.md#-hook-的输入与输出)
+> 📝 **笔记定位**：[Agent 模型自定义](../sub-agents/index.md#-sub-agent-工作原理) · [Hook systemMessage 字段](../hooks/index.md#-hook-能用来做什么实践指南)
 
 ### ✨ 新功能
 
@@ -479,7 +479,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.62
 
-> 📝 **笔记定位**：[@-mention 调用 Agent](../sub-agents/index.md#-sub-agents-的协作模式) · [SessionStart 事件](../hooks/index.md#-hook-事件类型)
+> 📝 **笔记定位**：[@-mention 调用 Agent](../sub-agents/index.md#-agent-teams) · [SessionStart 事件](../hooks/index.md#-hook-能在哪些时机触发)
 
 ### ✨ 新功能
 
@@ -516,7 +516,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.60
 
-> 📝 **笔记定位**：[自定义 Sub-agents 发布](../sub-agents/index.md#-为什么需要-sub-agents)
+> 📝 **笔记定位**：[自定义 Sub-agents 发布](../sub-agents/index.md#-为什么需要-sub-agent)
 
 ### ✨ 新功能
 
@@ -526,7 +526,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.59
 
-> 📝 **笔记定位**：[Hook PermissionDecision 输出](../hooks/index.md#-hook-的输入与输出)
+> 📝 **笔记定位**：[Hook PermissionDecision 输出](../hooks/index.md#-hook-能用来做什么实践指南)
 
 ### ✨ 新功能
 
@@ -546,7 +546,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.58
 
-> 📝 **笔记定位**：[PreCompact 事件](../hooks/index.md#-hook-事件类型) · [CLAUDE_PROJECT_DIR 环境变量](../hooks/index.md#-hook-的输入与输出)
+> 📝 **笔记定位**：[PreCompact 事件](../hooks/index.md#-hook-能在哪些时机触发) · [CLAUDE_PROJECT_DIR 环境变量](../hooks/index.md#-hook-能用来做什么实践指南)
 
 ### ✨ 新功能
 
@@ -561,7 +561,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.57
 
-> 📝 **笔记定位**：[斜杠命令指定模型](../skills/index.md#-自定义斜杠命令)
+> 📝 **笔记定位**：[斜杠命令指定模型](../skills/index.md#-自定义命令commands)
 
 ### ✨ 新功能
 
@@ -609,7 +609,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.54
 
-> 📝 **笔记定位**：[UserPromptSubmit 事件](../hooks/index.md#-hook-事件类型) · [斜杠命令 argument-hint](../skills/index.md#-自定义斜杠命令)
+> 📝 **笔记定位**：[UserPromptSubmit 事件](../hooks/index.md#-hook-能在哪些时机触发) · [斜杠命令 argument-hint](../skills/index.md#-自定义命令commands)
 
 ### 🔧 改进
 
@@ -645,7 +645,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.51
 
-> 📝 **笔记定位**：[Windows 原生支持](../platforms/index.md#-跨平台支持) · [Bedrock API Key](../platforms/index.md#-云平台bedrock-与-vertex)
+> 📝 **笔记定位**：[Windows 原生支持](../platforms/index.md#-终端-cli) · [Bedrock API Key](../platforms/index.md#-平台全景图)
 
 ### ✨ 新功能
 
@@ -669,7 +669,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.48
 
-> 📝 **笔记定位**：[PreCompact 事件](../hooks/index.md#-hook-事件类型)
+> 📝 **笔记定位**：[PreCompact 事件](../hooks/index.md#-hook-能在哪些时机触发)
 
 ### ✨ 新功能
 
@@ -741,7 +741,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.41
 
-> 📝 **笔记定位**：[Stop/SubagentStop 事件拆分](../hooks/index.md#-hook-事件类型) · [Hook 超时配置](../hooks/index.md#-hook-配置详解)
+> 📝 **笔记定位**：[Stop/SubagentStop 事件拆分](../hooks/index.md#-hook-能在哪些时机触发) · [Hook 超时配置](../hooks/index.md#-怎么配置-hook)
 
 ### ✨ 新功能
 
@@ -777,7 +777,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.38
 
-> 📝 **笔记定位**：[🎉 Hooks 正式发布](../hooks/index.md#-为什么需要-hooks)
+> 📝 **笔记定位**：[🎉 Hooks 正式发布](../hooks/index.md#-什么时候需要-hook)
 
 ### ✨ 新功能
 
@@ -858,7 +858,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.30
 
-> 📝 **笔记定位**：[斜杠命令增强](../skills/index.md#-自定义斜杠命令)
+> 📝 **笔记定位**：[斜杠命令增强](../skills/index.md#-自定义命令commands)
 
 ### ✨ 新功能
 
@@ -903,7 +903,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.27
 
-> 📝 **笔记定位**：[Streamable HTTP 连接](../mcp/index.md#-连接方式) · [MCP OAuth 认证](../mcp/index.md#-认证方式)
+> 📝 **笔记定位**：[Streamable HTTP 连接](../mcp/index.md#-配置-mcp-服务器) · [MCP OAuth 认证](../mcp/index.md#-认证方式)
 
 ### ✨ 新功能
 
@@ -1116,7 +1116,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 1.0.0
 
-> 📝 **笔记定位**：[Sonnet 4 / Opus 4 模型](../how-it-works/index.md#-模型选择与配置)
+> 📝 **笔记定位**：[Sonnet 4 / Opus 4 模型](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
 
 ### ✨ 新功能
 
@@ -1130,7 +1130,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.125
 
-> 📝 **笔记定位**：[Bedrock ARN 格式变更](../platforms/index.md#-云平台bedrock-与-vertex)
+> 📝 **笔记定位**：[Bedrock ARN 格式变更](../platforms/index.md#-平台全景图)
 
 ### 🔧 改进
 
@@ -1177,7 +1177,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.107
 
-> 📝 **笔记定位**：[CLAUDE.md 文件导入](../configuration/index.md#-claudemd项目级上下文)
+> 📝 **笔记定位**：[CLAUDE.md 文件导入](../configuration/index.md#-配置文件有哪几层)
 
 ### ✨ 新功能
 
@@ -1278,7 +1278,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.75
 
-> 📝 **笔记定位**：[@-mention 文件引用](../skills/index.md#-mention-机制) · [--mcp-config 启动参数](../mcp/index.md#-管理-mcp-服务器)
+> 📝 **笔记定位**：[@-mention 文件引用](../skills/index.md#-skill-的加载与触发) · [--mcp-config 启动参数](../mcp/index.md#-管理-mcp-服务器)
 
 ### ⚡ 性能
 
@@ -1295,7 +1295,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.74
 
-> 📝 **笔记定位**：[Task 工具写入与 Bash](../sub-agents/index.md#-sub-agents-的协作模式)
+> 📝 **笔记定位**：[Task 工具写入与 Bash](../sub-agents/index.md#-agent-teams)
 
 ### ✨ 新功能
 
@@ -1339,7 +1339,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.67
 
-> 📝 **笔记定位**：[共享项目权限规则](../enterprise/index.md#-安全与合规)
+> 📝 **笔记定位**：[共享项目权限规则](../enterprise/index.md#-安全架构)
 
 ### 🔧 改进
 
@@ -1395,7 +1395,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.54
 
-> 📝 **笔记定位**：[MCP SSE 传输协议](../mcp/index.md#-连接方式)
+> 📝 **笔记定位**：[MCP SSE 传输协议](../mcp/index.md#-配置-mcp-服务器)
 
 ### ✨ 新功能
 
@@ -1520,7 +1520,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ## 📦 0.2.31
 
-> 📝 **笔记定位**：[自定义斜杠命令首发](../skills/index.md#-自定义斜杠命令) · [MCP 调试模式](../mcp/index.md#-管理-mcp-服务器)
+> 📝 **笔记定位**：[自定义斜杠命令首发](../skills/index.md#-自定义命令commands) · [MCP 调试模式](../mcp/index.md#-管理-mcp-服务器)
 
 ### 🔧 改进
 
