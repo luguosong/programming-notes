@@ -17,6 +17,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.92（2026-04-04）
 
+> 📝 **笔记定位**：[CLI 命令](../getting-started/index.md#-有哪些常用命令cli-参考)
+
 ### ✨ 新功能
 
 - **`forceRemoteSettingsRefresh` 策略**：启用后 CLI 在启动时阻塞直到远程托管设置刷新完成，获取失败则退出（fail-closed）
@@ -394,6 +396,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.1.77（2026-03-17）
+
+> 📝 **笔记定位**：[上下文窗口](../how-it-works/index.md#-上下文窗口)
 
 ### ✨ 新功能
 
@@ -846,6 +850,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.59（2026-02-26）
 
+> 📝 **笔记定位**：[压缩机制](../context-engineering/index.md#-压缩机制的陷阱) · [交互模式](../getting-started/index.md#-怎么跟-claude-code-对话交互模式)
+
 ### ✨ 新功能
 
 - 新增 `/copy` command to show an interactive picker when code blocks are present, allowing selection of individual code blocks or the full response.
@@ -1197,6 +1203,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.41（2026-02-13）
 
+> 📝 **笔记定位**：[安装方式](../getting-started/index.md#-怎么安装-claude-code)
+
 ### ✨ 新功能
 
 - 新增 guard against launching Claude Code inside another Claude Code session
@@ -1375,6 +1383,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.30（2026-02-03）
 
+> 📝 **笔记定位**：[交互模式](../getting-started/index.md#-怎么跟-claude-code-对话交互模式) · [内置工具](../how-it-works/index.md#-内置工具) · [MCP 认证](../mcp/index.md#-认证方式)
+
 ### ✨ 新功能
 
 - 新增 `pages` parameter to the Read tool for PDFs, allowing specific page ranges to be read (e.g., `pages: "1-5"`). Large PDFs (>10 pages) now return a lightweight reference when `@` mentioned instead of being inlined into context.
@@ -1506,6 +1516,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.20（2026-01-27）
 
+> 📝 **笔记定位**：[上下文分层](../context-engineering/index.md#-上下文分层策略) · [上下文窗口](../how-it-works/index.md#-上下文窗口)
+
 ### ✨ 新功能
 
 - 新增 arrow key history navigation in vim normal mode when cursor cannot move further
@@ -1625,6 +1637,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.1.14（2026-01-20）
+
+> 📝 **笔记定位**：[交互模式](../getting-started/index.md#-怎么跟-claude-code-对话交互模式)
 
 ### ✨ 新功能
 
@@ -1799,6 +1813,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.3（2026-01-09）
 
+> 📝 **笔记定位**：[安装方式](../getting-started/index.md#-怎么安装-claude-code)
+
 ### ✨ 新功能
 
 - 新增 release channel (`stable` or `latest`) toggle to `/config`
@@ -1824,6 +1840,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.1.2（2026-01-09）
+
+> 📝 **笔记定位**：[安装方式](../getting-started/index.md#-怎么安装-claude-code) · [内置工具](../how-it-works/index.md#-内置工具)
 
 ### ✨ 新功能
 
@@ -2009,6 +2027,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.74（2025-12-19）
 
+> 📝 **笔记定位**：[交互模式](../getting-started/index.md#-怎么跟-claude-code-对话交互模式) · [内置工具](../how-it-works/index.md#-内置工具)
+
 ### ✨ 新功能
 
 - 新增 LSP (Language Server Protocol) tool for code intelligence features like go-to-definition, find references, and hover documentation
@@ -2105,6 +2125,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.70
 
+> 📝 **笔记定位**：[内置工具](../how-it-works/index.md#-内置工具)
+
 ### ✨ 新功能
 
 - 新增 Enter key to accept and submit prompt suggestions immediately (tab still accepts for editing)
@@ -2186,6 +2208,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.0.65
+
+> 📝 **笔记定位**：[内置工具](../how-it-works/index.md#-内置工具)
 
 ### ✨ 新功能
 
@@ -2645,6 +2669,8 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.28
 
+> 📝 **笔记定位**：[Agentic Loop](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
+
 ### ✨ 新功能
 
 - Subagents: claude can now choose to resume subagents
@@ -2666,6 +2692,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.0.27
+
+> 📝 **笔记定位**：[交互模式](../getting-started/index.md#-怎么跟-claude-code-对话交互模式)
 
 ### ✨ 新功能
 
@@ -2725,6 +2753,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.0.21
+
+> 📝 **笔记定位**：[内置工具](../how-it-works/index.md#-内置工具)
 
 ### ✨ 新功能
 
@@ -2851,6 +2881,8 @@ npm update -g @anthropic-ai/claude-code
 ---
 
 ## 📦 2.0.10
+
+> 📝 **笔记定位**：[交互模式](../getting-started/index.md#-怎么跟-claude-code-对话交互模式)
 
 ### ✨ 新功能
 
