@@ -233,7 +233,7 @@ claude
 
 ### 自动 OAuth 认证
 
-大多数 MCP 服务器支持 **Dynamic Client Registration**（动态客户端注册），Claude Code 会自动完成 OAuth 流程——你只需要在浏览器中确认授权即可。v2.1.30 新增了对不支持动态注册的 MCP 服务器（如 Slack）的预配置 OAuth 客户端凭证，使用 `--client-id` 和 `--client-secret` 参数。v2.1.84 将 MCP 工具描述和服务器指令的上限设为 2KB。
+大多数 MCP 服务器支持 **Dynamic Client Registration**（动态客户端注册），Claude Code 会自动完成 OAuth 流程——你只需要在浏览器中确认授权即可。对于不支持动态注册的 MCP 服务器（如 Slack），可以使用 `--client-id` 和 `--client-secret` 参数传入预配置的 OAuth 客户端凭证（v2.1.30 新增）。MCP 工具描述和服务器指令的单条上限为 2KB（v2.1.84 改进）。
 
 如果服务器要求固定的回调端口，可以使用 `--callback-port` 指定：
 

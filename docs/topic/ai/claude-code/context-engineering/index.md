@@ -1,7 +1,6 @@
 ---
 title: 上下文工程
 description: 理解 Claude Code 的上下文成本构成、分层策略、噪声治理和 Prompt Caching 架构
-icon: lucide/brain
 ---
 
 **本文你会学到**：

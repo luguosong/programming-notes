@@ -14,7 +14,7 @@ description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Age
 - 📊 通过对比表格，快速判断哪种方案适合你的场景
 - 🚀 三个典型实践场景：并行研究、独立代码审查、多假设调试
 
-## 为什么需要 Sub-agent
+## 🤔 为什么需要 Sub-agent
 
 假设你正在和 Claude Code 讨论一个项目架构问题。聊到一半，你说「帮我看一下这个项目的数据库连接池是怎么配的」。Claude 开始翻文件、读代码，读了一大堆配置文件和工具类——这些中间过程全部挤进了你的**主对话上下文**。
 
@@ -38,7 +38,7 @@ description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Age
 - 💰 **控制成本**：把简单任务路由到更便宜的模型（如 Haiku），复杂任务用 Opus
 - 🧩 **专业分工**：给不同领域设定专门的系统提示词，让每个 Sub-agent 成为该领域的专家
 
-## Sub-agent 工作原理
+## ⚙️ Sub-agent 工作原理
 
 ### 上下文隔离
 
@@ -219,7 +219,7 @@ exit 0
 | @-mention | `@"code-reviewer (agent)" 审查一下` | 保证使用指定 Sub-agent |
 | 会话级 | `claude --agent code-reviewer` | 整个会话都使用该 Sub-agent 的配置 |
 
-## Agent Teams
+## 🤝 Agent Teams
 
 ### 与 Sub-agent 的区别
 
@@ -340,7 +340,7 @@ Teammate 在只读的 plan mode 下工作，方案完成后提交给 Lead 审批
 | `TaskCreated` | 任务被创建 | `exit 2` 阻止创建并发送反馈 |
 | `TaskCompleted` | 任务被标记完成 | `exit 2` 阻止完成并发送反馈 |
 
-## 实践场景
+## 🎯 实践场景
 
 ### 并行研究多个方向
 

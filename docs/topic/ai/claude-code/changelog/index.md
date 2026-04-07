@@ -252,7 +252,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.83（2026-03-25）
 
-> 📝 **笔记定位**：[托管设置](../enterprise/index.md#-托管设置managed-settings) · [安装 Claude Code](../getting-started/index.md#-怎么安装-claude-code) · [Sub-agent 工作原理](../sub-agents/index.md#sub-agent-工作原理) · [配置文件层级](../configuration/index.md#-配置文件有哪几层)
+> 📝 **笔记定位**：[托管设置](../enterprise/index.md#-托管设置managed-settings) · [安装 Claude Code](../getting-started/index.md#-怎么安装-claude-code) · [Sub-agent 工作原理](../sub-agents/index.md#-sub-agent-工作原理) · [配置文件层级](../configuration/index.md#-配置文件有哪几层)
 
 ### ✨ 新功能
 
@@ -985,7 +985,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.49（2026-02-19）
 
-> 📝 **笔记定位**：[Sub-agent 工作原理](../sub-agents/index.md#sub-agent-工作原理) · [Hook 实践](../hooks/index.md#-hook-能用来做什么实践指南) · [安全架构](../enterprise/index.md#-安全架构)
+> 📝 **笔记定位**：[Sub-agent 工作原理](../sub-agents/index.md#-sub-agent-工作原理) · [Hook 实践](../hooks/index.md#-hook-能用来做什么实践指南) · [安全架构](../enterprise/index.md#-安全架构)
 
 ### ✨ 新功能
 
@@ -1318,7 +1318,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.32（2026-02-05）
 
-> 📝 **笔记定位**：[Agent Teams](../sub-agents/index.md#agent-teams) · [第三方 LLM](../integrations/index.md#-第三方-llm-提供商) · [上下文分层](../context-engineering/index.md#-上下文分层策略) · [Agentic Loop](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
+> 📝 **笔记定位**：[Agent Teams](../sub-agents/index.md#-agent-teams) · [第三方 LLM](../integrations/index.md#-第三方-llm-提供商) · [上下文分层](../context-engineering/index.md#-上下文分层策略) · [Agentic Loop](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
 
 ### ✨ 新功能
 
@@ -1863,7 +1863,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.1.0
 
-> 📝 **笔记定位**：[Skill 类型](../skills/index.md#-skill-的两种类型) · [配置层级](../configuration/index.md#-配置文件有哪几层) · [Sub-agent](../sub-agents/index.md#sub-agent-工作原理) · [MCP 工具发现](../mcp/index.md#-mcp-工具的发现与调用) · [平台全景](../platforms/index.md#-平台全景图) · [Hook 触发](../hooks/index.md#-hook-能在哪些时机触发) · [Channels](../automation/index.md#-channels-消息通道)
+> 📝 **笔记定位**：[Skill 类型](../skills/index.md#-skill-的两种类型) · [配置层级](../configuration/index.md#-配置文件有哪几层) · [Sub-agent](../sub-agents/index.md#-sub-agent-工作原理) · [MCP 工具发现](../mcp/index.md#-mcp-工具的发现与调用) · [平台全景](../platforms/index.md#-平台全景图) · [Hook 触发](../hooks/index.md#-hook-能在哪些时机触发) · [Channels](../automation/index.md#-channels-消息通道)
 
 ### ✨ 新功能
 
@@ -2203,7 +2203,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.64
 
-> 📝 **笔记定位**：[安装](../getting-started/index.md#-怎么安装-claude-code) · [上下文分层](../context-engineering/index.md#-上下文分层策略) · [Sub-agent](../sub-agents/index.md#sub-agent-工作原理)
+> 📝 **笔记定位**：[安装](../getting-started/index.md#-怎么安装-claude-code) · [上下文分层](../context-engineering/index.md#-上下文分层策略) · [Sub-agent](../sub-agents/index.md#-sub-agent-工作原理)
 
 ### ✨ 新功能
 
@@ -2257,7 +2257,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.60
 
-> 📝 **笔记定位**：[Sub-agent](../sub-agents/index.md#sub-agent-工作原理) · [MCP 工具发现](../mcp/index.md#-mcp-工具的发现与调用)
+> 📝 **笔记定位**：[Sub-agent](../sub-agents/index.md#-sub-agent-工作原理) · [MCP 工具发现](../mcp/index.md#-mcp-工具的发现与调用)
 
 ### ✨ 新功能
 
@@ -2766,7 +2766,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.17
 
-> 📝 **笔记定位**：[第三方 LLM](../integrations/index.md#-第三方-llm-提供商) · [Sub-agent](../sub-agents/index.md#为什么需要-sub-agent)
+> 📝 **笔记定位**：[第三方 LLM](../integrations/index.md#-第三方-llm-提供商) · [Sub-agent](../sub-agents/index.md#-为什么需要-sub-agent)
 
 ### ✨ 新功能
 
@@ -2926,7 +2926,7 @@ npm update -g @anthropic-ai/claude-code
 
 ## 📦 2.0.0
 
-> 📝 **笔记定位**：[平台全景](../platforms/index.md#-平台全景图) · [Sub-agent](../sub-agents/index.md#sub-agent-工作原理) · [Agentic Loop](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环) · [安装](../getting-started/index.md#-怎么安装-claude-code)
+> 📝 **笔记定位**：[平台全景](../platforms/index.md#-平台全景图) · [Sub-agent](../sub-agents/index.md#-sub-agent-工作原理) · [Agentic Loop](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环) · [安装](../getting-started/index.md#-怎么安装-claude-code)
 
 ### ✨ 新功能
 
