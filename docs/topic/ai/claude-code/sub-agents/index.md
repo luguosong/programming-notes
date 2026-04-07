@@ -88,7 +88,7 @@ graph TB
 
 ### 自定义 Sub-agent
 
-Claude Code 内置了几个 Sub-agent（`Explore`、`Plan`、`general-purpose`），但你也可以创建自己的。自定义 Sub-agent 本质上是一个 **Markdown 文件 + YAML 前置配置**。
+Claude Code 内置了几个 Sub-agent（`Explore`（v2.0.17 引入）、`Plan`、`general-purpose`），但你也可以创建自己的。自定义 Sub-agent 本质上是一个 **Markdown 文件 + YAML 前置配置**。
 
 #### 存放位置与优先级
 
@@ -97,7 +97,7 @@ Sub-agent 定义文件按优先级从高到低排列：
 | 位置 | 作用范围 | 说明 |
 |------|---------|------|
 | 托管设置 | 组织全局 | 由管理员部署 |
-| `--agents` CLI 参数 | 当前会话 | 启动时传入 JSON |
+| `--agents` CLI 参数 | 当前会话 | 启动时传入 JSON（v2.0.0 新增） |
 | `.claude/agents/` | 当前项目 | 可提交到 Git，团队共享 |
 | `~/.claude/agents/` | 所有项目 | 个人全局 |
 | 插件的 `agents/` 目录 | 插件启用范围 | 随插件安装 |
@@ -148,8 +148,8 @@ model: sonnet
 | `maxTurns` | ❌ | 最大对话轮数限制 |
 | `skills` | ❌ | 预加载的 Skills 列表 |
 | `memory` | ❌ | 持久记忆范围：`user`、`project`、`local` |
-| `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行 |
-| `background` | ❌ | 设为 `true` 时始终后台运行 |
+| `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行（v2.1.49 新增） |
+| `background` | ❌ | 设为 `true` 时始终后台运行（v2.1.49 新增） |
 | `hooks` | ❌ | 生命周期钩子配置 |
 
 #### 工具限制：白名单 vs 黑名单
@@ -277,7 +277,7 @@ Agent Teams 最适合以下场景：
 
 #### 启用 Agent Teams
 
-Agent Teams 默认关闭，需要手动启用：
+Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启用：
 
 ```json title="settings.json"
 {
@@ -409,5 +409,7 @@ model: inherit
 | 子任务之间强依赖，频繁共享中间状态 | 这种场景在主线程做，不用 Subagent | Subagent 之间无法共享中间状态 |
 | 子代理输出格式不固定 | 在定义文件中明确输出格式要求 | 主线程拿到没法用的结果等于白跑 |
 | 用 Subagent 做只需要简单搜索的事 | 用 Glob/Grep 直接搜索 | 派子代理有启动开销，简单搜索不值得 |
+
+v2.0.60 新增 Background Agents，支持后台运行并发送消息唤醒主 Agent。v2.1.0 进一步新增了 `Task(AgentName)` 语法用于禁用特定 Agent，以及 Ctrl+B 统一后台化操作。v2.1.83 为 Agent 定义新增了 `initialPrompt` 字段，支持自动提交首轮对话。
 
 📝 **小结**：本节学习了三个典型的并行工作场景。核心思路是：**Sub-agent 适合「给我结果就行」的任务，Agent Team 适合「你们讨论一下再给我结论」的任务。** 选择哪种方式，取决于你的 Teammate 之间是否需要互相通信。
