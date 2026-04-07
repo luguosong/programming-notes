@@ -13,7 +13,7 @@ description: 通过插件打包和分发 Skills、Hooks、MCP 服务器等扩展
 
 ## 🔌 什么是插件
 
-想象一下你的手机：出厂时系统功能有限，但通过应用商店安装 App 后，它能变成导航仪、支付工具、社交平台。Claude Code 的插件系统做的就是类似的事 —— 让你把 `Skills`、`Hooks`、`MCP 服务器`、`LSP 服务器` 等扩展功能打包成一个可分发、可版本管理的「扩展包」，一键安装到 Claude Code 中。
+想象一下你的手机：出厂时系统功能有限，但通过应用商店安装 App 后，它能变成导航仪、支付工具、社交平台。Claude Code 的插件系统做的就是类似的事（v2.0.12 发布） —— 让你把 `Skills`、`Hooks`、`MCP 服务器`、`LSP 服务器` 等扩展功能打包成一个可分发、可版本管理的「扩展包」，一键安装到 Claude Code 中。
 
 💡 简单来说：**插件就是一个自包含的目录，里面装着各种扩展组件，附带一份描述文件（manifest）告诉 Claude Code 怎么加载它们。**
 
@@ -92,7 +92,7 @@ claude plugin uninstall formatter@my-marketplace --keep-data
 
 ### 会话中热重载
 
-安装、启用或禁用插件后，不需要重启 Claude Code。运行以下命令即可让所有改动立即生效：
+安装、启用或禁用插件后，不需要重启 Claude Code。运行以下命令即可让所有改动立即生效（v2.1.69 新增 `/reload-plugins` 命令）：
 
 ```
 /reload-plugins

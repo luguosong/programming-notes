@@ -117,7 +117,7 @@ export ANTHROPIC_BEDROCK_GUARDRAILS_ARN="arn:aws:bedrock:us-east-1:123456789012:
 
 ### Google Vertex AI
 
-Google Vertex AI 是 GCP 上的 AI/ML 平台，同样支持 Claude 模型。一个显著优势是支持 **100 万 token 的上下文窗口**。
+Google Vertex AI 是 GCP 上的 AI/ML 平台，同样支持 Claude 模型。一个显著优势是支持 **100 万 token 的上下文窗口**（v2.1.75 新增 Vertex AI 1M context 支持）。
 
 #### 配置步骤
 
@@ -160,7 +160,7 @@ export VERTEX_REGION_EU_WEST4=europe-west4
 
 ### Microsoft Foundry
 
-Microsoft Foundry（原名 Azure AI Foundry）是 Azure 上的 AI 平台，适合已有 Azure 基础设施的团队。
+Microsoft Foundry（原名 Azure AI Foundry）是 Azure 上的 AI 平台，适合已有 Azure 基础设施的团队（v2.0.45 新增 Foundry 支持）。
 
 #### 配置步骤
 
