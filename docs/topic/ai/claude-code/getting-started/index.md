@@ -49,9 +49,11 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 
 === "WinGet"
 
-``` powershell
-winget install Anthropic.ClaudeCode
-```
+    ``` powershell
+    winget install Anthropic.ClaudeCode
+    ```
+
+    （v2.1.2 新增）
 
 === "macOS / Linux / WSL"
 
@@ -71,7 +73,7 @@ brew install --cask claude-code
 
 Claude Code 在 Windows 上有两种运行方式：
 
-- **原生 Windows + Git Bash**：安装 Git for Windows 后，直接从 PowerShell 或 CMD 启动。Claude Code 内部通过 Git Bash 来执行 shell 命令。不需要管理员权限。
+- **原生 Windows + Git Bash**：安装 Git for Windows 后，直接从 PowerShell 或 CMD 启动。Claude Code 内部通过 Git Bash 来执行 shell 命令。不需要管理员权限。支持 x64 和 ARM64 架构（v2.1.41 新增 ARM64 原生二进制）。
 - **WSL**：如果你已经习惯使用 WSL（Windows Subsystem for Linux），Claude Code 在 WSL 1 和 WSL 2 中都可以运行。推荐 WSL 2，因为它支持沙箱（Sandbox）安全特性。
 
 💡 如果 Claude Code 找不到 Git Bash，可以在 `settings.json` 中手动指定路径：
@@ -103,13 +105,14 @@ claude
 
 登录成功后，凭证会自动保存，后续不需要重复登录。如果需要切换账户，在交互模式中输入 `/login` 即可。
 
-你也可以通过命令行预先认证：
+你也可以通过 `claude auth` 子命令预先认证（v2.1.41 新增）：
 
 ``` bash
 claude auth login              # 标准登录
 claude auth login --console    # 使用 API Console 登录
 claude auth login --sso        # 强制 SSO 认证
 claude auth status --text      # 查看当前登录状态
+claude auth logout             # 登出当前账户
 ```
 
 ### 更新与卸载
@@ -119,6 +122,8 @@ claude auth status --text      # 查看当前登录状态
 ``` bash
 claude update    # 立即更新到最新版
 ```
+
+你还可以通过 `/config` 切换更新通道（Release Channel）：`stable`（稳定版）或 `latest`（最新版，可能包含实验性功能）。（v2.1.3 新增）
 
 如果需要卸载：
 
@@ -202,7 +207,7 @@ Claude Code 的执行流程是这样的：
 | `!` | 直接执行 Bash 命令，结果加入上下文 | `! git status`、`! npm test` |
 | `@` | 文件路径提及，触发自动补全 | `@src/main.java` |
 
-`!` 前缀特别实用——当你只想快速跑一条 shell 命令，但又希望结果留在对话上下文中时，直接 `! 命令` 即可，不需要 Claude 介入解释和审批。
+`!` 前缀特别实用——当你只想快速跑一条 shell 命令，但又希望结果留在对话上下文中时，直接 `! 命令` 即可，不需要 Claude 介入解释和审批。Bash 模式下支持 `Tab` 补全命令（v2.0.10 新增），还能根据历史命令进行智能补全（v2.1.14 改进）。
 
 #### 多行输入
 
@@ -212,10 +217,10 @@ Claude Code 的执行流程是这样的：
 |------|--------|---------|
 | 反斜杠换行 | `\` + `Enter` | 所有终端通用 |
 | Ctrl+J | `Ctrl+J` | 发送换行符，所有终端通用 |
-| Shift+Enter | `Shift+Enter` | iTerm2、WezTerm、Ghostty、Kitty 开箱即用 |
+| Shift+Enter | `Shift+Enter` | iTerm2、WezTerm、Ghostty、Kitty 开箱即用（v2.1.0 改进） |
 | 直接粘贴 | 粘贴多行文本 | 代码块、日志 |
 
-💡 在 Claude Code 内部运行 `/terminal-setup` 可以自动为 VS Code、Alacritty、Zed 等终端配置 `Shift+Enter`。
+💡 在 Claude Code 内部运行 `/terminal-setup` 可以自动为 VS Code、Alacritty、Zed、Kitty、Warp 等终端配置 `Shift+Enter`（v2.0.74 扩展了多终端支持）。
 
 ### 常用斜杠命令
 
@@ -225,14 +230,18 @@ Claude Code 的执行流程是这样的：
 |------|------|
 | `/help` | 显示帮助信息 |
 | `/clear` | 清除当前对话历史（之前的会话仍可恢复） |
-| `/config` | 打开配置面板（主题、更新通道、Vim 模式等） |
+| `/config` | 打开配置面板（主题、更新通道、Vim 编辑模式、Release Channel 等） |
 | `/login` | 切换账户 |
 | `/resume` | 恢复之前的会话 |
 | `/compact` | 压缩对话上下文（上下文太长时使用） |
-| `/vim` | 开启 Vim 编辑模式 |
 | `/terminal-setup` | 自动配置终端的 `Shift+Enter` |
 | `/theme` | 切换界面主题 |
 | `/btw` | 问一个不影响主对话的快速问题 |
+| `/debug` | 让 Claude 帮助排查当前会话问题（v2.1.30 新增） |
+| `/copy` | 交互式选择代码块或完整回复并复制到剪贴板（v2.1.59 新增） |
+| `/cost` | 查看当前会话花费，订阅用户可按模型和缓存命中查看分项明细（v2.1.92 新增） |
+
+💡 斜杠命令支持在输入的**任意位置**触发自动补全，不限于行首输入 `/`（v2.1.0 改进）。原有的 `/vim` 命令已在 v2.1.92 移除，Vim 编辑模式现通过 `/config` → Editor mode 切换。
 
 📌 `/btw` 是一个很巧妙的设计：它能看到当前对话的完整上下文，但回答后不会写入对话历史。适合在 Claude 正在忙的时候插一句「刚才那个配置文件叫什么来着？」。
 
@@ -247,7 +256,7 @@ claude -r "auth-refactor"  # 恢复名为 "auth-refactor" 的会话
 claude -n "my-feature"     # 给当前会话命名，方便以后恢复
 ```
 
-使用 `/clear` 清除当前对话后，之前的对话仍然保存在磁盘上，随时可以恢复。
+使用 `/clear` 清除当前对话后，之前的对话仍然保存在磁盘上，随时可以恢复。`/resume` 界面支持按分支过滤和搜索（v2.0.27 新增），快速定位目标会话。
 
 ### 键盘快捷键
 
@@ -260,8 +269,9 @@ claude -n "my-feature"     # 给当前会话命名，方便以后恢复
 | `Ctrl+C` | 取消当前输入或中断生成 |
 | `Ctrl+D` | 退出 Claude Code |
 | `Ctrl+L` | 重绘屏幕（画面乱了的时候用） |
-| `Ctrl+R` | 反向搜索命令历史 |
-| `Ctrl+O` | 切换详细输出（Transcript 查看器） |
+| `Ctrl+R` | 反向搜索命令历史（v2.0.0 新增） |
+| `Ctrl+G` | 在系统默认文本编辑器中编辑当前提示（v2.0.10 新增） |
+| `Ctrl+O` | 切换详细输出（Transcript 查看器），按 `/` 可搜索内容（v2.1.83 新增搜索） |
 | `Ctrl+T` | 切换任务列表显示 |
 | `Esc` + `Esc` | 回退代码或总结对话 |
 | `Shift+Tab` | 切换权限模式 |
@@ -310,6 +320,10 @@ claude -n "my-feature"     # 给当前会话命名，方便以后恢复
 #### 主题匹配
 
 Claude Code 的界面主题通过 `/config` 命令设置。它无法控制终端本身的颜色方案，但你可以在 `/config` 中将 Claude Code 的主题调整为与终端一致。
+
+#### 可点击的文件路径
+
+在支持 OSC 8 超链接协议的终端（如 iTerm2、Windows Terminal 等）中，Claude Code 输出的文件路径会自动变为可点击链接，点击即可在编辑器中打开。（v2.1.2 新增）
 
 #### 减少闪烁
 
