@@ -181,7 +181,8 @@ nav = [
                 { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
                 { "企业管理" = "topic/ai/claude-code/enterprise/index.md" },
                 { "最佳实践" = "topic/ai/claude-code/best-practices/index.md" },
-                { "更新日志" = "topic/ai/claude-code/changelog/index.md" }
+                { "更新日志" = "topic/ai/claude-code/changelog/index.md" },
+                { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
             ] }
         ] }
     ] },
