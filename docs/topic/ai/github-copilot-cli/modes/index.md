@@ -182,6 +182,7 @@ copilot -p "审查 @src/api.py 的安全性" > review.md
 | `--allow-all` | 自动批准所有权限（适合无人值守脚本） |
 | `--yolo` | 同 `--allow-all`，跳过所有确认 |
 | `--agent <name>` | 指定使用的 Agent |
+| `--reasoning-effort <level>` | 设置推理努力级别（1.0.4 新增），简写 `--effort` |
 
 ---
 

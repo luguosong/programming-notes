@@ -32,6 +32,12 @@ Copilot CLI 自带以下内置 Agent，无需配置即可使用：
 | `code-review` | 高信噪比的代码审查 | 发现真正重要的问题：Bug、安全漏洞、逻辑错误 |
 | `general-purpose` | 完整能力的通用 Agent | 复杂多步骤任务 |
 | `init` | 项目初始化 | 分析项目并生成指令文件 |
+| `configure-copilot` | MCP/Agent/Skill 配置助手（1.0.4 新增） | 交互式管理 MCP 服务器、Agents 和 Skills |
+| `critic` | 互补模型审查（1.0.18 新增，实验性） | 执行计划和复杂实现时自动审查，提前捕获错误 |
+
+!!! info "Critic Agent"
+
+    Critic Agent 在你执行复杂实现时自动激活，使用一个互补模型（与主模型不同的 LLM）来审查代码——就像请了一位"第二意见"专家。目前为 Claude 模型的实验性功能（1.0.18 新增）。
 
 ---
 
@@ -64,6 +70,20 @@ copilot --agent explore -p "找出所有未使用的导入"
 # 选择 code-review
 > @src/auth.py 审查认证逻辑中的安全漏洞
 ```
+
+### 向后台 Agent 发送消息
+
+使用 `write_agent` 工具可以向后台运行的 Agent 发送跟进消息（1.0.5 新增），无需等待它完成：
+
+``` text
+# 启动后台任务
+> 在后台分析整个项目的测试覆盖率
+
+# 发送补充指令
+> 写入后台 Agent：重点关注 src/auth/ 目录
+```
+
+子 Agent 会获得基于名称的可读 ID（如 `math-helper-0`）而非随机字符串（1.0.6 新增），方便在 `/tasks` 视图中识别。空闲子 Agent 在 `/tasks` 视图中 2 分钟后自动隐藏（1.0.8 改进）。
 
 ---
 

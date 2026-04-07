@@ -84,5 +84,20 @@ Copilot CLI 自带两个默认插件市场——就像手机的应用商店：
 - `Skills`：新的自动触发技能（如测试生成、代码审查清单）
 - `MCP 服务器`：新的外部数据源连接（如数据库、API 文档服务）
 - `Slash 命令`：新的斜杠命令（如 `/deploy`、`/analyze`）
+- `LSP 服务器`：语言服务器协议支持（0.0.422 新增），在 `/lsp show` 中查看
 
 💡 安装一个 `database-data-management` 插件，你可能同时获得：一个 DBA Agent + 一套 SQL 审查 Skill + 一个 PostgreSQL MCP 服务器。
+
+---
+
+## 🔌 Extensions（实验性）
+
+Extensions 是比插件更底层的扩展机制（1.0.3 新增，实验性），支持以 CommonJS 模块编写（1.0.4 新增），可以：
+
+- 接入权限系统（1.0.6 新增）
+- 提供 LSP 服务器支持
+- 通过 Extension 模式设置控制可扩展性（1.0.8 新增）
+
+使用 `/extensions` 命令查看、启用和禁用已安装的 Extensions（1.0.5 新增）。
+
+在配置中设置 `enabledPlugins` 可实现插件自动安装（0.0.422 新增），无需手动执行 `/plugin install`。
