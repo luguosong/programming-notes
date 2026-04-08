@@ -151,13 +151,14 @@ nav = [
                 { "Agent 系统" = "topic/ai/github-copilot-cli/agents/index.md" },
                 { "Skills 技能系统" = "topic/ai/github-copilot-cli/skills/index.md" },
                 { "MCP 服务器" = "topic/ai/github-copilot-cli/mcp/index.md" },
-                { "插件" = [
-                    "topic/ai/github-copilot-cli/plugins/index.md",
-                    { "官方市场 copilot-plugins" = "topic/ai/github-copilot-cli/plugins/copilot-plugins/index.md" },
-                    { "社区市场 awesome-copilot" = "topic/ai/github-copilot-cli/plugins/awesome-copilot/index.md" }
-                ] },
+                { "插件" = "topic/ai/github-copilot-cli/plugins/index.md" },
                 { "Hook 扩展" = "topic/ai/github-copilot-cli/hooks/index.md" },
                 { "推荐扩展" = "topic/ai/github-copilot-cli/practices/index.md" },
+                { "相关资源" = [
+                    "topic/ai/github-copilot-cli/resources/index.md",
+                    { "官方市场 copilot-plugins" = "topic/ai/github-copilot-cli/resources/copilot-plugins/index.md" },
+                    { "社区市场 awesome-copilot" = "topic/ai/github-copilot-cli/resources/awesome-copilot/index.md" }
+                ] },
                 { "更新日志" = "topic/ai/github-copilot-cli/changelog/index.md" }
             ] },
             { "Claude Code" = [
@@ -179,15 +180,16 @@ nav = [
                     { "Hooks" = "topic/ai/claude-code/hooks/index.md" },
                     { "Sub-agents" = "topic/ai/claude-code/sub-agents/index.md" },
                     { "MCP" = "topic/ai/claude-code/mcp/index.md" },
-                    { "插件" = [
-                        "topic/ai/claude-code/plugins/index.md",
-                        { "官方插件目录" = "topic/ai/claude-code/plugins/claude-plugins-official/index.md" },
-                    ] },
+                    { "插件" = "topic/ai/claude-code/plugins/index.md" },
                 ] },
                 { "自动化" = "topic/ai/claude-code/automation/index.md" },
                 { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
                 { "企业管理" = "topic/ai/claude-code/enterprise/index.md" },
                 { "最佳实践" = "topic/ai/claude-code/best-practices/index.md" },
+                { "相关资源" = [
+                    "topic/ai/claude-code/resources/index.md",
+                    { "官方插件目录" = "topic/ai/claude-code/resources/claude-plugins-official/index.md" }
+                ] },
                 { "更新日志" = "topic/ai/claude-code/changelog/index.md" },
                 { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
             ] }
