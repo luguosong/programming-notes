@@ -1,3 +1,7 @@
+---
+title: 实现OAuth 2与OpenID Connect
+---
+
 # 实现OAuth 2与OpenID Connect
 
 在一个对安全且无缝的身份验证方式需求至高无上的时代，诸如 OAuth 2 和 OpenID Connect 这样的协议已经成为行业标准。本书这一部分剖析了这些协议的精妙机制，阐明了它们的运作原理、优势以及潜在风险。

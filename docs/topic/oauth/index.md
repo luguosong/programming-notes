@@ -1,4 +1,5 @@
 ---
+title: OAuth2
 icon: lucide/shield-check
 ---
 

@@ -1,3 +1,7 @@
+---
+title: React 集成
+---
+
 # React 集成
 
 本文档说明了如何手动为 React 组件应用 `observation`（观察）。不过，借助 `mobx-react-observer` Babel/SWC

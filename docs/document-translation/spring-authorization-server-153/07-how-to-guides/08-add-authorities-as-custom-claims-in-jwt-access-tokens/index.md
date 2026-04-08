@@ -1,3 +1,7 @@
+---
+title: 在JWT访问令牌中将权限作为自定义声明添加
+---
+
 # 在JWT访问令牌中将权限作为自定义声明添加
 
 本指南将演示如何在 JWT 访问令牌中加入资源所有者的授权信息（authorities）。“authorities” 一词可能有不同的表现形式，例如资源所有者的角色（roles）、权限（permissions）或所属组（groups）。

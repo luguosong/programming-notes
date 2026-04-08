@@ -1,3 +1,7 @@
+---
+title: 概述
+---
+
 # 概述
 
 本网站提供 Spring Authorization Server 的参考文档和使用指南。

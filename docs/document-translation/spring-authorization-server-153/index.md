@@ -1,4 +1,5 @@
 ---
+title: Spring Authorization Server-1.5.3
 icon: simple/springsecurity
 ---
 

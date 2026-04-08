@@ -1,3 +1,6 @@
+---
+title: 实现多租户(Multitenancy)
+---
 
 # 实现多租户(Multitenancy)
 

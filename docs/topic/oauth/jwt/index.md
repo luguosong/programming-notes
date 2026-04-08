@@ -1,3 +1,7 @@
+---
+title: JWT 令牌
+---
+
 # JWT 令牌
 
 JWT（JSON Web Token，RFC 7519）是 OAuth2 和 OIDC 中最常用的令牌格式。

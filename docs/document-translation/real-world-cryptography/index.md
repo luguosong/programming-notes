@@ -1,4 +1,5 @@
 ---
+title: Real World Cryptography
 icon: material/lock
 ---
 

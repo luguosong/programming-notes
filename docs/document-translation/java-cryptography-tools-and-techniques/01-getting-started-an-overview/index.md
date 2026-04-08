@@ -1,3 +1,7 @@
+---
+title: 1.入门概览
+---
+
 # 1.入门概览
 
 本章介绍 Java 中加密 API 的架构，以及建立在这些加密 API 之上的 Bouncy Castle CMS/SMIME/OpenPGP API 架构。还会提供基本的安装说明，并讨论

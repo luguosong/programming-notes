@@ -1,3 +1,6 @@
+---
+title: 自定义OpenID Connect 1.0的UserInfo响应
+---
 
 # 自定义OpenID Connect 1.0的UserInfo响应
 

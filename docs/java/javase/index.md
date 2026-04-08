@@ -1,4 +1,5 @@
 ---
+title: JavaSE
 icon: lucide/code-2
 ---
 

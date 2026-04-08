@@ -1,3 +1,7 @@
+---
+title: Spring Authorization Server 迁移至 Spring Security 7.0
+---
+
 # Spring Authorization Server 迁移至 Spring Security 7.0
 
 !!! warning

@@ -1,3 +1,7 @@
+---
+title: 核心模型/组件
+---
+
 # 核心模型/组件
 
 ## RegisteredClient

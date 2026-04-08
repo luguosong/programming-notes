@@ -1,4 +1,5 @@
 ---
+title: Java
 icon: fontawesome/brands/java
 ---
 

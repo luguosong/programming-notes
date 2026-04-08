@@ -1,3 +1,7 @@
+---
+title: Mobx
+---
+
 # Mobx
 
 

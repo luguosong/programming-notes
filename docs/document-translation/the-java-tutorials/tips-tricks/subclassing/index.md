@@ -1,3 +1,7 @@
+---
+title: 子类化
+---
+
 # 子类化
 
 支持子类化，但有一定限制。最重要的是：你只能在原型（prototype）上重写 `actions`/`flows`/`computeds`，不能重写字段声明（field

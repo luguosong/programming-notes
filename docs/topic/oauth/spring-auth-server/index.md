@@ -1,3 +1,7 @@
+---
+title: 实战：授权服务器
+---
+
 # 实战：Spring Authorization Server
 
 !!! warning "版本迁移重要说明"

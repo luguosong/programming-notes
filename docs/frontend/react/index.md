@@ -1,4 +1,5 @@
 ---
+title: React
 icon: simple/react
 ---
 

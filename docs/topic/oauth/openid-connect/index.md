@@ -1,3 +1,7 @@
+---
+title: OpenID Connect
+---
+
 # OpenID Connect
 
 OpenID Connect（OIDC）是构建在 OAuth2 之上的`身份认证层`。如果说 OAuth2 解决了"应用能做什么"，那么 OIDC 解决的是"用户是谁"。

@@ -1,4 +1,5 @@
 ---
+title: Windows
 icon: material/microsoft-windows
 ---
 

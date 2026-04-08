@@ -1,3 +1,7 @@
+---
+title: Spring Security入门
+---
+
 # Spring Security入门
 
 准备好深入探索 Spring Security 的世界了吗？让我们一起踏上这段旅程吧！在本书的开篇部分，我们将为后续内容打下坚实的基础。

@@ -1,3 +1,7 @@
+---
+title: 矩阵与线性代数
+---
+
 # 矩阵与线性代数
 
 ## 🔢 矩阵 — `matrix`、`bmatrix`、`pmatrix`、`vmatrix`

@@ -1,3 +1,7 @@
+---
+title: 实战：客户端与资源服务器
+---
+
 # 实战：OAuth2 客户端与资源服务器
 
 本文介绍如何使用 Spring Security 配置 OAuth2 `客户端应用`（让用户通过 OAuth2 登录）和 `资源服务器`（保护 API 端点并验证 Token）。

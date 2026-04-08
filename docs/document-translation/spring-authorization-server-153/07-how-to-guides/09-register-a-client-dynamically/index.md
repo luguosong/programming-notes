@@ -1,3 +1,7 @@
+---
+title: 动态注册客户端
+---
+
 # 动态注册客户端
 
 本指南介绍如何在 Spring Authorization Server 中配置 OpenID Connect 动态客户端注册，并通过示例演示如何注册客户端。Spring

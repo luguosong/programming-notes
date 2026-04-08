@@ -1,4 +1,5 @@
 ---
+title: Introduction to Algorithms
 icon: material/graph
 ---
 

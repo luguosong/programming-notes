@@ -1,4 +1,5 @@
 ---
+title: Spring Security in Action 2
 icon: simple/springsecurity
 ---
 

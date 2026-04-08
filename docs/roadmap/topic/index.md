@@ -1,4 +1,5 @@
 ---
+title: 专题研究
 icon: lucide/telescope
 ---
 

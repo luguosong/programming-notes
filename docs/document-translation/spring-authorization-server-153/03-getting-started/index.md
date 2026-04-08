@@ -1,3 +1,7 @@
+---
+title: 入门
+---
+
 # 入门
 
 如果你刚开始接触 Spring Authorization Server，下面的内容将带你一步步创建你的第一个应用程序。

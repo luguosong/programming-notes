@@ -1,3 +1,7 @@
+---
+title: JDBC
+---
+
 # JDBC
 
 想从 Java 程序访问数据库，却发现 MySQL、PostgreSQL、Oracle 各家的连接方式完全不同？JDBC（Java Database Connectivity）就是为解决这个问题而生的——它提供一套统一 API，让你的代码`不因切换数据库而重写`。

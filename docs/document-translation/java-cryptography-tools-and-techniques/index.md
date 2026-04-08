@@ -1,4 +1,5 @@
 ---
+title: Java Cryptography: Tools and Techniques
 icon: material/shield-lock
 ---
 

@@ -1,3 +1,7 @@
+---
+title: OAuth2
+---
+
 # OAuth2
 
 Spring Security 提供了对 OAuth 2.0 的全面支持。本节将介绍如何在基于 Servlet 的应用中集成 OAuth 2.0。

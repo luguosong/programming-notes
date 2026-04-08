@@ -1,3 +1,7 @@
+---
+title: 实现扩展授权许可类型
+---
+
 # 实现扩展授权许可类型
 
 本指南介绍如何通过自定义扩展授权类型（extension authorization grant type）来扩展 Spring Authorization

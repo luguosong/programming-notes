@@ -1,3 +1,7 @@
+---
+title: 创建你的第一个 DrawingWeb SDK 应用
+---
+
 # 创建你的第一个 DrawingWeb SDK 应用
 
 本指南将带你从零开始，使用 DrawingWeb SDK 创建你的第一个应用。DrawingWeb SDK 是一个强大的 C++

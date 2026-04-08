@@ -1,3 +1,7 @@
+---
+title: 在单页应用（SPA）中使用PKCE进行身份认证
+---
+
 # 在单页应用（SPA）中使用PKCE进行身份认证
 
 本指南将演示如何配置 Spring Authorization Server，以支持启用 Proof Key for Code
