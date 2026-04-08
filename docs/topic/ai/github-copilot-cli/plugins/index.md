@@ -84,7 +84,18 @@ Copilot CLI 自带两个默认插件市场——就像手机的应用商店：
 - `Skills`：新的自动触发技能（如测试生成、代码审查清单）
 - `MCP 服务器`：新的外部数据源连接（如数据库、API 文档服务）
 - `Slash 命令`：新的斜杠命令（如 `/deploy`、`/analyze`）
-- `LSP 服务器`：语言服务器协议支持（0.0.422 新增），在 `/lsp show` 中查看
+- `LSP 服务器`：语言服务器协议支持（0.0.422 新增），在 `/lsp show` 中查看。安装 LSP 插件前需先安装对应的语言服务器二进制，以 TypeScript 为例：
+
+```bash
+# 1. 先安装语言服务器二进制
+npm install -g typescript-language-server typescript
+
+# 2. 验证安装
+typescript-language-server --version
+
+# 3. 再安装 LSP 插件
+/plugin install typescript-lsp@copilot-plugins
+```
 
 💡 安装一个 `database-data-management` 插件，你可能同时获得：一个 DBA Agent + 一套 SQL 审查 Skill + 一个 PostgreSQL MCP 服务器。
 

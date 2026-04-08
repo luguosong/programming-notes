@@ -15,7 +15,18 @@ Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](ht
 
 这些插件为 Claude 接入语言服务器，提供实时类型检查、跳转定义、查找引用等能力——和 IDE 一样的代码分析体验。
 
-⚠️ 安装前需确保对应语言服务器二进制已安装。
+⚠️ 安装前需确保对应语言服务器二进制已安装，以 TypeScript 为例：
+
+```bash
+# 1. 先安装语言服务器二进制
+npm install -g typescript-language-server typescript
+
+# 2. 验证安装
+typescript-language-server --version
+
+# 3. 再安装 LSP 插件
+/plugin install typescript-lsp@claude-plugins-official
+```
 
 | 语言 | 插件名 | 需要的二进制 | 说明 |
 |------|--------|------------|------|
