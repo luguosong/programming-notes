@@ -179,7 +179,10 @@ nav = [
                     { "Hooks" = "topic/ai/claude-code/hooks/index.md" },
                     { "Sub-agents" = "topic/ai/claude-code/sub-agents/index.md" },
                     { "MCP" = "topic/ai/claude-code/mcp/index.md" },
-                    { "插件" = "topic/ai/claude-code/plugins/index.md" },
+                    { "插件" = [
+                        "topic/ai/claude-code/plugins/index.md",
+                        { "官方插件目录" = "topic/ai/claude-code/plugins/claude-plugins-official/index.md" },
+                    ] },
                 ] },
                 { "自动化" = "topic/ai/claude-code/automation/index.md" },
                 { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
