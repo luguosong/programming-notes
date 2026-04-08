@@ -45,97 +45,97 @@ awesome-copilot 不仅有插件，还提供了其他类型的共享资源：
 
 为特定语言提供开发最佳实践、代码审查、测试生成等能力。MCP 开发类插件则专注于用该语言构建 MCP 服务器。
 
-| 插件名 | 说明 |
-|-------|------|
-| `java-development` | Java 开发最佳实践 |
-| `java-mcp-development` | 用 Java 构建 MCP 服务器 |
-| `csharp-dotnet-development` | C# / .NET 开发 |
-| `csharp-mcp-development` | 用 C# 构建 MCP 服务器 |
-| `frontend-web-dev` | 前端 Web 开发（React、Angular、Electron） |
-| `python-mcp-development` | 用 Python 构建 MCP 服务器 |
-| `go-mcp-development` | 用 Go 构建 MCP 服务器 |
-| `rust-mcp-development` | 用 Rust 构建 MCP 服务器 |
-| `typescript-mcp-development` | 用 TypeScript 构建 MCP 服务器 |
-| `kotlin-mcp-development` | 用 Kotlin 构建 MCP 服务器 |
-| `ruby-mcp-development` | 用 Ruby 构建 MCP 服务器 |
-| `swift-mcp-development` | 用 Swift 构建 MCP 服务器 |
-| `php-mcp-development` | 用 PHP 构建 MCP 服务器 |
-| `clojure-interactive-programming` | Clojure 交互式开发（REPL 驱动） |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `java-development` | Java 开发最佳实践 | 含 4 个 Skill。对话涉及 Javadoc、JUnit 5、Spring Boot 时**自动推荐**，也可 `/java-development:java-docs` 等**手动调用** |
+| `java-mcp-development` | 用 Java 构建 MCP 服务器 | Skill + Agent。Skill **手动** `/` 调用生成项目；Agent `java-mcp-expert` 处理复杂 MCP 任务时**自动委派** |
+| `csharp-dotnet-development` | C# / .NET 开发 | 多 Skill + Agent。Skill 涉及 C# 测试、异步编程等话题时**自动推荐**；Agent `expert-dotnet-software-engineer` 复杂任务时**自动委派** |
+| `csharp-mcp-development` | 用 C# 构建 MCP 服务器 | Skill + Agent。模式同 `java-mcp-development`，含生成器 Skill 和专家 Agent |
+| `frontend-web-dev` | 前端 Web 开发（React、Angular、Electron） | Skill + Agent。Playwright 测试 Skill **手动** `/` 调用；Agent `expert-react-frontend-engineer` / `electron-angular-native` 前端任务时**自动委派** |
+| `python-mcp-development` | 用 Python 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件，含生成器 Skill 和专家 Agent |
+| `go-mcp-development` | 用 Go 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `rust-mcp-development` | 用 Rust 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `typescript-mcp-development` | 用 TypeScript 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `kotlin-mcp-development` | 用 Kotlin 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `ruby-mcp-development` | 用 Ruby 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `swift-mcp-development` | 用 Swift 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `php-mcp-development` | 用 PHP 构建 MCP 服务器 | Skill + Agent。模式同其他 MCP 开发插件 |
+| `clojure-interactive-programming` | Clojure 交互式开发（REPL 驱动） | Skill + Agent。含提醒 Skill（手动 `/` 调用）和 REPL 驱动 Agent，Clojure 开发任务时**自动委派** |
 
 ### OpenAPI 代码生成
 
 从 OpenAPI 规范自动生成完整的、可运行的后端应用：
 
-| 插件名 | 目标框架 |
-|-------|---------|
-| `openapi-to-application-java-spring-boot` | Java + Spring Boot |
-| `openapi-to-application-csharp-dotnet` | C# + .NET |
-| `openapi-to-application-python-fastapi` | Python + FastAPI |
-| `openapi-to-application-nodejs-nestjs` | Node.js + NestJS |
-| `openapi-to-application-go` | Go |
+| 插件名 | 目标框架 | 使用方式 |
+|-------|---------|---------|
+| `openapi-to-application-java-spring-boot` | Java + Spring Boot | Skill + Agent。Skill 在提到"从 OpenAPI 生成应用"时**自动推荐**，也可 `/` 手动调用；Agent 处理完整应用生成时**自动委派** |
+| `openapi-to-application-csharp-dotnet` | C# + .NET | 同上模式，目标框架为 C# + .NET |
+| `openapi-to-application-python-fastapi` | Python + FastAPI | 同上模式，目标框架为 Python + FastAPI |
+| `openapi-to-application-nodejs-nestjs` | Node.js + NestJS | 同上模式，目标框架为 Node.js + NestJS |
+| `openapi-to-application-go` | Go | 同上模式，目标框架为 Go |
 
 ### 测试与质量
 
-| 插件名 | 说明 |
-|-------|------|
-| `testing-automation` | 测试自动化（Playwright、TDD 红绿重构） |
-| `polyglot-test-agent` | 多语言通用测试生成（自动发现语言和框架） |
-| `doublecheck` | 代码双重检查 |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `testing-automation` | 测试自动化（Playwright、TDD 红绿重构） | 多 Skill + 4 Agent。Playwright/JUnit/NUnit Skill **自动推荐**；TDD Agent（`tdd-red` → `tdd-green` → `tdd-refactor`）按 TDD 流程**手动指定**或匹配任务时**自动委派** |
+| `polyglot-test-agent` | 多语言通用测试生成（自动发现语言和框架） | Skill + 8 Agent 流水线。提到"生成测试、写单元测试、提高覆盖率"时 Skill **自动推荐**；Agent 按 Research → Plan → Implement 流水线**自动编排** |
+| `doublecheck` | 代码双重检查 | Skill + Agent。说 `use doublecheck` **自动激活**持续验证模式（每条回复附验证摘要）；`@doublecheck` **手动**启动交互式深度验证 |
 
 ### 数据库与数据
 
-| 插件名 | 说明 |
-|-------|------|
-| `database-data-management` | 数据库管理（PostgreSQL DBA Agent + MS SQL Agent） |
-| `oracle-to-postgres-migration-expert` | Oracle 到 PostgreSQL 迁移 |
-| `power-bi-development` | Power BI 报表开发 |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `database-data-management` | 数据库管理（PostgreSQL DBA Agent + MS SQL Agent） | 多 Skill + 2 Agent。SQL 优化/审查 Skill 涉及数据库话题时**自动推荐**；Agent `postgresql-dba` / `ms-sql-dba` 数据库管理任务时**自动委派** |
+| `oracle-to-postgres-migration-expert` | Oracle 到 PostgreSQL 迁移 | 7 Skill + Agent。Agent 采用引导式迁移（教育 → 建议 → 确认 → 执行），需用户逐步确认后**手动推进**，不会自主链式执行 |
+| `power-bi-development` | Power BI 报表开发 | 4 Skill + 4 Agent。Skill 涉及 DAX 优化、模型设计等时**自动推荐**；Agent 按专业方向（数据建模/DAX/性能/可视化）**自动委派** |
 
 ### 项目规划与工程管理
 
-| 插件名 | 说明 |
-|-------|------|
-| `project-planning` | 项目规划（PRD、架构设计、实施计划） |
-| `software-engineering-team` | 软件工程团队角色模拟（安全审查、架构评审、技术写作等） |
-| `technical-spike` | 技术预研（时间盒式技术调研） |
-| `edge-ai-tasks` | Edge AI 任务规划 |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `project-planning` | 项目规划（PRD、架构设计、实施计划） | 8 Skill + 7 Agent。Skill 涉及 PRD、实施计划、技术预研等时**自动推荐**；Agent（`plan` / `prd` / `planner` 等）复杂规划任务时**自动委派** |
+| `software-engineering-team` | 软件工程团队角色模拟（安全审查、架构评审、技术写作等） | 纯 Agent（7 个角色）。匹配对应角色任务时**自动委派**（如安全审查 → `se-security-reviewer`，架构评审 → `se-system-architecture-reviewer`） |
+| `technical-spike` | 技术预研（时间盒式技术调研） | Skill + Agent。Skill **手动** `/` 创建预研文档；Agent `research-technical-spike` 系统性调研验证时**自动委派** |
+| `edge-ai-tasks` | Edge AI 任务规划 | 纯 Agent（2 个）。`task-researcher` 项目分析 + `task-planner` 计划制定，复杂任务拆解时**自动委派** |
 
 ### DevOps 与云
 
-| 插件名 | 说明 |
-|-------|------|
-| `azure-cloud-development` | Azure 云开发 |
-| `devops-oncall` | DevOps 值班诊断 |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `azure-cloud-development` | Azure 云开发 | 2 Skill + 7 Agent。Skill **手动** `/` 调用（资源诊断、成本优化）；Agent 覆盖架构师、IaC（Bicep/Terraform）、Logic Apps 等，按任务**自动委派** |
+| `devops-oncall` | DevOps 值班诊断 | Skill + Agent。Skill **手动** `/` 调用（Azure 资源诊断、多阶段 Dockerfile 生成）；Agent `azure-principal-architect` 架构咨询时**自动委派** |
 
 ### Microsoft 生态
 
-| 插件名 | 说明 |
-|-------|------|
-| `mcp-m365-copilot` | Microsoft 365 Copilot 集成 |
-| `flowstudio-power-automate` | Power Automate 流程开发 |
-| `power-platform-mcp-connector-development` | Power Platform 连接器开发 |
-| `power-apps-code-apps` | Power Apps 代码组件开发 |
-| `pcf-development` | PowerApps Component Framework 开发 |
-| `typespec-m365-copilot` | TypeSpec M365 Copilot 开发 |
-| `dataverse-sdk-for-python` | Dataverse Python SDK |
-| `winui3-development` | WinUI 3 桌面应用开发 |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `mcp-m365-copilot` | Microsoft 365 Copilot 集成 | Skill + Agent。Skill **手动** `/` 调用（创建声明式代理、自适应卡片、部署管理）；Agent `mcp-m365-agent-expert` 专家指导时**自动委派** |
+| `flowstudio-power-automate` | Power Automate 流程开发 | 3 个 Skill。涉及 Power Automate 流程管理、调试、构建时**自动推荐**（需 FlowStudio MCP 订阅） |
+| `power-platform-mcp-connector-development` | Power Platform 连接器开发 | Skill + Agent。Skill **手动** `/` 调用生成连接器和 MCP 服务器；Agent 集成专家按需**自动委派** |
+| `power-apps-code-apps` | Power Apps 代码组件开发 | Skill + Agent。Skill **手动** `/` 调用脚手架项目；Agent `power-platform-expert` 平台咨询时**自动委派** |
+| `pcf-development` | PowerApps Component Framework 开发 | 安装后按 `/pcf-development:` 查看可用命令，**手动** `/` 调用 |
+| `typespec-m365-copilot` | TypeSpec M365 Copilot 开发 | 3 个 Skill。**手动** `/` 调用创建 TypeSpec 声明式代理、API 插件、REST 操作 |
+| `dataverse-sdk-for-python` | Dataverse Python SDK | 4 个 Skill。**手动** `/` 调用生成 Dataverse Python 代码（快速入门、高级模式、生产代码、用例方案） |
+| `winui3-development` | WinUI 3 桌面应用开发 | Skill + Agent。迁移指南 Skill **手动** `/` 调用；Agent `winui3-expert` 防止 UWP→WinUI 3 API 误用，桌面开发时**自动委派** |
 
 ### AI 与 Agent 工具链
 
-| 插件名 | 说明 |
-|-------|------|
-| `context-engineering` | 上下文工程（多文件变更前的依赖分析） |
-| `structured-autonomy` | 结构化自主工作流 |
-| `rug-agentic-workflow` | Agent 工作流编排 |
-| `copilot-sdk` | Copilot SDK 开发 |
-| `arize-ax` | Arize AI 可观测性 |
-| `phoenix` | Phoenix AI 追踪 |
-| `napkin` | 快速原型/草稿工具 |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `context-engineering` | 上下文工程（多文件变更前的依赖分析） | 3 Skill + Agent。Skill 涉及上下文映射、重构计划时**自动推荐**；Agent `context-architect` 多文件变更前**自动委派**分析依赖 |
+| `structured-autonomy` | 结构化自主工作流 | 3 个 Skill。**手动** `/` 调用（Plan → Generate → Implement 三阶段工作流） |
+| `rug-agentic-workflow` | Agent 工作流编排 | 纯 Agent（3 个）。编排器 `rug-orchestrator` 拆解任务，自动分配给 `swe-subagent`（实现）和 `qa-subagent`（质检），复杂交付任务时**自动委派** |
+| `copilot-sdk` | Copilot SDK 开发 | 1 个 Skill。提到"Copilot SDK、嵌入 AI Agent、可编程代理"等关键词时**自动推荐** |
+| `arize-ax` | Arize AI 可观测性 | 9 个 Skill。涉及 Arize 追踪、评估、数据集、实验等关键词时**自动推荐**，也可 `/arize-ax:arize-trace` 等**手动调用** |
+| `phoenix` | Phoenix AI 追踪 | 3 个 Skill。涉及 Phoenix CLI 调试、LLM 评估、OpenInference 追踪时**自动推荐** |
+| `napkin` | 快速原型/草稿工具 | 1 个 Skill。对话中说 `let's napkin` 或"打开白板"时**自动触发**，在浏览器中打开可视化白板，画完后说 `check the napkin` 让 Copilot 分析 |
 
 ### 安全
 
-| 插件名 | 说明 |
-|-------|------|
-| `security-best-practices` | 安全最佳实践（OWASP、零信任等） |
+| 插件名 | 说明 | 使用方式 |
+|-------|------|---------|
+| `security-best-practices` | 安全最佳实践（OWASP、零信任等） | 1 个 Skill。涉及 AI 提示词安全审查时**自动推荐**，也可 `/security-best-practices:ai-prompt-engineering-safety-review` **手动调用** |
 
 ## 🤖 Agent 速查
 
