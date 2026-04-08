@@ -153,7 +153,6 @@ nav = [
                 { "MCP 服务器" = "topic/ai/github-copilot-cli/mcp/index.md" },
                 { "插件" = "topic/ai/github-copilot-cli/plugins/index.md" },
                 { "Hook 扩展" = "topic/ai/github-copilot-cli/hooks/index.md" },
-                { "推荐扩展" = "topic/ai/github-copilot-cli/practices/index.md" },
                 { "相关资源" = [
                     "topic/ai/github-copilot-cli/resources/index.md",
                     { "官方市场 copilot-plugins" = "topic/ai/github-copilot-cli/resources/copilot-plugins/index.md" },
