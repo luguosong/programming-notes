@@ -66,10 +66,10 @@ description: 安装和管理 Copilot CLI 插件，扩展 Agent、Skill 和斜杠
 
 Copilot CLI 自带两个默认插件市场——就像手机的应用商店：
 
-| 市场 | 说明 |
-|------|------|
-| `copilot-plugins` | 官方插件市场（经过验证，质量有保障） |
-| `awesome-copilot` | 社区插件市场（种类更多，需自行评估质量） |
+| 市场 | 说明 | 详情 |
+|------|------|------|
+| `copilot-plugins` | 官方插件市场（经过验证，质量有保障） | [查看详情](copilot-plugins/index.md) |
+| `awesome-copilot` | 社区插件市场（种类更多，需自行评估质量） | [查看详情](awesome-copilot/index.md) |
 
 | 命令 | 功能 |
 |------|------|
