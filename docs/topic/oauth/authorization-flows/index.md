@@ -8,6 +8,7 @@
 - PKCE 如何防止授权码被截获滥用
 - Refresh Token 的刷新机制
 - 客户端凭证流程和设备授权流程的使用场景
+- 隐式流程和 ROPC 为何被弃用
 
 ## 授权码流程（Authorization Code）
 
@@ -20,34 +21,34 @@
 
 ``` mermaid
 sequenceDiagram
-    participant RO as 用户浏览器
-    participant Client as 客户端服务端
+    participant RO as 资源所有者
+    participant CF as 客户端前端<br/>(浏览器)
+    participant CB as 客户端后端
     participant AS as 授权服务器
     participant RS as 资源服务器
 
-    rect rgb(219, 234, 254)
     Note over RO,AS: 前端通道（Front Channel）— 通过浏览器重定向
-    RO->>Client: 1. 点击"使用第三方登录"
-    Client-->>RO: 2. HTTP 302 重定向至授权端点
-    RO->>AS: 3. GET /authorize?response_type=code<br/>&client_id=...&redirect_uri=...&scope=...&state=...
+    RO->>CF: 1. 点击"使用第三方登录"
+    CF->>CB: 2. 浏览器向客户端后端发起请求
+    CB-->>CF: 3. HTTP 302 重定向至授权端点
+    CF->>AS: 4. GET /authorize?response_type=code<br/>&client_id=...&redirect_uri=...&scope=...&state=...
     Note over AS: 验证 client_id、redirect_uri、scope
-    AS-->>RO: 4. 展示登录/授权确认页面
-    RO->>AS: 5. 用户登录并同意授权
+    AS-->>CF: 5. 展示登录/授权确认页面
+    RO->>AS: 6. 用户登录并同意授权
     Note over AS: 生成一次性授权码<br/>与请求信息绑定存储
-    AS-->>RO: 6. HTTP 302 重定向回 redirect_uri<br/>?code=AUTH_CODE&state=...
-    RO->>Client: 7. 浏览器跟随重定向，将授权码送达客户端
-    end
+    AS-->>CF: 7. HTTP 302 重定向回 redirect_uri<br/>?code=AUTH_CODE&state=...
+    CF->>CB: 8. 浏览器跟随重定向，授权码送达客户端后端
 
-    rect rgb(220, 252, 231)
-    Note over Client,AS: 后端通道（Back Channel）— 服务端直接通信
-    Note over Client: 验证 state 防 CSRF
-    Client->>AS: 8. POST /token<br/>grant_type=authorization_code&code=...<br/>Authorization: Basic BASE64(client_id:client_secret)
+    Note over CB,AS: 后端通道（Back Channel）— 服务端直接通信
+    Note over CB: 验证 state 防 CSRF
+    CB->>AS: 9. POST /token<br/>grant_type=authorization_code&code=...<br/>Authorization: Basic BASE64(client_id:client_secret)
     Note over AS: 验证客户端凭证 + 授权码<br/>授权码用后即焚
-    AS-->>Client: 9. 返回 Access Token + Refresh Token
-    end
+    AS-->>CB: 10. 返回 Access Token + Refresh Token
 
-    Client->>RS: 10. GET /api/resource<br/>Authorization: Bearer <access_token>
-    RS-->>Client: 11. 返回受保护资源
+    CF->>CB: 11. 用户在前端发起资源请求
+    CB->>RS: 12. GET /api/resource<br/>Authorization: Bearer <access_token>
+    RS-->>CB: 13. 返回受保护资源
+    CB-->>CF: 14. 将数据返回前端展示
 ```
 
 ### 为什么需要授权码作为中间步骤？
@@ -60,35 +61,41 @@ sequenceDiagram
 
 ### 执行过程详解
 
-1. `用户发起操作`：用户在客户端点击"使用第三方登录"等按钮，触发授权流程。
+1. `用户发起操作`：用户在客户端前端页面点击"使用第三方登录"等按钮，触发授权流程。
 
-2. `客户端构造授权请求并重定向`：客户端服务端生成授权请求 URL，通过 HTTP 302 将用户浏览器重定向到授权服务器的`授权端点（Authorization Endpoint）`。请求中携带 `response_type=code`（表明使用授权码模式）、`client_id`（标识客户端身份）、`redirect_uri`（授权完成后的回调地址）、`scope`（申请的权限范围）和 `state`（防 CSRF 的随机值，客户端需保存此值以便后续验证）。
+2. `浏览器向客户端后端发起请求`：用户的点击触发浏览器向客户端后端的登录端点发起 HTTP 请求（如 `GET /login/oauth2`）。
 
-3. `浏览器访问授权端点`：用户浏览器跟随重定向，携带上述参数访问授权服务器。
+3. `客户端后端构造授权请求并重定向`：客户端后端生成授权请求 URL，通过 HTTP 302 将浏览器重定向到授权服务器的`授权端点（Authorization Endpoint）`。请求中携带 `response_type=code`（表明使用授权码模式）、`client_id`（标识客户端身份）、`redirect_uri`（授权完成后的回调地址）、`scope`（申请的权限范围）和 `state`（防 CSRF 的随机值，客户端后端需保存此值以便后续验证）。
 
-4. `授权服务器验证请求并展示授权页面`：授权服务器的授权端点收到请求后，执行以下验证：
+4. `浏览器访问授权端点`：浏览器跟随重定向，携带上述参数访问授权服务器。
+
+5. `授权服务器验证请求并展示授权页面`：授权服务器的授权端点收到请求后，执行以下验证：
     - 验证 `client_id` 是否对应已注册的客户端——如果客户端不存在，直接展示授权服务器自己的错误页面（`不会`通过 `redirect_uri` 返回错误，因为此时 `redirect_uri` 可能是伪造的，指向钓鱼页面或恶意软件下载地址）
     - 核对 `redirect_uri` 是否与该客户端注册时预配置的地址一致
     - 将请求的 `scope` 与客户端注册的允许 scope 做对比，确保不会超出权限范围
     - 验证通过后，如果用户未登录则先重定向到登录页面，然后展示授权确认页面
 
-5. `用户完成认证并同意授权`：用户在授权服务器的页面上完成登录并同意授权。认证过程完全在用户与授权服务器之间完成，客户端`不会接触`用户的凭证。OAuth 协议不限定认证方式——可以是用户名/密码、加密证书、安全令牌或联合单点登录（SSO）等。授权确认页面通常展示客户端信息和 scope 列表（以复选框形式呈现），用户可以选择`批准全部或仅批准部分`权限，因此客户端最终获得的 scope 可能少于申请的范围。
+6. `用户完成认证并同意授权`：用户在授权服务器的页面上完成登录并同意授权。认证过程完全在用户与授权服务器之间完成，客户端`不会接触`用户的凭证。OAuth 协议不限定认证方式——可以是用户名/密码、加密证书、安全令牌或联合单点登录（SSO）等。授权确认页面通常展示客户端信息和 scope 列表（以复选框形式呈现），用户可以选择`批准全部或仅批准部分`权限，因此客户端最终获得的 scope 可能少于申请的范围。
 
-6. `授权服务器颁发授权码`：用户同意授权后，授权服务器确定用户最终批准了哪些 scope（再次校验未超出客户端注册的范围，防止表单被篡改注入额外 scope），然后生成一个`一次性短效授权码`，将其与客户端请求信息、批准的 scope 绑定存储，最后通过 HTTP 302 将浏览器重定向到 `redirect_uri`，在查询参数中附带授权码 `code` 和原始 `state` 值。如果用户拒绝授权，则通过 `redirect_uri` 返回 `error=access_denied`。
+7. `授权服务器颁发授权码`：用户同意授权后，授权服务器确定用户最终批准了哪些 scope（再次校验未超出客户端注册的范围，防止表单被篡改注入额外 scope），然后生成一个`一次性短效授权码`，将其与客户端请求信息、批准的 scope 绑定存储，最后通过 HTTP 302 将浏览器重定向到 `redirect_uri`，在查询参数中附带授权码 `code` 和原始 `state` 值。如果用户拒绝授权，则通过 `redirect_uri` 返回 `error=access_denied`。
 
-7. `授权码送达客户端`：浏览器跟随重定向访问回调地址，客户端服务端从请求参数中取出授权码。
+8. `授权码送达客户端后端`：浏览器跟随重定向访问回调地址（`redirect_uri` 指向客户端后端），客户端后端从请求参数中取出授权码。
 
-8. `客户端凭码换 Token`：客户端服务端首先验证 `state` 与步骤 2 中生成的值一致（防止 CSRF 攻击），然后`在后端`向授权服务器的`令牌端点（Token Endpoint）`发起 POST 请求，携带授权码和客户端凭证。按照 OAuth 规范，如果授权请求中指定了 `redirect_uri`，则令牌请求中也必须包含相同的 `redirect_uri`（防止攻击者利用已被攻破的重定向地址将授权码注入到另一个会话中）。客户端凭证通常通过 HTTP Basic 认证传递（`Authorization: Basic BASE64(client_id:client_secret)`），也可以通过表单参数传递。
+9. `客户端后端凭码换 Token`：客户端后端首先验证 `state` 与步骤 3 中生成的值一致（防止 CSRF 攻击），然后向授权服务器的`令牌端点（Token Endpoint）`发起 POST 请求，携带授权码和客户端凭证。按照 OAuth 规范，如果授权请求中指定了 `redirect_uri`，则令牌请求中也必须包含相同的 `redirect_uri`（防止攻击者利用已被攻破的重定向地址将授权码注入到另一个会话中）。客户端凭证通常通过 HTTP Basic 认证传递（`Authorization: Basic BASE64(client_id:client_secret)`），也可以通过表单参数传递。
 
-9. `授权服务器验证并颁发 Token`：令牌端点收到请求后执行以下处理：
+10. `授权服务器验证并颁发 Token`：令牌端点收到请求后执行以下处理：
     - 验证客户端身份（`client_id` + `client_secret`）
     - 查找授权码并验证其是否有效、是否属于当前客户端
     - `用后即焚`：验证通过后立即从存储中删除授权码，确保一次性使用
-    - 生成 Access Token 和 Refresh Token，连同授权的 scope 一起存储，然后返回给客户端
+    - 生成 Access Token 和 Refresh Token，连同授权的 scope 一起存储，然后返回给客户端后端
 
-10. `访问受保护资源`：客户端使用 `Authorization: Bearer <access_token>` 请求头携带 Access Token，向资源服务器发起 API 请求。令牌由客户端后端保存和发送，不会暴露给前端页面或用户，进一步降低泄露风险。
+11. `前端发起资源请求`：用户在客户端前端页面发起操作（如查看个人资料），浏览器将请求发送到客户端后端。
 
-11. `返回资源`：资源服务器验证 Token 有效（签名、过期时间、scope 权限）后，根据 Token 携带的 scope 决定返回哪些数据，最终返回受保护的资源。
+12. `客户端后端携带 Token 访问资源`：客户端后端使用 `Authorization: Bearer <access_token>` 请求头携带 Access Token，向资源服务器发起 API 请求。令牌由客户端后端保存和发送，不会暴露给前端页面或用户，进一步降低泄露风险。
+
+13. `资源服务器返回数据`：资源服务器验证 Token 有效（签名、过期时间、scope 权限）后，根据 Token 携带的 scope 决定返回哪些数据，最终返回受保护的资源。
+
+14. `数据返回前端展示`：客户端后端将资源服务器的响应数据处理后返回给前端，前端渲染展示给用户。
 
 ### 授权端点错误响应（RFC 6749 Section 4.1.2.1）
 
@@ -217,26 +224,30 @@ PKCE 的安全分析详见「安全实践 · PKCE」。
 
 ``` mermaid
 sequenceDiagram
-    participant Client as 客户端
+    participant CF as 客户端前端<br/>(浏览器)
+    participant CB as 客户端后端
     participant AS as 授权服务器
     participant RS as 资源服务器
 
-    Client->>RS: 1. 携带已过期的 Access Token 请求资源
-    RS-->>Client: 2. 返回 401 Unauthorized（Token 已过期）
-    Client->>AS: 3. POST /token<br/>grant_type=refresh_token&refresh_token=...<br/>+ 客户端凭证（机密客户端）
+    CF->>CB: 1. 用户在前端发起资源请求
+    CB->>RS: 2. 携带已过期的 Access Token 请求资源
+    RS-->>CB: 3. 返回 401 Unauthorized（Token 已过期）
+    CB->>AS: 4. POST /token<br/>grant_type=refresh_token&refresh_token=...<br/>+ 客户端凭证（机密客户端）
     Note over AS: 验证 Refresh Token 有效性<br/>验证客户端身份<br/>检查请求的 scope 未超出原始授权
-    AS-->>Client: 4. 新 Access Token +（可选）新 Refresh Token
-    Client->>RS: 5. 携带新 Access Token 请求资源
-    RS-->>Client: 6. 返回受保护资源
+    AS-->>CB: 5. 新 Access Token +（可选）新 Refresh Token
+    CB->>RS: 6. 携带新 Access Token 重新请求资源
+    RS-->>CB: 7. 返回受保护资源
+    CB-->>CF: 8. 将数据返回前端（用户无感知刷新）
 ```
 
 执行过程：
 
-1. `Access Token 过期`：客户端携带已过期的 Access Token 请求资源服务器，收到 401 响应。
-2. `发起刷新请求`：客户端向令牌端点发起 POST 请求，携带 `grant_type=refresh_token` 和之前保存的 Refresh Token。机密客户端还需提供客户端凭证（`client_id` + `client_secret`）进行身份认证。
-3. `授权服务器验证`：授权服务器验证 Refresh Token 是否有效、是否属于该客户端。如果请求中携带了 `scope`，还需确认未超出 Refresh Token 最初授权的范围（可以请求子集，但不能请求更多权限）。
-4. `颁发新令牌`：验证通过后，授权服务器颁发新的 Access Token。授权服务器也可以同时颁发新的 Refresh Token 替换旧的（即 Refresh Token Rotation），旧 Token 立即失效。
-5-6. 客户端使用新 Access Token 正常访问资源。
+1. `前端发起资源请求`：用户在客户端前端页面发起操作，浏览器将请求发送到客户端后端。
+2. `Access Token 过期`：客户端后端携带已过期的 Access Token 请求资源服务器，收到 401 响应。
+3. `发起刷新请求`：客户端后端向令牌端点发起 POST 请求，携带 `grant_type=refresh_token` 和之前保存的 Refresh Token。机密客户端还需提供客户端凭证（`client_id` + `client_secret`）进行身份认证。
+4. `授权服务器验证`：授权服务器验证 Refresh Token 是否有效、是否属于该客户端。如果请求中携带了 `scope`，还需确认未超出 Refresh Token 最初授权的范围（可以请求子集，但不能请求更多权限）。
+5. `颁发新令牌`：验证通过后，授权服务器颁发新的 Access Token。授权服务器也可以同时颁发新的 Refresh Token 替换旧的（即 Refresh Token Rotation），旧 Token 立即失效。
+6-8. 客户端后端使用新 Access Token 重新请求资源服务器，获取数据后返回给前端展示。整个刷新过程对用户完全透明，无需重新登录。
 
 !!! note "Refresh Token 的安全注意事项"
 
@@ -304,16 +315,88 @@ sequenceDiagram
 5. `访问资源服务器`：设备获得 Access Token 后，携带 Token 向资源服务器发起 API 请求。
 6. `返回资源`：资源服务器验证 Token 后返回受保护的数据。
 
+## 隐式流程（Implicit）— ⚠️ 已弃用
+
+!!! danger "已弃用"
+    隐式流程因严重安全缺陷已在 OAuth 2.1 中移除。现代应用应使用`授权码流程 + PKCE` 替代。此处仅作历史参考。
+
+隐式流程最初为`纯前端应用（SPA）`设计——当时浏览器无法安全保存 `client_secret`，也没有 PKCE 机制。它的做法是跳过授权码这个中间步骤，直接在授权端点通过 URL 片段（`fragment`）返回 Access Token。
+
+``` mermaid
+sequenceDiagram
+    participant RO as 资源所有者
+    participant CF as 客户端前端<br/>(浏览器)
+    participant AS as 授权服务器
+    participant RS as 资源服务器
+
+    RO->>CF: 1. 点击"使用第三方登录"
+    CF-->>RO: 2. 重定向至授权端点
+    RO->>AS: 3. GET /authorize?response_type=token<br/>&client_id=...&redirect_uri=...&scope=...&state=...
+    Note over AS: 验证请求参数
+    AS-->>RO: 4. 展示登录/授权确认页面
+    RO->>AS: 5. 用户登录并同意授权
+    Note over AS: 直接生成 Access Token
+    AS-->>CF: 6. HTTP 302 重定向回 redirect_uri<br/>#access_token=...&token_type=Bearer&expires_in=3600&state=...
+    Note over CF: 从 URL 片段中提取 Access Token
+    CF->>RS: 7. GET /api/resource<br/>Authorization: Bearer <access_token>
+    RS-->>CF: 8. 返回受保护资源
+```
+
+与授权码流程的关键区别：
+
+- `response_type=token`（而非 `code`）：告知授权服务器直接返回 Token
+- `Token 通过 URL 片段返回`：使用 `#`（fragment）而非 `?`（query），片段不会发送到服务器（`redirect_uri` 对应的服务端收不到 Token），但会保留在浏览器中
+- `没有后端通道`：整个流程都在前端完成，不存在客户端后端与授权服务器的直接通信
+- `不颁发 Refresh Token`：因为没有安全的存储位置
+
+弃用原因：
+
+- `Token 暴露在浏览器中`：URL 片段可被页面中的 JavaScript（包括第三方脚本）读取，存在浏览器历史记录中，也可能通过 Referrer 头泄露
+- `无法验证客户端身份`：没有 `client_secret`，也没有 PKCE 的 `code_verifier`，任何能截获重定向的恶意应用都可以冒充合法客户端
+- `Token 注入攻击`：攻击者可以将自己获取的 Token 注入到受害者的重定向 URL 中，客户端无法区分 Token 是否来自正常授权流程
+
+## 资源所有者密码凭证（ROPC）— ⚠️ 已弃用
+
+!!! danger "已弃用"
+    ROPC 因违反 OAuth 核心设计原则已在 OAuth 2.1 中移除。现代应用应使用`授权码流程 + PKCE` 替代。此处仅作历史参考。
+
+ROPC 的做法是`用户直接将用户名和密码交给客户端`，由客户端代为向授权服务器换取 Token。这完全违背了 OAuth 的初衷——`让应用不接触用户密码`。
+
+``` mermaid
+sequenceDiagram
+    participant RO as 资源所有者
+    participant Client as 客户端
+    participant AS as 授权服务器
+    participant RS as 资源服务器
+
+    RO->>Client: 1. 输入用户名和密码
+    Note over Client: 客户端直接持有用户凭证
+    Client->>AS: 2. POST /token<br/>grant_type=password&username=...&password=...<br/>&client_id=...&scope=...
+    Note over AS: 验证用户凭证
+    AS-->>Client: 3. 返回 Access Token +（可选）Refresh Token
+    Client->>RS: 4. GET /api/resource<br/>Authorization: Bearer <access_token>
+    RS-->>Client: 5. 返回受保护资源
+```
+
+流程极为简单——客户端直接拿用户密码换 Token，跳过了授权码、浏览器重定向等所有保护机制。
+
+弃用原因：
+
+- `客户端直接接触用户密码`：OAuth 的核心价值就是让第三方应用不碰用户密码，ROPC 完全破坏了这一设计
+- `无法支持多因素认证`：用户名/密码是唯一的认证方式，无法集成短信验证码、硬件密钥等现代认证手段
+- `钓鱼风险`：用户被训练成"把密码交给客户端是正常的"，降低了对钓鱼攻击的警觉性
+- `权限范围不可控`：虽然形式上有 `scope`，但客户端已经持有用户密码，实际上拥有了用户的全部权限
+
+
 ## 适用场景对比
 
 | 授权流程 | 适用场景 | 推荐程度 | 需要用户参与 |
 |---------|---------|---------|------------|
-| 授权码 + PKCE | 所有有用户的应用（SPA、Web、移动端） | 强烈推荐 | 是 |
-| 客户端凭证 | 微服务、后台任务、M2M | 推荐 | 否 |
-| 设备授权 | 智能电视、CLI 工具、IoT | 推荐 | 是（用辅助设备） |
-
-!!! tip "已废弃的流程"
-    `隐式流程（Implicit）`和`资源所有者密码凭证（ROPC）`因安全问题已被废弃，OAuth 2.1 中已移除。现代应用应使用授权码流程 + PKCE 替代。
+| 授权码 + PKCE | 所有有用户的应用（SPA、Web、移动端） | ✅ 强烈推荐 | 是 |
+| 客户端凭证 | 微服务、后台任务、M2M | ✅ 推荐 | 否 |
+| 设备授权 | 智能电视、CLI 工具、IoT | ✅ 推荐 | 是（用辅助设备） |
+| 隐式流程 | ~~纯前端 SPA~~ | ❌ 已弃用 | 是 |
+| ROPC | ~~高度信任的第一方应用~~ | ❌ 已弃用 | 是 |
 
 ---
 
