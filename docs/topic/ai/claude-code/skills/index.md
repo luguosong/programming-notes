@@ -1,5 +1,5 @@
 ---
-title: Skills 技能系统
+title: Skills
 description: 通过 Skills 为 Claude Code 添加可复用的知识、工作流和参考文档
 ---
 

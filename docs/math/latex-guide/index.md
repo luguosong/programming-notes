@@ -1,9 +1,9 @@
 ---
-title: LaTeX 公式编写指南
+title: LaTeX 公式指南
 description: 在 Zensical 中使用 MathJax 编写 LaTeX 数学公式的完整参考
 ---
 
-# LaTeX 公式编写指南
+# LaTeX 公式指南
 
 需要在文档中写数学公式，但不知道 LaTeX 语法怎么拼？本指南帮你从零开始，用最少的命令写出专业的数学排版。
 

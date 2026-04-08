@@ -1,5 +1,5 @@
 ---
-title: 自动化与 CI/CD 集成
+title: 自动化
 description: 定时任务、远程控制、消息通道、CI/CD 集成与自动代码审查
 ---
 

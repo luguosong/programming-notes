@@ -1,9 +1,9 @@
 ---
-title: MCP 服务器
+title: MCP
 description: 通过 MCP（Model Context Protocol）将 Claude Code 连接到外部服务和工具
 ---
 
-# MCP 服务器
+# MCP
 
 **本文你会学到：**
 

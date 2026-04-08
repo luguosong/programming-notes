@@ -1,9 +1,9 @@
 ---
-title: Hooks 钩子系统
+title: Hooks
 description: 通过 Hooks 在特定生命周期事件时自动执行脚本，实现可预测的自动化
 ---
 
-# Hooks 钩子系统
+# Hooks
 
 **本文你会学到**：
 

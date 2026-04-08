@@ -1,9 +1,9 @@
 ---
-title: Sub-agents 与 Agent Teams
+title: Sub-agents
 description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Agent Teams 协调多个独立会话
 ---
 
-# Sub-agents 与 Agent Teams
+# Sub-agents
 
 **本文你会学到**：
 
