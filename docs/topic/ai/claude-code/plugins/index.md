@@ -1,5 +1,5 @@
 ---
-title: 插件系统
+title: 插件
 description: 通过插件打包和分发 Skills、Hooks、MCP 服务器等扩展功能
 ---
 

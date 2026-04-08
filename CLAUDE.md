@@ -255,6 +255,15 @@ programming-notes/
 - **只有二级目录的 `index.md` 在左侧导航中展示图标**，一级目录和三级及以下不设置
 - front matter `icon:` 路径用 `/`（如 `lucide/database`），正文图标短码用 `-`（如 `:lucide-database:`）——勿混淆
 
+### 文档标题一致性（强制）
+
+每篇文档 front matter 中的 `title:` 必须与 `zensical.toml` nav 中对应条目的标题**完全一致**。这是因为 Zensical 会优先显示 nav 配置的标题，不一致会导致 SEO 标题与页面标题不同、搜索索引混乱。
+
+- ✅ nav: `{ "自定义指令" = "..." }` → front matter: `title: 自定义指令`
+- ❌ nav: `{ "插件" = "..." }` → front matter: `title: 插件系统`（多了"系统"二字）
+
+修改任一侧标题时，务必同步更新另一侧。
+
 ### 图片统一格式
 
 带图注统一用 `<figure>` 格式（见下方「Zensical 特有语法」），图片托管在 `https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/`，图注格式为"图 章节号.图号 说明"。
