@@ -1,7 +1,7 @@
 <h1 align="center">programming-notes</h1>
 
 <p align="center">
-  <span>学习编程过程中整理的笔记集合。它涵盖了多个领域的知识</span>
+  <span>学习编程过程中整理的笔记集合，涵盖 Java、前端、数学、英语等多个领域</span>
 </p>
 
 <p align="center">
@@ -12,69 +12,63 @@
 
 ## 本地运行
 
-- 首先安装Python环境。
+### 前置条件
 
-- 安装zensical
+- Python 3（用于运行 Zensical）
+- Node.js（用于前端示例项目）
+- Java 17 + Maven（用于 Java 示例项目）
+- Docker（用于本地基础环境）
+
+### 安装 Zensical
 
 ```shell
 pip install zensical
 ```
 
-- 运行
+### 启动文档站点
 
 ```shell
+# 本地预览（默认 http://localhost:7000）
 zensical serve
-```
 
-- 编译成静态网页
-
-```shell
+# 编译为静态网页（输出到 site/）
 zensical build
 ```
 
-具体操作请查看[zensical文档](https://zensical.org/docs/get-started/)。
+> 具体操作请查看 [Zensical 文档](https://zensical.org/docs/get-started/)。
 
-## 笔记教学风格
+### 启动本地基础环境
 
-本仓库所有自编笔记（`docs/` 下非翻译类内容）统一采用**深入浅出的教学风格**写作，目标是：**让初学者能读懂、让高手觉得有收获**。
+基础环境配置位于 `environment/docker-compose.yml`，包含 MySQL、Redis、RabbitMQ、Nacos。
 
-### 写作原则
+```shell
+# 启动所有服务
+docker compose -f environment/docker-compose.yml up -d
 
-| 原则 | 说明 |
-|------|------|
-| 类比优先 | 用生活常识类比技术概念，再给出精确定义。如「JWT 就像一张盖了公章的纸条，任何人都能读，但伪造不了」 |
-| 循序渐进 | 先给「够用的版本」，再补充完整细节；先给最简示例，再演进到生产级写法 |
-| 口语化且严谨 | 可用「其实」「注意」「换句话说」，但技术术语必须准确 |
-| 主动语态 | 「Spring 会自动注入」> 「Bean 会被自动注入」 |
-| 术语零门槛 | 遇到专有名词先解释，不假设读者已掌握前置概念 |
+# 查看状态
+docker compose -f environment/docker-compose.yml ps
 
-### 知识点结构
+# 停止
+docker compose -f environment/docker-compose.yml down
+```
 
-每个知识点按以下脉络展开：
+| 服务 | 地址 | 账号 / 密码 |
+|------|------|------------|
+| MySQL 8.0 | `localhost:23306` | `root` / `12345678` |
+| Redis 7 | `localhost:26379` | 无密码 |
+| RabbitMQ 3 | `localhost:25672` / `http://localhost:35672` | `guest` / `guest` |
+| Nacos 2.3 | `http://localhost:28848/nacos` | `nacos` / `nacos` |
 
-1. **是什么（What）** — 一句话定义，用最朴素的语言
-2. **为什么（Why）** — 解释存在的意义 / 解决了什么问题
-3. **怎么用（How）** — 实际代码或操作示例
-4. **注意点（Pitfalls）** — 常见误区或边界情况（可选）
+## 项目结构
 
-### 代码示例
+```
+programming-notes/
+├── docs/            # 文档内容（Markdown）
+├── code/            # 与笔记对应的示例代码
+├── environment/     # 本地开发基础环境（Docker Compose）
+├── overrides/       # Zensical 主题覆盖文件
+├── site/            # 构建产物（勿手动修改）
+└── zensical.toml    # 站点配置（导航、主题、Markdown 扩展）
+```
 
-- 每个示例标注语言，关键行加注释
-- 提供最小可运行版本，不堆砌无关配置
-- 错误示例标注 `// ❌`，正确示例标注 `// ✅`
-- 复杂示例前先用自然语言说明「这段代码做了什么」
-
-### 节奏控制
-
-- 每个 H3 知识点控制在 **5 分钟内**可读完
-- 每 2-3 个知识点后加小结或对比表格，帮助建立结构感
-- 长文开头加「本文你会学到」的要点列表
-
-### 禁止事项
-
-- 不要上来就贴大段代码没有任何解释
-- 不要堆砌官方文档原文
-- 不要「总之就是这样」式的虎头蛇尾
-- 不要假设读者已经知道前置概念
-
-> 翻译类内容（`docs/document-translation/`）忠于原书风格，不适用以上约束。
+`docs/` 中的笔记通常对应 `code/` 中的示例代码。
