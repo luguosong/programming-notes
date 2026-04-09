@@ -286,6 +286,17 @@ exit 0  # exit 0 = 放行
 | `ask` | 正常弹出权限确认对话框 |
 | `defer` | 仅在 `-p` 非交互模式下有效，暂停等待外部处理 |
 
+`hookSpecificOutput` 还支持事件特有的输出字段。例如 `UserPromptSubmit` Hook 可以返回 `sessionTitle` 来设置当前会话标题（v2.1.94 新增）：
+
+```json title="UserPromptSubmit 设置会话标题"
+{
+  "hookSpecificOutput": {
+    "hookEventName": "UserPromptSubmit",
+    "sessionTitle": "feat: 添加用户认证模块"
+  }
+}
+```
+
 ## 🔧 Hook 能用来做什么？——实践指南
 
 ### CLAUDE.md + Skills + Hooks：三层叠加

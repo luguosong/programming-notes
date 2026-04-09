@@ -85,6 +85,8 @@ copilot --agent explore -p "找出所有未使用的导入"
 
 子 Agent 会获得基于名称的可读 ID（如 `math-helper-0`）而非随机字符串（1.0.6 新增），方便在 `/tasks` 视图中识别。空闲子 Agent 在 `/tasks` 视图中 2 分钟后自动隐藏（1.0.8 改进）。
 
+Sub-agent 现在有深度和并发限制，防止 Agent 无限递归生成子 Agent（1.0.22 新增）。
+
 ---
 
 ## 🎭 自定义 Agent

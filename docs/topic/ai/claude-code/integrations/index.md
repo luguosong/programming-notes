@@ -115,6 +115,20 @@ export ANTHROPIC_BEDROCK_GUARDRAILS_ARN="arn:aws:bedrock:us-east-1:123456789012:
 !!! warning "Guardrails 的影响"
     启用 Guardrails 后，如果模型的输出被过滤，Claude Code 可能收到空响应，导致功能异常。建议先在测试环境验证 Guardrails 规则不会误拦截正常的编码助手回复。
 
+#### Mantle 接入（v2.1.94 新增）
+
+Mantle 是 Amazon Bedrock 的优化接入层，由 Anthropic 提供。与传统 `CLAUDE_CODE_USE_BEDROCK=1` 直连方式不同，Mantle 在保持数据不出 AWS 的前提下提供更快的响应速度和更好的可靠性：
+
+```bash
+# 使用 Mantle 接入 Bedrock
+export CLAUDE_CODE_USE_MANTLE=1
+
+# 仍需配置 AWS 凭证和区域（与标准 Bedrock 相同）
+export AWS_REGION=us-east-1
+```
+
+Mantle 适用于所有已配置 Bedrock 的场景，无需额外的 IAM 权限变更。
+
 ### Google Vertex AI
 
 Google Vertex AI 是 GCP 上的 AI/ML 平台，同样支持 Claude 模型。一个显著优势是支持 **100 万 token 的上下文窗口**（v2.1.75 新增 Vertex AI 1M context 支持）。

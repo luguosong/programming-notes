@@ -15,6 +15,115 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.97（2026-04-08）
+
+> 📝 **笔记定位**：[状态栏配置](../configuration/advanced/index.md#怎么自定义状态栏) · [NO_FLICKER 模式](../configuration/index.md) · [Bash 工具权限](../permissions/index.md) · [MCP 认证](../mcp/index.md#认证方式)
+
+### ✨ 新功能
+
+- **焦点视图切换**（`Ctrl+O`）：在 `NO_FLICKER` 模式下显示提示词、单行工具摘要（含编辑 diff 统计）和最终响应
+- **`refreshInterval` 状态栏设置**：每隔 N 秒自动重新运行状态栏命令
+- **`workspace.git_worktree`** 加入状态栏 JSON 输入，当当前目录位于链接的 git worktree 内时设置
+- `/agents` 页面为正在运行的 Agent 类型显示 `● N running` 指示器
+- 新增 Cedar 策略文件语法高亮（`.cedar`、`.cedarpolicy`）
+
+### 🔧 改进
+
+- Accept Edits 模式自动批准带安全环境变量或进程包装器前缀的文件系统命令（如 `LANG=C rm foo`、`timeout 5 mkdir out`）
+- 自动模式和绕过权限模式自动批准沙箱网络访问提示
+- 沙箱改进：`sandbox.network.allowMachLookup` 现在在 macOS 上生效
+- 图片处理改进：粘贴和附件图片现在压缩到与 Read 工具读取图片相同的 token 预算
+- 斜杠命令和 `@` 提及补全现在在 CJK 句末标点后触发，日语/中文输入不再需要在 `/` 或 `@` 前加空格
+- Bridge 会话在 claude.ai 会话卡片上显示本地 git 仓库、分支和工作目录
+- 页脚布局改进：指示器（焦点、通知）保持在模式指示行，不再换行到下方
+- 上下文不足警告改为临时页脚通知，不再占据固定行
+- Markdown 引用块改进：跨行换行时显示连续的左侧竖线
+- 会话 transcript 大小优化：跳过空的 Hook 条目并限制存储的编辑前文件副本大小
+- Transcript 准确性改进：每个 block 条目现在携带最终 token 用量而非流式占位符
+- Bash 工具 OTEL 追踪改进：子进程在启用追踪时继承 W3C `TRACEPARENT` 环境变量
+- 更新 `/claude-api` Skill 以涵盖 Managed Agents 和 Claude API
+
+### 🐛 修复
+
+- 修复 `--dangerously-skip-permissions` 在批准对受保护路径的写入后被静默降级为 accept-edits 模式
+- 修复并加固 Bash 工具权限检查，收紧环境变量前缀和网络重定向检查，减少常见命令的误提示
+- 修复权限规则名称匹配 JavaScript 原型属性（如 `toString`）导致 `settings.json` 被静默忽略
+- 修复托管设置 allow 规则在管理员移除后仍保持活跃直到进程重启
+- 修复 `permissions.additionalDirectories` 设置变更不会在会话中途生效
+- 修复从 `settings.permissions.additionalDirectories` 移除目录时同时撤销通过 `--add-dir` 传入的相同目录
+- 修复 MCP HTTP/SSE 连接在服务器重连时累积约 50 MB/小时未释放的缓冲区
+- 修复 MCP OAuth `oauth.authServerMetadataUrl` 在重启后 token 刷新时未被使用，影响 ADFS 等身份提供商
+- 修复 429 重试在服务器返回较小的 `Retry-After` 时在约 13 秒内耗尽所有尝试——指数退避现在作为最小值
+- 修复速率限制升级选项在上下文压缩后消失
+- 修复多个 `/resume` 选择器问题：`--resume <name>` 打开不可编辑的会话、Ctrl+A 重载清空搜索、空列表吞没导航、任务状态文本替换会话摘要、跨项目过时数据
+- 修复 `--resume` 时超过 10KB 的文件编辑 diff 消失
+- 修复 `--resume` 缓存未命中和附件消息中丢失的会话中输入未保存到 transcript
+- 修复 Claude 工作时输入的消息未持久化到 transcript
+- 修复 prompt 类型 `Stop`/`SubagentStop` Hook 在长会话上失败，以及 Hook 评估器 API 错误显示 "JSON validation failed" 而非实际消息
+- 修复使用 worktree 隔离或 `cwd:` 覆盖的子 Agent 将工作目录泄露回父会话的 Bash 工具
+- 修复压缩在 prompt-too-long 重试时写入重复的多 MB 子 Agent transcript 文件
+- 修复 `claude plugin update` 在远程有新提交时仍报告 "already at the latest version"（基于 git 的 marketplace 插件）
+- 修复斜杠命令选择器在插件 frontmatter `name` 为 YAML 布尔关键字时崩溃
+- 修复 `NO_FLICKER` 模式下复制换行 URL 在断行处插入空格
+- 修复 `NO_FLICKER` 模式在 zellij 内运行时的滚动渲染伪影
+- 修复 `NO_FLICKER` 模式下悬停 MCP 工具结果时的崩溃
+- 修复 `NO_FLICKER` 模式 API 重试留下过时流式状态导致的内存泄漏
+- 修复 `NO_FLICKER` 模式在 Windows Terminal 上鼠标滚轮滚动缓慢
+- 修复 `NO_FLICKER` 模式在终端行数少于 24 行时不显示自定义状态栏
+- 修复 `NO_FLICKER` 模式在 Warp 中 Shift+Enter 和 Alt/Cmd+方向键快捷键不工作
+- 修复 Windows 上无闪烁模式下复制韩语/日语/Unicode 文本时出现乱码
+- 修复 Bedrock SigV4 认证在 `AWS_BEARER_TOKEN_BEDROCK` 或 `ANTHROPIC_BEDROCK_BASE_URL` 设为空字符串时失败（如 GitHub Actions 对未设置输入的处理）
+
+---
+
+## 📦 2.1.96（2026-04-08）
+
+### 🐛 修复
+
+- 修复使用 `AWS_BEARER_TOKEN_BEDROCK` 或 `CLAUDE_CODE_SKIP_BEDROCK_AUTH` 时 Bedrock 请求失败并报 `403 "Authorization header is missing"`（2.1.94 引入的回归）
+
+---
+
+## 📦 2.1.94（2026-04-07）
+
+> 📝 **笔记定位**：[Effort 等级](../configuration/model-output/index.md#思考强度effort-level) · [Hook 会话标题](../hooks/index.md#hook-脚本如何与-claude-code-通信) · [Bedrock Mantle](../integrations/index.md#amazon-bedrock) · [插件 Skill 名称](../plugins/index.md#pluginjson-详解)
+
+### ✨ 新功能
+
+- **Amazon Bedrock（Mantle）支持**：设置 `CLAUDE_CODE_USE_MANTLE=1` 启用
+- Slack MCP 发送消息工具调用新增紧凑的 `Slacked #channel` 标题，带可点击的频道链接
+- `UserPromptSubmit` Hook 新增 `hookSpecificOutput.sessionTitle` 用于设置会话标题
+- 插件输出样式新增 `keep-coding-instructions` frontmatter 字段支持
+- 通过 `"skills": ["./"]` 声明的插件 Skills 现在使用 Skill 的 frontmatter `name` 作为调用名称，而非目录名，跨安装方式保持一致
+
+### 🔧 改进
+
+- **默认 effort 等级从 medium 改为 high**（适用于 API Key、Bedrock/Vertex/Foundry、Team 和 Enterprise 用户，可通过 `/effort` 控制）
+- `--resume` 改进：直接从同一仓库的其他 worktree 恢复会话，而非打印 `cd` 命令
+- [VSCode] 减少启动会话时的冷启动子进程工作
+- [VSCode] 新增 `settings.json` 解析失败时的警告横幅，提示用户权限规则未生效
+
+### 🐛 修复
+
+- 修复 Agent 在收到带长 `Retry-After` 头的 429 速率限制响应后看起来卡住——现在立即显示错误而非静默等待
+- 修复 macOS Console 登录在登录钥匙串被锁定或密码不同步时静默失败并报 "Not logged in"——现在显示错误且 `claude doctor` 可诊断修复
+- 修复 YAML frontmatter 中定义的插件 Skill Hook 被静默忽略
+- 修复 `CLAUDE_PLUGIN_ROOT` 未设置时插件 Hook 报错 "No such file or directory"
+- 修复 `${CLAUDE_PLUGIN_ROOT}` 在本地 marketplace 插件启动时解析为 marketplace 源目录而非安装缓存
+- 修复长时间运行的会话中回滚显示重复的 diff 和空白页
+- 修复 transcript 中多行用户提示在 `❯` 插入符下方缩进换行
+- 修复搜索输入中 Shift+Space 插入文字 "space" 而非空格字符
+- 修复在 tmux 内基于 xterm.js 的终端（VS Code、Hyper、Tabby）中点击超链接打开两个浏览器标签
+- 修复 alt-screen 渲染 bug：滚动中途内容高度变化可能导致累积幽灵行
+- 修复 `FORCE_HYPERLINK` 环境变量通过 `settings.json` `env` 设置时被忽略
+- 修复原生终端光标不跟踪对话框中选中的标签页，影响屏幕阅读器和放大镜跟随标签导航
+- 修复 Bedrock 调用 Sonnet 3.5 v2 时使用 `us.` 推理配置文件 ID
+- 修复 SDK/print 模式在流式传输中断时不保留部分助手响应
+- 修复 CJK 及其他多字节文本在 stream-json 输入/输出中因 chunk 边界拆分 UTF-8 序列而被 U+FFFD 破坏
+- [VSCode] 修复下拉菜单在鼠标悬停列表时输入或使用方向键选中错误项
+
+---
+
 ## 📦 2.1.92（2026-04-04）
 
 > 📝 **笔记定位**：[CLI 命令](../getting-started/index.md#-有哪些常用命令cli-参考)

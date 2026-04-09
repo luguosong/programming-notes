@@ -335,6 +335,8 @@ enterprise-plugin/
 
 💡 `commands`、`agents`、`skills` 等路径字段可以**替换**默认目录位置。如果指定了这些字段，对应的默认目录就不会被扫描。想同时保留默认目录并添加额外路径，可以用数组形式：`"commands": ["./commands/", "./extras/deploy.md"]`。
 
+当 `skills` 使用 `"skills": ["./"]` 声明时，插件会扫描指定目录下的所有 Skill。此时 Skill 的调用名称取自 `SKILL.md` frontmatter 中的 `name` 字段而非目录名（v2.1.94 改进），这确保了 Skill 名称在不同安装方式下保持一致。
+
 ### 两个重要的环境变量
 
 Claude Code 为插件提供了两个特殊的环境变量，在 Hook 命令、MCP/LSP 配置、Skill 和 Agent 内容中都可以使用：

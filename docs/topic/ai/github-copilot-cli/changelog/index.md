@@ -15,6 +15,58 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.22-0（2026-04-08）
+
+> 📝 **笔记定位**：[Sub-agent 并发限制](../agents/index.md#内置-agent-的协作方式) · [Hook 触发修复](../hooks/index.md#-生命周期事件)
+
+### ✨ 新功能
+
+- **Sub-agent 深度和并发限制**：防止 Agent 无限递归生成子 Agent
+- 恢复会话时如果该会话已被其他 CLI 或应用使用，显示警告
+
+### 🐛 修复
+
+- 修复受 V8 引擎 grapheme 分段 bug 影响的系统上 CLI 崩溃
+- 修复 `sessionStart` 和 `sessionEnd` Hook 在交互模式下每个提示触发一次，改为每个会话只触发一次
+- 修复插件 Agent 未遵循 frontmatter 中指定的模型配置
+
+---
+
+## 📦 1.0.21（2026-04-07）
+
+> 📝 **笔记定位**：[MCP 管理命令](../mcp/index.md#-管理-mcp-服务器)
+
+### ✨ 新功能
+
+- **`copilot mcp` 命令**：新增 MCP 服务器管理命令
+- Hook payload 格式兼容：使用 PascalCase 事件名配置的 Hook 现在接收 VS Code 兼容的 snake_case payload，包含 `hook_event_name`、`session_id` 和 ISO 8601 时间戳
+
+### 🔧 改进
+
+- 长时间运行的异步 shell 命令执行时 spinner 不再卡住
+- Enterprise GitHub URL 输入框在登录流程中支持键盘输入和 Enter 提交
+- 斜杠命令选择器过滤时不再闪烁或移动输入位置
+- 时间线在内容缩减（如取消操作或工具完成）后不再变空白
+- Plan 模式时间线显示用户文本时不再重复添加 "Plan" 前缀
+- 自动关闭不再需要的 shell 会话，减少内存使用
+
+---
+
+## 📦 1.0.20（2026-04-07）
+
+### ✨ 新功能
+
+- **`copilot help monitoring`**：新增 OpenTelemetry 配置详情和示例的帮助主题
+
+### 🔧 改进
+
+- Spinner 持续显示直到后台 Agent 和 shell 命令完成，期间用户仍可输入
+- Azure OpenAI BYOK 未配置 API 版本时默认使用 GA 无版本 v1 路由
+- 减少实时响应流式传输时的 UI 卡顿
+- `/yolo` 和 `--yolo` 行为统一，且 `/yolo` 状态跨 `/restart` 保持
+
+---
+
 ## 📦 1.0.19（2026-04-06）
 
 > 📝 **笔记定位**：[MCP 持久化](../mcp/index.md#-管理-mcp-服务器) · [Hook macOS 权限](../hooks/index.md#-实战示例) · [Agent 文件名映射](../agents/index.md#-agent-存放位置)
