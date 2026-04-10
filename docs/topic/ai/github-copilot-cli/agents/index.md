@@ -133,6 +133,7 @@ tools:
 | `name` | ✅ | Agent 标识符，使用小写字母加连字符 |
 | `description` | ✅ | 简述 Agent 用途和激活时机 |
 | `tools` | ❌ | Agent 可使用的工具列表 |
+| `skills` | ❌ | 启动时预加载到 Agent 上下文中的 Skill 列表（1.0.22 新增） |
 
 ### 命名约定
 

@@ -15,6 +15,77 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.98（2026-04-09）
+
+> 📝 **笔记定位**：[Bash 工具权限](../permissions/index.md) · [Perforce 模式](../configuration/advanced/index.md) · [MCP 认证](../mcp/index.md#认证方式) · [Agent 管理](../agents/index.md)
+
+### ✨ 新功能
+
+- **Google Vertex AI 配置向导**：登录界面选择 "3rd-party platform" 后，交互式引导完成 GCP 认证、项目和区域配置、凭证验证和模型绑定
+- **Perforce 模式**（`CLAUDE_CODE_PERFORCE_MODE`）：对只读文件的 Edit/Write/NotebookEdit 操作会提示 `p4 edit` 而非静默覆盖
+- **Monitor 工具**：流式监控后台脚本的事件输出
+- **子进程沙箱**：Linux 上设置 `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` 后启用 PID 命名空间隔离；`CLAUDE_CODE_SCRIPT_CAPS` 限制每会话脚本调用次数
+- **`--exclude-dynamic-system-prompt-sections`**：Print 模式下排除动态系统提示区段，改善跨用户 prompt 缓存
+- **`workspace.git_worktree`** 状态栏 JSON 字段：当前目录在关联的 git worktree 内时设置
+- **W3C `TRACEPARENT`**：启用 OTEL 追踪时，Bash 工具子进程自动继承 trace tree
+- **LSP `clientInfo`**：Claude Code 在初始化请求中向语言服务器标识自己
+
+### 🔧 改进
+
+- **`/resume` 筛选器增强**：改进筛选提示标签，在筛选指示器中显示项目/worktree/分支名称
+- **页脚指示器**（Focus、通知）在窄终端宽度下保持在模式指示器行，不再换行
+- **`/agents` 分页布局**：Running 页签显示活跃子 Agent，Library 页签新增运行 Agent 和查看运行实例的操作
+- **`/reload-plugins`** 无需重启即可加载插件提供的 Skill
+- **Accept Edits 模式**：自动批准带有安全环境变量或进程包装器前缀的文件系统命令
+- **Vim 模式**：NORMAL 模式下 `j`/`k` 导航历史，在输入边界选中页脚指示器
+- **Hook 错误**：会话记录中包含 stderr 首行，无需 `--debug` 即可自诊断
+- **OTEL 追踪**：interaction span 正确包装并发 SDK 调用下的完整轮次，headless 轮次按轮结束 span
+- **会话记录**携带最终 token 使用量，而非流式传输占位符
+- 更新 `/claude-api` Skill 覆盖 Managed Agents 和 Claude API
+
+### 🐛 修复
+
+- **安全修复**：Bash 工具权限绕过——反斜杠转义标志可能被自动允许为只读，导致任意代码执行
+- **安全修复**：复合 Bash 命令绕过 auto 和 bypass-permissions 模式下的强制权限提示
+- 修复只读命令带环境变量前缀时未提示（除非变量为已知安全值如 `LANG`、`TZ`、`NO_COLOR`）
+- 修复重定向到 `/dev/tcp/...` 或 `/dev/udp/...` 时未提示而非自动允许
+- 修复流式传输响应卡住后超时而非回退到非流式模式
+- 修复 429 重试在服务器返回较小 `Retry-After` 时约 13 秒内耗尽所有重试次数——指数退避现在作为最小值
+- 修复 MCP OAuth `oauth.authServerMetadataUrl` 配置覆盖在重启后 token 刷新时不生效（影响 ADFS 等 IdP）
+- 修复 kitty 键盘协议激活时 xterm 和 VS Code 集成终端中大写字母被丢弃
+- 修复 macOS 文本替换删除触发词而非插入替换内容
+- 修复 `--dangerously-skip-permissions` 在通过 Bash 批准写入受保护路径后被静默降级为 accept-edits 模式
+- 修复 managed-settings allow 规则在管理员移除后仍保持活跃直到进程重启
+- 修复 `permissions.additionalDirectories` 变更不会在会话中途生效——移除的目录立即失去访问权限，新增的无需重启
+- 修复 `Bash(cmd:*)` 和 `Bash(git commit *)` 通配符权限规则无法匹配含多余空格或制表符的命令
+- 修复 `Bash(...)` deny 规则对混合 `cd` 与其他段的管道命令被降级为提示
+- 修复 `cut -d /`、`paste -d /`、`column -s /`、`awk '{print $1}' file` 及含 `%` 文件名的误报权限提示
+- 修复权限规则名称匹配 JavaScript 原型属性（如 `toString`）导致 `settings.json` 被静默忽略
+- 修复 Agent 团队成员使用 `--dangerously-skip-permissions` 时未继承领导者的权限模式
+- 修复全屏模式下悬停 MCP 工具结果时崩溃
+- 修复全屏模式下复制换行 URL 在换行处插入空格
+- 修复 `--resume` 时编辑文件超过 10KB 时 diff 从 UI 消失
+- 修复多个 `/resume` 选择器问题：`--resume <name>` 不可编辑、筛选重载清除搜索状态、空列表吞没方向键、跨项目过期、任务状态文本覆盖对话摘要
+- 修复 `/export` 不接受绝对路径和 `~`，静默重写用户指定的扩展名为 `.txt`
+- 修复 `/effort max` 对未知或未来模型 ID 被拒绝
+- 修复斜杠命令选择器在插件 frontmatter `name` 为 YAML 布尔关键字时崩溃
+- 修复速率限制升级文本在消息重新挂载后隐藏
+- 修复 MCP 工具 `_meta["anthropic/maxResultSizeChars"]` 未绕过基于 token 的持久层
+- 修复语音模式在推送通话按键时泄漏大量空格字符到输入中
+- 修复 `DISABLE_AUTOUPDATER` 未完全抑制 npm 注册表版本检查和符号链接修改
+- 修复 Remote Control 权限处理条目在会话生命周期内持续存在的内存泄漏
+- 修复后台子 Agent 失败时不向父 Agent 报告部分进度
+- 修复 Stop/SubagentStop Hook 在长会话中失败，Hook 评估器 API 错误显示"JSON validation failed"而非真实消息
+- 修复 `grep -f FILE` / `rg -f FILE` 读取工作目录外的模式文件时未提示
+- 修复过期子 Agent worktree 清理移除包含未跟踪文件的 worktree
+- 修复 `sandbox.network.allowMachLookup` 在 macOS 上不生效
+- 修复 `CLAUDE_CODE_MAX_CONTEXT_TOKENS` 设置 `DISABLE_COMPACT` 时未生效
+- 设置 `DISABLE_COMPACT` 时不再显示 `/compact` 提示
+- 修复反馈调查关闭时的渲染问题
+- [VSCode] 修复 Windows 上设置 `CLAUDE_CODE_GIT_BASH_PATH` 或 Git 安装在默认位置时出现误报的"requires git-bash"错误
+
+---
+
 ## 📦 2.1.97（2026-04-08）
 
 > 📝 **笔记定位**：[状态栏配置](../configuration/advanced/index.md#怎么自定义状态栏) · [NO_FLICKER 模式](../configuration/index.md) · [Bash 工具权限](../permissions/index.md) · [MCP 认证](../mcp/index.md#认证方式)

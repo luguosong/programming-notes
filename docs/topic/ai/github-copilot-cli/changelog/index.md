@@ -15,20 +15,37 @@ npm update -g @github/copilot
 
 ---
 
-## 📦 1.0.22-0（2026-04-08）
+## 📦 1.0.22（2026-04-09）
 
-> 📝 **笔记定位**：[Sub-agent 并发限制](../agents/index.md#内置-agent-的协作方式) · [Hook 触发修复](../hooks/index.md#-生命周期事件)
+> 📝 **笔记定位**：[Sub-agent 并发限制](../agents/index.md#内置-agent-的协作方式) · [Agent Skills 字段](../agents/index.md) · [MCP 配置源精简](../mcp/index.md#-配置文件层级) · [Hook 触发修复](../hooks/index.md#-生命周期事件)
 
 ### ✨ 新功能
 
 - **Sub-agent 深度和并发限制**：防止 Agent 无限递归生成子 Agent
+- **Agent Skills 字段**：自定义 Agent 可声明 `skills` 字段，启动时将 Skill 内容预加载到 Agent 上下文中
+- **插件安装后提示**：插件安装完成后可显示设置说明消息
+- **插件跨会话持久化**：插件在会话间保持启用状态，启动时根据用户配置自动安装
 - 恢复会话时如果该会话已被其他 CLI 或应用使用，显示警告
+
+### 🔧 改进
+
+- MCP 工具的非标准 JSON Schema 现在会自动清理，兼容所有模型提供商
+- 改进 MCP 和 Extension 工具返回的大图片处理
+- 使用新的简化内联渲染器提升渲染性能
+- 远程会话被组织策略阻止时，显示联系管理员的明确提示
+- Sub-agent 活动不再显示重复的工具名称（如"view view the file..."）
+- 斜杠命令选择器移至文本输入框上方，布局更稳定
 
 ### 🐛 修复
 
 - 修复受 V8 引擎 grapheme 分段 bug 影响的系统上 CLI 崩溃
 - 修复 `sessionStart` 和 `sessionEnd` Hook 在交互模式下每个提示触发一次，改为每个会话只触发一次
+- 修复通过 BYOM/BYOK 配置使用 Anthropic 模型时，权限检查和其他 Hook 无法正常工作的问题
 - 修复插件 Agent 未遵循 frontmatter 中指定的模型配置
+
+### 🗑️ 移除
+
+- 移除 `.vscode/mcp.json` 和 `.devcontainer/devcontainer.json` 作为 MCP 服务器配置源，CLI 现在只读取 `.mcp.json`。检测到 `.vscode/mcp.json` 但没有 `.mcp.json` 时显示迁移提示
 
 ---
 
