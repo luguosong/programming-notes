@@ -1,9 +1,14 @@
 {
   "hooks": {
-    "postToolUse": [
+    "PostToolUse": [
       {
-        "if": "Edit(**/changelog/index.md)",
-        "command": "echo 💡 检测到 changelog 文件更新。建议使用 sync-changelog Skill 将变更同步到对应主题笔记页面。"
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const p = process.env.CLAUDE_FILE_PATHS || ''; if (p.includes('changelog/index.md')) { console.log('💡 检测到 changelog 文件更新。建议使用 sync-changelog Skill 将变更同步到对应主题笔记页面。'); }\""
+          }
+        ]
       }
     ]
   }
