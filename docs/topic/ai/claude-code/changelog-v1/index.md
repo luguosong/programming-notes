@@ -29,8 +29,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Set `CLAUDE_BASH_NO_LOGIN` environment variable to 1 or true to to skip login shell for BashTool
-- No longer inform Claude of the list of allowed tools when permission is denied
+- 新增 `CLAUDE_BASH_NO_LOGIN` 环境变量，设为 1 或 true 可跳过 BashTool 的 login shell
+- 改进 权限被拒绝时不再将 allowed tools 列表通知 Claude
 
 ### 🐛 修复
 
@@ -49,8 +49,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Bash permission rules now support output redirections when matching (e.g., `Bash(python:*)` matches `python script.py > output.txt`)
-- Enhanced BashTool environment snapshot logging
+- 改进 Bash 权限规则现在支持匹配时的输出重定向（例如 `Bash(python:*)` 匹配 `python script.py > output.txt`）
+- 改进 BashTool 环境快照日志
 - 迁移 --debug logging to a file, to enable easy tailing & filtering
 
 ### 🐛 修复
@@ -66,7 +66,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🔧 改进
 
 - 改进 VSCode extension command registry and sessions dialog user experience
-- Enhanced sessions dialog responsiveness and visual feedback
+- 改进 会话对话框的响应性和视觉反馈
 
 ### 🐛 修复
 
@@ -80,7 +80,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Support dynamic headers for MCP servers via headersHelper configuration
+- 新增 通过 headersHelper 配置为 MCP 服务器设置动态 headers
 
 ### 🐛 修复
 
@@ -110,9 +110,9 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🔧 改进
 
 - 改进 thinking mode display with enhanced visual effects
-- Type /t to temporarily disable thinking mode in your prompt
+- 新增 输入 /t 可临时禁用 thinking mode
 - 改进 path validation for glob and grep tools
-- Show condensed output for post-tool hooks to reduce visual clutter
+- 改进 post-tool hooks 显示精简输出以减少视觉干扰
 - 改进 UI consistency for permission request dialogs
 
 ### 🐛 修复
@@ -125,7 +125,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Move Ctrl+R keybinding for toggling transcript to Ctrl+O
+- 改进 将切换 transcript 的快捷键从 Ctrl+R 改为 Ctrl+O
 
 ### 🗑️ 移除
 
@@ -142,12 +142,12 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Transcript mode (Ctrl+R): Added the model used to generate each assistant message
+- Transcript mode (Ctrl+R): 新增 显示生成每条 assistant 消息所用的模型
 - 修复 issue where some Claude Max users were incorrectly recognized as Claude Pro users
 
 ### 🐛 修复
 
-- IDE: Various improvements and bug fixes
+- IDE: 改进 多项优化和 bug 修复
 
 ---
 
@@ -155,7 +155,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- /model now validates provided model names
+- /model 现在会验证提供的模型名称
 
 ### 🐛 修复
 
@@ -167,8 +167,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- /terminal-setup command now supports WezTerm
-- MCP: OAuth tokens now proactively refresh before expiration
+- /terminal-setup command 现在支持 WezTerm
+- MCP: 改进 OAuth token 现在会在过期前主动刷新
 
 ### 🐛 修复
 
@@ -196,7 +196,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Settings: /doctor now validates permission rule syntax and suggests corrections
+- Settings: 新增 /doctor 验证权限规则语法并建议修正
 
 ---
 
@@ -204,13 +204,13 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ✨ 新功能
 
-- Vertex: add support for global endpoints for supported models
+- Vertex: 新增 支持受支持模型的 global endpoints
 - SDK: 新增 custom tools as callbacks
 - 新增 /todos command to list current todo items
 
 ### 🔧 改进
 
-- /memory command now allows direct editing of all imported memory files
+- /memory command 现在允许直接编辑所有导入的 memory 文件
 
 ---
 
@@ -222,7 +222,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Support NO_PROXY environment variable to bypass proxy for specified hostnames and IPs
+- 新增 支持 NO_PROXY 环境变量以绕过指定主机名和 IP 的代理
 
 ---
 
@@ -230,18 +230,16 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Settings file changes take effect immediately - no restart required
+- 改进 设置文件更改立即生效，无需重启
 
 ---
 
 ## 📦 1.0.88
 
-> 📝 **笔记定位**：[模型别名环境变量](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
-
 ### 🔧 改进
 
-- Status line input now includes `exceeds_200k_tokens`
-- Introduced `ANTHROPIC_DEFAULT_SONNET_MODEL` and `ANTHROPIC_DEFAULT_OPUS_MODEL` for controlling model aliases opusplan, opus, and sonnet.
+- 新增 status line 输入包含 `exceeds_200k_tokens`
+- 引入 `ANTHROPIC_DEFAULT_SONNET_MODEL` 和 `ANTHROPIC_DEFAULT_OPUS_MODEL`，用于控制模型别名 opusplan、opus 和 sonnet
 - Bedrock: 更新 default Sonnet model to Sonnet 4
 
 ### 🐛 修复
@@ -267,8 +265,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Status line input now includes session cost info
-- Hooks: Introduced SessionEnd hook
+- 新增 status line 输入包含会话费用信息
+- Hooks: 引入 SessionEnd hook
 
 ---
 
@@ -278,8 +276,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- @-mention: Add ~/.claude/\* files to suggestions for easier agent, output style, and slash command editing
-- Use built-in ripgrep by default; to opt out of this behavior, set USE_BUILTIN_RIPGREP=0
+- @-mention: 新增 ~/.claude/* 文件到建议列表，便于编辑 agent、output style 和 slash command
+- 改进 默认使用内置 ripgrep；如需退出此行为，设置 USE_BUILTIN_RIPGREP=0
 
 ### 🐛 修复
 
@@ -296,7 +294,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- @-mention: Support files with spaces in path
+- @-mention: 新增 支持路径中包含空格的文件
 
 ---
 
@@ -309,7 +307,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Settings: Validation prevents invalid fields in .claude/settings.json files
+- Settings: 改进 验证防止 .claude/settings.json 文件中的无效字段
 - MCP: 改进 tool name consistency
 
 ### 🐛 修复
@@ -326,7 +324,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🐛 修复
 
-- Agents: Fix custom agent loading when agent files are unparsable
+- Agents: 修复 agent 文件无法解析时的自定义 agent 加载问题
 
 ---
 
@@ -334,13 +332,11 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🐛 修复
 
-- UI improvements: Fix text contrast for custom subagent colors and spinner rendering issues
+- 修复 自定义 subagent 颜色的文本对比度和 spinner 渲染问题
 
 ---
 
 ## 📦 1.0.77
-
-> 📝 **笔记定位**：[Opus Plan Mode](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
 
 ### ✨ 新功能
 
@@ -348,11 +344,11 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Opus Plan Mode: New setting in `/model` to run Opus only in plan mode, Sonnet otherwise
+- Opus Plan Mode: 新增 在 `/model` 中设置仅在 plan mode 使用 Opus，其他情况使用 Sonnet
 
 ### 🐛 修复
 
-- Bash tool: Fix heredoc and multiline string escaping, improve stderr redirection handling
+- Bash tool: 修复 heredoc 和多行字符串转义，改进 stderr 重定向处理
 - 修复 token limit errors in conversation summarization
 
 ---
@@ -367,10 +363,10 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- MCP: Support multiple config files with `--mcp-config file1.json file2.json`
-- MCP: Press Esc to cancel OAuth authentication flows
+- MCP: 新增 支持多配置文件 `--mcp-config file1.json file2.json`
+- MCP: 新增 按 Esc 取消 OAuth 认证流程
 - Bash: 改进 command validation and reduced false security warnings
-- UI: Enhanced spinner animations and status line visual hierarchy
+- UI: 改进 spinner 动画和 status line 视觉层次
 
 ---
 
@@ -378,7 +374,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Ask permissions: have Claude Code always ask for confirmation to use specific tools with /permissions
+- 新增 Ask permissions：通过 /permissions 让 Claude Code 始终确认是否使用特定工具
 
 ---
 
@@ -386,8 +382,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Background commands: (Ctrl-b) to run any Bash command in the background so Claude can keep working (great for dev servers, tailing logs, etc.)
-- Customizable status line: add your terminal prompt to Claude Code with /statusline
+- 新增 Background commands：按 Ctrl-b 在后台运行 Bash 命令，Claude 可继续工作（适用于 dev servers、tailing logs 等）
+- 新增 可自定义 status line：通过 /statusline 将终端 prompt 添加到 Claude Code
 
 ---
 
@@ -399,7 +395,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ⚡ 性能
 
-- Performance: Optimized message rendering for better performance with large contexts
+- 优化 消息渲染性能，提升大上下文场景下的表现
 
 ### 🐛 修复
 
@@ -411,7 +407,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Upgraded Opus to version 4.1
+- 更新 Opus 升级至 4.1 版本
 
 ---
 
@@ -430,9 +426,9 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Windows: improve permissions checks for allow / deny tools and project trust. This may create a new project entry in `.claude.json` - manually merge the history field if desired.
-- Windows: improve sub-process spawning to eliminate "No such file or directory" when running commands like pnpm
-- Enhanced /doctor command with CLAUDE.md and MCP tool context for self-serve debugging
+- Windows: 改进 allow/deny 工具和项目信任的权限检查。可能会在 `.claude.json` 中创建新的项目条目——如需要请手动合并 history 字段
+- Windows: 改进 子进程启动，消除运行 pnpm 等命令时的 "No such file or directory" 错误
+- 改进 /doctor 命令，新增 CLAUDE.md 和 MCP 工具上下文用于自助调试
 
 ### 🐛 修复
 
@@ -455,7 +451,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ✨ 新功能
 
-- Agents: Added model customization support - you can now specify which model an agent should use
+- Agents: 新增 模型自定义支持，现在可以指定 agent 使用的模型
 - 新增 hidden files to file search and @-mention suggestions
 
 ### 🔧 改进
@@ -464,7 +460,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🐛 修复
 
-- Agents: Fixed unintended access to the recursive agent tool
+- Agents: 修复 对 recursive agent tool 的非预期访问
 - SDK: 修复 user input tracking across multi-turn conversations
 
 ---
@@ -488,7 +484,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🔧 改进
 
 - Hooks: 新增 SessionStart hook for new session initialization
-- /add-dir command now supports typeahead for directory paths
+- /add-dir command 现在支持目录路径的 typeahead
 - 改进 network connectivity check reliability
 
 ---
@@ -503,14 +499,14 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Transcript mode (Ctrl+R): Changed Esc to exit transcript mode rather than interrupt
-- Settings: Added `--settings` flag to load settings from a JSON file
+- Transcript mode (Ctrl+R): 改进 将 Esc 改为退出 transcript mode 而非中断
+- Settings: 新增 `--settings` 参数从 JSON 文件加载设置
 
 ### 🐛 修复
 
-- Settings: Fixed resolution of settings files paths that are symlinks
-- OTEL: Fixed reporting of wrong organization after authentication changes
-- Slash commands: Fixed permissions checking for allowed-tools with Bash
+- Settings: 修复 settings 文件路径为 symlinks 时的解析问题
+- OTEL: 修复 认证变更后报告错误 organization 的问题
+- Slash commands: 修复 Bash 相关 allowed-tools 的权限检查
 
 ---
 
@@ -520,7 +516,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ✨ 新功能
 
-- You can now create custom subagents for specialized tasks! Run /agents to get started
+- 新增 自定义 subagents，用于专项任务！运行 /agents 开始使用
 
 ---
 
@@ -534,9 +530,9 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- SDK: Allow specifying env for spawned process
-- Hooks: Exposed PermissionDecision to hooks (including "ask")
-- Hooks: UserPromptSubmit now supports additionalContext in advanced JSON output
+- SDK: 新增 为 spawned process 指定 env
+- Hooks: 新增 向 hooks 暴露 PermissionDecision（包括 "ask"）
+- Hooks: 新增 UserPromptSubmit 支持 advanced JSON output 中的 additionalContext
 
 ### 🐛 修复
 
@@ -573,7 +569,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🐛 修复
 
-- Fix: Remove trailing newlines from bash output in terminal wrapping
+- 修复 移除 bash 输出在 terminal wrapping 中的尾部换行符
 
 ---
 
@@ -585,7 +581,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🐛 修复
 
-- Fixes for WSL IDE detection
+- 修复 WSL IDE 检测问题
 - 修复 an issue causing awsRefreshHelper changes to .aws directory not to be picked up
 
 ---
@@ -603,7 +599,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🐛 修复
 
-- Windows: fixed Ctrl+Z crash
+- Windows: 修复 Ctrl+Z 崩溃问题
 
 ---
 
@@ -614,10 +610,10 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🔧 改进
 
 - Hooks: 新增 UserPromptSubmit hook and the current working directory to hook inputs
-- Custom slash commands: Added argument-hint to frontmatter
-- Windows: OAuth uses port 45454 and properly constructs browser URL
-- Windows: mode switching now uses alt + m, and plan mode renders properly
-- Shell: Switch to in-memory shell snapshot to fix file-related errors
+- Custom slash commands: 新增 frontmatter 中的 argument-hint
+- Windows: 改进 OAuth 使用端口 45454 并正确构建浏览器 URL
+- Windows: 改进 模式切换改为 alt + m，plan mode 正确渲染
+- Shell: 改进 切换到内存 shell snapshot 以修复文件相关错误
 
 ---
 
@@ -651,19 +647,19 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 - 新增 support for native Windows (requires Git for Windows)
 - 新增 support for Bedrock API keys through environment variable AWS_BEARER_TOKEN_BEDROCK
-- Settings: /doctor can now help you identify and fix invalid setting files
-- `--append-system-prompt` can now be used in interactive mode, not just --print/-p.
+- Settings: 新增 /doctor 可帮助识别和修复无效的 setting 文件
+- `--append-system-prompt` 现在可在交互模式中使用，不仅限于 --print/-p
 
 ### 🔧 改进
 
 - 增加 auto-compact warning threshold from 60% to 80%
-- OTEL resource now includes os.type, os.version, host.arch, and wsl.version (if running on Windows Subsystem for Linux)
+- 新增 OTEL resource 包含 os.type、os.version、host.arch 和 wsl.version（如运行在 Windows Subsystem for Linux 上）
 
 ### 🐛 修复
 
 - 修复 an issue with handling user directories with spaces for shell snapshots
-- Custom slash commands: Fixed user-level commands in subdirectories
-- Plan mode: Fixed issue where rejected plan from sub-task would get discarded
+- Custom slash commands: 修复 子目录中的 user-level 命令
+- Plan mode: 修复 sub-task 中被拒绝的 plan 被丢弃的问题
 
 ---
 
@@ -681,7 +677,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 - 移动 shell snapshots from /tmp to ~/.claude for more reliable Bash tool calls
 - 改进 IDE extension path handling when Claude Code runs in WSL
 - Hooks: 新增 a PreCompact hook
-- Vim mode: Added c, f/F, t/T
+- Vim mode: 新增 c、f/F、t/T 操作
 
 ### 🐛 修复
 
@@ -696,12 +692,12 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 - 重新设计 Search (Grep) tool with new tool input parameters and features
 - 禁用 IDE diffs for notebook files, fixing "Timeout waiting after 1000ms" error
 - 更新 prompt input undo to Ctrl+\_ to avoid breaking existing Ctrl+U behavior, matching zsh's undo shortcut
-- Custom slash commands: Restored namespacing in command names based on subdirectories. For example, .claude/commands/frontend/component.md is now /frontend:component, not /component.
+- Custom slash commands: 改进 恢复基于子目录的命令名称命名空间。例如 .claude/commands/frontend/component.md 现在是 /frontend:component，而非 /component
 
 ### 🐛 修复
 
 - 修复 config file corruption issue by enforcing atomic writes
-- Stop Hooks: Fixed transcript path after /clear and fixed triggering when loop ends with tool call
+- Stop Hooks: 修复 /clear 后的 transcript 路径以及循环以 tool call 结束时的触发问题
 
 ---
 
@@ -713,8 +709,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- MCP: resource_link tool results are now supported
-- MCP: tool annotations and tool titles now display in /mcp view
+- MCP: 新增 支持 resource_link tool 结果
+- MCP: 新增 tool annotations 和 tool titles 在 /mcp view 中显示
 - 变更 Ctrl+Z to suspend Claude Code. Resume by running `fg`. Prompt input undo is now Ctrl+U.
 
 ---
@@ -749,7 +745,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Hooks: Split Stop hook triggering into Stop and SubagentStop
+- Hooks: 改进 将 Stop hook 触发拆分为 Stop 和 SubagentStop
 - Hooks: 启用 optional timeout configuration for each command
 - Hooks: 新增 "hook_event_name" to hook input
 
@@ -797,7 +793,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Web search now takes today's date into context
+- 改进 Web search 现在将当天日期纳入上下文
 
 ### 🐛 修复
 
@@ -832,7 +828,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🔧 改进
 
 - 改进 logging functionality with session ID support
-- Improvements to plan mode
+- 改进 plan mode
 
 ---
 
@@ -863,11 +859,11 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### ✨ 新功能
 
 - 新增 timestamps in Ctrl-r mode and fixed Ctrl-c handling
-- Enhanced jq regex support for complex filters with pipes and select
+- 改进 jq 正则表达式支持，适用于包含 pipes 和 select 的复杂过滤器
 
 ### 🔧 改进
 
-- Custom slash commands: Run bash output, @-mention files, enable thinking with thinking keywords
+- Custom slash commands: 新增 运行 bash 输出、@-mention 文件、通过 thinking 关键词启用 thinking
 - 改进 file path autocomplete with filename matching
 
 ---
@@ -889,15 +885,15 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ⚡ 性能
 
-- Performance optimizations for memory usage
+- 优化 内存使用性能
 
 ### 🔧 改进
 
-- Resizes images before upload to prevent API size limit errors
+- 改进 上传前调整图片尺寸以避免 API 大小限制错误
 
 ### 🐛 修复
 
-- Slash commands: Fix selector display during history navigation
+- Slash commands: 修复 历史导航时的 selector 显示问题
 
 ---
 
@@ -907,13 +903,13 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ✨ 新功能
 
-- MCP resources can now be @-mentioned
+- 新增 MCP resources 支持 @-mention
 
 ### 🔧 改进
 
-- Streamable HTTP MCP servers are now supported
-- Remote MCP servers (SSE and HTTP) now support OAuth
-- /resume slash command to switch conversations within Claude Code
+- 新增 支持 Streamable HTTP MCP 服务器
+- 新增 Remote MCP 服务器（SSE 和 HTTP）支持 OAuth
+- /resume slash command 用于在 Claude Code 内切换对话
 
 ---
 
@@ -921,8 +917,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- Slash commands: moved "project" and "user" prefixes to descriptions
-- Slash commands: improved reliability for command discovery
+- Slash commands: 改进 将 "project" 和 "user" 前缀移至描述中
+- Slash commands: 改进 命令发现的可靠性
 - 改进 support for Ghostty
 - 改进 web search reliability
 
@@ -988,7 +984,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- MCP authentication and permission improvements
+- 改进 MCP 认证和权限
 
 ### 🐛 修复
 
@@ -1000,8 +996,8 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### 🔧 改进
 
-- We now emit messages from sub-tasks in -p mode (look for the parent_tool_use_id property)
-- MCP server list UI improvements
+- 改进 在 -p mode 中输出 sub-tasks 的消息（查找 parent_tool_use_id 属性）
+- 改进 MCP 服务器列表 UI
 - 更新 Claude Code process title to display "claude" instead of "node"
 
 ### 🐛 修复
@@ -1014,7 +1010,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 
 ### ✨ 新功能
 
-- Claude Code can now also be used with a Claude Pro subscription
+- 新增 Claude Code 现在支持 Claude Pro 订阅
 - 新增 /upgrade for smoother switching to Claude Max plans
 
 ### 🔧 改进
@@ -1067,7 +1063,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🐛 修复
 
 - 修复 a bug where --dangerously-skip-permissions sometimes didn't work in --print mode
-- Bugfixes, UI polish, and tool reliability improvements
+- 修复 Bug 修复、UI 优化和工具可靠性改进
 
 ### 🗑️ 移除
 
@@ -1084,7 +1080,7 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ### 🔧 改进
 
 - 改进 edit reliability for tab-indented files
-- Respect CLAUDE_CONFIG_DIR everywhere
+- 改进 全局统一遵循 CLAUDE_CONFIG_DIR
 - 减少 unnecessary tool permission prompts
 
 ### 🐛 修复
@@ -1115,8 +1111,6 @@ description: Claude Code 1.x 及更早版本的更新内容汇总
 ---
 
 ## 📦 1.0.0
-
-> 📝 **笔记定位**：[Sonnet 4 / Opus 4 模型](../how-it-works/index.md#-agentic-loopclaude-code-的核心循环)
 
 ### ✨ 新功能
 
