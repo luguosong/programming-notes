@@ -1,0 +1,16 @@
+# 日志级别配置
+logging:
+  level:
+    root: INFO
+    com.luguosong: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/spring-app.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
+      total-size-cap: 1GB
+  group:
+    demo: "com.luguosong"
