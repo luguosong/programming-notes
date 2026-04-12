@@ -16,9 +16,10 @@ graph LR
     C --> D["核心 API"]
     D --> E["集合框架"]
     E --> F["I/O 与 NIO"]
-    F --> G["多线程与并发"]
-    G --> H["网络编程"]
-    H --> I["JVM 原理"]
+    F --> G["日志框架"]
+    G --> H["多线程与并发"]
+    H --> I["网络编程"]
+    I --> J["JVM 原理"]
 ```
 
 ## 本节内容
@@ -26,3 +27,4 @@ graph LR
 - [Java 概述](overview/index.md)
 - [文件操作](file/index.md)
 - [IO 流](io/index.md)
+- [日志框架](logging/index.md)
