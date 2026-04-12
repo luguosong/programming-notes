@@ -406,4 +406,6 @@ classDef regular fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
 classDef lts fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
 ```
 
-**禁止**：通过 `extra_javascript` 调用 `mermaid.run()` 或 `mermaid.initialize()` 试图修复样式——Shadow DOM 关闭后外部无法操作，唯一有效方式是 CSS 变量继承。
+**禁止**：通过 `extra_javascript` 调用 `mermaid.run()` 或 `mermaid.initialize()` 试图修复**样式**——Shadow DOM 关闭后外部 CSS 无法穿透，唯一有效方式是 CSS 变量继承。
+
+**已修复**：`custom/js/mermaid.js` 修复了 Zensical 即时导航后 Mermaid 图表无法渲染的问题。根因是 bundle 的 `$s()` 函数使用 `ko || fp().pipe(se(1))` 缓存模式，`ko` 在首次渲染后 `take(1)` 已完成，后续 SPA 导航的新订阅者收不到值。修复方式：预加载 Mermaid 库 + `document$.subscribe()` 兜底渲染失败元素。
