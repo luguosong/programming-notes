@@ -4,14 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.luguosong</groupId>
-    <artifactId>javase</artifactId>
+    <artifactId>logging</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>JavaSE 知识点演示合集</name>
+    <name>Java 日志框架演示合集</name>
 
     <modules>
-        <module>io</module>
-        <module>file</module>
-        <module>logging</module>
+        <module>jul-demo</module>
+        <module>log4j-demo</module>
+        <module>logback-demo</module>
+        <module>log4j2-demo</module>
+        <module>jcl-demo</module>
+        <module>slf4j-demo</module>
+        <module>springboot-logging-demo</module>
     </modules>
 </project>
