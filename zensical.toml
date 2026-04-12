@@ -97,6 +97,15 @@ nav = [
                 { "高级数据类型" = "java/database/jdbc/advanced-types/index.md" },
                 { "最佳实践" = "java/database/jdbc/best-practices/index.md" }
             ] }
+        ] },
+        { "Maven" = [
+            "java/maven/index.md",
+            { "概述与安装" = "java/maven/overview-setup/index.md" },
+            { "入门案例" = "java/maven/getting-started/index.md" },
+            { "POM 详解" = "java/maven/pom/index.md" },
+            { "生命周期与插件" = "java/maven/lifecycle-plugin/index.md" },
+            { "依赖管理" = "java/maven/dependency/index.md" },
+            { "仓库与 Profile" = "java/maven/repository-profile/index.md" }
         ] }
     ] },
     { "专题研究" = [
