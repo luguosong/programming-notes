@@ -15,6 +15,48 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.24（2026-04-10）
+
+> 📝 **笔记定位**：[preToolUse Hook 字段](../hooks/index.md#-hook-配置字段) · [Agent model 字段](../agents/index.md#-自定义-agent)
+
+### 🔧 改进
+
+- `preToolUse` Hook 现在遵循 `modifiedArgs`/`updatedInput` 和 `additionalContext` 字段
+- 自定义 Agent 的 `model` 字段现在接受 VS Code 的显示名称和供应商后缀（如 "Claude Sonnet 4.5"、"GPT-5.4 (copilot)"）
+- 重新设计退出界面，展示 Copilot 吉祥物和更清爽的使用摘要布局
+
+### 🐛 修复
+
+- CLI 崩溃（如 OOM 或 segfault）后终端状态（备用屏幕、光标、原始模式）正确恢复
+- 首次运行在 GitHub 仓库中时，会话同步提示出现时正确遵循 `--remote` 标志
+
+---
+
+## 📦 1.0.23（2026-04-10）
+
+> 📝 **笔记定位**：[CLI 模式标志](../modes/index.md#-programmatic-模式) · [快捷键](../basic/index.md#-快捷键)
+
+### ✨ 新功能
+
+- **`--mode`、`--autopilot` 和 `--plan` 标志**：直接以指定 Agent 模式启动 CLI
+- ++ctrl+l++ 清除终端屏幕但不清除对话会话
+- `/diff`、`/agent`、`/feedback`、`/ide` 和 `/tuikit` 在 Agent 运行时可用
+- 在每模型 token 使用明细中显示 reasoning token 用量（非零时）
+
+### 🔧 改进
+
+- 斜杠命令选择器显示完整 Skill 描述和改进的滚动条
+- Remote 标签页正确显示 Copilot coding agent 任务并支持通过 Tasks API 转向
+- `.vscode/mcp.json` 迁移提示现在包含 `jq` 命令将配置迁移到 `.mcp.json`
+
+### 🐛 修复
+
+- 修复 memory 后端不可用时 Agent 在首轮挂起
+- 修复 Bazel/Buck 构建目标标签（如 `//package:target`）被误识别为文件路径
+- 修复包含 BEL 字符的 shell 输出导致终端反复蜂鸣
+
+---
+
 ## 📦 1.0.22（2026-04-09）
 
 > 📝 **笔记定位**：[Sub-agent 并发限制](../agents/index.md#内置-agent-的协作方式) · [Agent Skills 字段](../agents/index.md) · [MCP 配置源精简](../mcp/index.md#-配置文件层级) · [Hook 触发修复](../hooks/index.md#-生命周期事件)

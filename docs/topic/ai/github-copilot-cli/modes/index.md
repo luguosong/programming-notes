@@ -62,6 +62,9 @@ Allow? [Y/n]
 === "命令行参数"
 
     ``` bash
+    # 直接以 Plan 模式启动（1.0.23 新增）
+    copilot --plan
+
     copilot -p "[[PLAN]] 重构数据库层为 Repository 模式"
     ```
 
@@ -179,6 +182,9 @@ copilot -p "审查 @src/api.py 的安全性" > review.md
 | 标志 | 功能 |
 |------|------|
 | `-p "prompt"` | 执行单条指令后退出 |
+| `--mode <mode>` | 以指定模式启动 CLI（`interactive`/`plan`/`autopilot`）（1.0.23 新增） |
+| `--plan` | 直接以 Plan 模式启动（1.0.23 新增） |
+| `--autopilot` | 直接以 Autopilot 模式启动（1.0.23 新增） |
 | `--allow-all` | 自动批准所有权限（适合无人值守脚本） |
 | `--yolo` | 同 `--allow-all`，跳过所有确认 |
 | `--agent <name>` | 指定使用的 Agent |

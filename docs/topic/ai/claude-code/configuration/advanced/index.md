@@ -127,6 +127,8 @@ export HTTPS_PROXY=http://username:password@proxy.example.com:8080
 export NODE_EXTRA_CA_CERTS=/path/to/enterprise-ca.pem
 ```
 
+> 💡 **v2.1.101 起**：Claude Code 默认信任操作系统的 CA 证书存储，企业 TLS 代理通常无需额外配置。如果只需要内置 CA，设置 `CLAUDE_CODE_CERT_STORE=bundled` 即可。
+
 ### mTLS 双向认证
 
 对安全性要求极高的环境可以启用 mTLS：

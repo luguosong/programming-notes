@@ -15,6 +15,67 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.101（2026-04-11）
+
+> 📝 **笔记定位**：[企业网络配置](../configuration/advanced/index.md) · [Settings 与权限](../configuration/settings-permissions/index.md)
+
+### ✨ 新功能
+
+- **`/team-onboarding` 命令**：根据本地 Claude Code 使用记录生成团队新人上手指南
+- **OS CA 证书存储默认信任**：企业 TLS 代理无需额外配置即可工作（设置 `CLAUDE_CODE_CERT_STORE=bundled` 仅使用内置 CA）
+- **`/ultraplan` 自动创建云环境**：`/ultraplan` 及其他远程会话功能现在自动创建默认云环境，无需先在网页端配置
+
+### 🔧 改进
+
+- brief mode 现在会在 Claude 返回纯文本而非结构化消息时自动重试一次
+- focus mode 中 Claude 编写更自包含的摘要，因为用户只能看到最终消息
+- 工具不可用错误现在解释原因和后续步骤，当模型调用的工具存在但当前上下文不可用时
+- rate-limit 重试消息现在显示命中的限制和重置时间，而非模糊的秒数倒计时
+- 拒绝错误消息现在包含 API 提供的解释（如果可用）
+- `claude -p --resume <name>` 现在接受通过 `/rename` 或 `--name` 设置的会话标题
+- settings 韧性改进：`settings.json` 中无法识别的 Hook 事件名称不再导致整个文件被忽略
+- 通过托管设置强制启用的插件 Hook 现在在设置 `allowManagedHooksOnly` 时正常运行
+- `/plugin` 和 `claude plugin update` 在 marketplace 无法刷新时显示警告，而非静默报告过时版本
+- plan mode 在用户组织或认证设置无法访问 Claude Code 网页端时，隐藏「Refine with Ultraplan」选项
+- beta tracing 现在遵循 `OTEL_LOG_USER_PROMPTS`、`OTEL_LOG_TOOL_DETAILS` 和 `OTEL_LOG_TOOL_CONTENT` 设置
+- SDK `query()` 在消费者从 `for await` 中 `break` 或使用 `await using` 时正确清理子进程和临时文件
+
+### 🐛 修复
+
+- **修复 POSIX `which` 回退中的命令注入漏洞**（LSP 二进制检测使用）
+- 修复长会话中虚拟滚动器保留大量消息列表历史副本导致内存泄漏
+- 修复 `--resume`/`--continue` 在大会话上丢失对话上下文（加载器锚定到死胡同分支而非活跃对话）
+- 修复 `--resume` 链恢复桥接到无关子 Agent 对话（当子 Agent 消息位于主链写入间隙附近时）
+- 修复 `--resume` 在持久化的 Edit/Write 工具结果缺少 `file_path` 时崩溃
+- 修复硬编码的 5 分钟请求超时中止慢速后端（本地 LLM、扩展思考、慢网关），忽略 `API_TIMEOUT_MS`
+- 修复 `permissions.deny` 规则不覆盖 PreToolUse Hook 的 `permissionDecision: "ask"`（之前 Hook 可将拒绝降级为提示）
+- 修复 `--setting-sources` 未包含 `user` 时，后台清理忽略 `cleanupPeriodDays` 并删除 30 天前的对话历史
+- 修复 Bedrock SigV4 认证在设置 `ANTHROPIC_AUTH_TOKEN`、`apiKeyHelper` 或 `ANTHROPIC_CUSTOM_HEADERS` 的 Authorization 头时返回 403
+- 修复 `claude -w <name>` 在之前会话的 worktree 清理留下过期目录时报「already exists」
+- 修复子 Agent 不继承动态注入的 MCP 服务器工具
+- 修复在隔离 worktree 中运行的子 Agent 被拒绝访问其 worktree 内的文件
+- 修复沙箱 Bash 命令在全新启动后因 `mktemp: No such file or directory` 失败
+- 修复 `claude mcp serve` 工具调用在验证 `outputSchema` 的 MCP 客户端中报「Tool execution failed」
+- 修复 `RemoteTrigger` 工具的 `run` 操作发送空请求体被服务器拒绝
+- 修复多个 `/resume` 选择器问题：窄默认视图隐藏其他项目会话、Windows Terminal 无法预览、worktree 中 cwd 不正确、会话未找到错误未输出到 stderr、终端标题未设置、恢复提示与输入重叠
+- 修复 Grep 工具在嵌入的 ripgrep 二进制路径过期时 ENOENT（VS Code 扩展自动更新、macOS App Translocation）；现在回退到系统 `rg` 并在会话中自修复
+- 修复 `/btw` 每次使用时将整个对话写入磁盘
+- 修复 `/context` 的 Free space 和 Messages breakdown 与头部百分比不一致
+- 修复多个插件问题：斜杠命令解析到具有重复 `name:` frontmatter 的错误插件、`/plugin update` 失败报 `ENAMETOOLONG`、Discover 显示已安装的插件、目录源插件从过期版本缓存加载、skill 不遵循 `context: fork` 和 `agent` frontmatter 字段
+- 修复 `/mcp` 菜单对使用 `headersHelper` 配置的 MCP 服务器提供 OAuth 特定操作；现在改为提供 Reconnect 以重新调用辅助脚本
+- 修复 `ctrl+]`、`ctrl+\` 和 `ctrl+^` 键绑定在发送原始 C0 控制字节的终端中不触发（Terminal.app、默认 iTerm2、xterm）
+- 修复 `/login` OAuth URL 渲染时带填充，影响鼠标选择
+- 修复渲染问题：非全屏模式下可见区域上方内容变化时闪烁、长会话中终端滚动回溯被清除、鼠标滚动转义序列偶尔泄漏到输入中作为文本
+- 修复 `settings.json` 的 env 值为数字而非字符串时崩溃
+- 修复应用内设置写入（如 `/add-dir --remember`、`/config`）不刷新内存快照，阻止已移除目录在会话中被撤销
+- 修复自定义键绑定（`~/.claude/keybindings.json`）在 Bedrock、Vertex 和其他第三方提供商上不加载
+- 修复 `claude --continue -p` 未正确继续由 `-p` 或 SDK 创建的会话
+- 修复多个 Remote Control 问题：会话崩溃时 worktree 被移除、连接失败未持久化到记录、brief mode 中本地会话显示虚假「Disconnected」指示器、`/remote-control` 在仅设置 `CLAUDE_CODE_ORGANIZATION_UUID` 时通过 SSH 失败
+- 修复 `/insights` 有时从响应中省略报告文件链接
+- [VSCode] 修复关闭最后一个编辑器标签时聊天输入下方的文件附件未清除
+
+---
+
 ## 📦 2.1.98（2026-04-09）
 
 > 📝 **笔记定位**：[Bash 工具权限](../permissions/index.md) · [Perforce 模式](../configuration/advanced/index.md) · [MCP 认证](../mcp/index.md#认证方式) · [Agent 管理](../agents/index.md)
