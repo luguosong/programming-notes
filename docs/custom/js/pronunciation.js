@@ -1,5 +1,6 @@
 // 单词/音标发音按钮 —— 使用 Web Speech API 在页面内直接朗读
-document$.subscribe(function () {
+if (typeof document$ !== 'undefined') {
+    document$.subscribe(function () {
     // IPA 音标到代表单词的映射
     var ipaToWord = {
         // 短元音
@@ -54,3 +55,4 @@ document$.subscribe(function () {
         speechSynthesis.speak(utterance);
     });
 });
+}
