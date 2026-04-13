@@ -77,17 +77,26 @@ nav = [
             "java/javase/index.md",
             { "Java 概述" = "java/javase/overview/index.md" },
             { "文件操作" = "java/javase/file/index.md" },
-            { "IO 流" = "java/javase/io/index.md" },
-            { "日志框架" = [
-                "java/javase/logging/index.md",
-                { "JUL" = "java/javase/logging/jul/index.md" },
-                { "Log4j" = "java/javase/logging/log4j/index.md" },
-                { "Logback" = "java/javase/logging/logback/index.md" },
-                { "Log4j2" = "java/javase/logging/log4j2/index.md" },
-                { "JCL" = "java/javase/logging/jcl/index.md" },
-                { "SLF4J" = "java/javase/logging/slf4j/index.md" },
-                { "Spring Boot 日志" = "java/javase/logging/springboot/index.md" }
-            ] }
+            { "IO 流" = "java/javase/io/index.md" }
+        ] },
+        { "日志框架" = [
+            "java/javase/logging/index.md",
+            { "JUL" = "java/javase/logging/jul/index.md" },
+            { "Log4j" = "java/javase/logging/log4j/index.md" },
+            { "Logback" = "java/javase/logging/logback/index.md" },
+            { "Log4j2" = "java/javase/logging/log4j2/index.md" },
+            { "JCL" = "java/javase/logging/jcl/index.md" },
+            { "SLF4J" = "java/javase/logging/slf4j/index.md" },
+            { "Spring Boot 日志" = "java/javase/logging/springboot/index.md" }
+        ] },
+        { "Maven" = [
+            "java/maven/index.md",
+            { "概述与安装" = "java/maven/overview-setup/index.md" },
+            { "入门案例" = "java/maven/getting-started/index.md" },
+            { "POM 详解" = "java/maven/pom/index.md" },
+            { "生命周期与插件" = "java/maven/lifecycle-plugin/index.md" },
+            { "依赖管理" = "java/maven/dependency/index.md" },
+            { "仓库与 Profile" = "java/maven/repository-profile/index.md" }
         ] },
         { "数据库" = [
             "java/database/index.md",
@@ -107,16 +116,8 @@ nav = [
                 { "高级数据类型" = "java/database/jdbc/advanced-types/index.md" },
                 { "最佳实践" = "java/database/jdbc/best-practices/index.md" }
             ] }
-        ] },
-        { "Maven" = [
-            "java/maven/index.md",
-            { "概述与安装" = "java/maven/overview-setup/index.md" },
-            { "入门案例" = "java/maven/getting-started/index.md" },
-            { "POM 详解" = "java/maven/pom/index.md" },
-            { "生命周期与插件" = "java/maven/lifecycle-plugin/index.md" },
-            { "依赖管理" = "java/maven/dependency/index.md" },
-            { "仓库与 Profile" = "java/maven/repository-profile/index.md" }
         ] }
+
     ] },
     { "专题研究" = [
         "topic/index.md",
@@ -228,7 +229,7 @@ nav = [
             { "微积分" = "math/latex-guide/calculus/index.md" },
             { "矩阵与线性代数" = "math/latex-guide/linear-algebra/index.md" },
             { "符号参考" = "math/latex-guide/symbols/index.md" }
-        ]}
+        ] }
     ] },
     { "英语" = [
         "english/index.md",
@@ -248,15 +249,15 @@ nav = [
             { "MobX and React" = [
                 "document-translation/the-java-tutorials/mobX-and-react/index.md",
                 { "React 集成" = "document-translation/the-java-tutorials/mobX-and-react/react-integration/index.md" },
-                {"优化React组件渲染"="document-translation/the-java-tutorials/mobX-and-react/react-optimizations/index.md"}
+                { "优化React组件渲染" = "document-translation/the-java-tutorials/mobX-and-react/react-optimizations/index.md" }
             ] },
-            {"Tips & Tricks"=[
+            { "Tips & Tricks" = [
                 "document-translation/the-java-tutorials/tips-tricks/index.md",
-                {"定义数据存储"="document-translation/the-java-tutorials/tips-tricks/defining-data-stores/index.md"},
-                {"理解响应式"="document-translation/the-java-tutorials/tips-tricks/understanding-reactivity/index.md"},
-                {"子类化"="document-translation/the-java-tutorials/tips-tricks/subclassing/index.md"},
-                {"分析响应性 {🚀}"="document-translation/the-java-tutorials/tips-tricks/analyzing-reactivity/index.md"}
-            ]}
+                { "定义数据存储" = "document-translation/the-java-tutorials/tips-tricks/defining-data-stores/index.md" },
+                { "理解响应式" = "document-translation/the-java-tutorials/tips-tricks/understanding-reactivity/index.md" },
+                { "子类化" = "document-translation/the-java-tutorials/tips-tricks/subclassing/index.md" },
+                { "分析响应性 {🚀}" = "document-translation/the-java-tutorials/tips-tricks/analyzing-reactivity/index.md" }
+            ] }
         ] },
         { "The Java Tutorials" = [
             "document-translation/the-java-tutorials/index.md"
@@ -504,7 +505,7 @@ base_path = ["docs", "."]
 [project.markdown_extensions.pymdownx.superfences]
 # 启用 Mermaid.js 图表支持，将 mermaid 代码块渲染为图形
 custom_fences = [
-  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+    { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
 ]
 [project.markdown_extensions.pymdownx.tabbed]
 alternate_style = true
