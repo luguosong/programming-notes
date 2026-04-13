@@ -22,13 +22,15 @@
   background: var(--md-default-bg-color);
 }
 
-/* Canvas 绝对定位，铺满 Hero，点击穿透 */
+/* Canvas 固定定位，铺满全屏视口 */
 #home-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
+  z-index: 0;
 }
 
 /* 文字层，z-index 高于 Canvas */
@@ -154,6 +156,8 @@
    ============================================================ */
 
 .home-cards {
+  position: relative;
+  z-index: 1;
   padding: 4rem 2rem 5rem;
   max-width: 1200px;
   margin: 0 auto;

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block header %}{% endblock %}
+{% block header %}
+<header class="md-header" data-md-component="header" style="display:none"></header>
+{% endblock %}
 {% block tabs %}{% endblock %}
 {% block footer %}{% endblock %}
 
@@ -102,16 +104,22 @@
 
   /* ---- 配置参数 ---- */
   var CONFIG = {
-    nodeCountDesktop: 60,   // 桌面节点数
-    nodeCountMobile: 30,    // 移动端节点数
+    nodeCountDesktop: 80,   // 桌面节点数
+    nodeCountMobile: 40,    // 移动端节点数
     speed: 0.3,             // 漂移速度 px/frame
-    linkDistance: 120,      // 连线距离阈值 px
-    linkOpacityMax: 0.4,    // 连线最大透明度
+    linkDistance: 150,       // 节点间连线距离阈值 px
+    linkOpacityMax: 0.35,   // 连线最大透明度
+    mouseRadius: 180,       // 鼠标影响半径 px
+    mouseForce: 0.06,       // 鼠标推力系数
+    mouseLinkDistance: 200,  // 鼠标与粒子连线距离 px
+    mouseLinkOpacity: 0.5,  // 鼠标连线最大透明度
     colorDark: '19, 145, 252',    // 深色模式 RGB
-    colorLight: '19, 145, 252',   // 浅色模式 RGB（透明度降低）
+    colorLight: '19, 145, 252',   // 浅色模式 RGB
   };
 
   var canvas, ctx, nodes, animId, observer;
+  // 鼠标状态（页面坐标系，fixed canvas 直接使用）
+  var mouse = { x: -9999, y: -9999 };
 
   /* ---- 工具函数 ---- */
   function isDark() {
@@ -126,8 +134,8 @@
 
   function resize() {
     if (!canvas) return;
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
   }
 
   /* ---- 节点初始化 ---- */
@@ -140,6 +148,9 @@
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * CONFIG.speed * 2,
         vy: (Math.random() - 0.5) * CONFIG.speed * 2,
+        // 鼠标推力产生的偏移速度（每帧衰减）
+        pushX: 0,
+        pushY: 0,
       });
     }
   }
@@ -149,15 +160,40 @@
     if (!canvas || !ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 更新节点位置，边界反弹
+    var w = canvas.width;
+    var h = canvas.height;
+    var mx = mouse.x;
+    var my = mouse.y;
+    var mRadius = CONFIG.mouseRadius;
+
+    // 更新节点位置
     nodes.forEach(function (n) {
-      n.x += n.vx;
-      n.y += n.vy;
-      if (n.x < 0 || n.x > canvas.width)  n.vx *= -1;
-      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+      // 鼠标排斥力
+      var dx = n.x - mx;
+      var dy = n.y - my;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mRadius && dist > 0) {
+        var force = (1 - dist / mRadius) * CONFIG.mouseForce;
+        n.pushX += (dx / dist) * force;
+        n.pushY += (dy / dist) * force;
+      }
+
+      // 衰减推力
+      n.pushX *= 0.92;
+      n.pushY *= 0.92;
+
+      // 更新位置 = 自然漂移 + 鼠标推力
+      n.x += n.vx + n.pushX;
+      n.y += n.vy + n.pushY;
+
+      // 边界反弹
+      if (n.x < 0)  { n.x = 0; n.vx *= -1; }
+      if (n.x > w)  { n.x = w; n.vx *= -1; }
+      if (n.y < 0)  { n.y = 0; n.vy *= -1; }
+      if (n.y > h)  { n.y = h; n.vy *= -1; }
     });
 
-    // 绘制连线
+    // 绘制节点间连线
     for (var i = 0; i < nodes.length; i++) {
       for (var j = i + 1; j < nodes.length; j++) {
         var dx = nodes[i].x - nodes[j].x;
@@ -175,15 +211,46 @@
       }
     }
 
+    // 绘制鼠标与附近粒子的连线
+    for (var k = 0; k < nodes.length; k++) {
+      var ndx = nodes[k].x - mx;
+      var ndy = nodes[k].y - my;
+      var ndist = Math.sqrt(ndx * ndx + ndy * ndy);
+      if (ndist < CONFIG.mouseLinkDistance) {
+        var mOpacity = CONFIG.mouseLinkOpacity * (1 - ndist / CONFIG.mouseLinkDistance);
+        ctx.beginPath();
+        ctx.moveTo(mx, my);
+        ctx.lineTo(nodes[k].x, nodes[k].y);
+        ctx.strokeStyle = getColor(mOpacity);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+
     // 绘制节点
     nodes.forEach(function (n) {
+      // 鼠标附近的节点稍大
+      var dToMouse = Math.sqrt((n.x - mx) * (n.x - mx) + (n.y - my) * (n.y - my));
+      var sizeBoost = dToMouse < mRadius ? 1 + (1 - dToMouse / mRadius) * 1.5 : 0;
+
       ctx.beginPath();
-      ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
-      ctx.fillStyle = getColor(0.6);
+      ctx.arc(n.x, n.y, 2 + sizeBoost, 0, Math.PI * 2);
+      ctx.fillStyle = getColor(0.6 + sizeBoost * 0.15);
       ctx.fill();
     });
 
     animId = requestAnimationFrame(draw);
+  }
+
+  /* ---- 鼠标事件 ---- */
+  function onMouseMove(e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }
+
+  function onMouseLeave() {
+    mouse.x = -9999;
+    mouse.y = -9999;
   }
 
   /* ---- 初始化 ---- */
@@ -199,12 +266,22 @@
     // 停止旧 observer
     if (observer) observer.disconnect();
 
-    // 清理旧 resize 监听器（instant navigation 多次执行防内存泄漏）
+    // 清理旧事件监听（instant navigation 多次执行防内存泄漏）
     if (window._homeResizeHandler) {
       window.removeEventListener('resize', window._homeResizeHandler);
     }
+    if (window._homeMouseHandler) {
+      document.removeEventListener('mousemove', window._homeMouseHandler);
+      document.removeEventListener('mouseleave', window._homeMouseLeaveHandler);
+    }
+
     window._homeResizeHandler = function () { resize(); createNodes(); };
+    window._homeMouseHandler = onMouseMove;
+    window._homeMouseLeaveHandler = onMouseLeave;
+
     window.addEventListener('resize', window._homeResizeHandler);
+    document.addEventListener('mousemove', window._homeMouseHandler);
+    document.addEventListener('mouseleave', window._homeMouseLeaveHandler);
 
     resize();
     createNodes();
@@ -218,10 +295,26 @@
     });
   }
 
+  /* ---- 清理（页面离开时） ---- */
+  function cleanup() {
+    if (animId) cancelAnimationFrame(animId);
+    if (observer) observer.disconnect();
+    if (window._homeResizeHandler) {
+      window.removeEventListener('resize', window._homeResizeHandler);
+    }
+    if (window._homeMouseHandler) {
+      document.removeEventListener('mousemove', window._homeMouseHandler);
+    }
+    if (window._homeMouseLeaveHandler) {
+      document.removeEventListener('mouseleave', window._homeMouseLeaveHandler);
+    }
+  }
+
   /* ---- 兼容 navigation.instant（MkDocs Material） ---- */
   // document$ 是 MkDocs Material 暴露的 RxJS Observable，每次页面内容更新时触发
   if (typeof document$ !== 'undefined') {
     document$.subscribe(function () {
+      cleanup();
       init();
     });
   } else {
