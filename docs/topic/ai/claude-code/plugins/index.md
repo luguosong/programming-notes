@@ -337,6 +337,18 @@ enterprise-plugin/
 
 当 `skills` 使用 `"skills": ["./"]` 声明时，插件会扫描指定目录下的所有 Skill。此时 Skill 的调用名称取自 `SKILL.md` frontmatter 中的 `name` 字段而非目录名（v2.1.94 改进），这确保了 Skill 名称在不同安装方式下保持一致。
 
+除了上述字段，`plugin.json` 还支持 `monitors` 键（2.1.105 新增）：
+
+```json
+{
+  "monitors": [
+    { "script": "./scripts/monitor-logs.sh", "interval": 60 }
+  ]
+}
+```
+
+`monitors` 用于声明插件的后台监控脚本，Claude Code 会在插件激活时定期运行这些脚本，并将输出作为上下文注入对话。适合需要持续跟踪外部状态（如日志文件、服务健康）的插件。
+
 ### 两个重要的环境变量
 
 Claude Code 为插件提供了两个特殊的环境变量，在 Hook 命令、MCP/LSP 配置、Skill 和 Agent 内容中都可以使用：

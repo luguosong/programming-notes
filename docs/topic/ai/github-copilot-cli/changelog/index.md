@@ -15,6 +15,39 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.25（2026-04-13）
+
+> 📝 **笔记定位**：[MCP 注册表向导](../mcp/index.md#-管理-mcp-服务器) · [Skill 指令持久化](../skills/index.md#-使用-skill) · [远程会话控制](../modes/index.md#-远程会话控制)
+
+### ✨ 新功能
+
+- **MCP 注册表安装向导**：可在 CLI 中直接通过注册表搜索并引导配置安装 MCP 服务器
+- **`/env` 命令**：显示当前已加载的环境变量详情
+- **ACP 客户端提供 MCP 服务器**：ACP 客户端现在可通过 stdio、HTTP 或 SSE 方式提供 MCP 服务器
+- **远程会话控制**：支持通过 `--remote` 标志或 `/remote` 命令控制远程会话
+- **Alt+D**：删除光标前方的单词（Emacs 风格）
+
+### 🔧 改进
+
+- 会话历史中的模型选择在活跃轮次结束后再延迟生效，避免切换时中断当前响应
+- `/add-dir` 接受相对路径并自动解析为绝对路径
+- `--config-dir` 标志现在正确影响活跃模型的选取
+- MCP 远程服务器在网络故障时自动重试连接
+- `/share html` 显示带 Ctrl+X O 快捷键支持的 `file://` URL
+- `/logout` 对非 OAuth 认证方式显示警告提示
+- MCP 客户端握手时上报正确的 CLI 版本号
+
+### 🐛 修复
+
+- 修复 `/resume` 查找会话失败后 Esc 键行为异常
+- 修复 `/share` 导出文件缺少扩展名（`.md` 或 `.html`）
+- 修复自定义指令文件中特殊字符被破坏
+- 修复 Skill 选择器在终端高度受限时列表滚动异常
+- 修复 Skill 指令在对话轮次间未能持久保留
+- 修复 Share Research 页面目录侧边栏的锚点链接失效
+
+---
+
 ## 📦 1.0.24（2026-04-10）
 
 > 📝 **笔记定位**：[preToolUse Hook 字段](../hooks/index.md#-hook-配置字段) · [Agent model 字段](../agents/index.md#-自定义-agent)

@@ -213,6 +213,20 @@ copilot -p "审查 @src/api.py 的安全性" > review.md
     3. Copilot coding agent 在云端继续工作
     4. 完成后发送通知，请求你的 Review
 
+## 🖥️ 远程会话控制
+
+除了委派到云端，你也可以连接并控制**已在另一台机器上运行的本地 Copilot 会话**（1.0.25 新增）。适合在服务器上启动会话后，通过笔记本远程操控：
+
+```bash
+# 启动时附加到远程会话
+copilot --remote
+
+# 会话内随时切换到远程控制
+/remote
+```
+
+与 `/delegate` 的区别：`/delegate` 把任务推送到 GitHub 云端代理；`--remote`/`/remote` 是连接到你自己机器上正在运行的会话，适合在多设备间切换工作环境。
+
 ---
 
 ## 📊 模式对比

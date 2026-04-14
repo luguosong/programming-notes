@@ -111,7 +111,7 @@ shell: bash
 | 字段 | 是否必填 | 说明 |
 |------|---------|------|
 | `name` | 否 | Skill 的显示名称，也是 `/` 命令的名字。省略时使用目录名。只能用小写字母、数字和连字符（最长 64 字符） |
-| `description` | **推荐** | 描述 Skill 的功能和适用场景。Claude 根据它判断是否自动加载。超过 250 字符会被截断 |
+| `description` | **推荐** | 描述 Skill 的功能和适用场景。Claude 根据它判断是否自动加载。超过 1,536 字符会被截断（2.1.105 起；此前为 250 字符） |
 | `argument-hint` | 否 | 自动补全时显示的参数提示，如 `[issue-number]` 或 `[filename] [format]` |
 | `disable-model-invocation` | 否 | 设为 `true` 禁止 Claude 自动触发，只能手动 `/命令` 调用 |
 | `user-invocable` | 否 | 设为 `false` 将 Skill 从 `/` 菜单隐藏（仅 Claude 可自动调用） |
@@ -265,7 +265,7 @@ description: Use for PR reviews with focus on correctness.
 
 ⚠️ **每个启用的 Skill，description 都在偷你的上下文空间**。把描述写得短而精准，优化前后差距很大。
 
-关键原则：**把最关键的用例放在前 250 字符内**，因为超出部分会被截断。
+关键原则：**把最关键的用例前置**，超出 1,536 字符的部分会被截断（2.1.105 起；此前为 250 字符）。
 
 ### 🏷️ 三种典型 Skill 类型
 

@@ -15,6 +15,57 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.105（2026-04-13）
+
+> 📝 **笔记定位**：[PreCompact 可阻断](../hooks/index.md#其他事件) · [插件 monitors 键](../plugins/index.md#pluginjson-详解) · [Skill 描述上限提升](../skills/index.md#front-matter-配置项说明) · [/proactive 别名](../automation/index.md#本地定时任务)
+
+### ✨ 新功能
+
+- **`EnterWorktree` 工具新增 `path` 参数**：可在现有 worktree 之间直接切换，无需重新创建
+- **PreCompact Hook 支持阻断**：exit code 2 可阻止自动压缩执行
+- **插件后台监控**：插件 manifest 新增 `monitors` 键，支持挂载后台监控进程
+- **`/proactive` 命令**：作为 `/loop` 的别名使用
+
+### 🔧 改进
+
+- API 流式传输卡住超过 5 分钟后自动中止并切换到非流式重试
+- 网络错误消息立即显示重试提示，不再等待
+- 超长单行文件写入在 UI 中截断显示，而非分页翻页
+- `/doctor` 界面重新设计，加入状态图标
+- `/config` 菜单标签和说明更清晰
+- Skill 描述上限从 250 提升至 1,536 字符
+- `WebFetch` 工具自动过滤页面中的 `<style>` 和 `<script>` 标签
+- 改进合并了 squash-merged PR 的过期 Agent worktree 清理
+- MCP 大体量输出截断时提供格式化相关的具体指引
+
+### 🐛 修复
+
+- 修复排队消息附带的图片被丢弃
+- 修复长对话中提示词换行时屏幕变空白
+- 修复助手消息中前导空白被丢失
+- 修复 Bash 输出在带可点击文件链接时显示乱码
+- 修复 Alt+Enter 和 Ctrl+J 在多种终端中换行插入失效
+- 修复 "Creating worktree" 文字重复出现
+- 修复焦点模式下已排队的用户提示词消失
+- 修复单次定时任务被反复触发
+- 修复 Team/Enterprise 入站频道通知被静默丢弃
+- 修复市场插件安装时未自动安装依赖
+- 修复自动更新后官方市场状态丢失
+- 修复 `/resume` 会话提示未正确打印
+- 修复反馈调查快捷键失效
+- 修复输出格式不规范的 stdio MCP 服务器导致卡住，现在快速失败
+- 修复 headless 会话第一轮无法使用 MCP 工具
+- 修复 `/model` 选择器在 AWS Bedrock 非 US 区域无法使用
+- 修复多个提供商的 429 速率限制错误未显示清晰提示
+- 修复 `/resume` 在遇到格式错误的 text block 时崩溃
+- 修复终端高度较短时 `/help` 布局错乱
+- 修复格式错误的键绑定条目不再被静默接受，改为报错
+- 修复 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` 在单项目持久化场景下不生效
+- 修复通过 SSH/mosh 连接时 16 色调色板显示偏淡
+- 修复模式降级时 Bash 工具权限提示行为不一致
+
+---
+
 ## 📦 2.1.101（2026-04-11）
 
 > 📝 **笔记定位**：[企业网络配置](../configuration/advanced/index.md) · [Settings 与权限](../configuration/settings-permissions/index.md)
