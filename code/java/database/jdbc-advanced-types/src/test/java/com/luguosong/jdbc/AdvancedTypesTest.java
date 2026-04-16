@@ -48,7 +48,7 @@ class AdvancedTypesTest {
         }
     }
 
-    // region array_create
+    // --8<-- [start:array_create]
     /**
      * ARRAY 创建：使用 Connection.createArrayOf() 创建数组并插入数据库
      */
@@ -79,9 +79,9 @@ class AdvancedTypesTest {
 
         System.out.println("ARRAY 创建测试通过，标签: " + Arrays.toString(tags));
     }
-    // endregion
+    // --8<-- [end:array_create]
 
-    // region array_read
+    // --8<-- [start:array_read]
     /**
      * ARRAY 读取：从 ResultSet 获取数组并转换为 Java 数组
      */
@@ -124,9 +124,9 @@ class AdvancedTypesTest {
             assertArrayEquals(tags, resultTags, "读取的数组应与插入时一致");
         }
     }
-    // endregion
+    // --8<-- [end:array_read]
 
-    // region sqlxml_write_read
+    // --8<-- [start:sqlxml_write_read]
     /**
      * SQLXML 演示：创建并操作 SQLXML 对象
      * <p>
@@ -172,5 +172,5 @@ class AdvancedTypesTest {
             assumeTrue(false, "SQLXML not supported: " + e.getMessage());
         }
     }
-    // endregion
+    // --8<-- [end:sqlxml_write_read]
 }

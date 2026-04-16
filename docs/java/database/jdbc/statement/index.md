@@ -5,6 +5,15 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 
 # Statement 与 CRUD
 
+**本文你会学到**：
+
+- `executeQuery`、`executeUpdate`、`execute` 三种执行方法的区别
+- 通过 Statement 完成基本的查询、插入、删除操作
+- SQL 注入风险的成因和利用方式
+- 如何通过 `RETURN_GENERATED_KEYS` 获取自增主键
+
+## ⚙️ 三种执行方法
+
 ### 执行 SQL 用哪个方法？——三种方式对比
 
 | 方法 | 返回值 | 适用场景 |
@@ -18,6 +27,8 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 ``` java title="建表并插入初始数据（@BeforeEach）"
 --8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:setup"
 ```
+
+## 📝 CRUD 操作实践
 
 ### 如何查询数据？——executeQuery
 
@@ -42,6 +53,8 @@ description: JDBC Statement 执行 SQL 语句，包括 executeQuery/executeUpdat
 ``` java title="execute() 处理 SELECT 和 UPDATE 两种情况"
 --8<-- "code/java/database/jdbc-statement/src/test/java/com/luguosong/jdbc/StatementTest.java:execute_generic"
 ```
+
+## 🛡️ 安全与高级特性
 
 ### SQL 注入风险演示
 

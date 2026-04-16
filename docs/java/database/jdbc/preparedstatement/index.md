@@ -5,10 +5,21 @@ description: JDBC PreparedStatement 参数化查询，防 SQL 注入、预编译
 
 # PreparedStatement 参数化查询
 
+**本文你会学到**：
+
+- `PreparedStatement` 相比 `Statement` 的两大优势（防注入 + 预编译）
+- 参数化查询、插入、更新的标准写法
+- 同一 `PreparedStatement` 对象的多次复用
+- BLOB 大字段的读写方法
+
+## 💡 概念与优势
+
 ### 为什么要用 PreparedStatement？
 
 1. `防 SQL 注入`：参数通过占位符 `?` 绑定，驱动对参数值进行转义，彻底防止注入攻击
 2. `预编译性能`：SQL 结构只解析、编译一次，多次执行只需替换参数值，减少数据库解析开销
+
+## 🔐 参数化 CRUD 操作
 
 ### 参数化查询
 
@@ -33,6 +44,8 @@ description: JDBC PreparedStatement 参数化查询，防 SQL 注入、预编译
 ``` java title="Statement 注入成功 vs PreparedStatement 注入失败"
 --8<-- "code/java/database/jdbc-preparedstatement/src/test/java/com/luguosong/jdbc/PreparedStatementTest.java:prevent_sql_injection"
 ```
+
+## ⚡ 预编译复用与大字段
 
 ### 同一条 SQL 要执行多次怎么办？——预编译复用
 

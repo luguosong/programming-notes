@@ -5,6 +5,15 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 
 # ResultSet 数据读取
 
+**本文你会学到**：
+
+- `ResultSet` 游标机制和 `next()` 遍历方式
+- 按列名取值与按列索引取值的区别和选择
+- `ResultSetMetaData` 动态获取列信息
+- 可滚动 `ResultSet` 的创建和双向导航方法
+
+## 🚀 游标遍历机制
+
 ### ResultSet 怎么读数据？——游标机制
 
 `ResultSet` 内部维护一个`游标`，初始位置在第一行之前。调用 `next()` 将游标前移一行，返回 `true` 表示当前行有数据，`false` 表示已越过最后一行。
@@ -32,6 +41,8 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 !!! note "按索引 vs 按列名"
     - 按列名（`rs.getString("name")`）：可读性好，不受 SELECT 列顺序变化影响，`推荐`
     - 按列索引（`rs.getString(2)`）：性能略高，但列顺序变化后容易出错
+
+## 🔍 元数据与高级遍历
 
 ### ResultSetMetaData：在遍历中动态获取列信息
 

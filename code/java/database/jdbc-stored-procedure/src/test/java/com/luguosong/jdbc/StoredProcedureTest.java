@@ -31,7 +31,7 @@ class StoredProcedureTest {
         }
     }
 
-    // region in_params
+    // --8<-- [start:in_params]
     /**
      * 演示带 IN 参数的存储函数调用
      *
@@ -68,9 +68,9 @@ class StoredProcedureTest {
             }
         }
     }
-    // endregion
+    // --8<-- [end:in_params]
 
-    // region out_params
+    // --8<-- [start:out_params]
     /**
      * 演示带 OUT 参数的存储过程调用
      *
@@ -122,9 +122,9 @@ class StoredProcedureTest {
             }
         }
     }
-    // endregion
+    // --8<-- [end:out_params]
 
-    // region inout_params
+    // --8<-- [start:inout_params]
     /**
      * 演示 INOUT 参数（输入输出参数）
      *
@@ -180,9 +180,9 @@ class StoredProcedureTest {
             }
         }
     }
-    // endregion
+    // --8<-- [end:inout_params]
 
-    // region callable_syntax
+    // --8<-- [start:callable_syntax]
     /**
      * CallableStatement 语法总结
      *
@@ -242,5 +242,5 @@ class StoredProcedureTest {
         System.out.println("CallableStatement 语法总结测试通过");
         assertTrue(true, "语法总结测试");
     }
-    // endregion
+    // --8<-- [end:callable_syntax]
 }

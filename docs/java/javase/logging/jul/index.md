@@ -13,7 +13,7 @@ description: Java 原生日志框架 JUL 的核心组件、日志级别、配置
 - Java 代码配置和 `logging.properties` 文件配置两种方式
 - 一条日志从产生到输出的完整执行流程
 
-## 为什么了解 JUL？
+## 🤔 为什么了解 JUL？
 
 当你需要日志功能时，第一反应可能是引入 SLF4J 或 Logback。但 JUL（`java.util.logging`）作为 JDK 自带的日志框架，有几个独特优势：
 
@@ -23,7 +23,7 @@ description: Java 原生日志框架 JUL 的核心组件、日志级别、配置
 
 当然，JUL 也有明显的局限：占位符支持不如 SLF4J 方便、配置灵活性不如 Logback、没有异步日志。当你需要在生产项目中做复杂的日志管理时，升级到 `SLF4J` + `Logback` 是更好的选择。
 
-## 核心组件
+## 🧱 核心组件
 
 JUL 的架构围绕五个组件展开，它们之间的协作关系如下：
 
@@ -60,7 +60,7 @@ graph LR
 | `Formatter` | 打包员 | 将 `LogRecord` 格式化为最终输出文本 |
 | `Level` | 优先级标签 | 日志严重程度标识，数值越大越严重 |
 
-## 日志级别
+## 📊 日志级别
 
 JUL 定义了 7 个标准级别，外加 `OFF` 和 `ALL` 两个特殊值：
 
@@ -78,7 +78,7 @@ JUL 定义了 7 个标准级别，外加 `OFF` 和 `ALL` 两个特殊值：
 
 **默认行为**：`Logger` 的默认级别是 `INFO`（800），只有 `INFO` 及以上级别（`INFO`、`WARNING`、`SEVERE`）的日志会被输出。这意味着你调用 `logger.fine("...")` 时，默认情况下看不到任何输出。
 
-## 快速上手
+## 🚀 快速上手
 
 ### 获取 Logger
 
@@ -137,7 +137,7 @@ logger.log(Level.INFO, "用户 {0} 登录成功，耗时 {1} ms",
     }
     ```
 
-## Logger 父子关系
+## 🔗 Logger 父子关系
 
 JUL 中的 Logger 按照**名称的层级**自动形成父子关系——就像文件系统的目录结构一样：
 
@@ -180,7 +180,7 @@ childLogger.setUseParentHandlers(false); // 关键一行
 
 设置后，子 Logger 的日志只由自己的 Handler 处理，不再传递给父 Logger。这在需要**对不同包使用不同的日志输出策略**时非常有用。
 
-## 配置方式
+## ⚙️ 配置方式
 
 JUL 提供两种配置途径：Java 代码配置和 `logging.properties` 文件配置。
 
@@ -278,7 +278,7 @@ com.luguosong.jul.demo.level=ALL
 | `FileHandler.limit` | 单个日志文件的最大字节数，0 表示无限制 |
 | `FileHandler.count` | 日志文件循环数量 |
 
-## 执行流程
+## 🔄 执行流程
 
 当你调用 `logger.info("消息")` 时，JUL 内部经历了以下步骤：
 

@@ -7,7 +7,7 @@ description: Java 语言概述，包括发展历史、JDK 与 JRE、平台体系
 
 Java 是一门广泛使用的面向对象编程语言，由 Sun Microsystems 于 1995 年发布，现由 Oracle 维护。它的核心理念是「一次编写，到处运行」（Write Once, Run Anywhere），这得益于 Java 程序编译为字节码后在 `JVM`（Java Virtual Machine）上运行的机制。
 
-**🎯 本文你会学到**：
+**本文你会学到**：
 
 - 🔍 Java 为什么被设计成跨平台语言——从它的诞生背景说起
 - 🛠️ 开发 Java 程序需要安装什么——JDK 与 JRE 的区别与选择

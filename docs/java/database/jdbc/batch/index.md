@@ -5,6 +5,12 @@ description: JDBC 批处理机制，Statement/PreparedStatement 的 addBatch+exe
 
 # 批处理
 
+**本文你会学到**：
+
+- 批处理为什么能显著提升大批量写入性能
+- `Statement` 和 `PreparedStatement` 两种批处理写法
+- 批处理与事务结合的最佳实践
+
 ### 为什么要用批处理？
 
 每次执行单条 SQL 都会经历：`Java → 网络 → 数据库解析 → 执行 → 网络 → Java` 的完整往返。批处理将多条 SQL 打包一次性发送，显著减少网络往返次数，大幅提升大批量写入性能。

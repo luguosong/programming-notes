@@ -5,6 +5,15 @@ description: JDBC 连接池原理，HikariCP 与 Druid 配置对比，DataSource
 
 # 连接池
 
+**本文你会学到**：
+
+- 为什么频繁创建物理连接会成为性能瓶颈
+- HikariCP 和 Druid 两大连接池的配置和特点
+- 连接池 vs 直连的使用方式对比
+- 面向 `DataSource` 标准接口编程的意义
+
+## 💡 连接池原理
+
 ### 为什么需要连接池？
 
 每次通过 `DriverManager.getConnection()` 建立物理连接都需要完成 TCP 握手、数据库认证等开销，耗时通常在几毫秒到数十毫秒之间。高并发下频繁创建/销毁连接会成为瓶颈。
@@ -27,6 +36,8 @@ sequenceDiagram
     DB-->>App: 返回结果
     App->>App: 归还连接到池（不销毁）
 ```
+
+## 🏭 主流实现
 
 ### Druid 连接池
 
@@ -61,6 +72,8 @@ sequenceDiagram
 ``` java title="HikariCP 连接池创建与基本参数配置"
 --8<-- "code/java/database/jdbc-pool/src/test/java/com/luguosong/jdbc/ConnectionPoolTest.java:hikari_basic_config"
 ```
+
+## 📊 对比与最佳实践
 
 ### 连接池 vs 直连对比
 

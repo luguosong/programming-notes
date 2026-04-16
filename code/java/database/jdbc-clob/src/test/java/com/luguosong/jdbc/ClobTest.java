@@ -40,7 +40,7 @@ class ClobTest {
         }
     }
 
-    // region clob_write
+    // --8<-- [start:clob_write]
     /**
      * CLOB 写入：使用 Connection.createClob() + setCharacterStream 写入大文本
      */
@@ -78,9 +78,9 @@ class ClobTest {
             assertEquals(1, rs.getInt(1), "documents 表应有 1 条记录");
         }
     }
-    // endregion clob_write
+    // --8<-- [end:clob_write]
 
-    // region clob_write_string
+    // --8<-- [start:clob_write_string]
     /**
      * CLOB 写入：直接使用 setString() 插入文本（适合较小内容）
      */
@@ -110,9 +110,9 @@ class ClobTest {
             }
         }
     }
-    // endregion clob_write_string
+    // --8<-- [end:clob_write_string]
 
-    // region clob_read
+    // --8<-- [start:clob_read]
     /**
      * CLOB 读取：使用 getClob() 和 getString() 两种方式读取大文本
      */
@@ -155,9 +155,9 @@ class ClobTest {
             }
         }
     }
-    // endregion clob_read
+    // --8<-- [end:clob_read]
 
-    // region clob_free
+    // --8<-- [start:clob_free]
     /**
      * CLOB 资源释放：演示 free() 方法的使用
      * <p>
@@ -190,5 +190,5 @@ class ClobTest {
         assertThrows(SQLException.class, () -> clob.length(),
                 "free() 之后访问 Clob 应抛出 SQLException");
     }
-    // endregion clob_free
+    // --8<-- [end:clob_free]
 }

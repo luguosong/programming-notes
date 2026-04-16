@@ -19,7 +19,7 @@ graph LR
     C --> F["仓库与 Profile"]
 ```
 
-## 本节内容
+## 📚 本节内容
 
 - [概述与安装](overview-setup/index.md)
 - [入门案例](getting-started/index.md)

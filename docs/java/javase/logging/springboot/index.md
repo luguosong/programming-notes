@@ -384,7 +384,7 @@ graph LR
 
 **结论**：在 Spring Boot 项目中，始终使用 `logback-spring.xml`。
 
-## 完整代码示例
+## 📋 完整代码示例
 
 ``` xml title="pom.xml"
 --8<-- "code/java/javase/logging/springboot-logging-demo/pom.xml"

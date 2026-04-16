@@ -5,6 +5,14 @@ description: JDBC SQLException 异常处理机制，包括异常链遍历、SQLS
 
 # 异常处理
 
+**本文你会学到**：
+
+- `SQLException` 提供的三种诊断信息（`getMessage` / `getSQLState` / `getErrorCode`）
+- 异常链和因果链的遍历方式
+- 通过 `SQLState` 类别码区分致命与非致命错误
+- `SQLWarning` 的获取和处理
+- JDBC 4.0 异常子类体系（瞬时 vs 非瞬时）
+
 ## 🤔 为什么需要了解 SQLException
 
 JDBC 操作可能因多种原因失败：数据库服务不可达、认证失败、SQL 语法错误、约束违反、连接超时等。`SQLException` 不仅携带了错误描述信息，还提供了 `SQLState`（标准化的 5 字符错误码）、`ErrorCode`（数据库厂商私有码）以及异常链，使得开发者可以精确诊断问题根因，并根据错误类型采取不同的恢复策略。

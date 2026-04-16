@@ -4,6 +4,12 @@ title: JDBC
 
 # JDBC
 
+**本文你会学到**：
+
+- JDBC 在 Java 数据库技术栈中的位置和作用
+- `DriverManager`、`Connection`、`Statement`、`ResultSet` 等核心接口的职责
+- JDBC 驱动的三代注册方式演进（显式注册 → 反射加载 → SPI 自动发现）
+
 想从 Java 程序访问数据库，却发现 MySQL、PostgreSQL、Oracle 各家的连接方式完全不同？JDBC（Java Database Connectivity）就是为解决这个问题而生的——它提供一套统一 API，让你的代码`不因切换数据库而重写`。
 
 ## 🏗️ 为什么需要 JDBC？——统一数据库访问的标准层

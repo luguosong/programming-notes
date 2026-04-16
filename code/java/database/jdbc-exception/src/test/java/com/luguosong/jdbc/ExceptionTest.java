@@ -36,7 +36,7 @@ class ExceptionTest {
         }
     }
 
-    // region exception_chain
+    // --8<-- [start:exception_chain]
     /**
      * 演示 SQLException 异常链遍历
      * <p>
@@ -82,9 +82,9 @@ class ExceptionTest {
         }
         return count;
     }
-    // endregion exception_chain
+    // --8<-- [end:exception_chain]
 
-    // region sqlstate_filter
+    // --8<-- [start:sqlstate_filter]
     /**
      * 演示通过 SQLState 过滤异常类型
      * <p>
@@ -120,9 +120,9 @@ class ExceptionTest {
                     "表不存在错误的 SQLState 应以 '42' 开头");
         }
     }
-    // endregion sqlstate_filter
+    // --8<-- [end:sqlstate_filter]
 
-    // region sql_warning
+    // --8<-- [start:sql_warning]
     /**
      * 演示 SQLWarning 的获取与处理
      * <p>
@@ -184,5 +184,5 @@ class ExceptionTest {
             assertEquals(1, rs.getInt(1), "测试表应有 1 条数据");
         }
     }
-    // endregion sql_warning
+    // --8<-- [end:sql_warning]
 }
