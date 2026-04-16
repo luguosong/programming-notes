@@ -152,7 +152,7 @@ byte[] plainText = cipher.doFinal(cipherText);
 
 另一种方案是 **CTS（Cipher Text Stealing，密文窃取）**：它不需要填充，且密文长度与明文完全一致。但 CTS 要求明文必须大于一个块的大小，且使用场景较少。
 
-```
+``` text title="填充方案对比"
 明文: [hello world!!!!!] (16 bytes, 恰好一个块)
 PKCS7 填充后: [hello world!!!!! 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10] (32 bytes)
 CTS: [密文长度 = 明文长度 = 16 bytes]

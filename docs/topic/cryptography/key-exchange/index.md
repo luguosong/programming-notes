@@ -127,7 +127,7 @@ bobKa.doPhase(aliceKeyPair.getPublic(), true);
 byte[] bobSecret = bobKa.generateSecret();
 
 // 双方的共享密钥完全一致
-assert aliceSecret == bobSecret; // true
+assert Arrays.equals(aliceSecret, bobSecret); // true
 ```
 
 💡 生成 DH 参数（找大素数）非常耗时。实际系统中，参数通常是预先生成或从标准文档（如 RFC 5114）中选取的，而不是每次通信都重新生成。
@@ -184,7 +184,7 @@ bobKa.doPhase(aliceKeyPair.getPublic(), true);
 byte[] bobSecret = bobKa.generateSecret();
 
 // 双方独立计算出的共享密钥完全一致
-assert aliceSecret == bobSecret; // true
+assert Arrays.equals(aliceSecret, bobSecret); // true
 ```
 
 💡 ECDH 可以使用与 ECDSA 相同的椭圆曲线参数集（如 NIST P-256、secp256k1 等），无需额外的参数生成步骤。
@@ -245,13 +245,11 @@ sequenceDiagram
     participant C as 客户端
     participant S as 服务器
 
-    rect rgb(240,248,255)
-    Note right of S: RSA 密钥传输方式
+    Note over C,S: RSA 密钥传输方式
     C->>S: ClientHello
     S->>C: ServerHello + 服务器证书
     C->>S: Pre-Master Secret（用服务器公钥加密）
     Note over C,S: 双方用 Pre-Master Secret 派生会话密钥
-    end
 ```
 
 ```mermaid
@@ -259,13 +257,11 @@ sequenceDiagram
     participant C as 客户端
     participant S as 服务器
 
-    rect rgb(240,255,240)
-    Note right of S: ECDHE 密钥协商方式
+    Note over C,S: ECDHE 密钥协商方式
     C->>S: ClientHello（含 ECDHE 参数）
     S->>C: ServerHello + 服务器证书 + ECDHE 公钥
     C->>S: ECDHE 公钥
     Note over C,S: 双方各自计算共享密钥，<br/>服务器私钥不参与密钥推导
-    end
 ```
 
 ### 前向保密（Forward Secrecy）

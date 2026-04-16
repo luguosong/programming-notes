@@ -73,7 +73,7 @@ graph TD
 
 OpenPGP 的原生格式是二进制数据包，但二进制数据无法直接放进邮件正文。于是 OpenPGP 定义了 **ASCII Armored** 格式——将二进制数据做 Base64 编码，并在首尾加上标记行：
 
-```
+``` text title="ASCII Armored 格式示例"
 -----BEGIN PGP MESSAGE-----
 Version: BCPG v1.65
 yxt0CF9DT05TT0xFXX9ONEhlbGxvLCB3b3JsZCE=
@@ -238,7 +238,7 @@ assertTrue(signature.verify()); // ✅ 签名验证通过
 
 一个清文签名的完整结构如下：
 
-```
+``` text title="清文签名结构"
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
