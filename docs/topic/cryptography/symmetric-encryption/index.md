@@ -212,6 +212,29 @@ cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(iv));
 byte[] plainText = cipher.doFinal(cipherText);
 ```
 
+### CBC 模式的安全归约与 Padding Oracle 攻击
+
+CBC 模式的 CPA 安全归约思路是：如果底层块密码是安全的 PRF，那么 CBC 的安全性取决于随机 IV 产生的密钥流。只要 IV 真正随机且不可预测，CBC 就是 CPA 安全的。
+
+但 CBC 模式在**密文被篡改**时存在严重风险。著名的 **Padding Oracle Attack** 利用 CBC 填充验证的反馈来逐字节还原明文：
+
+```mermaid
+graph LR
+    A[攻击者] -->|修改密文块| B[服务器]
+    B -->|填充有效/无效| A
+    A -->|调整最后字节| B
+    Note right of A: 重复 256 次<br/>还原一个字节
+
+    classDef atk fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:1px
+    classDef srv fill:transparent,stroke:#0288d1,color:#adbac7,stroke-width:1px
+    class A atk
+    class B srv
+```
+
+攻击原理：攻击者修改密文的某个块，如果服务器返回"填充错误"（`BadPaddingException`），攻击者就知道最后一块的填充值不正确；如果返回"解密成功"，就知道填充值正确。通过二分法，每字节只需 256 次尝试就能还原。
+
+⚠️ 在 Java 中，`AES/CBC/PKCS5Padding` 的填充错误会抛 `BadPaddingException`。**如果应用层区分了"填充错误"和"解密成功"两种响应**（比如返回不同的 HTTP 状态码），就给攻击者提供了 Oracle。
+
 ⚠️ **IV 不需要保密，但必须不可预测且不重复。** 如果 IV 可预测（如递增计数器），攻击者可能构造特定的明文来验证猜测。最安全的做法是用 `SecureRandom` 生成。
 
 ### 填充机制
@@ -254,6 +277,14 @@ CTR 模式有几个重要优势：
 - **无需填充**：密文长度等于明文长度
 - **支持并行加密**：每个块的密钥流可以独立计算，多线程友好
 - **随机访问**：可以直接解密任意位置的数据块，无需从头开始
+
+### CTR 模式为什么安全？
+
+CTR 模式的 CPA 安全性可以精确量化。假设底层块密码是安全的伪随机函数（PRF），$Q$ 是加密查询次数，$N$ 是分组空间大小（AES 为 $2^{128}$），则：
+
+$$\text{CPAadv} \leq \frac{2Q^2}{N} + 2 \cdot \text{PRFadv}$$
+
+这个公式的含义很直观：CTR 模式的唯一安全瓶颈是**随机 nonce 的碰撞**。两个 nonce 相同的概率约为 $Q^2/(2N)$——当 $Q$ 远小于 $\sqrt{N}$ 时，碰撞概率可忽略。这就是为什么 nonce 绝不能重复。
 
 ⚠️ **IV（nonce）绝不能重复使用！** 如果同一个密钥下重用了 nonce，就会产生相同的密钥流。攻击者拿到两份密文后，把它们 XOR 起来就能得到两份明文的 XOR——这在密码学中是不可接受的信息泄露。
 
