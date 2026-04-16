@@ -429,6 +429,8 @@ $$\text{SIGadv} \leq (Q_\text{ro} + 1) \cdot \text{OWadv}$$
 
 其中 $Q_\text{ro}$ 是哈希查询次数，$\text{OWadv}$ 是底层的单向函数安全优势。RSA-FDH 利用 RSA 的随机自归约性获得了更紧的界：$\text{SIGadv} \leq 2.72 \cdot (Q_s + 1) \cdot \text{RSAadv}$。
 
+⚠️ 无哈希的 RSA 签名还面临**盲签名攻击**：攻击者选择随机数 $r$，计算 $m' = m \cdot r^e \bmod n$ 让签名者签名，得到 $\sigma' = (m')^d \bmod n = \sigma \cdot r \bmod n$，再除以 $r$ 就得到 $m$ 的合法签名——签名者完全不知道自己签了什么消息。这就是为什么 RSA 签名必须使用填充方案（PKCS#1 v1.5 或 PSS），而不是直接对消息求逆。
+
 💡 `SHA256withRSA` 就是 Hash-and-Sign 的实例化。RSA-PSS 比 PKCS#1 v1.5 更接近 FDH 的理论安全保证，这也是 NIST 推荐 RSA-PSS 的原因之一。
 
 ## RSA 签名
