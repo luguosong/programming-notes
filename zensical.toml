@@ -131,7 +131,10 @@ nav = [
             { "对称加密" = "topic/cryptography/symmetric-encryption/index.md" },
             { "哈希与完整性" = "topic/cryptography/hashing-and-integrity/index.md" },
             { "基于密码的密钥生成" = "topic/cryptography/password-based-keys/index.md" },
-            { "密钥交换" = "topic/cryptography/key-exchange/index.md" }
+            { "密钥交换" = "topic/cryptography/key-exchange/index.md" },
+            { "数字签名" = "topic/cryptography/digital-signatures/index.md" },
+            { "证书与 PKI" = "topic/cryptography/certificates-and-pki/index.md" },
+            { "密钥存储" = "topic/cryptography/key-storage/index.md" }
         ] },
         { "OAuth2" = [
             "topic/oauth/index.md",

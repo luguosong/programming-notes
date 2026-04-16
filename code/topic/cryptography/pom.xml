@@ -17,5 +17,8 @@
         <module>hashing-integrity</module>
         <module>password-keys</module>
         <module>key-exchange</module>
+        <module>digital-signatures</module>
+        <module>certificates-pki</module>
+        <module>key-storage</module>
     </modules>
 </project>
