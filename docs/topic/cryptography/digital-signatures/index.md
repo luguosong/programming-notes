@@ -407,6 +407,30 @@ byte[] signatureBytes2 = sig2.sign();
 
 > ⚠️ Ed25519 有多种变体（纯 Ed25519、带 context 的 Ed25519ctx、带预哈希的 Ed25519ph），不同变体的签名不能交叉验证。在 Java 中使用 Bouncy Castle 时，`EdDSA` 算法名称默认使用纯 Ed25519。
 
+## Hash-and-Sign 范式与 FDH 签名方案
+
+### 为什么必须先哈希再签名？
+
+考虑一个"裸签名"方案：签名 = $m^d \bmod n$。这种方案有一个致命缺陷：任何人都可以伪造签名，不需要知道私钥。攻击者只需选择一个随机签名 $\sigma$，然后计算 $m = \sigma^e \bmod n$——$m$ 就是用公钥 $e$ 验证通过的"消息"。
+
+这就是**Hash-and-Sign 范式**被发明的原因：
+
+$$\text{S}'(sk, m) = \text{S}(sk, H(m))$$
+
+先用哈希函数将任意长消息压缩为固定长度的摘要，再对摘要签名。安全性依赖碰撞抗性：如果 $H$ 是碰撞安全的且 $\text{S}$ 是安全的，则 $\text{S}'$ 也是安全的。
+
+### FDH：Full Domain Hash
+
+**FDH（Full Domain Hash）** 是 Hash-and-Sign 范式的理论实例化：签名 = $H(m)^{-1} \bmod n$（在陷门置换下求逆）。$H$ 被视为随机预言（random oracle），将消息映射到陷门置换的定义域内。
+
+FDH 在随机预言模型下的安全归约为：
+
+$$\text{SIGadv} \leq (Q_\text{ro} + 1) \cdot \text{OWadv}$$
+
+其中 $Q_\text{ro}$ 是哈希查询次数，$\text{OWadv}$ 是底层的单向函数安全优势。RSA-FDH 利用 RSA 的随机自归约性获得了更紧的界：$\text{SIGadv} \leq 2.72 \cdot (Q_s + 1) \cdot \text{RSAadv}$。
+
+💡 `SHA256withRSA` 就是 Hash-and-Sign 的实例化。RSA-PSS 比 PKCS#1 v1.5 更接近 FDH 的理论安全保证，这也是 NIST 推荐 RSA-PSS 的原因之一。
+
 ## RSA 签名
 
 当你需要一种被几乎所有系统广泛支持的签名算法时，RSA 几乎是默认选择。自 1977 年发表以来，RSA 一直是公钥密码学的"主力军"。
