@@ -125,6 +125,11 @@ nav = [
             "topic/zensical/index.md",
             { "基本使用" = "topic/zensical/basic/index.md" }
         ] },
+        { "密码学" = [
+            "topic/cryptography/index.md",
+            { "Java 密码学架构" = "topic/cryptography/java-crypto-architecture/index.md" },
+            { "对称加密" = "topic/cryptography/symmetric-encryption/index.md" }
+        ] },
         { "OAuth2" = [
             "topic/oauth/index.md",
             { "核心概念" = "topic/oauth/core-concepts/index.md" },

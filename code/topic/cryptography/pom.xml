@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 聚合 POM：统一管理密码学笔记的配套代码模块 -->
+    <groupId>com.luguosong</groupId>
+    <artifactId>cryptography</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>密码学笔记配套代码</name>
+
+    <modules>
+        <module>crypto-architecture</module>
+        <module>symmetric-encryption</module>
+    </modules>
+</project>
