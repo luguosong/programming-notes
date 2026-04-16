@@ -342,6 +342,36 @@ $$\text{CCAadv} \leq \text{CPAadv} + 2 \cdot Q_d \cdot \text{CIadv}$$
 | MAC-then-Encrypt | 先计算 MAC，再一起加密 | ⚠️ 不一定安全 |
 | Encrypt-and-MAC | 同时独立加密和计算 MAC | ⚠️ 不一定安全 |
 
+```mermaid
+graph TD
+    M[明文] --> E[加密 E]
+    M --> MAC1[认证 S]
+    E --> C[密文]
+    C --> T1["标签 t = S(k, c)"]
+    T1 --> OUT1["(c, t)"]
+
+    M2[明文] --> S2[认证 S]
+    S2 --> T2["标签 t"]
+    M2 --> E2[加密 E]
+    T2 --> E2
+    E2 --> OUT2["(密文含 t)"]
+
+    M3[明文] --> E3[加密 E]
+    M3 --> MAC3[认证 S]
+    E3 --> C3[密文]
+    MAC3 --> T3["标签 t"]
+    C3 --> OUT3["(c, t) 独立计算"]
+
+    classDef safe fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:2px
+    classDef unsafe fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:2px
+    classDef data fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:1px
+    classDef proc fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+    class OUT1 safe
+    class OUT2,OUT3 unsafe
+    class M,M2,M3,C,C3 data
+    class E,E2,E3,MAC1,S2,MAC3 proc
+```
+
 **Encrypt-then-MAC（EtM）** 的构造：$c \leftarrow E(k_e, m)$，$t \leftarrow S(k_m, c)$，发送 $(c, t)$。验证时先检查 MAC，再解密。它的安全性归约为：
 
 $$\text{CIadv}[A, E_\text{EtM}] = \text{MACadv}[B, I]$$

@@ -76,6 +76,19 @@ Diffie-Hellman 协议的安全性依赖于群上三个递进的计算难题：
 
 三个假设构成递进关系：DDH ⇒ CDH ⇒ DLP（反向不一定成立）。
 
+```mermaid
+graph LR
+    DLP["DLP<br/>给定 gᵅ 求 α<br/>最难"] -->|解决| CDH["CDH<br/>给定 gᵅ,gᵝ 求 gᵅᵝ<br/>困难"]
+    CDH -->|解决| DDH["DDH<br/>区分真/假 DH 三元组<br/>最容易但仍不可行"]
+
+    classDef hard fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:2px
+    classDef med fill:transparent,stroke:#f0883e,color:#adbac7,stroke-width:2px
+    classDef easy fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:2px
+    class DLP hard
+    class CDH med
+    class DDH easy
+```
+
 DDH 假设是 ElGamal 加密和 ECDSA 安全性的理论基础。它的 Attack Game 是区分"真正的 DH 三元组"和"随机三元组"：挑战者发送 $(g^\alpha, g^\beta, w_b)$，其中 $w_0 = g^{\alpha\beta}$（真 DH），$w_1 = g^\gamma$（随机），攻击者需要判断 $b$ 的值。
 
 ⚠️ DDH 假设在偶数阶群中不成立（可以直接计算 Legendre 符号来区分）。这就是为什么 DH 参数必须基于素数阶的子群（参数 $(P, Q, G)$ 中的 $Q$）。
