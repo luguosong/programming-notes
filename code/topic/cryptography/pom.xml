@@ -14,5 +14,8 @@
     <modules>
         <module>crypto-architecture</module>
         <module>symmetric-encryption</module>
+        <module>hashing-integrity</module>
+        <module>password-keys</module>
+        <module>key-exchange</module>
     </modules>
 </project>

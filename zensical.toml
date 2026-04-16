@@ -128,7 +128,10 @@ nav = [
         { "密码学" = [
             "topic/cryptography/index.md",
             { "Java 密码学架构" = "topic/cryptography/java-crypto-architecture/index.md" },
-            { "对称加密" = "topic/cryptography/symmetric-encryption/index.md" }
+            { "对称加密" = "topic/cryptography/symmetric-encryption/index.md" },
+            { "哈希与完整性" = "topic/cryptography/hashing-and-integrity/index.md" },
+            { "基于密码的密钥生成" = "topic/cryptography/password-based-keys/index.md" },
+            { "密钥交换" = "topic/cryptography/key-exchange/index.md" }
         ] },
         { "OAuth2" = [
             "topic/oauth/index.md",
