@@ -379,10 +379,6 @@ nav = [
         { "Real World Cryptography" = [
             "document-translation/real-world-cryptography/index.md"
         ] },
-        { "Java Cryptography: Tools and Techniques" = [
-            "document-translation/java-cryptography-tools-and-techniques/index.md",
-            { "1.入门概览" = "document-translation/java-cryptography-tools-and-techniques/01-getting-started-an-overview/index.md" }
-        ] },
         { "Open Design Alliance" = [
             "document-translation/opendesign/index.md",
             { "Open Cloud" = [
