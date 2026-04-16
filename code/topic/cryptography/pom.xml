@@ -20,5 +20,8 @@
         <module>digital-signatures</module>
         <module>certificates-pki</module>
         <module>key-storage</module>
+        <module>cms-smime</module>
+        <module>openpgp</module>
+        <module>tls</module>
     </modules>
 </project>

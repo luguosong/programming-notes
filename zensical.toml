@@ -123,7 +123,8 @@ nav = [
         "topic/index.md",
         { "Zensical" = [
             "topic/zensical/index.md",
-            { "基本使用" = "topic/zensical/basic/index.md" }
+            { "基本使用" = "topic/zensical/basic/index.md" },
+            { "更新日志" = "topic/zensical/changelog/index.md" }
         ] },
         { "密码学" = [
             "topic/cryptography/index.md",
@@ -134,7 +135,10 @@ nav = [
             { "密钥交换" = "topic/cryptography/key-exchange/index.md" },
             { "数字签名" = "topic/cryptography/digital-signatures/index.md" },
             { "证书与 PKI" = "topic/cryptography/certificates-and-pki/index.md" },
-            { "密钥存储" = "topic/cryptography/key-storage/index.md" }
+            { "密钥存储" = "topic/cryptography/key-storage/index.md" },
+            { "CMS 与 S/MIME" = "topic/cryptography/cms-and-smime/index.md" },
+            { "OpenPGP" = "topic/cryptography/openpgp/index.md" },
+            { "TLS" = "topic/cryptography/tls/index.md" }
         ] },
         { "OAuth2" = [
             "topic/oauth/index.md",
