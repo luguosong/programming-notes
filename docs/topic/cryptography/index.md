@@ -1,6 +1,6 @@
 ---
 title: 密码学
-icon: lucide/shield-lock
+icon: material/lock
 ---
 
 # 密码学
