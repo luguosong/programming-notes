@@ -134,6 +134,20 @@ byte[] hash = sha3.digest("Hello World!".getBytes());
 - **没有密钥的人**：无法为篡改后的消息生成合法的 MAC
 - **持有密钥的人**：可以验证消息的完整性和来源
 
+### MAC 的安全定义：EUF-CMA
+
+MAC 安全性的精确定义叫做 **EUF-CMA**（Existential Unforgeability under Chosen Message Attack，选择消息攻击下的存在性不可伪造）。
+
+攻击游戏分三步：
+
+1. 挑战者选择随机密钥 $k$
+2. 攻击者可以请求任意消息的 tag（chosen message attack）
+3. 攻击者输出一个新消息和对应的 tag——如果验证通过则攻击者获胜
+
+安全优势 $\text{MACadv}[A, I]$ 定义为攻击者获胜的概率。当所有高效攻击者的优势都可忽略时，MAC 系统是安全的。
+
+⚠️ 注意 EUF-CMA 要求攻击者输出的必须是**新消息**——不能是之前已经查询过的消息的重新提交。这意味着即使攻击者获得了大量合法的 (消息, tag) 对，也无法为任何新消息生成合法 tag。
+
 ``` java title="AES-CMAC：基于 AES 分组密码的 MAC"
 javax.crypto.Mac mac = javax.crypto.Mac.getInstance("AESCMAC", "BC");
 
@@ -174,6 +188,24 @@ byte[] hmacValue = mac.doFinal("Hello World!".getBytes());
 ```
 
 💡 注意 HMAC 的输出长度与底层哈希函数一致：HMAC-SHA256 输出 32 字节，HMAC-SHA512 输出 64 字节。
+
+### Hash-then-MAC：HMAC 安全性的理论支撑
+
+HMAC 为什么用"内层哈希 + 外层哈希"这种看似复杂的设计？它的理论基础是 **Hash-then-MAC** 范式：
+
+$$\text{S}'(k, m) = \text{S}(k, H(m))$$
+
+先用哈希函数 $H$ 将任意长消息压缩为固定长度的摘要，再用 MAC 算法 $\text{S}$ 对摘要做认证。
+
+Hash-then-MAC 的安全性归约非常清晰：
+
+- 如果 $H$ 是碰撞安全的（找不到 $m_0 \neq m_1$ 使得 $H(m_0) = H(m_1)$）
+- 且 $\text{S}$ 是 EUF-CMA 安全的 MAC
+- 则 $\text{S}'$ 也是 EUF-CMA 安全的
+
+**碰撞抗性是必要条件**：如果攻击者找到了碰撞 $H(m_0) = H(m_1)$，就可以用 $m_1$ 的 tag 作为 $m_0$ 的合法 tag——MAC 被伪造了。
+
+HMAC 的 ipad/opad 设计巧妙地解决了另一个问题——如果不做特殊处理，直接用 $H(k \| m)$ 作为 MAC，会面临**长度扩展攻击**（length extension attack）：已知 $H(m)$ 的值，攻击者可以在不重新计算的情况下推算出 $H(m \| \text{padding})$ 的值。
 
 ### MAC 与 HMAC 对比
 
