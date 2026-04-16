@@ -21,12 +21,12 @@
     <dependencies>
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk18on</artifactId>
+            <artifactId>bcpg-jdk18on</artifactId>
             <version>${bc.version}</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-jdk18on</artifactId>
+            <artifactId>bcutil-jdk18on</artifactId>
             <version>${bc.version}</version>
         </dependency>
         <dependency>

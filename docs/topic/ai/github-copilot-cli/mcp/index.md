@@ -6,6 +6,7 @@ description: 配置和管理 MCP 服务器，扩展 Copilot CLI 的工具能力
 # MCP 服务器
 
 **本文你会学到**：
+
 - 🔌 MCP 是什么，解决什么问题
 - ⚙️ 如何配置和使用 MCP 服务器
 - 📦 常用的 MCP 服务器推荐
