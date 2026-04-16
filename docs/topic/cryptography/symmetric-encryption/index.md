@@ -314,6 +314,44 @@ $$\text{CPAadv} \leq \frac{2Q^2}{N} + 2 \cdot \text{PRFadv}$$
 - **完整性**：密文被篡改后解密会失败
 - **可认证性**：只有持有正确密钥的人才能生成合法的密文
 
+### 从 CCA 攻击看 AE 的必要性
+
+CPA 安全防止攻击者**被动获取**信息，但无法防御**主动修改**密文的攻击。**CCA 安全（Chosen Ciphertext Attack Security）** 要求：即使攻击者可以提交任意密文并获取解密结果，也无法获得信息。
+
+CCA 攻击的破坏力惊人：假设一封加密邮件的内容是"转账 100 元给 Bob"，攻击者 Mel 截获密文后修改前缀，使解密时收件人从 Bob 变成 Mel——现在 Mel 能解密邮件内容了。
+
+AE 安全恰好能防止 CCA 攻击。它的定义是两个安全性的组合：
+
+- **CPA 安全**（机密性）+ **密文完整性 CI**（Ciphertext Integrity）
+
+密文完整性的 Attack Game 与 MAC 类似：攻击者可以请求加密任意消息，但不能为自己构造的新密文获得"解密成功"的响应。如果所有高效攻击者的成功概率都可忽略，则系统满足 CI。
+
+一个关键定理将 AE 和 CCA 联系起来：
+
+$$\text{CCAadv} \leq \text{CPAadv} + 2 \cdot Q_d \cdot \text{CIadv}$$
+
+其中 $Q_d$ 是解密查询次数。只要 CI 安全，CCA 攻击就无法成功。
+
+### Encrypt-then-MAC：为什么它总是安全的
+
+如何从 CPA 安全的密码和安全的 MAC 组合出 AE 安全的系统？有三种组合方式：
+
+| 组合方式 | 做法 | 安全性 |
+|---------|------|--------|
+| **Encrypt-then-MAC** | 先加密，再对密文计算 MAC | ✅ 总是安全 |
+| MAC-then-Encrypt | 先计算 MAC，再一起加密 | ⚠️ 不一定安全 |
+| Encrypt-and-MAC | 同时独立加密和计算 MAC | ⚠️ 不一定安全 |
+
+**Encrypt-then-MAC（EtM）** 的构造：$c \leftarrow E(k_e, m)$，$t \leftarrow S(k_m, c)$，发送 $(c, t)$。验证时先检查 MAC，再解密。它的安全性归约为：
+
+$$\text{CIadv}[A, E_\text{EtM}] = \text{MACadv}[B, I]$$
+
+密文完整性直接等价于底层 MAC 的安全性——非常干净的安全归约。
+
+**MAC-then-Encrypt（MtE）** 不安全的典型案例是 SSL 3.0 的 **POODLE 攻击**。SSL 3.0 使用 MtE + CBC，其中 MAC 保护消息但不保护填充（padding）。攻击者修改密文使填充"碰巧"有效，从服务器的响应中逐字节提取明文。
+
+EtM 的三个常见实现错误：(1) 加密和 MAC 使用相同密钥；(2) MAC 未覆盖 IV；(3) 在验证 MAC 之前就输出了部分明文。第三个错误最危险——一旦明文泄露，即使后来发现 MAC 不匹配，信息已经丢失了。
+
 当认证加密还支持「关联数据（Associated Data）」时，它就被称为 **AEAD**（Authenticated Encryption with Associated Data）。关联数据不加密，但参与认证标签的计算——适合放协议头、文件名等不需要保密但不能被篡改的元数据。
 
 ### GCM 模式（推荐）
