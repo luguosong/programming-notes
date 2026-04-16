@@ -138,7 +138,9 @@ nav = [
             { "密钥存储" = "topic/cryptography/key-storage/index.md" },
             { "CMS 与 S/MIME" = "topic/cryptography/cms-and-smime/index.md" },
             { "OpenPGP" = "topic/cryptography/openpgp/index.md" },
-            { "TLS" = "topic/cryptography/tls/index.md" }
+            { "TLS" = "topic/cryptography/tls/index.md" },
+            { "后量子密码" = "topic/cryptography/post-quantum/index.md" },
+            { "ASN.1 基础" = "topic/cryptography/asn1-basics/index.md" }
         ] },
         { "OAuth2" = [
             "topic/oauth/index.md",

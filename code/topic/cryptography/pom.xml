@@ -23,5 +23,6 @@
         <module>cms-smime</module>
         <module>openpgp</module>
         <module>tls</module>
+        <module>post-quantum</module>
     </modules>
 </project>
