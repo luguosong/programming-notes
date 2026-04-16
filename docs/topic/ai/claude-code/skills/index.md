@@ -1,9 +1,9 @@
----
+﻿---
 title: Skills
 description: 通过 Skills 为 Claude Code 添加可复用的知识、工作流和参考文档
 ---
 
-**本文你会学到：**
+**本文你会学到**：
 
 - 🎯 什么是 Skill，它和 `CLAUDE.md` 有什么区别
 - 🔧 参考型 Skill 和动作型 Skill 的不同用法
@@ -32,7 +32,7 @@ Skills 遵循 [Agent Skills 开放标准](https://github.com/anthropics/agent-sk
 
 举个例子，你可以在项目中放一个 API 设计规范的 Skill：
 
-```yaml title=".claude/skills/api-conventions/SKILL.md"
+``` yaml title=".claude/skills/api-conventions/SKILL.md"
 ---
 name: api-conventions
 description: 本项目的 API 设计规范。编写或审查 API 接口时自动加载
@@ -54,7 +54,7 @@ description: 本项目的 API 设计规范。编写或审查 API 接口时自动
 
 典型示例——部署 Skill：
 
-```yaml title=".claude/skills/deploy/SKILL.md"
+``` yaml title=".claude/skills/deploy/SKILL.md"
 ---
 name: deploy
 description: 将应用部署到生产环境
@@ -275,7 +275,7 @@ description: Use for PR reviews with focus on correctness.
 
 发布前或提交前跑一遍，确保不漏项：
 
-```yaml title=".claude/skills/release-check/SKILL.md"
+``` yaml title=".claude/skills/release-check/SKILL.md"
 ---
 name: release-check
 description: Use before cutting a release to verify build, version, and smoke test.
@@ -298,7 +298,7 @@ Pass / Fail per item. Any Fail must be fixed before release.
 
 高风险操作显式调用 + 内置回滚步骤：
 
-```yaml title=".claude/skills/config-migration/SKILL.md"
+``` yaml title=".claude/skills/config-migration/SKILL.md"
 ---
 name: config-migration
 description: Migrate config schema. Run only when explicitly requested.
@@ -321,7 +321,7 @@ disable-model-invocation: true
 
 运行时出问题时让 Claude 按固定路径收集证据，不要瞎猜：
 
-```yaml title=".claude/skills/runtime-diagnosis/SKILL.md"
+``` yaml title=".claude/skills/runtime-diagnosis/SKILL.md"
 ---
 name: runtime-diagnosis
 description: Use when app crashes, hangs, or behaves unexpectedly at runtime.

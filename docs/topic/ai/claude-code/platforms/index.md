@@ -1,4 +1,4 @@
----
+﻿---
 title: 多平台支持
 description: Claude Code 可在终端、IDE、桌面应用、浏览器和云端运行，本篇梳理各平台的特点、安装方式和适用场景
 ---
@@ -288,7 +288,7 @@ Claude Code 能自动检测 DevContainer 环境，无需额外配置。
 
 ### 典型配置
 
-```json title=".devcontainer/devcontainer.json"
+``` json title=".devcontainer/devcontainer.json"
 {
   "name": "My Project",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",

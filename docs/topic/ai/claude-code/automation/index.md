@@ -1,9 +1,9 @@
----
+﻿---
 title: 自动化
 description: 定时任务、远程控制、消息通道、CI/CD 集成与自动代码审查
 ---
 
-**本文你会学到：**
+**本文你会学到**：
 
 - 🎯 如何用 `/loop` 命令设置本地定时任务，让 Claude Code 周期性执行工作
 - ☁️ 云端定时任务与本地定时任务的区别，以及如何利用 Anthropic 基础设施
@@ -196,7 +196,7 @@ graph LR
 
 Claude Code 提供官方 Action：`anthropics/claude-code-action@v1`。以下是基本用法：
 
-```yaml title=".github/workflows/claude.yml"
+``` yaml title=".github/workflows/claude.yml"
 name: Claude Code
 on:
   issues:
@@ -240,7 +240,7 @@ Claude Code 会读取上下文（Issue 内容、PR diff 等），然后执行相
 
 ### 实际示例：自动修复 lint
 
-```yaml title=".github/workflows/auto-fix.yml"
+``` yaml title=".github/workflows/auto-fix.yml"
 name: Auto Fix Lint
 on:
   pull_request:
@@ -275,7 +275,7 @@ GitLab CI/CD 的集成方式和 GitHub Actions 类似——通过在 `.gitlab-ci
 
 ### 基本配置
 
-```yaml title=".gitlab-ci.yml"
+``` yaml title=".gitlab-ci.yml"
 stages:
   - review
 
@@ -294,7 +294,7 @@ claude-review:
 
 如果你使用 AWS Bedrock 或 Google Vertex AI 作为 Claude 的模型提供方，可以通过 OIDC（OpenID Connect）让 GitLab Runner 无需硬编码 API 密钥即可安全访问：
 
-```yaml title=".gitlab-ci.yml"
+``` yaml title=".gitlab-ci.yml"
 claude-review:
   stage: review
   image: node:20
@@ -362,7 +362,7 @@ graph LR
 
 **`CLAUDE.md`**：在仓库根目录放置 `CLAUDE.md` 文件，审查 Agent 会自动读取并遵循其中的规范：
 
-```markdown title="CLAUDE.md"
+``` markdown title="CLAUDE.md"
 # 项目规范
 
 - 本项目使用 Java 17 + Spring Boot 3.x
@@ -373,7 +373,7 @@ graph LR
 
 **`REVIEW.md`**：专门用于代码审查的指令文件，优先级高于 `CLAUDE.md`：
 
-```markdown title="REVIEW.md"
+``` markdown title="REVIEW.md"
 # 审查重点
 
 - 关注并发安全性：检查共享可变状态是否正确同步

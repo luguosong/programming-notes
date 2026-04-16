@@ -1,4 +1,4 @@
----
+﻿---
 title: Sub-agents
 description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Agent Teams 协调多个独立会话
 ---
@@ -106,7 +106,7 @@ Sub-agent 定义文件按优先级从高到低排列：
 
 #### 定义文件格式
 
-```yaml title=".claude/agents/code-reviewer.md"
+``` yaml title=".claude/agents/code-reviewer.md"
 ---
 name: code-reviewer
 description: 代码审查专家。编写或修改代码后自动触发。
@@ -182,7 +182,7 @@ disallowedTools: Write, Edit
 
 当简单的工具黑名单不够用的时候（比如你想允许 `Bash` 但只允许执行 `SELECT` 查询），可以用 `PreToolUse` Hook 做运行时校验：
 
-```yaml title=".claude/agents/db-reader.md"
+``` yaml title=".claude/agents/db-reader.md"
 ---
 name: db-reader
 description: 执行只读数据库查询
@@ -198,7 +198,7 @@ hooks:
 
 校验脚本通过 `exit 2` 阻止写入操作，错误信息会反馈给 Claude：
 
-```bash title="scripts/validate-readonly-query.sh"
+``` bash title="scripts/validate-readonly-query.sh"
 #!/bin/bash
 INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
@@ -279,7 +279,7 @@ Agent Teams 最适合以下场景：
 
 Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启用：
 
-```json title="settings.json"
+``` json title="settings.json"
 {
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
@@ -371,7 +371,7 @@ Teammate 在只读的 plan mode 下工作，方案完成后提交给 Lead 审批
 
 如果不需要 Teammate 之间的协作，用 Sub-agent 也能做代码审查，而且 Token 成本更低：
 
-```yaml title=".claude/agents/code-reviewer.md"
+``` yaml title=".claude/agents/code-reviewer.md"
 ---
 name: code-reviewer
 description: 代码审查专家，代码变更后主动触发

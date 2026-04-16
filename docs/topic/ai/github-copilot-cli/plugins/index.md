@@ -3,7 +3,7 @@ title: 插件
 description: 安装和管理 Copilot CLI 插件，扩展 Agent、Skill 和斜杠命令
 ---
 
-# 插件系统
+# 插件
 
 **本文你会学到**：
 - 🤔 插件解决什么问题（为什么不直接手动配置）

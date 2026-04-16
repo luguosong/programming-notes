@@ -1,11 +1,11 @@
----
+﻿---
 title: 第三方集成
 description: 将 Claude Code 连接到第三方 LLM 提供商、Slack 等外部服务
 ---
 
 # 第三方集成
 
-本文你会学到：
+**本文你会学到**：
 
 - 🎯 理解 Claude Code 的第三方集成体系——换了 LLM 提供商，工具链和使用体验不变
 - 🔧 接入 Amazon Bedrock、Google Vertex AI、Microsoft Foundry 三大云平台
@@ -84,7 +84,7 @@ export ANTHROPIC_MODEL_ID=us.anthropic.claude-sonnet-4-20250514-v1:0
 
 为 Claude Code 使用的 IAM 角色/用户添加以下权限策略：
 
-```json title="bedrock-policy.json"
+``` json title="bedrock-policy.json"
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -259,7 +259,7 @@ LLM Gateway 就像一个「API 交通枢纽」——Claude Code 不直接连接 
 
 [LiteLLM](https://github.com/BerriAI/litellm) 是一个常用的开源 LLM 代理，支持 100+ 提供商的统一接口：
 
-```yaml title="litellm_config.yaml"
+``` yaml title="litellm_config.yaml"
 model_list:
   - model_name: claude-sonnet-4-20250514
     litellm_params:
@@ -354,7 +354,7 @@ Computer Use 通过一个内置的 MCP 服务器（`computer-use`）实现。启
 
 Computer Use 默认关闭，需要手动启用：
 
-```json title=".claude/settings.json"
+``` json title=".claude/settings.json"
 {
   "mcpServers": {
     "computer-use": {

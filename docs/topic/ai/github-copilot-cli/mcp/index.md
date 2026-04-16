@@ -20,12 +20,15 @@ description: 配置和管理 MCP 服务器，扩展 Copilot CLI 的工具能力
 
 MCP 提供了一种标准化的方式，让 AI 模型与外部系统通信：
 
-``` text
-Copilot CLI ←→ MCP 协议 ←→ MCP 服务器 ←→ 外部系统
-                                            ├── GitHub API
-                                            ├── 文件系统
-                                            ├── 数据库
-                                            └── 第三方 API
+``` mermaid
+graph LR
+    A["Copilot CLI"] <-->|MCP 协议| B["MCP 服务器"]
+    B <--> C["GitHub API"]
+    B <--> D["文件系统"]
+    B <--> E["数据库"]
+    B <--> F["第三方 API"]
+
+    classDef default fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
 ```
 
 !!! info "自动调用"

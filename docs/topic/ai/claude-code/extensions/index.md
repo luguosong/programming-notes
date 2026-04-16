@@ -3,9 +3,9 @@ title: 扩展体系
 description: 理解 Claude Code 的扩展机制：CLAUDE.md、Skills、MCP、Hooks、Sub-agents、Plugins 各自的职责与选型
 ---
 
-# 扩展体系总览
+# 扩展体系
 
-**本文你会学到**
+**本文你会学到**：
 
 - 🎯 为什么 Claude Code 出厂就够用，但你的项目需要扩展
 - 💡 六大扩展机制各自解决什么问题，一张表看清全局
