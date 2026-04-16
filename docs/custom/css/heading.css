@@ -42,44 +42,44 @@
     content: counter(section-1) "." counter(section-2) "." counter(section-3) "." counter(section-4) " ";
 }
 
-/* === 浅色模式标题色：中性深色，白底高对比 === */
+/* === 浅色模式标题色：蓝调层级，与灰色正文形成色相区分 === */
 
 .md-typeset h2 {
-    color: #1a1a1a;
+    color: #1a365d;
     font-weight: 700;
 }
 
 .md-typeset h3 {
-    color: #252525;
+    color: #2a4a72;
     font-weight: 600;
 }
 
 .md-typeset h4 {
-    color: #333333;
+    color: #3a5e87;
 }
 
 .md-typeset h5 {
-    color: #444444;
+    color: #4a729c;
 }
 
-/* === 深色模式标题色：纯白系，与正文灰度拉开层级 === */
+/* === 深色模式标题色：蓝调层级，与灰色正文形成色相区分 === */
 
 [data-md-color-scheme="slate"] .md-typeset h2 {
-    color: #DADADA;
+    color: #8bb8e8;
     font-weight: 700;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h3 {
-    color: #CACACA;
+    color: #7ba8d8;
     font-weight: 600;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h4 {
-    color: #BABABA;
+    color: #6b98c8;
 }
 
 [data-md-color-scheme="slate"] .md-typeset h5 {
-    color: #AAAAAA;
+    color: #5b88b8;
 }
 
 /* === 标题下方渐变横线 === */
@@ -95,51 +95,51 @@
     margin-top: 8px;
 }
 
-/* 浅色模式横线：中性色 */
+/* 浅色模式横线：蓝调渐变，与标题色协调 */
 
 .md-typeset h2::after {
     width: 100%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), transparent);
+    background: linear-gradient(to right, rgba(26, 54, 93, 0.2), transparent);
 }
 
 .md-typeset h3::after {
     width: 75%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.08), transparent);
+    background: linear-gradient(to right, rgba(42, 74, 114, 0.15), transparent);
 }
 
 .md-typeset h4::after {
     width: 50%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.06), transparent);
+    background: linear-gradient(to right, rgba(58, 94, 135, 0.12), transparent);
 }
 
 .md-typeset h5::after {
     width: 33%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.05), transparent);
+    background: linear-gradient(to right, rgba(74, 114, 156, 0.1), transparent);
 }
 
 .md-typeset h6::after {
     width: 15%;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+    background: linear-gradient(to right, rgba(74, 114, 156, 0.08), transparent);
 }
 
-/* 深色模式横线：极细微，Linear 风格 */
+/* 深色模式横线：蓝调渐变，与标题色协调 */
 
 [data-md-color-scheme="slate"] .md-typeset h2::after {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
+    background: linear-gradient(to right, rgba(139, 184, 232, 0.18), transparent);
 }
 
 [data-md-color-scheme="slate"] .md-typeset h3::after {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.07), transparent);
+    background: linear-gradient(to right, rgba(123, 168, 216, 0.14), transparent);
 }
 
 [data-md-color-scheme="slate"] .md-typeset h4::after {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.05), transparent);
+    background: linear-gradient(to right, rgba(107, 152, 200, 0.1), transparent);
 }
 
 [data-md-color-scheme="slate"] .md-typeset h5::after {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.04), transparent);
+    background: linear-gradient(to right, rgba(91, 136, 184, 0.08), transparent);
 }
 
 [data-md-color-scheme="slate"] .md-typeset h6::after {
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.03), transparent);
+    background: linear-gradient(to right, rgba(91, 136, 184, 0.06), transparent);
 }
