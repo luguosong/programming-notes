@@ -12,6 +12,8 @@ title: TLS
 - Java 的 JSSE 框架如何让开发者用 `SSLContext` 几行代码就启用 TLS
 - 如何在代码中加载自签名证书、自定义密码套件、实现 `TrustManager` 精细控制证书验证
 - 自签名证书在开发和测试中的正确用法，以及生产环境中的证书管理策略
+- JSSE 架构总览：Provider → `SSLContext` → `SSLSocket` 的数据流向
+- 常见 TLS 配置问题与调优，以及使用中的典型陷阱（证书验证绕过、协议降级等）
 
 ## 为什么需要 TLS？
 

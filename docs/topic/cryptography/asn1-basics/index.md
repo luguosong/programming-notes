@@ -11,6 +11,8 @@ title: ASN.1 基础
 - 结构化类型（`SEQUENCE`、`SET`、`CHOICE`）如何组合出复杂的数据结构
 - 标签机制（`IMPLICIT` / `EXPLICIT`）如何消除歧义，以及为什么 `CHOICE` 必须用 `EXPLICIT`
 - DER 编码的 TLV（Tag-Length-Value）结构如何保证"同一份数据永远生成同一段字节"
+- OID（对象标识符）是什么，以及密码学中常见的 OID 含义
+- 常见 ASN.1 结构（`AlgorithmIdentifier`、`SubjectPublicKeyInfo`、`TBSCertificate`）如何组合成证书
 - 如何用 Bouncy Castle 的 ASN.1 API 在 Java 中读写 ASN.1 结构
 
 ## 为什么需要了解 ASN.1？

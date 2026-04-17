@@ -12,6 +12,8 @@ title: CMS 与 S/MIME
 - CMS 的两种加密方式（密钥传输 vs 密码加密）各自的工作原理
 - S/MIME 如何将 CMS 嵌入邮件系统，实现签名和加密邮件
 - CMS、S/MIME、PGP 三者的定位差异与选型建议
+- Sign-then-Encrypt 与 Encrypt-then-Sign 两种顺序的安全属性差异，以及 S/MIME 为何选择前者
+- 实现中的常见陷阱：Enveloping 签名验证、S/MIME 规范化、BouncyCastle 依赖
 
 ## 为什么需要 CMS？
 

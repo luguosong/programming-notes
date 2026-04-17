@@ -11,6 +11,7 @@ title: 基于密码的密钥生成
 - SCRYPT 为什么比 PBKDF2 更抗 GPU 暴力破解
 - Argon2、bcrypt 等其他密码哈希算法的特点
 - 密钥分割（Shamir's Secret Sharing）如何将一个密钥安全地分给多人保管
+- 密钥管理最佳实践：轮换策略、安全存储与安全销毁
 
 ## 为什么不能直接用密码做密钥？
 
@@ -359,7 +360,7 @@ byte[] key = factory.generateSecret(
 
 Argon2 的优势在于它同时控制三个维度：CPU 时间、内存用量、并行度，攻击者无论用 GPU 还是 ASIC 都很难找到高效的并行方案。
 
-截至 Bouncy Castle 1.80（本文使用的版本），BC 尚未内置 Argon2 API，但可以通过 `bcprov-jdk18on` 的内部类间接使用，或使用专门的 Argon2 JVM 库（如 `de.mkammerer:argon2-jvm`）。
+BC 1.80 已提供内部 API `Argon2BytesGenerator`（位于 `org.bouncycastle.crypto.generators`），但尚未注册为标准 JCA Provider 接口（不能通过 `SecretKeyFactory.getInstance("Argon2id")` 调用）。生产环境推荐使用专门的 JVM 库（如 `de.mkammerer:argon2-jvm`），或直接使用 BC 内部类。
 
 ### bcrypt
 

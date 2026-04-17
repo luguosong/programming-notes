@@ -12,6 +12,7 @@ title: OpenPGP
 - OpenPGP 签名的三种形式：封装签名、分离签名、清文签名
 - OpenPGP 公钥加密的完整流程（含压缩和 MDC 完整性保护）
 - OpenPGP 与 CMS 各自适用什么场景
+- 实现中的常见陷阱：Literal Data 数据包、MDC 完整性保护不可省略、`ArmoredOutputStream` 流关闭
 
 ## 为什么需要 OpenPGP？
 

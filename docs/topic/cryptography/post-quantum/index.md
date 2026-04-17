@@ -10,6 +10,7 @@ title: 后量子密码
 - NIST 后量子标准化选出了哪些算法？ML-KEM 和 ML-DSA 的核心原理
 - 如何使用 BouncyCastle 实现 ML-KEM 密钥封装和 ML-DSA 数字签名
 - 混合加密为什么是当前过渡期的最佳实践？如何用 ECDH + ML-KEM 组合
+- 如何制定后量子密码迁移路线：优先级排序与 Java 开发者行动清单
 - 迁移到后量子密码时有哪些常见陷阱需要避免
 
 ## 为什么需要后量子密码？
@@ -71,7 +72,7 @@ graph TD
 | **FIPS 204** | **ML-DSA** | 数字签名 | CRYSTALS-Dilithium | 模格（Module Lattice） |
 | **FIPS 205** | **SLH-DSA** | 数字签名 | SPHINCS+ | 哈希（Hash-based） |
 
-此外，**FN-DSA**（原 Falcon）预计也将作为第四个标准发布。
+此外，**FN-DSA**（原 Falcon）已作为 FIPS 206 于 2024 年 8 月正式发布，成为第四个后量子标准。
 
 ### 为什么选了"格"？
 
