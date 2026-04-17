@@ -74,6 +74,8 @@ claude plugin install formatter@my-marketplace --scope project
 
 你也可以在交互界面操作：运行 `/plugin`，进入 **Discover** 标签页，选中插件后选择安装范围。
 
+**Installed 标签页改进**（2.1.110 改进）：Installed 视图现在会将需要关注的项和收藏项置顶，禁用的插件折叠隐藏。按 `f` 键可以收藏选中的插件，方便你快速找到常用的插件。
+
 ### 管理已安装的插件
 
 ```bash
@@ -99,6 +101,10 @@ claude plugin uninstall formatter@my-marketplace --keep-data
 ```
 
 Claude Code 会重新加载所有活跃的插件，并显示插件、Skills、Agents、Hooks、MCP 服务器和 LSP 服务器的数量统计。
+
+### 插件错误处理与诊断
+
+当插件依赖不满足时，Claude Code 会进行智能降级处理（2.1.111 改进）：依赖错误现在区分冲突、无效和过于复杂的版本要求，给出更明确的错误提示。在 headless 模式下使用 `--output-format stream-json` 时，如果插件因依赖问题被降级，init 事件中会包含 `plugin_errors` 字段（2.1.111 新增），方便自动化脚本检测和告警。
 
 ## 🏪 插件市场
 

@@ -15,6 +15,139 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.31（2026-04-16）
+
+### 🐛 修复
+
+- 修复 Windows 和 Ubuntu 终端上 prompt frame 导致的渲染异常
+
+---
+
+## 📦 1.0.30（2026-04-16）
+
+> 📝 **笔记定位**：[自定义状态栏](../modes/index.md) · [图片粘贴](../basic/index.md#-快捷键) · [Plugin Skill 发现](../plugins/index.md)
+
+### ✨ 新功能
+
+- **`/statusline` 命令**：新增 `/statusline` 命令（别名 `/footer`），可自定义状态栏显示的项目（目录、分支、effort、context window、配额）
+- **Ctrl+V / Meta+V 图片粘贴**：在所有平台上，Ctrl+V 和 Meta+V 均可触发从剪贴板粘贴图片
+
+### 🔧 改进
+
+- 反馈表单现在指向正确的 GitHub 仓库
+- 当 rewind 不可用时（如不在 git 仓库中或尚无 commit），`/undo` 会显示解释性提示
+- 使用 `skills.discover` 时能正确发现 Plugin 中的 skill 和 command
+
+### 🐛 修复
+
+- 修复 bracketed paste 处理引入的剪贴板图片粘贴回归问题
+
+### 🗑️ 移除
+
+- 移除 `--list-env` 标志
+
+---
+
+## 📦 1.0.29（2026-04-16）
+
+> 📝 **笔记定位**：[Claude Opus 4.7](../modes/index.md#-programmatic-模式) · [会话标识](../agents/index.md#-使用-agent)
+
+### ✨ 新功能
+
+- **Claude Opus 4.7 支持**：新增对 Claude Opus 4.7 模型的支持
+- **`--list-env` 标志**：在 prompt 模式下打印已加载的 plugin、agent、skill 和 MCP server，便于在 CI 流水线中验证环境配置
+- **`COPILOT_AGENT_SESSION_ID` 环境变量**：Shell 命令和 MCP server 现在会接收 `COPILOT_AGENT_SESSION_ID` 环境变量
+
+### 🔧 改进
+
+- Remote MCP server 配置现在允许省略 `type` 字段，默认为 `http`
+- 闪烁光标现在保持稳定宽度，避免闪烁时文本偏移
+
+### 🐛 修复
+
+- Agent 现在从 git remote URL 正确识别仓库所有者，而非使用本地用户名
+- 修复 Windows 上崩溃退出后终端状态未正确恢复的问题
+
+---
+
+## 📦 1.0.28（2026-04-16）
+
+> 📝 **笔记定位**：[远程会话连接](../modes/index.md#-远程会话控制) · [终端标题控制](../basic/index.md#-认证) · [Rewind 导航](../context/index.md#undo-和-rewind撤销操作)
+
+### ✨ 新功能
+
+- **Remote Control 会话连接**：可从 `--resume` 选择器连接到 CLI remote control 会话
+- **`COPILOT_DISABLE_TERMINAL_TITLE` 环境变量**：可禁用终端标题更新
+
+### 🔧 改进
+
+- Git submodule 中工作时，权限提示现在显示正确的仓库路径
+- 当 `read_agent` 已在等待结果时，不再重复发送后台 Agent 完成通知
+- MCP 迁移提示现在链接到包含平台特定说明的文档页面
+- Rewind 选择器导航简化为方向键 + Enter，移除了容易混淆的 1-9 快捷键
+- `/clear` 或 `/new` 后，自定义指令和 skill 会从磁盘重新加载
+- 吉祥物在启动时播放一次简短的眨眼动画，而非持续闪烁
+
+### 🐛 修复
+
+- 运行 `az` CLI 命令时，Azure 资源 ID 不再触发错误的路径安全警告
+- 当配置的编辑器无法启动时，现在显示清晰的错误信息
+
+---
+
+## 📦 1.0.27（2026-04-15）
+
+> 📝 **笔记定位**：[/ask 命令](../basic/index.md#-常用斜杠命令速查) · [插件市场更新](../plugins/index.md#-管理插件)
+
+### ✨ 新功能
+
+- **`/ask` 命令**：新增 `/ask` 命令，可快速提问而不影响对话历史
+- **Plugin Marketplace 更新命令**：新增 `copilot plugin marketplace update` 命令用于刷新 plugin 目录
+
+### 🔧 改进
+
+- 当 Copilot Pro 试用暂停时，显示清晰的提示信息而非通用的策略错误
+- 状态栏在输入时显示 `@files` 和 `#issues` 提示，在 slash command 选择器打开时显示 `/help` 提示
+
+### 🐛 修复
+
+- 修复 WSL 下剪贴板复制会在粘贴文本中泄漏不可见 BOM 字符的问题
+
+---
+
+## 📦 1.0.26（2026-04-14）
+
+> 📝 **笔记定位**：[Plugin Hook 环境变量](../hooks/index.md#-hook-配置字段) · [时间线展开](../context/index.md#undo-和-rewind撤销操作) · [指令展示优化](../instructions/index.md#-路径特定指令) · [插件安装警告](../plugins/index.md#-管理插件)
+
+### ✨ 新功能
+
+- **Plugin Hook 环境变量**：Plugin hook 现在接收 `PLUGIN_ROOT`、`COPILOT_PLUGIN_ROOT` 和 `CLADE_PLUGIN_ROOT` 环境变量，指向 plugin 的安装目录
+- **Ctrl+O 时间线展开**：`Ctrl+O` 现在可展开所有 timeline 条目，与 `Ctrl+E` 行为一致
+
+### 🔧 改进
+
+- 在 `--remote` 标志和 `/remote` 命令的帮助文本中，将 "steering" 更名为 "remote control"
+- Remote tab 正确显示 Copilot coding agent 任务，并支持无需 pull request 的远程控制
+- 去重内容相同的自定义指令文件（如 `copilot-instructions.md` 和 `CLAUDE.md`），减少每轮对话的 token 浪费
+- 具有 `applyTo` 模式的指令文件整合为表格展示，降低 context window 占用
+- 从 repo、URL 或本地路径安装 plugin 时现在会显示弃用警告
+
+### 🐛 修复
+
+- Escape 键现在能可靠地关闭 `ask_user` 和 elicitation 提示，不再卡住
+- `find -exec` 块内的参数不再触发虚假目录访问提示
+- 修复 context compaction 将 tool call 拆分到 checkpoint 边界时 Agent 会话不可恢复的问题
+- 单段 slash 前缀 token（如 `/help`）在 bash 命令中不再被误识别为文件路径
+- Anthropic BYOM 在查看图片文件时现在正确包含图片数据
+- Permission prompt notification hook 仅在提示实际显示给用户时触发
+- ACP server 现在仅绑定到 localhost，防止意外的网络暴露
+- 从 marketplace 安装名为 `git` 的 plugin 不再因 URL 解析错误而失败
+- Enterprise 登录现在接受不带 URL scheme 的主机名
+- LSP language server 在 Windows 上使用正确的 file URI 路径初始化
+- 文件编辑操作中的相对路径现在基于 session 工作目录正确解析
+
+---
+
 ## 📦 1.0.25（2026-04-13）
 
 > 📝 **笔记定位**：[MCP 注册表向导](../mcp/index.md#-管理-mcp-服务器) · [Skill 指令持久化](../skills/index.md#-使用-skill) · [远程会话控制](../modes/index.md#-远程会话控制)

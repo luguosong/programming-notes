@@ -570,5 +570,8 @@ exit 0
 
 - v2.1.0 新增了 Hooks 在 Skill 和 Agent frontmatter 中的支持，以及 `once: true` 配置（Hook 只执行一次后自动停用）
 - v2.1.69 为 Hook 事件新增了 `agent_id`（子代理）和 `agent_type`（子代理及 `--agent`）字段，以及 `worktree` 状态行字段
+- 修复 `PermissionRequest` hook 返回 `updatedInput` 时未重新检查 `permissions.deny` 规则（2.1.110 修复）
+- 修复 `PreToolUse` hook 的 `additionalContext` 在 tool 调用失败时被丢弃（2.1.110 修复）
+- 安全加固："在编辑器中打开"操作防止不受信任的文件名注入命令（2.1.110 修复）
 
 📝 小结：Hook 是 Claude Code 中"确定性自动化"的核心机制。通过在生命周期事件上注册脚本，你可以确保某些规则**始终被执行**，而不依赖模型的判断力。配置 Hook 的核心是选择正确的事件、设置合适的 matcher、然后编写一个快速且安静的脚本——快速是为了不阻塞 Claude，安静是为了不消耗上下文。

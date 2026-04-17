@@ -78,6 +78,10 @@ copilot auth status
 
     需要一个启用了 GitHub Copilot 的 GitHub 账号（个人、Business 或 Enterprise 订阅均可）。
 
+!!! info "环境变量补充"
+
+    - `COPILOT_DISABLE_TERMINAL_TITLE=1`（1.0.28 新增）：设置后 Copilot CLI 不再修改终端标题栏。适用于终端管理工具自行控制标题的场景，避免 Copilot 覆盖你的自定义标题。
+
 ---
 
 ## 💻 启动与退出
@@ -113,6 +117,8 @@ copilot -p "解释这段代码的作用"
 | ++ctrl+r++ | 反向增量搜索命令历史（0.0.422 新增） |
 | ++ctrl+y++ | 在编辑器中打开计划文件（Plan 模式） |
 | ++ctrl+q++ / ++ctrl+enter++ | 排队发送消息（1.0.15 调整） |
+| ++ctrl+v++ / ++meta+v++ | 从剪贴板粘贴图片（1.0.30 新增） |
+| ++ctrl+o++ | 展开时间线所有条目（1.0.26 新增） |
 | ++up++ / ++down++ | 导航命令历史 |
 
 ---
@@ -155,6 +161,8 @@ copilot -p "解释这段代码的作用"
 | `/rewind` | 时间线回滚到任意节点（1.0.13 新增） |
 | `/share html` | 导出会话为交互式 HTML（1.0.15 新增） |
 | `/changelog` | 查看更新日志，支持 `last N`、`since <ver>`、`summarize`（1.0.5 新增） |
+| `/ask` | 快速提问，不影响当前对话历史（1.0.27 新增） |
+| `/statusline` | 自定义状态栏显示内容（1.0.30 新增） |
 
 ### 模式与权限
 

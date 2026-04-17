@@ -88,6 +88,10 @@ copilot --agent explore -p "找出所有未使用的导入"
 
 Sub-agent 现在有深度和并发限制，防止 Agent 无限递归生成子 Agent（1.0.22 新增）。
 
+!!! info "会话标识（1.0.29 新增）"
+
+    Shell 命令和 MCP server 运行时会自动接收 `COPILOT_AGENT_SESSION_ID` 环境变量，其中包含当前 Agent 会话的唯一标识。当你需要在外部脚本中追踪是哪个 Agent 会话触发了操作时（如日志关联、审计追踪），这个变量非常有用。
+
 ---
 
 ## 🎭 自定义 Agent

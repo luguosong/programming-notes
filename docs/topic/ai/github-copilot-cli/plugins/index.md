@@ -62,6 +62,11 @@ description: 安装和管理 Copilot CLI 插件，扩展 Agent、Skill 和斜杠
 | `/plugin uninstall <name>` | 卸载指定插件（删除文件） |
 | `/plugin enable <name>` | 启用已禁用的插件 |
 | `/plugin disable <name>` | 暂时禁用插件（保留文件） |
+| `copilot plugin marketplace update` | 刷新插件市场的目录缓存（1.0.27 新增） |
+
+!!! warning "安装方式变更（1.0.26）"
+
+    从 repo、URL 或本地路径安装插件时，CLI 会显示弃用警告，建议优先从应用市场安装。未来版本可能移除直接从 Git 仓库安装的方式，改用统一的插件市场分发。
 
 ## 🛒 插件市场
 
@@ -99,6 +104,10 @@ typescript-language-server --version
 ```
 
 💡 安装一个 `database-data-management` 插件，你可能同时获得：一个 DBA Agent + 一套 SQL 审查 Skill + 一个 PostgreSQL MCP 服务器。
+
+!!! tip "插件 Skill 发现（1.0.30 改进）"
+
+    使用 `skills.discover` 时，Copilot 现在能正确发现插件中包含的 Skill 和 Slash 命令。这意味着插件提供的扩展能力会被自动索引，你可以像使用内置 Skill 一样通过 prompt 自动触发插件中的 Skill。
 
 ---
 

@@ -117,7 +117,7 @@ shell: bash
 | `user-invocable` | 否 | 设为 `false` 将 Skill 从 `/` 菜单隐藏（仅 Claude 可自动调用） |
 | `allowed-tools` | 否 | Skill 激活时 Claude 可免确认使用的工具列表 |
 | `model` | 否 | 指定 Skill 使用的模型 |
-| `effort` | 否 | 思考力度：`low` / `medium` / `high` / `max`（仅 Opus 4.6） |
+| `effort` | 否 | 思考力度：`low` / `medium` / `high` / `max`（仅 Opus 4.6） / `xhigh`（仅 Opus 4.7，v2.1.111 新增） |
 | `context` | 否 | 设为 `fork` 时，Skill 在独立的子代理中运行（v2.1.0 新增） |
 | `agent` | 否 | 配合 `context: fork` 使用，指定子代理类型（如 `Explore`、`Plan`）（v2.1.0 新增） |
 | `paths` | 否 | Glob 模式，限制 Skill 只在操作匹配的文件时才自动激活（v2.1.84 支持 YAML glob 列表） |
@@ -174,7 +174,9 @@ Claude 并不是把所有 Skill 全部加载进上下文——那样太浪费 to
 
 ### 手动调用（/命令）
 
-所有 `user-invocable` 为 `true`（默认）的 Skill 都可以通过 `/` 命令手动调用。在 Claude Code 中输入 `/` 即可看到所有可用的 Skill 和内置命令列表。
+所有 `user-invocable` 为 `true`（默认）的 Skill 都可以通过 `/` 命令手动调用。在 Claude Code 中输入 `/` 即可看到所有可用的 Skill 和内置命令列表（v2.1.111 改进：`/skills` 菜单现在支持按 `t` 键按估算 token 数排序，帮你快速定位最耗上下文的 Skill）。
+
+除了自定义 Skill，内置斜杠命令（如 `/init`、`/review`、`/security-review`）也可以被模型通过 Skill tool 发现和调用（v2.1.108 新增）——这意味着模型能自主选择合适的内置命令来完成任务。
 
 Skill 支持传递参数，通过 `$ARGUMENTS` 变量接收：
 
@@ -402,5 +404,9 @@ agent: Explore
 | 子目录级 | `packages/frontend/.claude/skills/<name>/SKILL.md` | 操作该子目录文件时自动发现（monorepo 场景） |
 
 优先级：企业级 > 个人全局 > 项目级 > 子目录级。
+
+### 🔑 减少权限提示：`/less-permission-prompts`
+
+权限确认弹窗频繁出现会打断工作节奏。v2.1.111 新增的 `/less-permission-prompts` 内置 Skill 可以自动解决这个问题——它会扫描你的 transcript，找出常见的只读 Bash 和 MCP 工具调用，然后为 `.claude/settings.json` 生成一个优先级排序的允许列表建议。运行一次就能显著减少重复授权。
 
 📝 **小结**：Skill 是 Claude Code 中性价比最高的扩展方式。一个几十行的 `SKILL.md` 文件，就能让 Claude 在你的项目中表现得像一个熟悉代码库、遵循团队规范的「老员工」。从编写项目的代码风格规范开始，逐步扩展到工作流自动化，你会发现 Skill 越写越多、Claude 越来越好用。

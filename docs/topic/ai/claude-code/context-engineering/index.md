@@ -82,6 +82,8 @@ Claude Code 的默认上下文窗口为 200K tokens（部分模型支持通过 `
 
 `cargo test` 一次完整输出动辄几千行，`git log`、`find`、`grep` 在稍大的仓库里也能轻松塞满屏幕。这些输出 Claude 并不需要全看——它真正需要知道的就是「过了还是挂了，挂在哪里」。但只要输出出现在上下文里，就是实实在在的 token 消耗。
 
+v2.1.108 通过按需加载语言语法，进一步降低了文件读取、编辑和语法高亮操作的内存占用——这对处理大型仓库的长会话尤为明显。
+
 ### 解决方案
 
 **手动截断**：在命令后面加 `| head -30` 限制输出行数。
@@ -129,6 +131,18 @@ When compressing, preserve in priority order:
 | 长时间工作，需要换人接手 | 先写 HANDOFF.md，再开新会话 | 见下方 HANDOFF.md 模式 |
 
 💡 **自动记忆**（v2.1.32 新增）：Claude 现在会在工作过程中自动记录和回忆有价值的上下文，v2.1.59 进一步强化为 auto-memory 自动保存。你可以用 `/memory` 管理这些记忆。
+
+### Session recap：不在场时发生了什么
+
+当你离开一段时间再回到会话，Claude 可能已经处理了大量内容。**Session recap**（v2.1.108 新增）就是为此设计的——返回 session 时提供上下文摘要，让你快速了解"我不在的时候发生了什么"。
+
+- 可在 `/config` 中配置是否启用
+- 手动调用 `/recap` 查看摘要
+- 对禁用遥测的用户（Bedrock、Vertex、Foundry、`DISABLE_TELEMETRY`）同样可用（v2.1.110 改进）
+
+### 恢复会话（`/resume`）
+
+`/resume` 用于恢复之前的会话。选择器默认显示当前目录的 session，按 `Ctrl+A` 切换为显示所有项目（v2.1.108 改进）。此外，`--resume` / `--continue` 现在还会恢复未过期的计划任务（v2.1.110 新增），让你继续上次中断的定时任务。
 
 ## 📋 HANDOFF.md：跨会话传递进度
 
@@ -185,6 +199,12 @@ Claude Code 的 Prompt 布局（从上到下）：
 | 会话中途增删工具 | 前缀结构改变 | 避免中途修改 MCP 配置 |
 
 💡 Claude Code 自己也是这么做的：当前时间等动态信息通过 `<system-reminder>` 标签放在用户消息里，而不是 System Prompt 中。
+
+### 缓存 TTL 控制
+
+默认的 Prompt 缓存有效期为 5 分钟。v2.1.108 新增了 `ENABLE_PROMPT_CACHING_1H` 环境变量，可将缓存 TTL 延长到 1 小时（适用于 API key、Bedrock、Vertex 和 Foundry），大幅提升长会话的成本效益。同时提供 `FORCE_PROMPT_CACHING_5M` 强制使用 5 分钟 TTL（适用于需要频繁刷新前缀的场景）。
+
+⚠️ 缓存 TTL 越长，Prompt 前缀必须越稳定。启用 1 小时 TTL 后，更要注意上方提到的缓存陷阱——中途增删工具或放入时间戳内容会导致缓存无法命中。
 
 ### 会话中途不要切换模型
 
