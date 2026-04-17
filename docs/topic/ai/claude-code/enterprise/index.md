@@ -150,7 +150,7 @@ export CLAUDE_CODE_USE_BETAS="otel"
 
 ### 调试 API 请求体
 
-在排查 Claude Code 的 API 调用问题时，通常只能看到摘要信息。设置 `OTEL_LOG_RAW_API_BODIES` 环境变量后（2.1.111 新增），完整的 API 请求和响应体会作为 OpenTelemetry 日志事件输出，方便你在 OTel Collector 或日志分析工具中查看原始的请求/响应内容：
+在排查 Claude Code 的 API 调用问题时，通常只能看到摘要信息。设置 `OTEL_LOG_RAW_API_BODIES` 环境变量后（v2.1.111 新增），完整的 API 请求和响应体会作为 OpenTelemetry 日志事件输出，方便你在 OTel Collector 或日志分析工具中查看原始的请求/响应内容：
 
 ```bash
 export OTEL_LOG_RAW_API_BODIES=1
@@ -160,7 +160,7 @@ export OTEL_LOG_RAW_API_BODIES=1
 
 ### SDK 分布式追踪
 
-当 Claude Code 通过 SDK 或 headless 模式在微服务架构中使用时，追踪请求链路至关重要。SDK/headless 会话现在会自动从环境变量读取 `TRACEPARENT` 和 `TRACESTATE` 用于分布式追踪链接（2.1.110 改进），可以无缝融入现有的 OpenTelemetry 追踪体系。
+当 Claude Code 通过 SDK 或 headless 模式在微服务架构中使用时，追踪请求链路至关重要。SDK/headless 会话现在会自动从环境变量读取 `TRACEPARENT` 和 `TRACESTATE` 用于分布式追踪链接（v2.1.110 改进），可以无缝融入现有的 OpenTelemetry 追踪体系。
 
 ### OTel Collector 架构
 
