@@ -39,8 +39,8 @@ graph TD
     A --> D["密码层面的攻击<br/>暴力破解密钥库密码"]
     A --> E["完整性攻击<br/>篡改密钥库内容"]
 
-    F["KeyStore 的防御"] --> G["密码加密<br/>PBKDF2/Scrypt 增加破解成本"]
-    F --> H["HMAC 完整性校验<br/>篡改后加载失败"]
+    F["KeyStore 的防御"] --> G["PBKDF2/Scrypt 增加破解成本<br/>（PKCS#12 / BCFKS）"]
+    F --> H["HMAC 完整性校验<br/>（PKCS#12 / BCFKS）"]
     F --> I["密码保护<br/>即使文件泄露也需密码"]
 
     classDef threat fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:2px
@@ -53,7 +53,7 @@ graph TD
 - **磁盘泄露**：密钥库文件被复制到外部（备份泄露、恶意软件窃取、员工带走）。KeyStore 用密码加密密钥内容，攻击者即使拿到文件，没有密码也无法提取密钥
 - **内存提取**：应用运行时，密钥已加载到内存中。`PrivateCredential` 对象在 Java 中受保护，但特权进程（如 root）或 JVM 级别的攻击（如 Unsafe API）仍可能提取。这不是 KeyStore 能解决的问题，而是操作系统级别的安全边界
 - **密码暴力破解**：攻击者尝试各种密码打开密钥库。KeyStore 通过 PBKDF2/Scrypt 增加每次尝试的计算成本，使暴力破解在实际时间内不可行
-- **完整性篡改**：攻击者替换密钥库文件中的公钥或证书。KeyStore 的存储格式包含 HMAC 完整性校验——如果文件被篡改，加载时会抛出异常
+- **完整性篡改**：攻击者替换密钥库文件中的公钥或证书。PKCS#12 和 BCFKS 的存储格式包含 HMAC 完整性校验——如果文件被篡改，加载时会抛出异常。但 JKS 缺乏显式的完整性校验，更容易受到此类攻击
 
 ⚠️ KeyStore 的安全性建立在**密码强度**的基础上。如果密钥库密码是 `123456`，所有加密和完整性保护都形同虚设。密码应该足够长且随机（至少 16 个字符），或者直接使用随机生成的密钥作为密钥库密码。
 
@@ -489,10 +489,10 @@ graph TD
 
 | 安全维度 | JKS | PKCS#12 | BCFKS |
 |---------|-----|---------|-------|
-| **密钥派生** | 专有方案（未公开审计） | PKCS#12 专有 KDF（SHA-1 哈希链，RFC 7292 Appendix B；现代实现可切换 PBKDF2-HMAC-SHA256） | PBKDF2-HMAC-SHA256 或 Scrypt（可选） |
-| **完整性保护** | 无显式 HMAC（依赖格式隐式校验） | 基于 PKCS#12 专有 KDF 派生 MAC key，默认使用 SHA-1 摘要（RFC 7292 Section 4 + Appendix B.3） | HMAC-SHA256 完整性校验 |
-| **密钥加密** | 专有流密码（SHA-1 基础） | 3DES-CBC 或 AES-CBC（RFC 7292） | AES-256-CBC（默认） |
-| **抗暴力破解** | 弱（迭代次数不可配置） | 中（PBKDF2 迭代次数可配置） | 强（支持 Scrypt 内存硬度） |
+| **密钥派生** | 专有方案（未公开审计） | PKCS#12 专有 KDF（基于 SHA-1 的迭代哈希方案，RFC 7292 Appendix B；现代实现可切换 PBKDF2-HMAC-SHA256） | PBKDF2-HMAC-SHA256 或 Scrypt（可选） |
+| **完整性保护** | 无显式 HMAC（依赖格式隐式校验） | 专有 KDF 派生 MAC key，使用 HMAC-SHA1 完整性校验（RFC 7292 Section 4；现代实现可切换 HMAC-SHA256） | HMAC-SHA256 完整性校验 |
+| **密钥加密** | 专有流密码（SHA-1 基础） | 3DES-CBC（RFC 7292）或 AES-CBC（现代实现通过 PBES2 支持） | AES-256-CBC（默认） |
+| **抗暴力破解** | 弱（迭代次数不可配置） | 中（专有 KDF 迭代次数可配置；切换至 PBKDF2 后更强） | 强（支持 Scrypt 内存硬度） |
 
 ⚠️ **PKCS#12 默认使用 3DES-CBC 加密和基于 SHA-1 哈希链的专有 KDF**——这些是 1990 年代末的设计选择，在当时足够安全，但以现代标准来看并不理想。如果你的密钥库需要长期保护高价值密钥，建议使用 BCFKS（PBKDF2-HMAC-SHA256 + AES-256-CBC 或 Scrypt）。
 
