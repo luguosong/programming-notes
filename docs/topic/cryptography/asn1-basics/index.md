@@ -343,6 +343,71 @@ BER（Basic Encoding Rules）比较宽松，允许同一数据产生多种编码
 
 🎯 **实践建议**：如果你在做任何涉及签名或 MAC 的 ASN.1 处理，**始终使用 DER 编码**。Bouncy Castle 默认就使用 DER，但如果你手动构造 `BER` 编码的数据再参与签名运算，验证方可能因为编码不一致而验证失败。
 
+### 为什么 DER 对安全性至关重要？
+
+DER 的"同一份数据永远生成同一段字节"这个特性，不仅仅是为了方便——它是**数字签名安全性的基础**。
+
+#### 签名与编码确定性
+
+数字签名的本质是对消息的哈希值签名。当消息是一个 ASN.1 结构（比如证书的 TBSCertificate）时，签名方对 TBSCertificate 的 DER 编码计算哈希，验证方也需要对 TBSCertificate 的 DER 编码计算哈希。如果编码不唯一——同一份逻辑数据可以产生多种合法的字节序列——验证方就无法重现签名方的哈希值。
+
+```
+签名方：H(DER_encode(TBS)) → 签名
+验证方：H(DER_encode(TBS)) → 应该得到相同的哈希值
+```
+
+如果签名方和验证方的编码不一致（比如一个用 BER，一个用 DER），签名验证就会失败——即使证书内容完全相同。这不是"偶尔失败"的问题，而是**确定性编码是签名方案正确性的前提**。
+
+#### BER 歧义攻击：从理论到现实
+
+BER 允许同一数据有多种合法编码，这在安全上下文中是危险的。攻击者可以利用 BER 的歧义性来构造**合法编码但恶意意图**的数据。
+
+**攻击 1：冗余编码的零前导字节**
+
+BER 允许 `INTEGER` 的编码包含多余的前导零字节。例如，整数 `1` 可以编码为：
+
+```
+# DER（最短编码，正确）
+02 01 01
+
+# BER（冗余编码，合法但危险）
+02 02 00 01
+```
+
+DER 规则要求长度必须最短（`02 01 01`），但 BER 允许 `02 02 00 01`。如果验证方只做 BER 解析不检查 DER 合规性，这两种编码都会被接受为相同的整数 `1`——但它们产生不同的哈希值。
+
+**攻击 2：SET 元素的顺序歧义**
+
+BER 中 `SET` 的元素是无序的。假设一个签名结构包含两个字段 A 和 B：
+
+```
+SET { A, B }  和  SET { B, A }
+```
+
+在 BER 中两者都是合法的，但它们的 DER 编码完全不同，哈希值也不同。如果实现者在构造待签名数据时使用了 BER（不排序），而验证者期望 DER（排序），签名验证就会失败。更危险的是，如果双方都接受 BER 且不排序，攻击者可以交换字段顺序来构造不同的合法签名。
+
+**攻击 3：indefinite-length 编码歧义**
+
+BER 支持 `indefinite-length`（不定长）编码——用 `0x80` 作为长度，以 `00 00` 结束标记。同一数据可以有 definite-length 和 indefinite-length 两种编码，产生完全不同的字节序列：
+
+```
+# definite-length（DER 标准方式）
+30 0A 02 01 05 02 01 03 02 01 01
+
+# indefinite-length（BER 允许）
+30 80 02 01 05 02 01 03 02 01 01 00 00
+```
+
+两种编码代表完全相同的逻辑数据，但哈希值完全不同。如果签名方和验证方使用不同的编码方式，签名验证就会失败。更危险的是，indefinite-length 的结束标记 `00 00` 之后的任何额外字节会被某些宽松解析器静默忽略，攻击者可能利用这一点在协议交互中构造非预期的编码变体。
+
+这就是为什么 **DER 禁止了所有这些歧义性**：最短长度、SET 排序、禁止不定长编码。在使用 DER 的前提下，每种 ASN.1 值只有**唯一一种**合法编码，攻击者无法在不改变逻辑数据的前提下操纵字节表示。
+
+#### 历史教训
+
+2006 年，Daniel Bleichenbacher 展示了一种针对 RSA PKCS#1 v1.5 签名的伪造攻击（Bleichenbacher's RSA signature forgery）。某些实现存在三个缺陷：ASN.1 DigestInfo 解析后**不检查尾部剩余字节**（trailing garbage tolerance）、**ASN.1 长度字段解析过于宽松**、以及 **FF padding 检查不严格**。Bleichenbacher 利用这些漏洞，配合小公钥指数（e=3）的数学特性，只需让签名块的前一小部分满足约束，剩余字节可以任意填充来凑成完全立方数，从而构造出能通过验证的伪造签名。
+
+这个攻击影响了多个主流实现（包括 OpenSSL 和 NSS），直接推动了业界对 DER 严格合规性的重视。
+
 ## OID——对象标识符
 
 ### 什么是 OID？
@@ -437,6 +502,50 @@ TBSCertificate ::= SEQUENCE {
 ## 在 Java 中使用 ASN.1
 
 Bouncy Castle 提供了完整的 ASN.1 API，位于 `org.bouncycastle.asn1` 包下。理解了 ASN.1 的基本概念后，用这个 API 就会很直观。
+
+### ASN.1 解析安全实践
+
+ASN.1 解析是密码学代码中最容易出安全漏洞的地方之一。攻击者可以构造恶意的 ASN.1 数据来触发解析器的各种异常行为。以下是几个常见的安全陷阱和防护原则。
+
+#### 常见安全陷阱
+
+**陷阱 1：类型混淆**
+
+ASN.1 的 Tag 决定了类型，但攻击者可以伪造 Tag。比如，一个应该是 `INTEGER` 的字段，攻击者可能把它编码为 `SEQUENCE`。如果代码直接强转而不检查类型：
+
+```java
+// ❌ 危险：如果实际是 SEQUENCE 而非 INTEGER，会抛出 ClassCastException
+ASN1Integer version = (ASN1Integer) seq.getObjectAt(0);
+
+// ✅ 安全：使用 getInstance() 做类型检查
+ASN1Integer version = ASN1Integer.getInstance(seq.getObjectAt(0));
+```
+
+**陷阱 2：OPTIONAL 字段缺失**
+
+当 ASN.1 定义中包含 `OPTIONAL` 字段时，解析代码必须处理字段不存在的情况。如果盲目按索引访问：
+
+```java
+// ❌ 危险：comment 是 OPTIONAL，可能不存在
+ASN1TaggedObject tagged = ASN1TaggedObject.getInstance(seq.getObjectAt(3));
+
+// ✅ 安全：按标签号查找，找不到时返回 null
+ASN1TaggedObject tagged = findTaggedObject(seq, 0);
+if (tagged != null) {
+    String comment = DERUTF8String.getInstance(tagged, false).getString();
+}
+```
+
+**陷阱 3：BER 不合规编码绕过验证**
+
+即使你使用 Bouncy Castle 的 DER 解析器，传入的数据仍可能是 BER 编码的。`ASN1Primitive.fromByteArray()` 能解析 BER，但不保证输出符合 DER。如果解析后的数据要参与签名验证，应该使用 `ASN1InputStream` 配合 `DER` 标记来强制 DER 合规检查。
+
+#### 防御性解析原则
+
+- **始终使用 `getInstance()` 而非强制类型转换**：`getInstance()` 在类型不匹配时抛出带有描述信息的 `IllegalArgumentException`，而非 `ClassCastException`；同时它还支持 `byte[]` 自动解析、`null` 安全返回、以及 tagged object 的 `getInstance(tagged, explicit)` 重载
+- **对 OPTIONAL 字段做空值检查**：不要假设所有字段都存在，按标签号查找比按索引查找更安全
+- **编码后重新解析验证**：如果你构造了一个 ASN.1 对象并要对其签名，先编码再解析回来，确认重建后的对象与原始对象一致
+- **使用 DER 而非 BER**：`getEncoded(ASN1Encoding.DER)` 而非 `getEncoded()`（后者可能使用 BER）
 
 ### 解析 ASN.1 结构
 

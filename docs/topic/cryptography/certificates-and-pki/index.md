@@ -23,6 +23,57 @@ title: 证书与 PKI
 
 💡 把证书想象成"身份证"：身份证上写着你的名字，还有一个权威机构（公安局）的盖章。别人看到身份证，不需要认识你本人，只要信任公安局，就能确认你的身份。证书也是一样的——它把公钥和一个身份绑定在一起，由受信任的 CA（Certificate Authority，证书颁发机构）签名担保。
 
+### 信任委托与信任链
+
+PKI 的核心是一个 `信任委托模型`：你不直接信任某个公钥的主人，而是信任一个 CA，由 CA 来担保公钥与身份的绑定。
+
+这个模型的关键特征是**信任的传递性**：如果你信任根 CA，根 CA 签发了中间 CA 的证书（担保中间 CA 的身份和公钥），中间 CA 签发了终端实体的证书——那么你通过验证整条签名链，就可以信任终端实体的公钥。
+
+```mermaid
+graph LR
+    U["用户"] -->|"信任"| Root["根 CA<br/>（信任锚）"]
+    Root -->|"签名担保"| Inter["中间 CA"]
+    Inter -->|"签名担保"| EE["终端实体<br/>www.example.com"]
+    EE -->|"绑定"| PK["公钥"]
+
+    classDef trust fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:2px
+    classDef delegate fill:transparent,stroke:#f57c00,color:#adbac7,stroke-width:1px
+    classDef target fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:1px
+
+    class U,Root trust
+    class Inter delegate
+    class EE,PK target
+```
+
+形式化地说，信任链的安全性依赖于以下**递归假设**：
+
+$$\forall i \in [1, n] : \text{签名验证通过}(cert_{i-1}, cert_i) \land \text{信任}(cert_0) \implies \text{信任}(cert_n)$$
+
+其中 `签名验证通过` 意味着使用 cert_{i-1} 的公钥验证 cert_i 的签名成功。这个递归的根基是根 CA（信任锚）——它的证书是自签名的，你选择信任它不是因为它有更高层的担保，而是因为你通过操作系统或浏览器预装的方式**预先决定了信任它**。
+
+### PKI 信任模型的根本假设与风险
+
+PKI 信任模型建立在几个关键假设上，每个假设的失败都会带来安全风险：
+
+**假设 1：根 CA 的私钥永不泄露**
+
+这是整个信任链的根基。如果根 CA 的私钥被攻破，攻击者可以签发任何域名的证书——包括银行、政府、任何网站。浏览器和操作系统会无条件信任这些伪造证书。这正是为什么根 CA 的私钥通常存储在硬件安全模块（HSM）中，并且有极其严格的物理和流程安全控制。
+
+**假设 2：CA 的签发流程值得信赖**
+
+CA 的职责不仅是"签名"，还包括**验证申请者的身份**。如果 CA 不做充分验证就签发证书（所谓"误签发"），攻击者就能获得合法的、受信任的证书。2011 年的 DigiNotar 事件就是典型案例——CA 被攻破后，攻击者为 `*.google.com` 签发了伪造证书，用于对伊朗用户发起大规模中间人攻击。DigiNotar 随后破产。
+
+**假设 3：中间 CA 的权限被正确限制**
+
+这就是 `BasicConstraints` 中 `pathLenConstraint` 的意义。如果中间 CA 被攻破，`pathLenConstraint` 限制了它只能签发终端实体证书，不能签发下级 CA——这控制了**爆炸半径**。
+
+| 被攻破的实体 | pathLen=0 | pathLen=无限 |
+|-------------|-----------|-------------|
+| 中间 CA | 只能签终端实体证书 | 能签下级 CA，无限扩展 |
+| 影响范围 | 该 CA 直接签发的证书 | 整个子树中的所有证书 |
+
+💡 **为什么信任根 CA 不是"零知识"的**：你信任根 CA 的原因是操作系统/浏览器厂商已经替你做了审核（比如 Microsoft、Apple、Google 维护的受信任根证书列表）。这本质上是**信任的转移**——你信任操作系统厂商的判断，操作系统厂商信任 CA 的运营能力。
+
 ## X.500 名称（Distinguished Name）
 
 ### 证书的身份标识
@@ -614,6 +665,31 @@ Java 提供了完整的 CertPath API 来执行 PKIX（RFC 5280）路径验证。
 | `CertPathValidator` | 路径验证器——执行 PKIX 验证算法 |
 | `CertPathBuilder` | 路径构建器——从证书集合中找到有效路径 |
 | `PKIXCertPathValidatorResult` | 验证结果——包含信任锚和公钥 |
+
+### 路径验证到底证明了什么？
+
+理解路径验证的理论意义很重要。路径验证成功**并不直接证明**"这个公钥属于 www.example.com"，它证明的是更精确的命题：
+
+> **在给定信任锚集合 T 的前提下，证书路径中每一步的签名验证都通过，且所有约束条件（有效期、用途、路径长度、吊销状态）都满足。**
+
+形式化地说，设信任锚集合为 T，证书路径为 `[cert_n, cert_{n-1}, ..., cert_1, cert_0]`（cert_0 是信任锚），则路径验证成功意味着：
+
+$$\forall i \in [1, n] : \text{Verify}(\text{pubkey}(cert_{i-1}), \text{TBS}(cert_i), \text{sig}(cert_i)) = \text{true}$$
+
+$$\land \forall i \in [0, n] : \text{Constraints}(cert_i) = \text{satisfied}$$
+
+其中 `Constraints` 包括有效期检查、BasicConstraints 检查、KeyUsage 兼容性检查、吊销状态检查等。
+
+⚠️ 注意两个重要的**安全边界**：
+
+1. **路径验证是计算安全，不是信息论安全**：它依赖于签名方案的安全性（如 RSA-PSS、ECDSA 的 EUF-CMA 安全性）。如果签名算法被攻破（比如量子计算机出现），路径验证就不再提供安全保障
+2. **信任锚是"公理"，不是"定理"**：路径验证的成功是**相对于信任锚集合**的。如果你信任了一个恶意 CA 的根证书，那么该 CA 签发的任何证书都会通过路径验证——验证器无法检测 CA 本身的恶意行为
+
+### pathLenConstraint 的安全论证
+
+`pathLenConstraint` 的安全意义在于**限制信任链的深度**。根据 RFC 5280 Section 6.1.3，它限制的是该 CA 下方**非自签发中间 CA** 的数量。如果中间 CA 的 `pathLenConstraint = 0`，它不能签发非自签发的下级 CA——只能签发终端实体证书（自签发的中间 CA 证书不受此限制，但实际攻击场景中极为罕见）。
+
+PKIX 验证算法通过 `max_path_length` 变量跟踪路径深度限制，当遇到非自签发的 CA 证书时递减该变量。如果变量减到负数，验证就会失败。这个机制在数学上保证了信任扩展是有界的——攻击者不能通过签发下级 CA 来无限扩展自己的权限。
 
 ### 使用 CertPathValidator 验证路径
 
