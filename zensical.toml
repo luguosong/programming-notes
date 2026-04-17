@@ -234,7 +234,8 @@ nav = [
                 ] },
                 { "更新日志" = "topic/ai/claude-code/changelog/index.md" },
                 { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
-            ] }
+            ] },
+            { "双工具协同实践" = "topic/ai/dual-tool-practice/index.md" }
         ] }
     ] },
     { "数学" = [
