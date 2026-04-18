@@ -80,14 +80,14 @@ nav = [
             { "IO 流" = "java/javase/io/index.md" }
         ] },
         { "日志框架" = [
-            "java/javase/logging/index.md",
-            { "JUL" = "java/javase/logging/jul/index.md" },
-            { "Log4j" = "java/javase/logging/log4j/index.md" },
-            { "Logback" = "java/javase/logging/logback/index.md" },
-            { "Log4j2" = "java/javase/logging/log4j2/index.md" },
-            { "JCL" = "java/javase/logging/jcl/index.md" },
-            { "SLF4J" = "java/javase/logging/slf4j/index.md" },
-            { "Spring Boot 日志" = "java/javase/logging/springboot/index.md" }
+            "java/logging/index.md",
+            { "JUL" = "java/logging/jul/index.md" },
+            { "Log4j" = "java/logging/log4j/index.md" },
+            { "Logback" = "java/logging/logback/index.md" },
+            { "Log4j2" = "java/logging/log4j2/index.md" },
+            { "JCL" = "java/logging/jcl/index.md" },
+            { "SLF4J" = "java/logging/slf4j/index.md" },
+            { "Spring Boot 日志" = "java/logging/springboot/index.md" }
         ] },
         { "Maven" = [
             "java/maven/index.md",

@@ -1,6 +1,7 @@
 ---
 title: 日志框架
 description: Java 日志框架全景图 — 门面模式、框架对比与选型指南
+icon: lucide/scroll-text
 ---
 
 **本文你会学到**：
