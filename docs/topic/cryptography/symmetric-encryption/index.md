@@ -169,6 +169,32 @@ byte[] output = cipher.doFinal(input);
 
 ❌ **永远不要在新系统中使用 ECB 模式。** 它无法隐藏数据模式，是最弱的工作模式。
 
+### 「加密企鹅」：ECB 模式的经典反面教材
+
+想象你把 Linux 吉祥物 Tux 企鹅的图片用 ECB 模式加密，结果会怎样？密文图像上，企鹅的轮廓依然清晰可见——你能看到它的头、身体和翅膀，只是换了一套颜色。这张图在密码学社区被称为「加密企鹅（ECB Penguin）」，收录于 Wikipedia 的 Block cipher mode of operation 词条，是 ECB 失败的标志性案例（出自《Real-World Cryptography》第 4.3 节）。
+
+ECB 模式的致命缺陷在于它的「码本」本质：每个 16 字节的明文块，经过相同密钥加密后，**永远对应相同的密文块**。图像像素通常有大量重复区域（比如均匀的背景色块）——这些区域在密文中照样重复，于是图像的结构信息被完整地保留了下来。
+
+```mermaid
+graph LR
+    P1["明文块（像素A）"] -->|AES/ECB| C1["密文块 X"]
+    P2["明文块（像素A）"] -->|AES/ECB| C2["密文块 X（完全相同！）"]
+    P3["明文块（像素B）"] -->|AES/ECB| C3["密文块 Y"]
+    P4["明文块（像素B）"] -->|AES/ECB| C4["密文块 Y（完全相同！）"]
+
+    classDef plain fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:1px
+    classDef cipher fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:1px
+    class P1,P2,P3,P4 plain
+    class C1,C2,C3,C4 cipher
+```
+
+这个问题不只发生在图像上。对于结构化数据（固定格式协议包、数据库字段、JSON 消息体），攻击者同样可以：
+
+- 识别重复的密文块，推断对应明文内容相同（信息泄露）
+- 重放某个密文块替换另一个位置（块替换攻击），在解密端构造恶意消息
+
+📌 **核心教训**：ECB 不是「弱一点」的加密，而是根本上**不应被称为安全的加密模式**。任何需要加密超过一个块的数据的场景，都必须选用带 IV 的模式（CBC / CTR）或 AEAD（GCM）。
+
 ### CBC 模式
 
 CBC（Cipher Block Chaining，密码分组链接）解决了 ECB 的模式泄露问题。它的做法是：在加密每个块之前，先用前一个密文块（或 IV）与当前明文块做 XOR，然后再加密。这样一来，即使明文块相同，由于前面的密文块不同，最终的密文块也不同。
@@ -386,6 +412,32 @@ EtM 的三个常见实现错误：(1) 加密和 MAC 使用相同密钥；(2) MAC
 
 当认证加密还支持「关联数据（Associated Data）」时，它就被称为 **AEAD**（Authenticated Encryption with Associated Data）。关联数据不加密，但参与认证标签的计算——适合放协议头、文件名等不需要保密但不能被篡改的元数据。
 
+### 为什么 GCM 成为现代标准
+
+在 AEAD 出现之前，开发者不得不手工拼装「加密 + 认证」两个组件——即 `AES-CBC-HMAC`。这个方案听起来合理，但在实践中暗藏大量陷阱（《Real-World Cryptography》第 4.4 节将其命名为「A lack of authenticity」）：
+
+- `CBC` 的 IV 必须**随机且不可预测**，一旦使用可预测的计数器作为 IV，就面临 BEAST 攻击
+- `HMAC` 必须覆盖 IV 和密文（`Encrypt-then-MAC` 顺序），漏掉 IV 就给攻击者留了篡改窗口
+- 加密密钥和 MAC 密钥必须独立，共用一把密钥会削弱安全性
+- 解密时必须先验证 MAC 再解密，顺序颠倒就可能触发 Padding Oracle 攻击
+
+正是这种现实的工程痛点，推动了 AEAD 的标准化——用一个「一体化」原语取代手工拼装。AEAD 的接口极为简洁：
+
+```
+加密：(密钥, nonce, 明文, [关联数据]) → (密文 + 认证标签)
+解密：(密钥, nonce, 密文+标签, [关联数据]) → 明文 或 错误
+```
+
+只要解密不报错，密文的完整性和关联数据的真实性就都得到了保证，不需要开发者再手动实现任何 MAC 逻辑。
+
+**`AES-GCM` 之所以成为现代事实标准，有两个核心原因**：
+
+1. **硬件加速**：自 2010 年起，主流 x86 CPU（Intel Westmere、AMD Bulldozer 起）内置了 `AES-NI` 硬件指令。`AES-GCM` 底层结合了 `AES-CTR`（加密）和 `GMAC`（认证），两者都能借助 `AES-NI` 达到 Gbps 级别的吞吐量，是纯软件实现的 10 倍以上。
+
+2. **并行化友好**：`CTR` 模式的每个块可以独立计算密钥流，天然支持多核并行；`GHASH` 的计算也可以流水线化。相比之下，`CBC` 加密必须串行——前一块密文是后一块的输入，性能瓶颈明显。
+
+正因如此，`AES-GCM` 被 TLS 1.2 / 1.3、IPSec、SSH 等几乎所有主流协议选为首选密码套件，也是 「`「TLS」`」 1.3 强制支持的算法之一。可以说 `AES-GCM` 加密了整个互联网。
+
 ### GCM 模式（推荐）
 
 GCM（Galois/Counter Mode）是目前最广泛使用的 AEAD 模式，定义在 NIST SP 800-38D 中。它底层基于 CTR 模式加密 + GHASH 函数生成认证标签（tag），采用「先加密再认证（Encrypt-then-MAC）」的方式。
@@ -450,6 +502,54 @@ cipher.updateAAD("protocol:v1|msgType:login".getBytes());
 byte[] cipherText = cipher.doFinal("用户密码...".getBytes());
 ```
 
+### nonce 误用与抗误用 AEAD
+
+`AES-GCM` 和 `ChaCha20-Poly1305` 有一个共同的致命弱点：**nonce 重用会造成灾难性后果**。
+
+当同一个（密钥, nonce）对被用于加密两条不同的消息时：
+
+- 两个密文产生了完全相同的 CTR 密钥流
+- 攻击者 XOR 两段密文，直接得到两条明文的 XOR——自然语言的冗余足以让攻击者还原出两条明文
+- 更严重的是，`GMAC` / `Poly1305` 的认证密钥同时泄露，攻击者从此可以**伪造任意合法密文**，完全绕过完整性保护
+
+```mermaid
+graph TD
+    A["nonce 重用"] --> B["相同 CTR 密钥流"]
+    B --> C["c₁ ⊕ c₂ = m₁ ⊕ m₂（明文泄露）"]
+    B --> D["GHASH 认证密钥泄露"]
+    D --> E["攻击者可伪造任意合法密文"]
+
+    classDef danger fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:2px
+    classDef warn fill:transparent,stroke:#f57c00,color:#adbac7,stroke-width:1px
+    class A,E danger
+    class B,C,D warn
+```
+
+**哪些场景容易出现 nonce 重用？**
+
+- 分布式系统中多台机器各自独立生成随机 nonce，短时间内随机碰撞（生日悖论，$2^{48}$ 次加密后碰撞概率超过 1%）
+- 机器崩溃重启后，计数器 nonce 从头开始，与宕机前的值发生重叠
+- 开发者将固定字符串或硬编码值作为 nonce（最常见的错误）
+
+**抗误用 AEAD（Nonce Misuse-Resistant AEAD）**
+
+为应对上述场景，2006 年 Phillip Rogaway 提出了 `SIV`（Synthetic Initialization Vector，合成初始化向量）模式。`SIV` 的核心思想是：**nonce 不由调用者直接控制，而是从明文和关联数据中合成**——即使调用者传入了重复的 nonce，`SIV` 也能保证最坏情况只是「两条相同明文的加密结果相同」，而不是像 `GCM` 那样泄露明文内容并丧失认证。
+
+2019 年，`AES-GCM-SIV` 被标准化为 RFC 8452，结合了 `GCM` 的高效性和 `SIV` 的抗误用特性：
+
+```
+nonce_synthetic = POLYVAL(key, associated_data ‖ plaintext)
+ciphertext      = AES-CTR-encrypt(key, nonce_synthetic, plaintext) + tag
+```
+
+💡 **何时需要考虑 `AES-GCM-SIV`？**
+
+- 加密密钥派生自口令（PBKDF2 / Argon2 输出），但 nonce 管理较粗放
+- 分布式多写系统，nonce 唯一性难以全局保证
+- 长期存储场景（数据库字段加密、文件加密）：加密一次后可能跨机器多次读写，nonce 重用概率随时间上升
+
+更多真实 nonce 误用事故，可参考「`「密码学失败案例集」`」。
+
 ### EAX 模式
 
 EAX 是 Bouncy Castle 提供的一种 AEAD 模式，基于 CTR 模式加密 + CMAC（Cipher-based MAC）认证。它比 CCM 更简洁灵活，也采用「先加密再认证」的方式。
@@ -499,6 +599,21 @@ byte[] cipherText = cipher.doFinal("hello, world!".getBytes());
 💡 **TLS 1.3** 将 ChaCha20-Poly1305 列为强制实现的密码套件之一，与 AES-128-GCM 并列。这意味着即使设备没有 AES 硬件加速，也能保证安全的通信性能。
 
 ⚠️ 与 GCM 一样，nonce 绝不能重复使用。对于 ChaCha20，同一密钥下最多可以安全处理 2^32 条消息（每条消息不超过 256GB）。
+
+### ChaCha20-Poly1305：移动端的更好选择
+
+`AES-GCM` 的高性能强依赖 `AES-NI` 硬件指令。当这一指令不可用时——比如 2013 年前的 ARM 移动处理器、低功耗 IoT 芯片——纯软件的 AES 实现速度大幅下降，有时甚至只有 `ChaCha20` 的几分之一。
+
+**为什么 ChaCha20 软件实现更快？** `ChaCha20` 的核心运算只有加法（Add）、循环移位（Rotate）、异或（XOR），即 ARX 结构——这类操作在任何 CPU 上都有高效的指令支持，不需要专用硬件。相比之下，AES 的 `SubBytes` 步骤涉及有限域查表，在没有硬件加速时是显著瓶颈。
+
+**Google 的推动**：2013 年，Google 为 Android 设备标准化了 `ChaCha20-Poly1305`（《Real-World Cryptography》第 4.5.3 节），将其用于低端 ARM 处理器上的加密通信。此后它被写入：
+
+- **TLS 1.3**（RFC 8446）：与 `AES-128-GCM` 并列为强制实现的密码套件
+- **OpenSSH**：作为对称加密的优选算法
+- **Noise 协议框架**：被 WireGuard VPN 协议采用
+- **QUIC / HTTP/3**：通过 TLS 1.3 间接成为标准套件
+
+💡 `ChaCha20-Poly1305` 与 `AES-GCM` 具有完全相同的 AEAD 接口，安全性同等（256 位密钥，96 位 nonce，128 位认证标签）。两者的差异只在于性能特征：有 `AES-NI` 的服务器更适合 `AES-GCM`；移动端 / 嵌入式优先选 `ChaCha20-Poly1305`。更多 AEAD 在传输层的应用，可参考「`「TLS」`」中的密码套件协商。
 
 ## 密钥包装与 SealedObject
 
@@ -558,3 +673,50 @@ UserCredential recovered = (UserCredential) sealed.getObject(aesKey, "BC");
 `SealedObject` 内部会自动保存加密时使用的 `Cipher` 的算法参数（如 IV、GCM 标签长度等），所以解封时不需要再手动传入这些参数。
 
 ⚠️ `SealedObject` 基于 Java 序列化，存在反序列化攻击的风险。在生产环境中使用时，建议开启 JEP 290（ObjectInputFilter）来限制反序列化的类白名单。
+
+## 其他对称加密形态
+
+标准 AEAD（`AES-GCM` / `ChaCha20-Poly1305`）并非万能。现实中还有一些场景对加密有特殊要求——磁盘加密和数据库加密是两个典型。
+
+### 磁盘加密简介
+
+磁盘扇区加密有非常苛刻的约束（《Real-World Cryptography》第 4.6.3 节）：
+
+- **原地加密（In-place encryption）**：加密后密文长度不能超过明文，否则磁盘空间不够存放额外的 nonce 和认证标签
+- **速度要求极高**：每次磁盘读写都要加解密，任何性能损耗用户都能感知
+- **随机访问**：需要能够直接加解密任意扇区，而不必从头到尾扫描
+
+这些约束使 AEAD 不适用——额外的 nonce 和 tag 字段没有地方存放，认证的开销也太大。磁盘加密通常退而使用**未认证加密**，依靠「篡改一个扇区会导致整块数据损坏（而不是悄悄解密）」来提供有限的防篡改能力：
+
+| 方案 | 使用场景 | 特点 |
+|------|---------|------|
+| `AES-XTS` | Windows BitLocker、macOS FileVault | 每个扇区独立加密，sector-tweak 保证不同扇区密文不同，但无认证 |
+| `Adiantum` | Android（低端 ARM）| Google 2019 年标准化，基于 ChaCha 的宽块加密（wide-block cipher），单比特翻转会扰乱整个扇区 |
+
+`AES-XTS` 是目前最广泛部署的方案（微软 BitLocker、Apple FileVault 均采用），但它是**未认证的**——攻击者可以翻转比特，尽管解密结果会乱码。如果攻击者有物理访问权限，`AES-XTS` 并不能阻止数据被静默篡改。`Adiantum` 通过宽块加密（wide-block cipher）让单比特翻转扰乱整个扇区，提供「穷人版认证」的效果，适合无 AES-NI 的低端 Android 设备。
+
+### 数据库字段加密简介
+
+加密数据库中的特定列（字段级加密）有其独特挑战（《Real-World Cryptography》第 4.6.4 节）：
+
+- 密钥必须存放在数据库服务器**以外**的地方，否则拖库就等于拿到了密钥
+- 加密后的字段通常**无法被 SQL 直接查询**（`WHERE email = ?` 对密文无效）
+- 同一行记录的不同字段加密时，需要把行 ID 和列名作为关联数据参与认证，**防止字段内容在行之间被交换**
+
+💡 最简单的方案是**透明数据加密（TDE，Transparent Data Encryption）**：选定需要保护的列，每列使用一个随机 nonce + `AES-GCM` 加密，将行 ID + 列名作为 AAD（关联数据）传入。这样即使攻击者把 A 行的密文复制到 B 行，认证标签校验也会失败。
+
+更复杂的需求（如"查询加密手机号段的用户"）属于**可搜索加密（Searchable Encryption）**研究领域。常见方案及其取舍：
+
+| 方案 | 支持的查询 | 安全代价 |
+|------|-----------|---------|
+| 盲索引（Blind Indexing） | 精确匹配（`=`） | 泄露相等模式（equality pattern） |
+| 保序加密（OPE） | 范围查询（`<`, `>`, `BETWEEN`） | 泄露顺序关系，安全性大幅降低 |
+| 同态加密（FHE） | 任意计算 | 性能极低（目前仅实验级） |
+
+⚠️ 数据库字段加密没有银弹——每一种「可搜索」方案都以不同程度的安全降级为代价。选型时需仔细评估威胁模型，优先使用「混合加密 + 应用层解密后过滤」等保守方案，而非在密文上直接进行复杂查询。
+
+与对称加密的密钥保护方面，可结合「`「非对称加密与混合加密」`」中的密钥封装（Key Encapsulation）机制，将字段加密密钥用非对称密钥保护后存储。
+
+---
+
+> 本笔记的「为什么 GCM 成为现代标准」「ChaCha20-Poly1305：移动端的更好选择」「nonce 误用与抗误用 AEAD」「加密企鹅 ECB 案例」「磁盘与数据库加密简介」等小节内容参考自《Real-World Cryptography》(David Wong, Manning 2021) 第 4 章。

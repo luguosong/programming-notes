@@ -409,6 +409,43 @@ byte[] signatureBytes2 = sig2.sign();
 
 > ⚠️ Ed25519 有多种变体（纯 Ed25519、带 context 的 Ed25519ctx、带预哈希的 Ed25519ph），不同变体的签名不能交叉验证。在 Java 中使用 Bouncy Castle 时，`EdDSA` 算法名称默认使用纯 Ed25519。
 
+### Ed25519 vs ECDSA：现代签名的事实标准
+
+你已经知道 `ECDSA` 和 `Ed25519` 都是椭圆曲线签名方案，但选哪个？答案几乎总是：**新项目用 `Ed25519`**。理由藏在它们核心设计的最大差异里。
+
+**随机 nonce：`ECDSA` 的阿喀琉斯之踵**
+
+`ECDSA` 签名需要一个每次都不同的随机数 k（也叫 nonce）。如果 k 被重复使用或可预测，攻击者可以直接推导出私钥——只需两个共享 k 的签名就足够了。
+
+💡 这不是理论威胁。2010 年，索尼 PlayStation 3 的固件签名系统因为将 k 硬编码为常量，导致攻击者提取了私钥，PS3 随后被完全破解。ECDSA 是一把"如果 k 安全则无懈可击，如果 k 出问题则彻底崩溃"的算法。
+
+```mermaid
+graph TD
+    A["ECDSA 签名<br/>需要随机 k"] --> B{k 是否安全？}
+    B -- "k 重复或可预测" --> C["攻击者可推导私钥 ❌"]
+    B -- "k 真随机且唯一" --> D["签名安全 ✅"]
+
+    style A fill:transparent,stroke:#0288d1,color:#adbac7
+    style B fill:transparent,stroke:#f57c00,color:#adbac7
+    style C fill:transparent,stroke:#d32f2f,color:#adbac7
+    style D fill:transparent,stroke:#388e3c,color:#adbac7
+```
+
+**`Ed25519` 的确定性设计**
+
+`Ed25519` 从根本上消除了这个问题：nonce 不再是随机数，而是从私钥和消息共同哈希**确定性推导**得出。即使在随机数生成器质量不佳的嵌入式环境中，`Ed25519` 依然安全。
+
+| 维度 | `ECDSA`（P-256） | `Ed25519` |
+|------|----------------|-----------|
+| nonce 来源 | 随机数生成器（每次不同） | 确定性推导（私钥 + 消息） |
+| nonce 重用风险 | 私钥泄露（致命） | 无风险（nonce 无法重用） |
+| 签名大小 | ~72 字节（DER 编码） | 64 字节（固定） |
+| 侧信道抗性 | 一般（需额外防护） | 优秀（曲线运算天然常量时间） |
+| 安全基础 | 无正式安全证明 | 基于 `Schnorr`（有安全归约） |
+| 兼容性 | 极广泛（TLS、JWT、代码签名） | 越来越广泛（SSH、TLS 1.3、JWT） |
+
+> 📌 `Ed25519` 本质上是 `Schnorr` 签名在 Edwards25519 曲线上的实例化，而 `ECDSA` 是为绕过 Schnorr 专利（2008 年到期）而设计的"扭曲变体"。专利到期后，`EdDSA` 终于可以直接继承 Schnorr 的所有优良性质。
+
 ## Hash-and-Sign 范式与 FDH 签名方案
 
 ### 为什么必须先哈希再签名？
@@ -434,6 +471,80 @@ $$\text{SIGadv} \leq (Q_\text{ro} + 1) \cdot \text{OWadv}$$
 ⚠️ 无哈希的 RSA 签名还面临**盲签名攻击**：攻击者选择随机数 $r$，计算 $m' = m \cdot r^e \bmod n$ 让签名者签名，得到 $\sigma' = (m')^d \bmod n = \sigma \cdot r \bmod n$，再除以 $r$ 就得到 $m$ 的合法签名——签名者完全不知道自己签了什么消息。这就是为什么 RSA 签名必须使用填充方案（PKCS#1 v1.5 或 PSS），而不是直接对消息求逆。
 
 💡 `SHA256withRSA` 就是 Hash-and-Sign 的实例化。RSA-PSS 比 PKCS#1 v1.5 更接近 FDH 的理论安全保证，这也是 NIST 推荐 RSA-PSS 的原因之一。
+
+### Schnorr 签名与聚合签名（MuSig）
+
+在「EdDSA（Edwards Curve DSA）」中你已经遇到了 `Schnorr` 的身影——`EdDSA` 正是基于它构建的。`Schnorr` 本身有一个 `ECDSA` 无法做到的独特性质：**线性性（linearity）**，这使得多方签名聚合成为可能。
+
+**`Schnorr` 的线性性质**
+
+`Schnorr` 签名在数学上满足"加法可交换"：多个签名者各自生成的签名分量可以直接相加，合并成一个与单个签名**大小完全相同**的聚合签名。验证时，聚合公钥也可以同样相加。这个性质被称为**签名聚合（Signature Aggregation）**。
+
+```mermaid
+graph LR
+    A["签名者 Alice<br/>(R_A, s_A)"] --> D
+    B["签名者 Bob<br/>(R_B, s_B)"] --> D
+    C["签名者 Carol<br/>(R_C, s_C)"] --> D
+    D["聚合签名<br/>(R_A+R_B+R_C, s_A+s_B+s_C)"] --> E["验证者<br/>一次验证 ✅"]
+
+    style A fill:transparent,stroke:#0288d1,color:#adbac7
+    style B fill:transparent,stroke:#0288d1,color:#adbac7
+    style C fill:transparent,stroke:#0288d1,color:#adbac7
+    style D fill:transparent,stroke:#388e3c,color:#adbac7
+    style E fill:transparent,stroke:#7b1fa2,color:#adbac7
+```
+
+**MuSig：安全的多方聚合协议**
+
+直接将 Schnorr 签名相加存在安全问题：恶意签名者可以声称自己的公钥为 `pk_evil = pk_evil_raw - pk_alice`，从而"抵消"其他人的公钥，独自控制聚合密钥——这被称为 **rogue-key attack（流氓密钥攻击）**。
+
+MuSig 协议（2018）通过**承诺-挑战-响应**的多轮交互解决了这个问题：
+
+1. 每位签名者先承诺（commit）自己的 nonce 值
+2. 汇总所有承诺后，各自公开 nonce
+3. 基于所有人的 nonce 和公钥计算挑战，产生可聚合的签名分量
+
+MuSig2（2021）将交互轮次从 3 轮降至 2 轮，更适合实际部署。
+
+> 📌 **比特币 Taproot**（2021 年激活）采用了 `Schnorr` 签名（基于 `secp256k1` 曲线），核心原因正是聚合能力：多签名合约在链上的占用空间与单签名相同，既节省手续费，又增强了隐私性。`ECDSA` 不具备线性性质，无法直接聚合——每个签名者的签名必须单独验证。
+
+### 零知识证明入口：签名怎样证明而不泄露
+
+理解数字签名为什么是安全的，需要回答一个更根本的问题：**你怎么证明你知道某个秘密，同时又不把秘密本身说出来？**
+
+这正是**零知识证明（Zero-Knowledge Proof，ZKP）** 解决的问题，而数字签名恰好是 ZKP 的一种特殊实例。
+
+**Σ 协议：交互式零知识证明**
+
+想象 Peggy 要向 Victor 证明她知道私钥 x（满足 Y = g^x），但不想透露 x 本身——这就是 Schnorr 识别协议（Schnorr Identification Protocol）：
+
+1. **承诺（Commitment）**：Peggy 生成随机数 k，计算 R = g^k，将 R 发给 Victor
+2. **挑战（Challenge）**：Victor 发送随机挑战值 c
+3. **响应（Response）**：Peggy 计算 s = k + c·x，发给 Victor
+
+Victor 验证 g^s = g^(k+cx) = R · Y^c 是否成立。这个三步模式（承诺→挑战→响应）被称为 **Σ 协议（Sigma Protocol）**——Victor 学不到任何关于 x 的信息，但能确信 Peggy 知道 x。
+
+**Fiat-Shamir 变换：从交互式到签名**
+
+交互式协议有个实际问题：Victor 必须在线。1986 年，Fiat 和 Shamir 提出了关键技巧：**让 Peggy 自己扮演 Victor，用哈希函数生成挑战值**：
+
+c = H(R \|\| message)
+
+挑战值不再来自真实验证者，而来自哈希函数。只要哈希输出不可预测，安全性就与交互版本等价。这正是 `Schnorr` 签名的数学本质——签名本质上是**非交互式零知识证明（NIZK）**。
+
+```mermaid
+graph TD
+    A["Σ 协议<br/>（交互式，需 Victor 在线）"] -- "Fiat-Shamir 变换<br/>c = H(R || msg)" --> B["Schnorr 签名<br/>（非交互式 NIZK）"]
+    B -- "Edwards25519 + 确定性 nonce" --> C["Ed25519"]
+    B -- "secp256k1 + Taproot" --> D["比特币聚合签名"]
+
+    style A fill:transparent,stroke:#0288d1,color:#adbac7
+    style B fill:transparent,stroke:#388e3c,color:#adbac7
+    style C fill:transparent,stroke:#7b1fa2,color:#adbac7
+    style D fill:transparent,stroke:#f57c00,color:#adbac7
+```
+
+> 📌 ZKP 的应用远不止于签名：现代区块链（如 Zcash、zkSync）使用更通用的 ZK-SNARK / ZK-STARK 实现隐私保护的计算验证。这些进阶话题详见「下一代密码学」(`../next-generation/`)。参考「散列函数与完整性保护」(`../hashing-and-integrity/`) 了解哈希函数在 Fiat-Shamir 变换中承担的角色。
 
 ## RSA 签名
 
@@ -483,6 +594,30 @@ assertTrue(signature.verify(signatureBytes));
 ```
 
 RSA 签名长度等于密钥长度（字节数）：2048 位密钥产生 256 字节签名，4096 位密钥产生 512 字节签名。
+
+### 为什么 RSA 签名有「教科书」漏洞
+
+当你第一次学习 RSA 时，可能听说过这样一个简洁描述：签名 = 消息^私钥 mod N，验证 = 签名^公钥 mod N。这个"教科书版 RSA 签名"看起来优雅，但它隐藏了一个致命的**可伪造性漏洞**。
+
+**无消息伪造：不需要私钥的"签名"**
+
+想象你是攻击者，以下步骤可以在完全不接触私钥的情况下伪造合法签名：
+
+1. 随机挑选任意数 σ（即"伪造签名"）
+2. 用公钥计算 m = σ^e mod N
+3. 宣称"消息 m 的签名就是 σ"
+
+验证者用公钥验算 σ^e mod N = m，与声称的消息完全匹配——**验证通过**。攻击者根本没有碰私钥。
+
+💡 这就像反着走棋局：你先随机摆好"终局"，再声称这是某局对弈的结果——只要规则允许这种反向推导，伪造就成立。无哈希、无填充的裸 RSA 恰好允许这种"倒推"。
+
+**PKCS#1 v1.5 的实现级漏洞**
+
+为对抗无消息伪造，`PKCS#1 v1.5` 引入了严格的填充格式（DigestInfo + 0xFF 序列），使倒推不再可行。但 1998 年 Bleichenbacher 发现了更深的问题：**如果实现代码对填充校验不够严格，攻击者可以在不知道私钥的情况下伪造签名**。
+
+2006 年 Bleichenbacher 给出了具体的签名伪造攻击。更严重的是，2019 年一项研究（Chau et al.）发现大量知名开源库存在这一缺陷——这不是罕见的边界情况，而是系统性的实现错误。
+
+> ⚠️ `RSA PKCS#1 v1.5` 签名**不是算法本身不安全**，而是"正确实现极其困难"。现有系统为向后兼容不得不继续使用时，请严格校验填充格式，并考虑迁移到 `RSA-PSS`（见下节）。
 
 ### RSA-PSS 签名
 
@@ -535,6 +670,46 @@ assertTrue(signature.verify(signatureBytes));
 | 算法名称 | `SHA256withRSA` | `SHA256withRSAandMGF1` |
 | 参数配置 | 无需额外参数 | 需要 `PSSParameterSpec` |
 | 推荐程度 | 兼容场景可用 | 新项目优先选择 |
+
+### 签名延展性攻击
+
+你以为一个合法签名在数学上只有唯一的形式？对于大多数签名方案来说，**并非如此**。
+
+**`ECDSA` 的天然可延展性**
+
+`ECDSA` 签名由两个整数 (r, s) 组成。由于椭圆曲线的对称性，如果 (r, s) 是消息 m 的合法签名，那么 **(r, -s mod n) 也是合法签名**——n 是曲线阶。攻击者不需要私钥，就能从任何已有签名生成另一个同样有效的签名。这种性质叫做**签名延展性（Signature Malleability）**。
+
+**比特币 MtGox 事件（2014）**
+
+2014 年 2 月，曾是最大比特币交易所的 MtGox 宣告破产，损失约 85 万枚比特币。调查显示，攻击者利用签名延展性修改了提款交易的签名：
+
+1. 用户发起提款，广播包含 `ECDSA` 签名的交易
+2. 攻击者截获，用 -s mod n 替换 s，重新广播篡改版本
+3. 两笔交易签名都合法，但**交易 ID（txid）不同**（txid 是含签名的整个交易的哈希）
+4. MtGox 系统误认为原始交易失败，触发重复发款逻辑
+
+```mermaid
+sequenceDiagram
+    participant User as 用户
+    participant Attacker as 攻击者
+    participant Network as 比特币网络
+
+    User->>Network: 广播提款交易 sig=(r, s)
+    Attacker->>Network: 广播篡改交易 sig=(r, -s mod n)
+    Note over Network: 两者签名均合法，txid 不同
+    Network->>Attacker: 篡改交易先被确认
+    User->>Network: 原始交易显示未确认
+    Note over User: 向 MtGox 投诉"提款失败"
+    Note over Network: MtGox 误判重复发款 ❌
+```
+
+**缓解措施**
+
+- **Bitcoin SegWit（隔离见证）**：将签名数据移出 txid 计算范围，使 txid 不再受签名内容影响，从根本上解决了比特币场景的延展性问题
+- **`Ed25519` 的 RFC 8032 规范**：要求验证时严格检查 s < n/2，拒绝"等价但不同"的签名，减少延展性攻击面
+- **BLS 签名**：基于双线性配对，具有天然的签名唯一性，同时支持聚合；但计算成本更高，适合对签名大小和聚合有严格要求的场景
+
+> ⚠️ 签名延展性并不意味着签名方案被"攻破"——攻击者仍然无法伪造针对自己选定消息的签名（EUF-CMA 安全性不受影响）。但在**依赖"签名唯一性"的协议**（如区块链 txid 去重）中，延展性可能成为逻辑漏洞的入口。设计依赖签名的协议时，不要假设同一消息只会有一种合法签名。
 
 ## SM2 国密签名
 
@@ -624,3 +799,8 @@ SM2 签名由 (r, s) 两个 32 字节整数组成，DER 编码后通常为 70-72
 - **避免使用**：DSA 3072（密钥太大、性能不如 ECDSA）、SHA-1 签名
 
 > 💡 如果没有特殊限制，**Ed25519 是当前最推荐的新项目选择**——确定性签名消除了随机数安全隐患，签名紧凑（64 字节），性能优秀，且被越来越多的协议和框架支持。
+
+## 参考来源（本笔记增强部分）
+
+- David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 7: Signatures and zero-knowledge proofs
+- 章节文本：会话工作区 `files/rwc-chapters/ch07.txt`

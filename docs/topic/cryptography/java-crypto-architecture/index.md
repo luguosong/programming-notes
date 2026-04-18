@@ -21,6 +21,33 @@ Java 密码学架构（Java Cryptography Architecture，JCA）就是密码学领
 
 ⚠️ 早期（Java 1.4 之前），Java Cryptography Extension（JCE）是单独发布的，与 JCA 分离。Java 1.4 之后两者合并，现在通常统一视为 JCA 的一部分。
 
+### 密码学工程的两大陷阱：自制算法与错误实现
+
+理解了"为什么需要密码学框架"之后，有必要先认识两个工程实践中最常见的陷阱——Wong 在《Real-World Cryptography》中反复强调，绝大多数密码学灾难都来自这两个方向。
+
+**陷阱一：自制算法（"Don't roll your own crypto"）**
+
+想象你家的门锁。你可以自己弯几根铁丝做一把锁，看起来挺复杂——但"看起来复杂"和"真正安全"之间有天壤之别。没有经过专业锁匠测试的锁，可能被有经验的人在几秒内撬开。
+
+密码算法同理。Bruce Schneier 有句名言："任何人，从最无知的业余爱好者到最顶尖的密码学家，都能设计出一个他自己无法破解的算法。" 难的不是创造算法，而是创造**别人也无法破解**的算法。
+
+正确做法是选用经过公开竞争和广泛密码分析的标准算法。`AES` 的诞生就是典范：NIST 组织历时数年的国际竞赛，来自全球的密码分析师对每个候选算法轮番轰炸，最终脱颖而出的才是值得信任的算法。这正是 Kerckhoffs 原则的精髓：**算法可以公开，秘密只在密钥**。
+
+JCA 通过标准化接口，让开发者只能使用已知算法名称（如 `"AES/GCM/NoPadding"`），从根本上引导大家使用经过验证的算法，而非自造轮子。
+
+**陷阱二：正确算法 + 错误实现（弄错了锁的用法）**
+
+即使选了最好的锁，如果装反了门，锁也没用。一项针对 269 个 Android 应用密码学使用情况的研究显示：**83% 的密码学漏洞来自对密码库的错误使用，而非密码库本身的 bug**。
+
+常见的错误实现：
+
+- 重用 `Nonce`/`IV`（AES-GCM 下重用 IV 会完全暴露明文差分）
+- 不验证 MAC 就使用解密结果
+- 用 `java.util.Random` 而非 `SecureRandom` 生成密钥
+- 手动拼接 `Cipher` + `Mac`，在 IV 处理或密钥派生的细节上出错
+
+在 JCA 体系中，选择高层抽象（直接使用 `AES/GCM/NoPadding` 的 AEAD 模式）比手动组合底层原语更安全。`Bouncy Castle` FIPS API 和 Google Tink 等库更进一步，通过接口设计约束（如禁止手动指定 IV）来防止开发者射自己的脚。
+
 ## JCA Provider 架构
 
 ### 服务类与 SPI
@@ -102,6 +129,73 @@ for (Provider p : providers) {
 }
 ```
 
+### 从 JCA 角度看密码学原语全景
+
+JCA 将密码学服务分为若干类引擎（Engine Class），每类引擎对应一种密码学原语。理解这张全景图，能帮助你快速定位"我需要用哪个 JCA 类"：
+
+```mermaid
+graph TD
+    JCA[JCA 体系] --> SYM[对称密码<br/>Cipher / Mac]
+    JCA --> ASYM[非对称密码<br/>Cipher / Signature / KeyAgreement]
+    JCA --> HASH[散列与完整性<br/>MessageDigest]
+    JCA --> KEY[密钥管理<br/>KeyGenerator / KeyPairGenerator<br/>KeyFactory / SecretKeyFactory]
+    JCA --> RAND[安全随机数<br/>SecureRandom]
+    JCA --> CERT[证书与信任链<br/>CertificateFactory / TrustManagerFactory]
+
+    SYM --> P1[SunJCE / BC]
+    ASYM --> P2[SunRsaSign / SunEC / BC]
+    HASH --> P3[SUN / BC]
+    KEY --> P4[SunJCE / BC]
+    RAND --> P5[SUN / BC]
+    CERT --> P6[SUN / BC]
+
+    classDef root fill:transparent,stroke:#539bf5,color:#adbac7,stroke-width:2px
+    classDef engine fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:1px
+    classDef prov fill:transparent,stroke:#768390,color:#adbac7,stroke-width:1px
+    class JCA root
+    class SYM,ASYM,HASH,KEY,RAND,CERT engine
+    class P1,P2,P3,P4,P5,P6 prov
+```
+
+各引擎与密码学原语的对应关系：
+
+| JCA 引擎类 | 对应密码学原语 | 典型算法 | 相关笔记 |
+|-----------|--------------|---------|---------|
+| `Cipher` | 对称/非对称加密 | AES-GCM、RSA-OAEP | 「[对称加密](../symmetric-encryption/)」 |
+| `Signature` | 数字签名 | ECDSA、EdDSA、RSA-PSS | 「[数字签名](../digital-signatures/)」 |
+| `MessageDigest` | 散列函数 | SHA-256、SHA3-256 | 「[散列函数与完整性保护](../hashing-and-integrity/)」 |
+| `Mac` | 消息认证码（MAC） | HMAC-SHA256、GMAC | 「[散列函数与完整性保护](../hashing-and-integrity/)」 |
+| `KeyAgreement` | 密钥协商 | ECDH、X25519 | — |
+| `KeyGenerator` | 对称密钥生成 | AES 密钥 | — |
+| `KeyPairGenerator` | 非对称密钥对生成 | RSA、EC 密钥对 | — |
+| `SecureRandom` | 密码学安全随机数 | NativePRNG、DRBG | — |
+
+### JCA Provider 选择指南
+
+面对 `SunJCE`、`Bouncy Castle`、PKCS#11 硬件 Provider 等多种选择，如何决定用哪个？
+
+| 场景 | 推荐 Provider | 原因 |
+|------|-------------|------|
+| 日常 AES、HMAC、SHA-2 等通用算法 | `SunJCE` / `SUN`（不指定 Provider） | JDK 内置，零依赖，经 Oracle 长期维护 |
+| 需要 EdDSA、SM2/SM3/SM4、AES-CCM 等扩展算法 | `Bouncy Castle`（`BC`） | 算法覆盖最全，更新活跃 |
+| 政府/金融合规（FIPS 140-2/3） | `Bouncy Castle FIPS`（`BCFIPS`）或 OS 级 FIPS 模式 | 需要 FIPS 认证，不可用标准 BC |
+| 密钥必须保存在硬件安全模块（HSM） | `SunPKCS11` + HSM 厂商驱动 | 硬件隔离，密钥不出 HSM |
+| 云端密钥管理 | AWS KMS / GCP Cloud HSM 等 SDK | 将加密计算卸载到云端，密钥零接触 |
+
+💡 **经验原则**：能不加依赖就不加。`SunJCE` 对 AES-GCM、HMAC、RSA、ECDSA 的支持已能覆盖绝大多数业务场景。只有当你需要 `SunJCE` 不支持的算法（如国密 SM 系列）或需要 FIPS 认证时，才引入 `Bouncy Castle`。
+
+``` java title="Provider 选择决策示例"
+// ✅ 推荐：不指定 Provider，JCA 自动选择最优实现
+Cipher aes = Cipher.getInstance("AES/GCM/NoPadding");
+
+// ✅ 需要国密算法时，明确指定 BC
+Cipher sm4 = Cipher.getInstance("SM4/CBC/PKCS7Padding", "BC");
+
+// ✅ 需要 FIPS 合规时，切换到 BC-FIPS Provider
+// Security.addProvider(new BouncyCastleFipsProvider());
+// Cipher fipsAes = Cipher.getInstance("AES/GCM/NoPadding", "BCFIPS");
+```
+
 ## Bouncy Castle 架构
 
 JDK 内置 Provider 涵盖了常见需求，但当你要用 AES-GCM、EdDSA、SM2/SM3/SM4（国密）等算法时，往往会发现内置支持不够全面。Bouncy Castle（简称 BC）是最广泛使用的第三方密码学 Provider，它几乎实现了你能想到的所有密码学算法。
@@ -176,6 +270,110 @@ security.provider.N=org.bouncycastle.jce.provider.BouncyCastleProvider
 ```
 
 `N` 是优先级数字，越小优先级越高。确保 BC 的 JAR 在 classpath 上即可。
+
+### 密码学的合规要求（FIPS 140-2/3 简介）
+
+如果你的系统要接入政府机构、金融机构或医疗系统，经常会遇到一个硬性要求：**FIPS 140-2/3 合规**。
+
+`FIPS 140`（Federal Information Processing Standard 140）是美国 NIST 针对密码模块（Cryptographic Module）发布的安全标准，从 FIPS 140-2（2002 年生效）到最新的 FIPS 140-3（2019 年），它定义了密码模块在设计、实现和运行方面必须满足的安全要求，分为 Level 1～Level 4 四个等级：
+
+| 等级 | 要求 | 典型场景 |
+|------|------|---------|
+| Level 1 | 算法必须通过 FIPS 认证，软件实现即可 | 普通商业 SaaS |
+| Level 2 | 需要防篡改证据（如封条） | 政府信息系统 |
+| Level 3 | 防篡改 + 身份认证 + 密钥清零 | 金融、军事 |
+| Level 4 | 完整物理防护，任何入侵尝试触发密钥销毁 | 最高安全场景 |
+
+**FIPS 合规对 Java 开发者意味着什么？**
+
+在 FIPS 模式下，有以下限制：
+
+- 只能使用 FIPS 认证的算法（如 AES、SHA-2、RSA-2048+、ECDSA P-256+）
+- 禁用非 FIPS 算法（如 MD5、SHA-1 用于签名、RC4、DES）
+- 密钥必须由 FIPS 认证的 DRBG 生成
+
+`Bouncy Castle` 提供了独立的 FIPS 认证版本（`bc-fips`），Maven 依赖与标准版不同：
+
+``` xml title="Bouncy Castle FIPS 依赖"
+<!-- FIPS 认证版，不能与标准 bcprov 同时使用 -->
+<dependency>
+    <groupId>org.bouncycastle</groupId>
+    <artifactId>bc-fips</artifactId>
+    <version>1.0.2.5</version>
+</dependency>
+```
+
+``` java title="注册 BC-FIPS Provider"
+import org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider;
+
+// 通常放在应用启动时（如 static 块或 main 方法中）
+Security.addProvider(new BouncyCastleFipsProvider());
+
+// 使用 FIPS 认证的 AES-GCM
+Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding", "BCFIPS");
+```
+
+⚠️ `bc-fips` 和标准 `bcprov`（`BouncyCastleProvider`）不能在同一 JVM 中同时注册——两者 Provider 名称分别是 `"BCFIPS"` 和 `"BC"`。需要 FIPS 合规的项目应从一开始就选择 `bc-fips`，不要混用。
+
+### 迁移指南：从 SunJCE 到 Bouncy Castle
+
+当业务需求超出 `SunJCE` 的算法覆盖范围（如需要国密算法、新曲线或 FIPS 合规），你需要将加密代码迁移到 `Bouncy Castle`。好消息是：因为 JCA 接口统一，迁移成本非常低。
+
+``` java title="AES-GCM 加密：SunJCE 与 Bouncy Castle 接口对比"
+import javax.crypto.*;
+import javax.crypto.spec.*;
+import java.security.*;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+// 通常放在应用启动时
+Security.addProvider(new BouncyCastleProvider());
+
+byte[] key = new byte[32]; // 256-bit AES 密钥
+byte[] iv  = new byte[12]; // GCM 推荐 12 字节 IV
+new SecureRandom().nextBytes(key);
+new SecureRandom().nextBytes(iv);
+
+SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
+GCMParameterSpec gcmSpec = new GCMParameterSpec(128, iv); // 128-bit 认证标签
+
+// ✅ SunJCE（不指定 Provider）
+Cipher sunjce = Cipher.getInstance("AES/GCM/NoPadding");
+sunjce.init(Cipher.ENCRYPT_MODE, keySpec, gcmSpec);
+
+// ✅ Bouncy Castle（指定 "BC"）— 接口完全相同，只换 Provider 名称
+Cipher bc = Cipher.getInstance("AES/GCM/NoPadding", "BC");
+bc.init(Cipher.ENCRYPT_MODE, keySpec, gcmSpec);
+```
+
+``` java title="EdDSA 签名：仅 Bouncy Castle 完整支持 Ed25519"
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import java.security.*;
+
+Security.addProvider(new BouncyCastleProvider());
+
+// 生成 Ed25519 密钥对
+KeyPairGenerator kpg = KeyPairGenerator.getInstance("Ed25519", "BC");
+KeyPair kp = kpg.generateKeyPair();
+
+// 签名
+Signature signer = Signature.getInstance("Ed25519", "BC");
+signer.initSign(kp.getPrivate());
+signer.update("要签名的消息".getBytes());
+byte[] sig = signer.sign();
+
+// 验签
+Signature verifier = Signature.getInstance("Ed25519", "BC");
+verifier.initVerify(kp.getPublic());
+verifier.update("要签名的消息".getBytes());
+boolean ok = verifier.verify(sig); // true
+```
+
+迁移时需要确认的要点：
+
+- 引入 `bcprov-jdk18on` 依赖，并在应用启动时调用 `Security.addProvider(new BouncyCastleProvider())`
+- 将 `Cipher.getInstance("...")`、`Signature.getInstance("...")` 等调用添加第二参数 `"BC"`（或将 BC 设置为最高优先级后不再指定）
+- 算法名称基本兼容，但部分填充名称有差异（`PKCS5Padding` vs `PKCS7Padding`，在 BC 中两者等价）
+- 迁移后运行原有测试套件；若有已有密文/签名需要向后兼容，先做解密/验签回归测试
 
 ## 熵与安全位数
 
@@ -273,3 +471,8 @@ AE 安全的密码等价于一个"理想加密接口"：密文只是一个不透
 这个等价性有重要的实践意义：开发者应该使用 AE 模式（GCM/CCM/EAX）而不是手动组合 `Cipher` + `Mac`。"手动组合 = 自定义加密协议 = 自找麻烦"——即使你正确地实现了 Encrypt-then-MAC，也容易在密钥管理、IV 处理、错误恢复等细节上犯错。
 
 💡 如果你不确定用哪个模式，就用 `AES/GCM/NoPadding`。它是目前最广泛部署的 AEAD 模式，有硬件加速支持，且 Java 7+ 原生支持。
+
+## 参考来源（本笔记增强部分）
+
+- David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 1 & 16
+- 章节文本：会话工作区 `files/rwc-chapters/ch01.txt`、`ch16.txt`

@@ -25,6 +25,25 @@ title: ASN.1 基础
 
 ASN.1 标准最早由 ISO 和 CCITT（现在的 ITU-T）在 1980 年代初联合制定，主要标准包括 X.680（语法定义）及 X.681~X.693 等配套标准。好消息是，你不需要完整掌握整个 ASN.1 标准才能用它——在密码学实践中，用到的是很小的一个子集。
 
+### ASN.1 在密码学中的地位：为什么无处不在
+
+如果你研究过密码学领域的主要标准，会发现一个规律：**几乎所有关键数据结构都用 `ASN.1` 来描述**。
+
+| 标准 / 格式 | 说明 | 底层编码 |
+|------------|------|---------|
+| **X.509 证书**（RFC 5280） | 公钥、颁发者、有效期、扩展字段 | `DER` + Base64（`PEM`） |
+| **PKCS#8**（RFC 5958） | 私钥的通用封装（`PrivateKeyInfo`） | `DER` + Base64（`PEM`） |
+| **PKCS#12**（RFC 7292） | 密钥库（`.p12`/`.pfx`/`.jks`） | `DER` |
+| **PKCS#7 / CMS**（RFC 5652） | 数字签名信封（详见「CMS 与 S/MIME」） | `DER` |
+| **OCSP**（RFC 6960） | 在线证书状态检查 | `DER` over HTTP |
+| **CSR**（RFC 2986） | 证书签名请求（`CertificationRequest`） | `DER` + Base64（`PEM`） |
+
+🎯 `ASN.1` 之于密码学，就像 `JSON` 之于 REST API——两者都是**数据结构描述语言**。但 `ASN.1` 诞生于 1984 年，面向严格类型化、二进制高效传输的场景，而非人类可读性。`JSON` 牺牲效率换取可读性；`ASN.1` + `DER` 牺牲可读性换取**编码的严格唯一性**——这正是数字签名所需要的核心特性。
+
+💡 **`PEM` 的本质**：你常见的 `-----BEGIN CERTIFICATE-----` 文件并不是独立格式，它只是把 `DER` 编码的二进制数据做了 `Base64` 编码，再加上人类可读的头尾标记。`PEM` = `DER` + `Base64` + 头尾标记，这就是为什么删掉 `PEM` 头尾并解码 Base64，你就能得到原始的 `DER` 字节流。
+
+这也解释了为什么理解 `ASN.1` 和 `DER` 是密码学工程实践的基础：处理任何证书、密钥或签名时，你都在操作 `ASN.1` 编码的数据——只是它可能包在 `PEM` 外壳里。
+
 ## ASN.1 基础语法
 
 在深入类型系统之前，先了解一下 ASN.1 的模块结构和注释语法，这样当你翻开 RFC 文档时不会一头雾水。
@@ -332,6 +351,74 @@ classDiagram
 └───── Tag: 05（Universal, Primitive, 标签号 5 = NULL）
 ```
 
+### TLV 编码深度解析：手工解码一个 RSA 公钥
+
+理论讲完，来做一次真实的解码练习。以 RSA-2048 公钥的 `SubjectPublicKeyInfo`（`SPKI`）为例，逐字节拆解它的 `DER` 编码。`SPKI` 是 X.509 证书中存储公钥的标准结构（RFC 5280），`PKCS#1` 格式的 RSA 公钥被嵌套在其内部的 `BIT STRING` 中。
+
+整体层次如下：
+
+```mermaid
+graph TD
+    A["SEQUENCE (SubjectPublicKeyInfo)<br/>Tag: 30 | Len: 82 01 22 = 290B"]
+    B["SEQUENCE (AlgorithmIdentifier)<br/>Tag: 30 | Len: 0D = 13B"]
+    C["OID rsaEncryption<br/>Tag: 06 | Len: 09<br/>1.2.840.113549.1.1.1"]
+    D["NULL<br/>Tag: 05 | Len: 00"]
+    E["BIT STRING<br/>Tag: 03 | Len: 82 01 0F = 271B<br/>第一字节 00 = 0个填充位"]
+    F["SEQUENCE (RSAPublicKey)<br/>Tag: 30 | Len: 82 01 0A = 266B"]
+    G["INTEGER modulus<br/>Tag: 02 | Len: 82 01 01 = 257B<br/>首字节 00 = 正数标记"]
+    H["INTEGER publicExponent<br/>Tag: 02 | Len: 03<br/>01 00 01 = 65537"]
+    A --> B
+    A --> E
+    B --> C
+    B --> D
+    E --> F
+    F --> G
+    F --> H
+    classDef seq fill:transparent,stroke:#0288d1,stroke-width:2px
+    classDef prim fill:transparent,stroke:#388e3c,stroke-width:1px
+    classDef bits fill:transparent,stroke:#f57c00,stroke-width:2px
+    class A,B,F seq
+    class C,D,G,H prim
+    class E bits
+```
+
+逐字节注释（括号内为十六进制）：
+
+```
+30 82 01 22          ← SEQUENCE，长形式：后 2 字节 = 0x0122 = 290
+│
+├─ 30 0D             ← SEQUENCE（AlgorithmIdentifier），定长 13 字节
+│  ├─ 06 09          ← OID，9 字节
+│  │  2A 86 48 86 F7 0D 01 01 01
+│  │  └─ 2A = 1*40+2 = 42（前两位 1.2 压缩为单字节）
+│  │     86 48 = 840（base-128：6*128+72）
+│  │     86 F7 0D = 113549（6*128²+119*128+13）
+│  │     01 01 01 = 后缀 .1.1.1
+│  └─ 05 00          ← NULL（算法参数为空）
+│
+└─ 03 82 01 0F 00    ← BIT STRING，长形式 271 字节，填充位 0（字节对齐）
+   └─ 30 82 01 0A    ← SEQUENCE（RSAPublicKey PKCS#1）
+      ├─ 02 82 01 01 ← INTEGER（modulus），257 字节
+      │  00 [256字节模数]
+      │  └─ 前导 0x00：最高位为1时须补零，避免被解读为负数
+      └─ 02 03        ← INTEGER（publicExponent），3 字节
+         01 00 01     = 65537（标准公钥指数 e）
+```
+
+💡 **为什么 RSA-2048 的模数是 257 字节而不是 256 字节？**
+RSA-2048 的模数是 2048 位 = 256 字节，但 `INTEGER` 采用有符号补码编码。当最高位为 `1` 时会被解释为负数，所以 `DER` 规定必须在前面补一个 `0x00` 字节以确保正数语义，因此变为 257 字节。
+
+用 OpenSSL 可以验证上面的解析：
+
+``` bash title="用 OpenSSL asn1parse 逐层解析公钥 DER"
+# 从证书提取公钥 DER
+openssl x509 -in cert.pem -pubkey -noout \
+  | openssl pkey -pubin -outform DER -out pubkey.der
+
+# 逐层解析 TLV 结构
+openssl asn1parse -in pubkey.der -inform DER
+```
+
 ### DER 对 BER 的限制
 
 BER（Basic Encoding Rules）比较宽松，允许同一数据产生多种编码。DER 在 BER 的基础上加了严格的限制，确保编码的唯一性：
@@ -409,6 +496,32 @@ BER 支持 `indefinite-length`（不定长）编码——用 `0x80` 作为长度
 2006 年，Daniel Bleichenbacher 展示了一种针对 RSA PKCS#1 v1.5 签名的伪造攻击（Bleichenbacher's RSA signature forgery）。某些实现存在三个缺陷：ASN.1 DigestInfo 解析后**不检查尾部剩余字节**（trailing garbage tolerance）、**ASN.1 长度字段解析过于宽松**、以及 **FF padding 检查不严格**。Bleichenbacher 利用这些漏洞，配合小公钥指数（e=3）的数学特性，只需让签名块的前一小部分满足约束，剩余字节可以任意填充来凑成完全立方数，从而构造出能通过验证的伪造签名。
 
 这个攻击影响了多个主流实现（包括 OpenSSL 和 NSS），直接推动了业界对 DER 严格合规性的重视。
+
+### BER vs DER vs CER：三种编码规则的区别
+
+`ASN.1` 只定义了数据的**逻辑结构**，把数据变成字节流需要**编码规则**（Encoding Rules）。`X.690` 标准定义了三种最常见的编码规则，它们都以 `BER` 为基础：
+
+| 特性 | `BER` | `DER` | `CER` |
+|------|-------|-------|-------|
+| 全称 | Basic Encoding Rules | Distinguished Encoding Rules | Canonical Encoding Rules |
+| 长度编码 | 定长或不定长均可 | 必须用最短**定长**形式 | <1000B 用短定长，≥1000B 用**不定长** |
+| `SET` 元素排序 | 不要求 | 字典序排列 | 字典序排列 |
+| `BOOLEAN TRUE` 编码 | 任意非零值均合法 | 必须为 `0xFF` | 必须为 `0xFF` |
+| 字符串分段（Constructed） | 允许分段传输 | 禁止，必须为 Primitive 整体 | 允许分段（≥1000B 时） |
+| 编码唯一性 | ❌ 同一值可有多种编码 | ✅ 唯一确定 | ✅ 唯一确定 |
+| 典型用途 | 通用解析、向下兼容 | X.509、PKCS#8、CSR、签名 | LDAP、流式 S/MIME |
+
+`CER` 是专门为**流式处理大型数据**设计的——当不知道数据总长度时，不定长编码允许边产生边发送，无需先缓存全部内容。`DER` 则专为**签名可验证性**设计，任何对 `DER` 编码数据的签名都可以被独立重现和验证。
+
+🎯 **记忆口诀**：签名选 `DER`（D for Deterministic 确定性），流式选 `CER`（C for Chunked 分块），读旧数据用 `BER`（B for Basic 宽容）。
+
+⚠️ **为什么签名必须用 `DER` 而非 `BER`？**
+签名的本质是 `Sign(H(消息字节序列))`。`BER` 允许同一逻辑数据有多种字节序列，这会导致：
+
+- **签名方与验证方使用不同编码** → 哈希不一致 → 签名验证失败
+- **攻击者把合法签名数据改写为另一种 `BER` 编码** → 哈希改变 → 在宽松实现中可能绕过验证
+
+`DER` 的唯一性封堵了这个攻击面：每种 `ASN.1` 值只有**唯一一种**合法 `DER` 编码，攻击者无法在不改变逻辑数据的前提下操纵字节表示。
 
 ## OID——对象标识符
 
@@ -549,6 +662,66 @@ if (tagged != null) {
 - **编码后重新解析验证**：如果你构造了一个 ASN.1 对象并要对其签名，先编码再解析回来，确认重建后的对象与原始对象一致
 - **使用 DER 而非 BER**：`getEncoded(ASN1Encoding.DER)` 而非 `getEncoded()`（后者可能使用 BER）
 
+### 常见的 ASN.1 安全漏洞
+
+`ASN.1` 解析是密码学代码中历史上漏洞频发的区域。以下两个具体案例涵盖了最典型的两类漏洞模式：
+
+#### CVE-2006-4339：OpenSSL RSA 签名伪造
+
+这是 Daniel Bleichenbacher 在 2006 年发现的针对 RSA `PKCS#1 v1.5` 签名验证的漏洞（也称 Bleichenbacher '06 forgery，注意区别于 1998 年的 PKCS#1 padding oracle 攻击）。
+
+**根因在于 `ASN.1` 解析过于宽松**。RSA 签名验证需要解析 `DigestInfo` 结构：
+
+```
+DigestInfo ::= SEQUENCE {
+    digestAlgorithm  AlgorithmIdentifier,
+    digest           OCTET STRING   -- 实际的哈希值
+}
+```
+
+有漏洞的实现犯了三个错误：
+
+1. **尾部垃圾字节容忍**：解析完 `DigestInfo` 后，**未检查是否还有剩余字节**。只要前面的 `DigestInfo` 有效，结构末尾填充任意字节也能通过验证
+2. **长度字段宽松**：未强制要求 `DER` 最短长度编码，允许冗余的 `BER` 长度形式
+3. **FF padding 检查不严格**：`PKCS#1 v1.5` 格式要求签名块以 `0x00 0x01 0xFF...0xFF 0x00` 开头，但某些实现对 padding 长度检查不足
+
+**危害放大因子**：当公钥指数 `e=3` 时，攻击者只需让签名块的前一小部分满足约束，剩余字节可以自由控制来凑出完全立方数，从而**无需知道私钥就能构造出通过验证的伪造签名**。
+
+**修复原则**：
+
+- 解析 `DigestInfo` 后，**必须验证消耗的字节数恰好等于输入总字节数**（检查尾部无剩余）
+- 使用 `DER` 解析器（而非 `BER`）以强制最短长度编码
+- 公钥指数推荐 `e=65537`，避免使用小指数（`e=3`）
+
+#### `BIT STRING` 填充字节漏洞
+
+`BIT STRING` 在 `DER` 编码中，第一字节是"末尾填充位数"（`0x00` 表示字节对齐）。以下两种异常编码会导致解析歧义：
+
+**问题 1：非法填充位数**
+填充位数字节的合法值是 `0~7`。如果编码为 `03 01 08`（填充 8 位，但没有数据字节），这在 `DER` 规范下是非法的，但部分实现会静默接受。
+
+**问题 2：空 `BIT STRING` 与 `NULL` 的混淆**
+`BIT STRING { 0 unused bits, 0 bytes }`（编码 `03 01 00`）和 `NULL`（编码 `05 00`）在某些宽松解析器中被视为等价，导致不同实现对同一证书的公钥内容产生不同解读——进而绕过证书固定（Certificate Pinning）检查。
+
+这类漏洞在 X.509 证书的 `SubjectPublicKeyInfo` 公钥字段中影响最大：攻击者构造含有异常 `BIT STRING` 的证书，使不同实现解析出不同的公钥，从而绕过针对特定公钥的固定策略。
+
+``` java title="安全读取 BIT STRING 的方式"
+// ❌ 不安全：直接读字节，未校验填充位数
+byte[] raw = ((ASN1BitString) obj).getBytes();
+
+// ✅ 安全：使用 DERBitString，内部会校验填充格式
+DERBitString bits = DERBitString.getInstance(obj);
+int padBits = bits.getPadBits();   // 应为 0（公钥字段必须字节对齐）
+byte[] payload = bits.getBytes();  // 实际内容（已去除填充字节的影响）
+
+// ✅ 额外验证：公钥字段的 BIT STRING 填充位必须为 0
+if (padBits != 0) {
+    throw new IllegalArgumentException("公钥 BIT STRING 填充位非零：" + padBits);
+}
+```
+
+📌 **关联阅读**：更多签名相关的 `DER` 编码安全问题，见「数字签名」中的签名格式规范章节。
+
 ### 解析 ASN.1 结构
 
 Bouncy Castle 的 ASN.1 对象几乎都提供静态 `getInstance()` 方法，它可以接受多种输入类型：
@@ -665,3 +838,111 @@ ASN1Primitive fromBytes = ASN1Primitive.fromByteArray(derBytes);
 boolean isDER = true;  // 始终用 DER 进行签名/MAC 操作
 boolean isBER = false; // BER 更宽松，但可能产生不同编码
 ```
+
+### Java 解析 ASN.1：Bouncy Castle ASN1Primitive API
+
+最常见的实际需求：**从 `PEM` 文件读取证书并提取关键字段**，以及**手工构造 `DER` 序列再编码为 `PEM`**。下面演示完整流程——`PEM` → `DER` → `ASN1Primitive`，以及逆向。
+
+Maven 依赖：
+
+``` xml title="Bouncy Castle 依赖（bcpkix 包含 PEM 解析器）"
+<dependency>
+    <groupId>org.bouncycastle</groupId>
+    <artifactId>bcpkix-jdk18on</artifactId>
+    <version>1.79</version>
+</dependency>
+```
+
+``` java title="从 PEM 证书提取公钥算法、序列号和顶层 ASN.1 结构"
+import org.bouncycastle.asn1.*;
+import org.bouncycastle.asn1.x509.*;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.openssl.PEMParser;
+
+import java.io.FileReader;
+
+public class CertParser {
+    public static void main(String[] args) throws Exception {
+        // 1. PEM → X509CertificateHolder（内部已解析为 ASN.1 对象树）
+        try (PEMParser pem = new PEMParser(new FileReader("cert.pem"))) {
+            X509CertificateHolder cert =
+                (X509CertificateHolder) pem.readObject();
+
+            // 2. 获取序列号（底层是 ASN1Integer）
+            System.out.println("序列号: " + cert.getSerialNumber());
+
+            // 3. 获取签名算法 OID
+            AlgorithmIdentifier sigAlg = cert.getSignatureAlgorithm();
+            System.out.println("签名算法 OID: " + sigAlg.getAlgorithm().getId());
+
+            // 4. 获取公钥结构（SubjectPublicKeyInfo → AlgorithmIdentifier + BIT STRING）
+            SubjectPublicKeyInfo spki = cert.getSubjectPublicKeyInfo();
+            String pubKeyAlg = spki.getAlgorithm().getAlgorithm().getId();
+            System.out.println("公钥算法 OID: " + pubKeyAlg);
+
+            // 5. 用底层 ASN1Sequence 直接遍历证书三个顶层字段：
+            //    [0] TBSCertificate, [1] signatureAlgorithm, [2] signatureValue
+            ASN1Sequence certSeq = ASN1Sequence.getInstance(cert.getEncoded());
+            System.out.println("证书顶层字段数（应为 3）: " + certSeq.size());
+
+            // 6. 从 TBSCertificate 取出 subject DN
+            ASN1Sequence tbs = ASN1Sequence.getInstance(certSeq.getObjectAt(0));
+            // TBS 字段顺序：version[0], serialNumber, signature, issuer, validity, subject, ...
+            // subject 是 tbs 的第 5 个字段（0-indexed，version 占一个 tagged object）
+            System.out.println("TBS 字段数: " + tbs.size());
+        }
+    }
+}
+```
+
+``` java title="手工构造 DER 序列并编码为 PEM"
+import org.bouncycastle.asn1.*;
+import org.bouncycastle.util.io.pem.PemObject;
+import org.bouncycastle.util.io.pem.PemWriter;
+
+import java.io.StringWriter;
+import java.math.BigInteger;
+
+public class BuildDer {
+    public static void main(String[] args) throws Exception {
+        // 手工构造：SEQUENCE { INTEGER 42, UTF8String "Hello ASN.1" }
+        ASN1EncodableVector v = new ASN1EncodableVector();
+        v.add(new ASN1Integer(BigInteger.valueOf(42)));
+        v.add(new DERUTF8String("Hello ASN.1"));
+        DERSequence seq = new DERSequence(v);
+
+        // 编码为 DER 字节数组
+        byte[] derBytes = seq.getEncoded(ASN1Encoding.DER);
+
+        // DER → PEM：PemObject 类型字符串出现在 BEGIN/END 标记中
+        StringWriter sw = new StringWriter();
+        try (PemWriter pw = new PemWriter(sw)) {
+            pw.writeObject(new PemObject("EXAMPLE", derBytes));
+        }
+        System.out.println(sw);
+        // 输出：
+        // -----BEGIN EXAMPLE-----
+        // MBMCASpMC0hlbGxvIEFTTi4x
+        // -----END EXAMPLE-----
+
+        // PEM → DER → 重新解析（往返验证）
+        byte[] redecoded = java.util.Base64.getMimeDecoder()
+            .decode(sw.toString()
+                .replaceAll("-----.*-----", "").trim());
+        ASN1Sequence reparsed = ASN1Sequence.getInstance(redecoded);
+        System.out.println("往返验证：" + reparsed.equals(seq)); // true
+    }
+}
+```
+
+💡 **`PemObject` 类型字符串的约定**：`"CERTIFICATE"` / `"PRIVATE KEY"`（PKCS#8 未加密）/ `"ENCRYPTED PRIVATE KEY"`（PKCS#8 加密）/ `"PUBLIC KEY"`（SubjectPublicKeyInfo）/ `"CERTIFICATE REQUEST"`（CSR）。类型字符串不影响 `DER` 内容的解析，但错误的头部会让工具（如 OpenSSL）拒绝识别文件。
+
+## 参考来源（本笔记增强部分）
+
+- David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 1 & 9 — 标准格式概览、X.509/PEM 编码说明
+- ITU-T X.690 (2021) — BER / DER / CER 编码规则官方标准
+- RFC 5280 — Internet X.509 Public Key Infrastructure Certificate
+- RFC 5958 — Asymmetric Key Packages（PKCS#8）
+- RFC 7292 — PKCS #12: Personal Information Exchange Syntax
+- Daniel Bleichenbacher, "Forging Some RSA Signatures with Pencil and Paper", Crypto 2006 Rump Session — CVE-2006-4339 根因分析
+- Bouncy Castle 官方文档，`org.bouncycastle.asn1` 包 — Java API 参考

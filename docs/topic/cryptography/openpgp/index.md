@@ -74,6 +74,67 @@ Web of Trust 的理论吸引力在于它的**去中心化**——没有单一信
 
 OpenPGP 与 CMS 提供的安全服务类似：签名、加密、压缩、认证。但两者的**数据格式完全不同**：CMS 使用 ASN.1/DER 编码，所有信息包装在一个结构中；OpenPGP 使用自定义的**数据包（packet）流格式**，签名头、数据和签名作为独立记录依次排列在流中。
 
+### Web of Trust vs PKI：两种信任哲学
+
+> 本节内容参考 David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11。
+
+去中心化信任听起来很理想，但现实中 PKI 才是互联网主流。理解两者哲学上的根本差异，才能在正确场景中做出正确选择。也可参考「CMS 与 S/MIME」（`../cms-and-smime/`）了解 PKI 体系的具体实现。
+
+#### CA 的脆弱点：单点失效
+
+PKI 体系的根本弱点是**根 CA 的集中性**——整个信任体系构建在对少数机构的绝对信任上。一旦某个根 CA 被攻破，攻击者可以为任意域名签发合法证书，悄无声息地发动中间人攻击。历史上已经发生过多起这样的真实事故：
+
+| 事件 | 时间 | 影响范围 |
+|------|------|---------|
+| DigiNotar 被黑客完全入侵 | 2011 | 荷兰政府 CA 被攻破，`*.google.com` 虚假证书被签发，伊朗用户遭到大规模中间人监控 |
+| Comodo 内部人员滥权 | 2011 | google.com、yahoo.com 等知名域名的虚假证书被签发 |
+| Symantec CA 被逐步吊销 | 2017–2018 | Chrome 撤销对数亿张 Symantec 证书的信任，影响大量网站 |
+
+这些事件推动了 **证书透明度（Certificate Transparency, CT）** 机制的诞生：所有公开信任 CA 签发的证书必须写入公开的、基于 Merkle 树构建的不可篡改日志，任何人都可以监控是否有针对自己域名的异常证书被签发。
+
+💡 CT 是对 PKI 信任模型的重要补丁，但并没有改变根本结构——根 CA 仍然是中心化的信任锚。这就像在银行（CA）的保险库外面加了摄像头（CT），但银行本身仍然是单一信任源。
+
+#### Web of Trust 的优劣权衡
+
+`Web of Trust` 彻底绕开了中心化 CA，但也带来了新的现实挑战：
+
+| 维度 | Web of Trust 的表现 | 实际影响 |
+|------|---------------------|---------|
+| **韧性** | 无单一失效点，没有根 CA 可以被攻破 | 局部密钥泄露不影响全局信任 |
+| **可用性** | 用户必须手动建立信任链和评估信任级别 | 非技术用户几乎无法正确使用 |
+| **可扩展性** | 陌生人之间可能找不到信任路径 | 不适合大规模互联网部署 |
+| **适用场景** | 小型封闭社区（开源项目、学术圈、安全研究人员） | 在企业或普通用户中几乎无法落地 |
+
+Web of Trust 最大的工程现实是：**信任是社交的，而社交是有边界的**。在 Linux 内核开发者圈子里，每个人认识的人都签过密钥；但对于普通用户，几乎不可能找到通向陌生人的完整信任路径。
+
+#### TOFU：信任首次使用
+
+面对 `Web of Trust` 的高使用门槛，`GPG` 2.2 引入了 **TOFU（Trust On First Use）** 模式——这是一种务实的折中方案，工作原理类似 SSH 的主机密钥验证：
+
+1. 第一次与某人通信时，自动记录其公钥指纹
+2. 后续通信时，检查公钥是否与第一次记录的一致
+3. 一致则信任，不一致则发出强警告（提示可能的密钥更换或中间人攻击）
+
+TOFU 将信任决策从"你认识谁？"简化为"你和这个人以前通信过吗？"。它无法防御**第一次通信时**的中间人攻击，但对已经建立过联系的通信者提供了较强的持续保证。
+
+结合 Web of Trust 和 TOFU，`GPG` 的实际信任模型是分层的：
+
+```mermaid
+graph TD
+    A["密钥的信任来源"] --> B["Web of Trust<br/>朋友为你签名"]
+    A --> C["TOFU<br/>你亲自验证过"]
+    A --> D["手动设置<br/>gpg --trust-model direct"]
+    B --> E["适合：社区成员间"]
+    C --> F["适合：日常邮件往来"]
+    D --> G["适合：自托管 / 企业内部"]
+
+    classDef trust fill:transparent,stroke:#0288d1,color:#adbac7,stroke-width:1px
+    classDef use fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:1px
+
+    class A,B,C,D trust
+    class E,F,G use
+```
+
 ## OpenPGP 核心概念
 
 ### 密钥环（Key Ring）
@@ -135,6 +196,84 @@ graph TD
 - 如果**主密钥泄露**：这才是灾难性事件。攻击者可以伪造新的子密钥绑定签名，签发虚假的用户 ID 绑定。此时需要通过密钥撤销机制通知所有相关方
 
 这也是为什么 OpenPGP 的最佳实践建议：**主密钥离线保存，日常只使用子密钥**。主密钥可以存放在断网的介质上（如 USB 安全密钥），只有需要创建或撤销子密钥时才取出使用。
+
+### GPG 最佳实践：子密钥、过期时间与吊销
+
+> 本节参考 David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11，以及 GPG 官方最佳实践文档。
+
+⚙️ 仅理解 OpenPGP 的数据结构还不够——**错误的密钥管理方式会让完美的密码学毫无价值**。这里汇总实际使用 `GPG` 时最重要的三条实践。
+
+#### 主密钥离线，子密钥在线
+
+现实中，大多数用户的 `GPG` 密钥环是这样的：主密钥和所有子密钥都存在同一台联网电脑上。这意味着一旦电脑被黑，所有密钥（包括主密钥）都可能泄露，攻击者可以伪造任意子密钥绑定签名，彻底摧毁你的身份。
+
+正确的做法是**主密钥离线**：
+
+```mermaid
+graph LR
+    A["🔐 主密钥<br/>离线存储<br/>（YubiKey / 加密U盘）"] -->|"仅在需要时<br/>物理接入"| B["💻 签发子密钥<br/>撤销证书"]
+    C["📧 日常加密子密钥<br/>在线使用"] -->|"主密钥签名绑定"| D["日常邮件加密"]
+    E["✏️ 日常签名子密钥<br/>在线使用"] -->|"主密钥签名绑定"| F["代码签名 / 邮件签名"]
+
+    classDef offline fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:2px
+    classDef online fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:1px
+
+    class A offline
+    class C,E online
+```
+
+在 `GPG` 中导出"仅子密钥"的密钥环（不含主密钥私钥），可以部署在日常工作机上：
+
+``` text title="导出仅含子密钥的密钥环"
+# 导出完整密钥（备份到离线介质）
+gpg --export-secret-keys alice@example.com > alice-full.gpg
+
+# 删除主密钥私钥，只保留子密钥私钥（在线机器用）
+gpg --export-secret-subkeys alice@example.com > alice-subkeys-only.gpg
+
+# 在日常使用机器上，只导入子密钥私钥
+gpg --import alice-subkeys-only.gpg
+```
+
+#### 设置子密钥过期时间
+
+为子密钥设置过期时间是一道重要的安全保险：即使子密钥在你不知情的情况下泄露，攻击者最多只能使用到过期日期为止。过期时间**不影响已签名内容的验证**——过去用该密钥签名的文件仍然可以验证（因为签名时密钥是有效的）。
+
+推荐的过期时间策略：
+
+| 密钥类型 | 推荐有效期 | 原因 |
+|---------|-----------|------|
+| 主密钥 | 不设置（或 5 年以上） | 主密钥吊销是最高级别操作，不希望频繁变更 |
+| 加密子密钥 | 1 年 | 定期轮换，减少泄露时窗 |
+| 签名子密钥 | 1 年 | 同上 |
+
+``` text title="在 GPG 中为子密钥设置过期时间"
+gpg --edit-key alice@example.com
+# 选中子密钥 key 1
+gpg> key 1
+# 设置 1 年过期时间
+gpg> expire
+# 输入 1y
+gpg> save
+```
+
+到期前，用主密钥私钥为子密钥续期（更新过期时间），无需重新分发公钥——已有联系人导入更新后的公钥即可。
+
+#### 预生成吊销证书
+
+吊销证书是"紧急关闭阀"。当主密钥泄露时，你需要通过发布吊销证书来告知所有人该密钥不再可信。**问题在于：吊销证书必须在主密钥可用时生成，而主密钥被盗后你可能已经无法使用它了。**
+
+正确做法是**在创建密钥时立即生成吊销证书**，并安全存放（与主密钥分开保存）：
+
+``` text title="生成并存储吊销证书"
+# 生成吊销证书（会提示选择吊销原因）
+gpg --gen-revoke alice@example.com > alice-revocation.asc
+
+# 将 alice-revocation.asc 打印纸质备份，或存储在独立的加密介质上
+# 永远不要和主密钥存在同一个地方！
+```
+
+发布吊销证书时，将其导入本地密钥环后上传到密钥服务器（如 `keys.openpgp.org`），所有已从该服务器同步过你公钥的人都会在下次更新时收到吊销通知。
 
 ### ASCII Armored 格式
 
@@ -248,6 +387,67 @@ assertEquals(originalKeyId, importedKeyRing.getPublicKey().getKeyID());
 > 完整代码见 `PgpKeyRingTest.shouldExportAndImportPublicKey()`。
 
 ⚠️ `PGPUtil.getDecoderStream()` 是一个非常重要的工具方法——它会自动检测输入是二进制 PGP 数据还是 ASCII Armored 格式，并返回统一的 `InputStream`。无论对方发来的是哪种格式，你都可以用它来解码。
+
+### OpenPGP 密钥服务器的问题与 WKD
+
+> 本节参考 David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11。
+
+⚠️ 有了公钥，还需要一个机制把它"发出去"让别人找到。`OpenPGP` 的传统答案是密钥服务器（Keyserver），但这套机制在 2019 年遭受了一次严重的可用性攻击，促使社区转向新的解决方案。
+
+#### SKS 密钥服务器污染攻击（2019）
+
+2019 年 6 月，一批攻击者对传统的 **SKS（Synchronizing Key Server）** 网络发动了所谓的"证书洪泛攻击"（Certificate Flooding Attack）：
+
+**攻击原理**：`OpenPGP` 规范允许任何人为他人的公钥附加签名——这是 `Web of Trust` 的基础。SKS 服务器会接受并同步这些签名，且**不限数量**。攻击者针对两位著名的 `GPG` 开发者（Robert J. Hansen 和 Daniel Kahn Gillmor）的公钥，附加了数以万计的伪造签名：
+
+```
+密钥 A（受害者公钥）
+├── 合法签名 1（朋友签名）
+├── 合法签名 2（同事签名）
+├── 伪造签名 1（攻击者账号 1）
+├── 伪造签名 2（攻击者账号 2）
+├── ...（50,000 条伪造签名）
+```
+
+**结果**：当受害者或其他人从 SKS 服务器下载这个公钥时，`GPG` 需要验证每一条签名，CPU 使用率飙升，`GPG` 实际上挂死——某些操作需要几小时才能完成。因为 SKS 网络的同步特性，这个"污染"几乎无法撤销。
+
+**根本原因**：SKS 协议的设计原则是"只增不删"——任何写入的数据（签名）都无法删除，且所有 SKS 节点会互相同步，形成一个最终一致的分布式数据库。
+
+#### WKD：Web Key Directory
+
+`WKD`（Web Key Directory，RFC 9580）是 `GPG` 社区为解决密钥发现问题提出的新标准，思路是**让域名所有者直接托管自己域内用户的公钥**，而不是依赖第三方服务器：
+
+```mermaid
+graph LR
+    A["想找 alice@example.com<br/>的公钥"] --> B["构造 WKD URL<br/>基于邮箱哈希"]
+    B --> C["GET https://openpgpkey.example.com/\n.well-known/openpgpkey/example.com/\nhu/{SHA-1(alice)}"]
+    C --> D["example.com 返回<br/>alice 的公钥"]
+    D --> E["✅ 无需信任第三方服务器"]
+
+    classDef req fill:transparent,stroke:#0288d1,color:#adbac7,stroke-width:1px
+    classDef resp fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:1px
+
+    class A,B,C req
+    class D,E resp
+```
+
+WKD 的优势在于：
+
+- **信任锚是 HTTPS**：公钥由域名所有者发布，其真实性由 TLS 证书（PKI）保证——复用了现有的 Web 信任基础设施
+- **无污染攻击面**：域名所有者控制自己的 WKD 端点，无法被他人写入垃圾签名
+- **自动发现**：`GPG` 2.2+ 在加密前会自动尝试 WKD 查询，用户无需手动导入公钥
+
+目前已支持 WKD 的邮件服务：`ProtonMail`（直接集成）、`Tutanota`（部分支持）、`mailbox.org`；自托管域名可以通过静态文件托管轻松实现 WKD。
+
+``` text title="GPG 通过 WKD 自动查找公钥"
+# GPG 2.2+ 在加密时会自动尝试 WKD 查询
+gpg --locate-keys alice@example.com
+
+# 也可以手动指定 WKD 查询
+gpg --auto-key-locate wkd --locate-keys alice@example.com
+```
+
+⚠️ WKD 要求域名必须通过 HTTPS 提供服务，且 TLS 证书有效。对于没有自己域名的普通用户，推荐使用 `keys.openpgp.org`——这是一个现代化密钥服务器，要求邮件验证后才能上传公钥，且支持删除操作，从根本上避免了 SKS 的污染问题。
 
 ## OpenPGP 签名实战
 
@@ -445,6 +645,153 @@ graph LR
     class H,I,J,K dec
 ```
 
+### 实战：Java Bouncy Castle 实现 PGP 签名加密（Sign-then-Encrypt）
+
+前面的代码分别演示了签名和加密。真实场景中，通常需要**先签名再加密（Sign-then-Encrypt）**，让接收方在解密后能同时验证消息来源的真实性。这是 `OpenPGP` 邮件加密的标准模式。
+
+> 关于数字签名的底层原理，参见「数字签名」（`../digital-signatures/`）。
+
+``` java title="先签名再加密（完整流程）"
+/**
+ * 先签名，再加密：
+ * 1. 用发送方私钥对明文签名（BINARY_DOCUMENT 签名类型）
+ * 2. 将签名打包成 OnePass 签名流
+ * 3. 压缩后用接收方公钥加密
+ */
+public static byte[] signAndEncrypt(
+        byte[] plaintext,
+        PGPSecretKey signingSecretKey, char[] passphrase,
+        PGPPublicKey encryptionPublicKey) throws Exception {
+
+    // 1. 解锁签名私钥
+    PGPPrivateKey signingPrivateKey = signingSecretKey.extractPrivateKey(
+            new JcePBESecretKeyDecryptorBuilder().setProvider("BC")
+                    .build(passphrase));
+    PGPPublicKey signingPublicKey = signingSecretKey.getPublicKey();
+
+    // 2. 准备输出流（Armored 格式）
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    try (OutputStream armoredOut = new ArmoredOutputStream(out)) {
+
+        // 3. 配置加密生成器
+        PGPEncryptedDataGenerator encGen = new PGPEncryptedDataGenerator(
+                new JcePGPDataEncryptorBuilder(SymmetricKeyAlgorithmTags.AES_256)
+                        .setWithIntegrityPacket(true) // ✅ 必须启用 MDC
+                        .setSecureRandom(new SecureRandom())
+                        .setProvider("BC"));
+        encGen.addMethod(new JcePublicKeyKeyEncryptionMethodGenerator(encryptionPublicKey)
+                .setProvider("BC"));
+
+        try (OutputStream encOut = encGen.open(armoredOut, new byte[1 << 16])) {
+
+            // 4. 在加密流内部进行压缩
+            PGPCompressedDataGenerator compGen =
+                    new PGPCompressedDataGenerator(CompressionAlgorithmTags.ZIP);
+            try (OutputStream compOut = compGen.open(encOut)) {
+
+                // 5. 创建签名生成器（OnePass 模式：签名头在数据之前）
+                PGPSignatureGenerator sigGen = new PGPSignatureGenerator(
+                        new JcaPGPContentSignerBuilder(
+                                signingPublicKey.getAlgorithm(), HashAlgorithmTags.SHA256)
+                                .setProvider("BC"));
+                sigGen.init(PGPSignature.BINARY_DOCUMENT, signingPrivateKey);
+
+                // 6. 写入 OnePass 签名头
+                sigGen.generateOnePassVersion(false).encode(compOut);
+
+                // 7. 写入 Literal Data 数据包（明文）
+                PGPLiteralDataGenerator litGen = new PGPLiteralDataGenerator();
+                try (OutputStream litOut = litGen.open(compOut,
+                        PGPLiteralData.BINARY, "message.txt",
+                        plaintext.length, new Date())) {
+                    litOut.write(plaintext);
+                    sigGen.update(plaintext); // 同步更新签名计算
+                }
+
+                // 8. 写入完整签名（OnePass 尾部）
+                sigGen.generate().encode(compOut); // ✅ 签名附在数据之后
+            }
+        }
+    }
+    return out.toByteArray();
+}
+```
+
+``` java title="解密并验证签名（完整流程）"
+/**
+ * 解密后验证嵌入的签名：
+ * 1. 用接收方私钥解密
+ * 2. 解压缩
+ * 3. 读取 OnePass 签名头，获取签名密钥 ID
+ * 4. 读取 Literal Data，同步更新签名验证器
+ * 5. 验证尾部签名
+ */
+public static String decryptAndVerify(
+        byte[] encryptedData,
+        PGPSecretKeyRing secretKeyRing,  // 接收方密钥环（用于解密）
+        PGPPublicKeyRing signerPublicKeyRing,  // 发送方公钥环（用于验签）
+        char[] passphrase) throws Exception {
+
+    // 1. 解码加密数据
+    InputStream in = PGPUtil.getDecoderStream(new ByteArrayInputStream(encryptedData));
+    JcaPGPObjectFactory outerFactory = new JcaPGPObjectFactory(in);
+    PGPEncryptedDataList encList = (PGPEncryptedDataList) outerFactory.nextObject();
+
+    // 2. 找到匹配的加密子密钥并解密
+    PGPPublicKeyEncryptedData pke = (PGPPublicKeyEncryptedData) encList.get(0);
+    long encKeyId = pke.getKeyID();
+    PGPPrivateKey decryptKey = null;
+    for (PGPSecretKey sk : secretKeyRing) {
+        if (sk.getKeyID() == encKeyId) {
+            decryptKey = sk.extractPrivateKey(
+                    new JcePBESecretKeyDecryptorBuilder().setProvider("BC").build(passphrase));
+            break;
+        }
+    }
+    if (decryptKey == null) throw new IllegalArgumentException("找不到匹配的解密私钥");
+
+    InputStream clearStream = pke.getDataStream(
+            new JcePublicKeyDataDecryptorFactoryBuilder().setProvider("BC").build(decryptKey));
+
+    // 3. 解析内层数据包（压缩 → OnePass 签名头 → Literal Data → 签名）
+    JcaPGPObjectFactory innerFactory = new JcaPGPObjectFactory(clearStream);
+    Object obj = innerFactory.nextObject();
+
+    // 解压缩层
+    if (obj instanceof PGPCompressedData compressed) {
+        innerFactory = new JcaPGPObjectFactory(compressed.getDataStream());
+        obj = innerFactory.nextObject();
+    }
+
+    // 读取 OnePass 签名头（包含签名密钥 ID 和哈希算法）
+    PGPOnePassSignatureList onePassList = (PGPOnePassSignatureList) obj;
+    PGPOnePassSignature ops = onePassList.get(0);
+
+    // 用发送方公钥初始化验证器
+    PGPPublicKey signerPublicKey = signerPublicKeyRing.getPublicKey(ops.getKeyID());
+    ops.init(new JcaPGPContentVerifierBuilderProvider().setProvider("BC"), signerPublicKey);
+
+    // 读取 Literal Data，同步更新签名验证器
+    PGPLiteralData literalData = (PGPLiteralData) innerFactory.nextObject();
+    byte[] plaintext = literalData.getInputStream().readAllBytes();
+    ops.update(plaintext);
+
+    // 验证尾部签名
+    PGPSignatureList sigList = (PGPSignatureList) innerFactory.nextObject();
+    boolean valid = ops.verify(sigList.get(0)); // ✅ 签名验证
+    if (!valid) throw new SecurityException("签名验证失败！消息可能被篡改或来源不可信");
+
+    // 4. 验证 MDC 完整性
+    if (!pke.verify()) throw new SecurityException("MDC 完整性校验失败！密文可能被篡改");
+
+    return new String(plaintext, StandardCharsets.UTF_8);
+}
+```
+
+> 完整测试代码见 `PgpSignEncryptTest.shouldSignAndEncryptThenDecryptAndVerify()`。
+
+⚠️ `OnePass` 签名模式（RFC 4880 Section 5.4）允许签名和数据在**同一个流**中顺序读取，无需将整个消息缓存到内存后再验证。这对于大文件特别重要。签名头（`PGPOnePassSignature`）在数据之前，实际签名（`PGPSignature`）在数据之后——接收方在流式读取数据的同时更新签名摘要，最后一步才验证签名。
+
 ## CMS vs OpenPGP 对比
 
 既然 CMS 和 OpenPGP 都能做签名和加密，怎么选择？以下是核心差异：
@@ -462,6 +809,64 @@ graph LR
 💡 简单选择原则：如果在企业环境中，邮件系统已经支持 S/MIME（Outlook 原生支持），用 CMS；如果在开源社区或个人通信中（GitHub 发布签名、Linux 包签名、个人邮件加密），用 OpenPGP。
 
 两者可以共存——GnuPG 2.1+ 的 Keybox（`.kbx`）格式就同时支持 OpenPGP 密钥环和 X.509 证书，可以在同一个文件中管理两种体系的公钥。
+
+### OpenPGP 现代化：Sequoia-PGP 与 OpenPGP.js
+
+> 本节参考 David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11。
+
+`Bouncy Castle` 的 `bcpg` 库是 Java 生态中最完整的 `OpenPGP` 实现，但在其他语言或需要现代化 API 的场景下，有两个值得了解的替代选择。
+
+#### Sequoia-PGP（Rust）
+
+**Sequoia-PGP** 是一个用 Rust 编写的 `OpenPGP` 实现（[https://sequoia-pgp.org](https://sequoia-pgp.org)），由 Kai Engert、Neal Walfield 和 Justus Winter 主导开发（其中部分开发者曾是 `GPG` 核心贡献者）。它的目标是提供一个**内存安全、API 设计现代**的 `OpenPGP` 库，同时兼容 RFC 4880 和新草案 RFC 9580。
+
+Sequoia 的设计哲学：
+
+| 特性 | Sequoia-PGP | GPG / Bouncy Castle |
+|------|-------------|---------------------|
+| **内存安全** | Rust 所有权系统保证无缓冲区溢出 | C（GPG）/ JVM GC（BC） |
+| **API 风格** | 类型安全的构建器模式，编译期拒绝无效状态 | 部分 API 需要运行时检查 |
+| **RFC 9580 支持** | 新草案的早期支持者 | 逐步跟进 |
+| **适用场景** | 系统级工具、嵌入式场景、安全工具链 | Java 后端、Android 应用 |
+
+Sequoia 还提供了 `sq` 命令行工具，作为 `gpg` 的现代替代品，API 更加一致。
+
+#### OpenPGP.js（JavaScript/Node.js）
+
+**OpenPGP.js**（[https://openpgpjs.org](https://openpgpjs.org)）是最广泛使用的 JavaScript `OpenPGP` 实现，ProtonMail 的前端加密就基于此库。它同时支持浏览器和 Node.js 环境，提供 `async/await` 风格的 API：
+
+``` javascript title="OpenPGP.js：加密和解密示例"
+import * as openpgp from 'openpgp';
+
+// 加密
+const encrypted = await openpgp.encrypt({
+    message: await openpgp.createMessage({ text: '你好，OpenPGP！' }),
+    encryptionKeys: recipientPublicKey,
+    signingKeys: senderPrivateKey,    // 同时签名
+});
+
+// 解密并验证签名
+const { data, signatures } = await openpgp.decrypt({
+    message: await openpgp.readMessage({ armoredMessage: encrypted }),
+    decryptionKeys: recipientPrivateKey,
+    verificationKeys: senderPublicKey, // 验证签名
+});
+
+// 检查签名有效性
+await signatures[0].verified; // ✅ 签名有效则 resolve，否则 reject
+```
+
+#### 如何选择
+
+| 场景 | 推荐库 |
+|------|-------|
+| Java / Android 后端 | Bouncy Castle `bcpg` |
+| 系统工具 / Rust 项目 | Sequoia-PGP |
+| 浏览器端加密 / Node.js | `OpenPGP.js` |
+| 命令行日常使用 | `gpg`（GnuPG）或 `sq`（Sequoia） |
+| 需要最广泛生态兼容性 | `gpg`（GnuPG，最成熟） |
+
+⚠️ 无论选择哪个库，核心的密码学原语（`RSA`、`ECDH`、`AES-256`、`SHA-256`）都是相同的——`OpenPGP` 的互操作性保证了不同实现生成的密文可以互相解密。选择库的重点在于**语言生态、API 易用性和安全维护状态**，而非密码学能力的差异。
 
 ## 常见问题与陷阱
 
@@ -508,3 +913,15 @@ $$\text{MDC} = \text{SHA-1}(prefix || plaintext)$$
 ### `ArmoredOutputStream.close()` 不关闭底层流
 
 `ArmoredOutputStream.close()` 的作用是触发 CRC 校验和的写入，而不是关闭底层流。这意味着你可以在同一个底层流上连续写入多个 PGP 数据块。反过来，如果你忘记调用 `close()`，输出的 Armored 数据将缺少尾部校验和，导致解析失败。
+
+## 参考来源（本笔记增强部分）
+
+- David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11 — "Securing communications"
+- 章节文本：会话工作区 `files/rwc-chapters/ch11.txt`
+- RFC 4880 — *OpenPGP Message Format* (2007)
+- RFC 9580 — *OpenPGP* (2024 草案，Sequoia-PGP 早期支持)
+- SKS 污染攻击分析：Robert J. Hansen, "SKS Keyserver Network Under Attack" (2019)
+- Certificate Transparency：[https://certificate.transparency.dev](https://certificate.transparency.dev)
+- WKD 规范：[https://wiki.gnupg.org/WKD](https://wiki.gnupg.org/WKD)
+- Sequoia-PGP 项目：[https://sequoia-pgp.org](https://sequoia-pgp.org)
+- OpenPGP.js 项目：[https://openpgpjs.org](https://openpgpjs.org)

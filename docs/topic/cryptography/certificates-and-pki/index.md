@@ -764,6 +764,274 @@ graph TD
     class V1,V2,V3 check
 ```
 
+## PKI 生态系统：现实中的挑战与防御
+
+> 本节内容来源于 David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 9: Secure transport
+
+### 证书透明度（Certificate Transparency）：谁来监督 CA？
+
+你已经知道 PKI 的安全性建立在"信任 CA"这一假设上（见「PKI 信任模型的根本假设与风险」）。但如果 CA 本身作恶——故意签发攻击者为 `google.com` 申请的证书——你的浏览器无法察觉。2011 年的 DigiNotar 事件正是如此。
+
+问题的本质是：**谁来监督 CA？**
+
+`CT`（Certificate Transparency，证书透明度）是 Google 在 2012 年提出的答案。它的核心思想是：**强制 CA 将每一张签发的证书写入公开的 CT Log（证书日志）**。任何人都可以查询这些日志，发现异常签发。
+
+```mermaid
+sequenceDiagram
+    participant CA as 证书颁发机构（CA）
+    participant Log as CT Log 服务器
+    participant Browser as 浏览器
+    participant Monitor as 域名监控方（你）
+
+    CA->>Log: 提交预证书（PreCertificate）
+    Log-->>CA: 签名证书时间戳（SCT）
+    CA->>Browser: 正式证书（内嵌 SCT）
+    Browser->>Browser: 验证 SCT 签名有效
+    Monitor->>Log: 持续轮询日志条目
+    Log-->>Monitor: 返回证书列表
+    Monitor-->>Monitor: 发现非预期证书 → 立即告警
+```
+
+**SCT（Signed Certificate Timestamp，签名证书时间戳）** 是 CT Log 给出的"收条"——Log 服务器用自己的私钥签名，证明"该证书已于 T 时刻被记录"。浏览器（如 Chrome）要求服务器证书必须内嵌至少两个来自不同 Log 的 SCT，否则拒绝连接。
+
+| CT 机制 | 说明 |
+|---------|------|
+| CT Log 服务器 | Merkle 树结构，只能追加（append-only），历史记录不可篡改 |
+| SCT 内嵌 | 证书内嵌（推荐）/ TLS 扩展传递 / OCSP Stapling 携带 |
+| 监控工具 | crt.sh、Google CT Monitor、Facebook CT Monitor |
+
+⚠️ `CT` 是**事后发现**机制，不是事前阻止。它依赖域名持有者主动监控日志。如果攻击者拿到了伪造证书并在你发现之前完成攻击，CT 来不及阻止——但它缩短了攻击窗口，并为事后取证提供了证据。
+
+💡 **实践建议**：将自己的域名注册到 [crt.sh](https://crt.sh) 或 [Cert Spotter](https://sslmate.com/certspotter/) 的监控服务，一旦有非预期证书被签发，立即收到邮件告警。
+
+### OCSP Stapling：如何高效验证吊销？
+
+上一节介绍了 `CRL` 和 `OCSP` 的基本原理，以及 `OCSP Stapling` 的隐私改进。这里从**部署决策**角度做一次三方横评：
+
+| 维度 | CRL | OCSP | OCSP Stapling |
+|------|-----|------|---------------|
+| 实时性 | ❌ 低（更新间隔数小时到天） | ✅ 高（实时查询） | 🔶 中（服务器定期缓存，通常 1 小时内） |
+| 客户端隐私 | ✅ 好（批量下载，CA 不知道谁在查） | ❌ 差（CA 知道你在访问哪个网站） | ✅ 好（客户端不直接联系 CA） |
+| 网络延迟 | ❌ 高（证书列表可能数百 KB 到 MB） | ❌ 额外 RTT | ✅ 低（随 TLS 握手一并传输） |
+| CA 可用性依赖 | 低（下载后离线验证） | 高（CA 必须在线，超时常被忽略） | 低（服务器代为缓存，CA 短暂宕机无影响） |
+| 失败行为 | Soft-fail（大多浏览器忽略下载失败） | Soft-fail | Soft-fail（服务器不 staple 时回退到 OCSP） |
+| 适用场景 | 小型私有 PKI、内网证书管理 | 历史遗留系统 | **现代公网 HTTPS 服务器（推荐）** |
+
+💡 **类比**：三种方案分别是"定期出版的黑名单报纸"（CRL）、"随时可拨打的查号热线"（OCSP）、"前台提前查好并贴在门口"（OCSP Stapling）。Stapling 在保证实时性的同时，把查询成本从客户端转移到了服务器，也顺带保护了用户隐私。
+
+**在 Nginx 中启用 OCSP Stapling**：
+
+``` nginx title="nginx.conf：启用 OCSP Stapling"
+server {
+    ssl_stapling on;                            # 启用 stapling
+    ssl_stapling_verify on;                     # 验证 stapled 响应
+    ssl_trusted_certificate /path/to/chain.pem; # CA 链（验证 OCSP 签名）
+    resolver 8.8.8.8 valid=300s;               # DNS 解析 OCSP 服务器地址
+}
+```
+
+### Let's Encrypt 与 ACME 协议
+
+过去，获取一张受信任的 TLS 证书需要手动向 CA 提交申请、等待审核、支付费用——整个过程可能耗费数天。这使得很多小网站选择不启用 HTTPS，或者使用自签名证书（浏览器会弹出安全警告）。
+
+`Let's Encrypt` 在 2015 年改变了这一局面：它是第一个免费、自动化的公共 CA，核心是 `ACME`（Automatic Certificate Management Environment）协议（RFC 8555）。
+
+**ACME 的核心思路**：你想要一张 `example.com` 的证书，CA 需要确认你确实控制了 `example.com`。ACME 通过**挑战（challenge）**机制来完成域名所有权验证：
+
+```mermaid
+sequenceDiagram
+    participant Client as 你的服务器（Certbot）
+    participant ACME as Let's Encrypt ACME 服务器
+    participant DNS as DNS / HTTP
+
+    Client->>ACME: 申请证书（域名 + 公钥）
+    ACME-->>Client: 颁发挑战（challenge token）
+    alt HTTP-01 挑战
+        Client->>DNS: 在 /.well-known/acme-challenge/<token> 放置验证文件
+        ACME->>DNS: GET http://example.com/.well-known/acme-challenge/<token>
+    else DNS-01 挑战
+        Client->>DNS: 创建 TXT 记录 _acme-challenge.example.com = <token>
+        ACME->>DNS: 查询 DNS TXT 记录
+    end
+    ACME-->>Client: 验证通过，签发证书（90 天有效期）
+    Client->>Client: 配置 TLS，自动续期
+```
+
+**三种主要挑战类型**：
+
+| 挑战类型 | 验证方式 | 适用场景 |
+|---------|---------|---------|
+| `HTTP-01` | 在指定 URL 放置 token 文件 | 有 80 端口访问权限的 Web 服务器 |
+| `DNS-01` | 创建 DNS TXT 记录 | 通配符证书（`*.example.com`）、内网服务器 |
+| `TLS-ALPN-01` | 通过 TLS 443 端口响应特殊握手 | 只有 443 端口开放的场景 |
+
+⚠️ Let's Encrypt 只颁发 `DV`（Domain Validated，域名验证）证书——只验证你控制该域名，不验证组织身份。如果需要展示组织名称（如银行、政府网站），应使用 OV（组织验证）或 EV（扩展验证）证书，这类证书需要人工审核。
+
+💡 **实际使用**：
+
+``` bash title="使用 Certbot 自动获取并续期证书"
+# 安装 certbot 并一键获取证书（自动配置 Nginx）
+certbot --nginx -d example.com -d www.example.com
+
+# 测试自动续期（Let's Encrypt 证书有效期 90 天，建议 60 天续期）
+certbot renew --dry-run
+```
+
+### 自签名证书 vs 私有 CA：内网部署最佳实践
+
+当你在内网部署服务时——微服务间 mTLS、企业内部 API 网关、开发环境——你有两个选择：**自签名证书**或**搭建私有 CA**。
+
+**为什么自签名证书在内网不够用？**
+
+自签名证书的问题不是"安全性差"，而是**分发和信任管理麻烦**：每台需要验证该证书的服务器都必须单独导入这张证书作为信任锚。10 个服务需要 10 次导入，100 个服务需要 100 次——而且一旦证书需要更换（比如密钥泄露），你需要在所有服务器上逐一更新。
+
+**私有 CA 的优势**：只需要把**根 CA 证书**导入一次，之后 CA 签发的所有证书都自动受信任。证书轮换只需要重新签发，无需动信任配置。
+
+``` java title="使用 Bouncy Castle 建立私有 CA 并签发服务器证书"
+// ===== 第一步：创建根 CA =====
+KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", "BC");
+kpg.initialize(4096);
+KeyPair rootKeyPair = kpg.generateKeyPair();
+
+X500NameBuilder rootNameBuilder = new X500NameBuilder(BCStyle.INSTANCE);
+rootNameBuilder.addRDN(BCStyle.CN, "My Private Root CA");
+rootNameBuilder.addRDN(BCStyle.O, "My Organization");
+X500Name rootName = rootNameBuilder.build();
+
+Date notBefore = new Date(System.currentTimeMillis() - 24 * 3600 * 1000L);
+Date notAfter  = new Date(System.currentTimeMillis() + 10 * 365L * 24 * 3600 * 1000); // 10 年
+
+// V1 自签名根证书（信任锚）
+JcaX509v1CertificateBuilder rootBuilder = new JcaX509v1CertificateBuilder(
+        rootName, BigInteger.ONE, notBefore, notAfter, rootName, rootKeyPair.getPublic());
+
+ContentSigner rootSigner = new JcaContentSignerBuilder("SHA256WithRSA")
+        .setProvider("BC").build(rootKeyPair.getPrivate());
+X509Certificate rootCert = new JcaX509CertificateConverter()
+        .setProvider("BC").getCertificate(rootBuilder.build(rootSigner));
+
+// ===== 第二步：签发服务器证书 =====
+KeyPair serverKeyPair = kpg.generateKeyPair();
+X500Name serverName = new X500NameBuilder(BCStyle.INSTANCE)
+        .addRDN(BCStyle.CN, "api.internal.example.com").build();
+
+Date serverNotAfter = new Date(System.currentTimeMillis() + 365L * 24 * 3600 * 1000); // 1 年
+
+JcaX509v3CertificateBuilder serverBuilder = new JcaX509v3CertificateBuilder(
+        rootName,                      // 签发者 = 根 CA
+        BigInteger.valueOf(100),
+        notBefore, serverNotAfter,
+        serverName,                    // 主体 = 服务器
+        serverKeyPair.getPublic()
+);
+
+JcaX509ExtensionUtils eu = new JcaX509ExtensionUtils();
+serverBuilder.addExtension(Extension.subjectKeyIdentifier, false,
+        eu.createSubjectKeyIdentifier(serverKeyPair.getPublic()));
+serverBuilder.addExtension(Extension.authorityKeyIdentifier, false,
+        eu.createAuthorityKeyIdentifier(rootCert));
+// CA=false：服务器证书不能再签发证书
+serverBuilder.addExtension(Extension.basicConstraints, true, new BasicConstraints(false));
+serverBuilder.addExtension(Extension.keyUsage, true,
+        new KeyUsage(KeyUsage.digitalSignature | KeyUsage.keyEncipherment));
+// SAN：绑定域名（CN 已被现代 TLS 忽略，SAN 是主要标识）
+serverBuilder.addExtension(Extension.subjectAlternativeName, false,
+        new GeneralNames(new GeneralName(GeneralName.dNSName, "api.internal.example.com")));
+
+X509Certificate serverCert = new JcaX509CertificateConverter()
+        .setProvider("BC").getCertificate(serverBuilder.build(rootSigner));
+```
+
+**选型建议**：
+
+| 场景 | 推荐方案 | 原因 |
+|------|---------|------|
+| 单台开发机自测 | 自签名 | 快速，无需维护 CA |
+| 内网多服务 mTLS | 私有 CA | 统一信任锚，证书轮换便捷 |
+| 生产公网服务 | Let's Encrypt / 商业 CA | 浏览器内置信任，无需手动分发 |
+| 企业设备管理 | 私有 CA + MDM 推送根证书 | 通过 MDM 统一部署信任锚 |
+
+### 证书钉扎（Certificate Pinning）：移动端与风险
+
+即使你完整实现了证书路径验证，仍然面临一个威胁：**恶意或被攻破的 CA 签发了针对你域名的伪造证书**。浏览器的证书路径验证会放行这张证书，因为它来自一个"受信任"的 CA。
+
+这正是**证书钉扎（Certificate Pinning）**要解决的问题——不信任"任意受信任 CA 签发的证书"，而是**只信任预先硬编码在客户端的特定证书或公钥**。
+
+**两种钉扎粒度**：
+
+| 类型 | 钉什么 | 灵活度 | 安全强度 |
+|------|--------|--------|---------|
+| 证书钉扎 | 具体证书（或其哈希） | 低（证书更换即失效） | 高 |
+| 公钥钉扎 | 公钥（或其哈希） | 高（可以更换证书但保留公钥） | 高 |
+
+公钥钉扎通常更实用——你可以事先生成好长期密钥对，用它签发多张不同有效期的证书，客户端只关心公钥不变。
+
+**Android 实现（Network Security Config）**：
+
+``` xml title="res/xml/network_security_config.xml（Android 公钥钉扎）"
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config>
+        <domain includeSubdomains="true">api.example.com</domain>
+        <pin-set expiration="2026-01-01">
+            <!-- 主钉扎公钥（SHA-256 Base64） -->
+            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
+            <!-- 备份钉扎公钥（防止主钥丢失导致无法访问） -->
+            <pin digest="SHA-256">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
+```
+
+``` java title="提取证书公钥哈希（用于生成 pin 值）"
+// 从服务器证书中提取公钥的 SHA-256 哈希（即 SPKI fingerprint）
+MessageDigest digest = MessageDigest.getInstance("SHA-256");
+byte[] spkiHash = digest.digest(
+        serverCert.getPublicKey().getEncoded()  // SubjectPublicKeyInfo DER 编码
+);
+String pin = Base64.getEncoder().encodeToString(spkiHash);
+System.out.println("公钥钉扎值: " + pin);
+```
+
+⚠️ **证书钉扎的核心风险——更新困难**
+
+钉扎是把"双刃剑"。一旦钉扎了某个公钥，更换证书时**客户端必须同步更新**，否则连接会直接断开，用户看到的是"无法连接"，与服务器宕机表现一样。2017 年，Google Chrome 移除了对公共网站的 HPKP（HTTP Public Key Pinning）支持，主要原因就是：
+
+- 运维失误（忘记更新钉扎值）造成大量用户被永久锁定
+- 攻击者可以通过注入恶意钉扎值发起 DoS 攻击
+
+**现代建议**：
+
+- 移动 App（你完全控制客户端版本）：可以使用钉扎，但**必须有备份钉扎**，并在证书轮换前发布新版本
+- 公网 Web 服务：不推荐 HTTP 层钉扎；改用 `CT` 监控 + 快速吊销代替
+- 企业内网：结合私有 CA + mTLS，天然不依赖公共 CA，不需要额外钉扎
+
+```mermaid
+graph TD
+    Q["是否完全控制所有客户端版本？"]
+    Y1["是（移动 App / 企业客户端）"]
+    Y2["否（公网浏览器）"]
+    P1["可使用公钥钉扎<br/>⚠️ 必须有备份钉扎 + 提前发版"]
+    P2["使用 CT 监控 + OCSP Stapling<br/>不推荐钉扎"]
+
+    Q -->|"是"| Y1
+    Q -->|"否"| Y2
+    Y1 --> P1
+    Y2 --> P2
+
+    classDef question fill:transparent,stroke:#0288d1,color:#adbac7,stroke-width:2px
+    classDef yes fill:transparent,stroke:#388e3c,color:#adbac7,stroke-width:1px
+    classDef no fill:transparent,stroke:#f57c00,color:#adbac7,stroke-width:1px
+    class Q question
+    class Y1,P1 yes
+    class Y2,P2 no
+```
+
+## 参考来源（本笔记增强部分）
+
+- David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 9: Secure transport
+- 章节文本：会话工作区 `files/rwc-chapters/ch09.txt`
+
 ## 小结
 
 本文从公钥分发的中间人攻击问题出发，介绍了 X.509 证书如何通过 CA 签名担保将公钥与身份绑定。核心知识点回顾：
