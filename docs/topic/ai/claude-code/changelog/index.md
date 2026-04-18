@@ -15,6 +15,67 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.114（2026-04-17）
+
+### 🐛 修复
+
+- 修复 Agent Teams 队友请求工具权限时权限对话框崩溃
+
+---
+
+## 📦 2.1.113（2026-04-17）
+
+> 📝 **笔记定位**：[原生二进制 / Windows 特性](../platforms/index.md#-终端-cli) · [Remote Control 扩展](../automation/index.md#remote-control-命令扩展) · [`/loop` & `/ultrareview`](../automation/index.md#loop云端定时任务) · [Subagent 卡死处理](../sub-agents/index.md) · [Sandbox 安全收紧](../configuration/index.md#-配置层级与优先级) · [MCP 并发与 ToolSearch](../mcp/index.md#动态工具更新) · [插件依赖冲突](../plugins/index.md#插件错误处理与诊断) · [长上下文恢复 compact](../context-engineering/index.md) · [终端快捷键](../how-it-works/index.md#-终端界面与快捷键)
+
+### ✨ 新功能
+
+- **原生二进制分发**：CLI 现在通过每平台可选依赖生成原生 Claude Code 二进制，而非 bundled JavaScript
+- **`sandbox.network.deniedDomains` 设置**：即使更广泛的 `allowedDomains` 通配符允许时，仍可阻止特定域名
+
+### 🔧 改进
+
+- **Fullscreen Shift+↑/↓ 滚动**：扩展选择超出可视边缘时滚动视口
+- **`Ctrl+A` / `Ctrl+E` readline 行为**：在多行输入中移到当前逻辑行的开头/结尾
+- **Windows `Ctrl+Backspace`**：删除前一个单词
+- **长 URL 跨行换行可点击**：在支持 OSC 8 hyperlinks 的终端中保持可点击
+- **`/loop` 改进**：Esc 取消待执行唤醒，唤醒显示为 "Claude resuming /loop wakeup"
+- **`/extra-usage` Remote Control 支持**：现在可在移动/Web 客户端使用
+- **Remote Control `@`-file 自动补全**：客户端可查询 `@`-file 补全建议
+- **`/ultrareview` 改进**：并行检查更快启动、启动对话框显示 diffstat、启动状态动画化
+- **Subagent 卡死检测**：mid-stream 卡死的 subagent 在 10 分钟后明确报错而非静默挂起
+- **Bash 多行注释命令**：首行为注释的多行命令现在在 transcript 中显示完整命令，关闭 UI 欺骗向量
+- **`cd <current-dir> && git …`**：当 `cd` 是 no-op 时不再触发权限提示
+- **macOS 安全加固**：`/private/{etc,var,tmp,home}` 路径在 `Bash(rm:*)` allow 规则下视为危险删除目标
+- **Bash deny 规则匹配 wrappers**：现在匹配被 `env`/`sudo`/`watch`/`ionice`/`setsid` 等 exec wrapper 包裹的命令
+- **`Bash(find:*)` 安全收紧**：allow 规则不再自动批准 `find -exec` / `-delete`
+
+### 🐛 修复
+
+- 修复 MCP 并发调用超时处理（一个工具调用的消息可能默默撤销另一个调用的看门狗）
+- 修复 Cmd-backspace / `Ctrl+U` 重新支持从光标删除到行首
+- 修复 markdown 表格在单元格包含含管道字符的行内代码 span 时断裂
+- 修复 session recap 在编写未发送的 prompt 文本时自动触发
+- 修复 `/copy` "Full response" 未为粘贴到 GitHub/Notion/Slack 对齐 markdown 表格列
+- 修复在查看运行中的 subagent 时输入的消息被隐藏并误归属于父 AI
+- 修复 Bash `dangerouslyDisableSandbox` 在 sandbox 外运行命令时未触发权限提示
+- 修复 `/effort auto` 确认信息（现在显示 "Effort level set to max" 与状态栏一致）
+- 修复"已复制 N 字符"提示对 emoji 等多 code-unit 字符过度计数
+- 修复 `/insights` 在 Windows 上以 `EBUSY` 崩溃
+- 修复退出确认对话框将一次性计划任务误标为重复任务（现显示倒计时）
+- 修复 fullscreen 模式下斜杠/@ 补全菜单未紧贴 prompt 边框
+- 修复 `CLAUDE_CODE_EXTRA_BODY` `output_config.effort` 在 subagent 调用不支持 effort 的模型和 Vertex AI 上引发 400 错误
+- 修复 `NO_COLOR` 设置时 prompt 光标消失
+- 修复 `ToolSearch` 排名（粘贴的 MCP 工具名现在返回实际工具而非描述匹配的兄弟工具）
+- 修复 compact 已恢复的长上下文会话失败（"Extra usage is required for long context requests"）
+- 修复 `plugin install` 在依赖版本与已安装插件冲突时仍成功——现在报告 `range-conflict`
+- 修复 "Refine with Ultraplan" 未在 transcript 显示远程会话 URL
+- 修复 SDK 图像内容块处理失败时崩溃会话（现在降级为文本占位符）
+- 修复 Remote Control 会话不流式传输 subagent transcripts
+- 修复 Remote Control 会话在 Claude Code 退出时未归档
+- 修复通过 Bedrock Application Inference Profile ARN 使用 Opus 4.7 时 `thinking.type.enabled is not supported` 400 错误
+
+---
+
 ## 📦 2.1.112（2026-04-16）
 
 ### 🐛 修复

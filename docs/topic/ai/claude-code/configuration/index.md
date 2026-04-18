@@ -55,6 +55,22 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 
 当多个层级对同一个配置项设置了不同的值时，**高优先级覆盖低优先级**。但有一个重要的例外：**权限规则（permissions）是追加的，不是覆盖的**。所有层级的 `allow` 规则会合并，而 `deny` 规则会从最严格的层级生效。v2.1.0 新增了通配符权限匹配（如 `Bash(npm *)`、`Bash(* install)`），让权限规则更灵活。
 
+!!! warning "v2.1.113 安全收紧"
+
+    从 v2.1.113 起，权限引擎对常见绕过手法做了关键收紧——这些是真实存在过的安全漏洞：
+
+    - **`deny` 规则匹配 exec wrapper**：`Bash(rm:*)` 等 deny 规则现在会匹配被 `env`、`sudo`、`watch`、`ionice`、`setsid` 等 wrapper 包裹的命令，不能再通过 `sudo rm ...` 绕过
+    - **`Bash(find:*)` allow 不再放行 `-exec` / `-delete`**：避免攻击者用 `find . -exec rm {} \;` 绕过 `Bash(rm:*)` 限制
+    - **macOS `/private/{etc,var,tmp,home}` 视为危险删除目标**：在 `Bash(rm:*)` allow 规则下，删除这些路径会触发危险确认（macOS 上 `/etc` 实际指向 `/private/etc`）
+    - **`dangerouslyDisableSandbox` 强制提示**：使用此参数运行命令时不再绕过权限提示（v2.1.113 修复）
+    - **多行注释命令完整显示**：第一行是注释的多行 Bash 命令现在在 transcript 中显示完整命令，关闭 UI 欺骗向量（v2.1.113 修复）
+
+    如果你之前依赖这些"漏洞"做某些自动化，升级后需要显式调整 `allow` 规则。
+
+!!! tip "新增 sandbox 网络黑名单"
+
+    v2.1.113 新增 `sandbox.network.deniedDomains` 设置——即使更广泛的 `allowedDomains` 通配符允许，仍可阻止特定域名。适合"允许 `*.example.com` 但禁止 `internal.example.com`"这类场景。
+
 ## ✅ 配置最佳实践
 
 ### 推荐的项目级配置

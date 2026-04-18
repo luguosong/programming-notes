@@ -15,6 +15,41 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.32（2026-04-17）
+
+> 📝 **笔记定位**：[实用标志](../modes/index.md#实用标志) · [远程会话控制](../modes/index.md#-远程会话控制) · [Plan 模式](../modes/index.md#-plan-模式) · [斜杠命令](../basic/index.md#-常用斜杠命令速查) · [恢复会话](../context/index.md#恢复会话) · [Skill 管理](../skills/index.md#-skill-管理命令) · [智能规划](../workflows/index.md#-智能规划从-issue-到实现蓝图)
+
+### ✨ 新功能
+
+- **`auto` 模型选择**：选择 `auto` 让 Copilot 自动为每个会话挑选最佳可用模型
+- **`--print-debug-info` 标志**：显示版本、终端能力和环境变量
+- **使用配额警告**：接近每周 75% 和 90% 配额时显示警告
+- **文档文件附加到 prompt**：可附加支持的文档文件给 Agent 阅读并推理
+- **`--connect` 标志**：通过会话 ID 直接连接到远程会话
+- **短会话 ID 前缀**：`--resume` 和 `/resume` 支持短前缀（7+ 十六进制字符）替代完整 ID
+
+### 🔧 改进
+
+- 限流会话现在暂停队列消息并自动重试，而非直接丢弃
+- 终端调整大小时表格渲染保持正确列宽、emoji 支持和稳定边框
+- 限流错误信息根据具体限流类型显示上下文
+- 新增 `--session-idle-timeout` 配置会话空闲超时（默认禁用）
+- 超过 token 限制的 skill 仍可通过名称发现和调用
+- `/feedback` 在工作目录不可写时将 bundle 保存到 TEMP
+- Agent 上下文中的当前日期时间现在包含本地时区偏移
+- Agent 思考时终端进度指示器保持可见
+
+### 🐛 修复
+
+- `copilot login --host` 现在正确认证 GitHub Enterprise Cloud (GHE) 实例
+- `/clear` 后状态栏不再在 Neovim 等终端中显示游离 Unicode 字形
+- `/cd` 切换目录后 Rewind 正常工作
+- 使用 `/plan` 和 plan 模式时保留多行输入
+- Backspace 仅在输入为空时才退出 shell 模式
+- `/ask` 对话框中鼠标滚轮滚动正常工作
+
+---
+
 ## 📦 1.0.31（2026-04-16）
 
 ### 🐛 修复

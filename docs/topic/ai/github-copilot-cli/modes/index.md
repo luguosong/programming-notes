@@ -86,6 +86,8 @@ Allow? [Y/n]
 
     按 ++ctrl+y++ 可在默认编辑器中查看和编辑计划的 Markdown 文件。你可以删除不需要的步骤、调整优先级或添加细节，Copilot 会按修改后的计划执行。
 
+    在 plan 模式下输入多行 prompt 时，多行内容现在会被完整保留（1.0.32 修复），不再被截断。
+
 ### 审批后的选项
 
 计划生成后，你可以选择：
@@ -194,7 +196,10 @@ copilot -p "审查 @src/api.py 的安全性" > review.md
 | `--yolo` | 同 `--allow-all`，跳过所有确认 |
 | `--agent <name>` | 指定使用的 Agent |
 | `--reasoning-effort <level>` | 设置推理努力级别（1.0.4 新增），简写 `--effort` |
-| `--model <model>` | 指定使用的模型，如 `claude-opus-4.7`（1.0.29 新增 Claude Opus 4.7 支持） |
+| `--model <model>` | 指定使用的模型，如 `claude-opus-4.7`（1.0.29 新增 Claude Opus 4.7 支持）；选 `auto` 让 Copilot 自动挑选最佳模型（1.0.32 新增） |
+| `--connect <session-id>` | 直接连接到指定的远程会话（1.0.32 新增） |
+| `--print-debug-info` | 打印版本、终端能力和环境变量，便于排障（1.0.32 新增） |
+| `--session-idle-timeout <秒>` | 配置会话空闲超时（默认禁用，1.0.32 新增） |
 
 ---
 
@@ -231,7 +236,7 @@ copilot --remote
 /remote
 ```
 
-你也可以在 `--resume` 会话选择器中直接连接到远程控制会话（1.0.28 新增），无需手动输入命令。
+你也可以在 `--resume` 会话选择器中直接连接到远程控制会话（1.0.28 新增），无需手动输入命令。如果你已经知道远程会话 ID，可以用 `copilot --connect <session-id>` 直接连接（1.0.32 新增），跳过选择器。
 
 与 `/delegate` 的区别：`/delegate` 把任务推送到 GitHub 云端代理；`--remote`/`/remote` 是连接到你自己机器上正在运行的会话，适合在多设备间切换工作环境。
 

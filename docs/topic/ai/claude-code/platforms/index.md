@@ -115,7 +115,12 @@ npm install -g @anthropic-ai/claude-code
 Claude Code 在 Windows 上持续改进，以下是近期值得关注的平台增强：
 
 - **PowerShell Tool**：新增原生的 PowerShell 工具（v2.1.111 新增，逐步推出），通过 `CLAUDE_CODE_USE_POWERSHELL_TOOL` 环境变量选择加入。启用后 Claude 可以直接在 PowerShell 中执行命令，无需 Bash 适配层，PowerShell 原生命令和管道语法都能原生使用
+- **`Ctrl+Backspace` 删除单词**：Windows 终端中 `Ctrl+Backspace` 现在会删除前一个单词（v2.1.113 新增），与其他平台行为一致
 - **macOS Terminal.app 渲染修复**：修复了在不支持同步输出的终端（如 macOS Terminal.app）中启动时出现的渲染乱码问题（v2.1.110 修复）
+
+!!! info "原生二进制分发"
+
+    从 v2.1.113 起，Claude Code CLI 会通过每平台可选依赖生成**原生二进制**，而非 bundled JavaScript。启动更快、内存占用更低。如果你之前通过 `npm install -g` 安装，新版本会自动切换到对应平台的原生二进制。
 
 ### 核心特性
 

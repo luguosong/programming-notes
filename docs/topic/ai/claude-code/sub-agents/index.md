@@ -414,4 +414,8 @@ model: inherit
 
 v2.0.60 新增 Background Agents，支持后台运行并发送消息唤醒主 Agent。v2.1.0 进一步新增了 `Task(AgentName)` 语法用于禁用特定 Agent，以及 Ctrl+B 统一后台化操作。v2.1.83 为 Agent 定义新增了 `initialPrompt` 字段，支持自动提交首轮对话。
 
+!!! warning "卡死的 Subagent 会自动失败"
+
+    从 v2.1.113 起，Subagent 在 mid-stream 卡死超过 10 分钟后会**明确报错**而非静默挂起，避免你长时间等待一个永远不会回来的子任务。如果你查看一个正在运行的 subagent 时输入消息，消息现在会正确归属于这个 subagent，不会被误送给父 AI（v2.1.113 修复）。Agent Teams 队友请求工具权限时不再触发权限对话框崩溃（v2.1.114 修复）。
+
 📝 **小结**：本节学习了三个典型的并行工作场景。核心思路是：**Sub-agent 适合「给我结果就行」的任务，Agent Team 适合「你们讨论一下再给我结论」的任务。** 选择哪种方式，取决于你的 Teammate 之间是否需要互相通信。

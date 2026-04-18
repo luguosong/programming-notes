@@ -155,6 +155,10 @@ Skill 指令（SKILL.md 正文）在对话的多个轮次间持久保留（1.0.2
 | `/skills reload <name>` | 重新加载技能（修改后无需重启 CLI） |
 | `/skills remove <dir>` | 移除技能目录 |
 
+!!! tip "超大 Skill 也可调用"
+
+    如果某个 Skill 的内容超过了 token 限制，它仍然会出现在 `/skills list` 中并可以通过名称显式调用（1.0.32 改进），只是不参与自动触发。这避免了大型 Skill 因体积问题被完全屏蔽。
+
 ---
 
 ## 💼 实战示例
