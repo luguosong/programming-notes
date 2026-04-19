@@ -366,7 +366,7 @@ $$\text{CCAadv} \leq \text{CPAadv} + 2 \cdot Q_d \cdot \text{CIadv}$$
 
 | 组合方式 | 做法 | 安全性 |
 |---------|------|--------|
-| **Encrypt-then-MAC** | 先加密，再对密文计算 MAC | ✅ 总是安全 |
+| `Encrypt-then-MAC` | 先加密，再对密文计算 MAC | ✅ 总是安全 |
 | MAC-then-Encrypt | 先计算 MAC，再一起加密 | ⚠️ 不一定安全 |
 | Encrypt-and-MAC | 同时独立加密和计算 MAC | ⚠️ 不一定安全 |
 
@@ -410,7 +410,7 @@ $$\text{CIadv}[A, E_\text{EtM}] = \text{MACadv}[B, I]$$
 
 EtM 的三个常见实现错误：(1) 加密和 MAC 使用相同密钥；(2) MAC 未覆盖 IV；(3) 在验证 MAC 之前就输出了部分明文。第三个错误最危险——一旦明文泄露，即使后来发现 MAC 不匹配，信息已经丢失了。
 
-当认证加密还支持「关联数据（Associated Data）」时，它就被称为 **AEAD**（Authenticated Encryption with Associated Data）。关联数据不加密，但参与认证标签的计算——适合放协议头、文件名等不需要保密但不能被篡改的元数据。
+当认证加密还支持「关联数据（Associated Data）」时，它就被称为 `AEAD`（Authenticated Encryption with Associated Data）。关联数据不加密，但参与认证标签的计算——适合放协议头、文件名等不需要保密但不能被篡改的元数据。
 
 ### 为什么 GCM 成为现代标准
 
@@ -623,8 +623,8 @@ byte[] cipherText = cipher.doFinal("hello, world!".getBytes());
 
 NIST SP 800-38F 定义了基于 AES 的密钥包装算法：
 
-- **AESKW**：基本密钥包装，输入必须是半块大小的整数倍（AES 为 8 字节的倍数）
-- **AESKWP**：带填充的密钥包装，无对齐限制
+- `AESKW`：基本密钥包装，输入必须是半块大小的整数倍（AES 为 8 字节的倍数）
+- `AESKWP`：带填充的密钥包装，无对齐限制
 
 ``` java title="AES 密钥包装示例"
 SecretKey aesKey = KeyGenerator.getInstance("AES").generateKey();

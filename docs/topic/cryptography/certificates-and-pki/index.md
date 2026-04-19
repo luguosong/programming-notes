@@ -138,7 +138,7 @@ Certificate ::= SEQUENCE {
 }
 ```
 
-其中 **TBSCertificate**（TBS = To Be Signed，待签名）包含了证书的所有信息——主体名称、签发者名称、有效期、公钥、扩展等。证书的数字签名就是 CA 对 TBSCertificate 的 DER 编码计算得到的。
+其中 `TBSCertificate`（TBS = To Be Signed，待签名）包含了证书的所有信息——主体名称、签发者名称、有效期、公钥、扩展等。证书的数字签名就是 CA 对 TBSCertificate 的 DER 编码计算得到的。
 
 TBSCertificate 中的关键字段：
 
@@ -1039,6 +1039,6 @@ graph TD
 - **X.500 DN** 是证书的身份标识，由多个属性（CN/O/C 等）组成
 - **V1 证书**无扩展，仅用作信任锚；**V3 证书**通过扩展控制用途
 - **关键扩展**：BasicConstraints（CA 标识）、KeyUsage（密码学用途）、SKI/AKI（签发链）
-- **CRL** 定期发布完整吊销列表，适合吊销量小的场景
-- **OCSP** 实时查询单张证书状态，适合大量短期证书；OCSP Stapling 保护隐私
-- **CertPathValidator** 执行 PKIX 路径验证，确保整条链路可信
+- `CRL` 定期发布完整吊销列表，适合吊销量小的场景
+- `OCSP` 实时查询单张证书状态，适合大量短期证书；OCSP Stapling 保护隐私
+- `CertPathValidator` 执行 PKIX 路径验证，确保整条链路可信
