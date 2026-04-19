@@ -11,7 +11,7 @@ title: Java 密码学架构
 - 为什么 `SecureRandom` 的质量比你想的更重要
 - 「安全位数」的含义以及如何为应用选择合适强度的算法
 
-## 为什么 Java 需要密码学框架？
+## 🤔 为什么 Java 需要密码学框架？
 
 假设你正在开发一个需要加密数据的应用。面对几十种加密算法（AES、RSA、ECDSA……）、每种算法又有多种模式（CBC、GCM、CTR……），如果每个厂商的加密库都提供完全不同的 API，你的代码将变成厂商锁定（vendor lock-in）的重灾区——换一家厂商，整个加密层就要重写。
 
@@ -48,7 +48,7 @@ JCA 通过标准化接口，让开发者只能使用已知算法名称（如 `"A
 
 在 JCA 体系中，选择高层抽象（直接使用 `AES/GCM/NoPadding` 的 AEAD 模式）比手动组合底层原语更安全。`Bouncy Castle` FIPS API 和 Google Tink 等库更进一步，通过接口设计约束（如禁止手动指定 IV）来防止开发者射自己的脚。
 
-## JCA Provider 架构
+## 🧩 JCA Provider 架构
 
 ### 服务类与 SPI
 
@@ -196,7 +196,7 @@ Cipher sm4 = Cipher.getInstance("SM4/CBC/PKCS7Padding", "BC");
 // Cipher fipsAes = Cipher.getInstance("AES/GCM/NoPadding", "BCFIPS");
 ```
 
-## Bouncy Castle 架构
+## 🏰 Bouncy Castle 架构
 
 JDK 内置 Provider 涵盖了常见需求，但当你要用 AES-GCM、EdDSA、SM2/SM3/SM4（国密）等算法时，往往会发现内置支持不够全面。Bouncy Castle（简称 BC）是最广泛使用的第三方密码学 Provider，它几乎实现了你能想到的所有密码学算法。
 
@@ -375,7 +375,7 @@ boolean ok = verifier.verify(sig); // true
 - 算法名称基本兼容，但部分填充名称有差异（`PKCS5Padding` vs `PKCS7Padding`，在 BC 中两者等价）
 - 迁移后运行原有测试套件；若有已有密文/签名需要向后兼容，先做解密/验签回归测试
 
-## 熵与安全位数
+## 🎲 熵与安全位数
 
 ### 为什么随机数质量至关重要
 
@@ -472,7 +472,7 @@ AE 安全的密码等价于一个"理想加密接口"：密文只是一个不透
 
 💡 如果你不确定用哪个模式，就用 `AES/GCM/NoPadding`。它是目前最广泛部署的 AEAD 模式，有硬件加速支持，且 Java 7+ 原生支持。
 
-## 参考来源（本笔记增强部分）
+## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 1 & 16
 - 章节文本：会话工作区 `files/rwc-chapters/ch01.txt`、`ch16.txt`

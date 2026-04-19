@@ -1,6 +1,5 @@
 ---
 title: 用户认证
-icon: material/account-key
 ---
 
 # 用户认证

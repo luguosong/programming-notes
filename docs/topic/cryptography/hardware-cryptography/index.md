@@ -1,6 +1,5 @@
 ---
 title: 硬件密码学
-icon: material/chip
 ---
 
 # 硬件密码学

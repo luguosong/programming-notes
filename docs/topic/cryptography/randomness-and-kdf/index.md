@@ -1,6 +1,5 @@
 ---
 title: 随机数与密钥派生
-icon: material/dice-multiple
 ---
 
 # 随机数与密钥派生
@@ -32,7 +31,7 @@ icon: material/dice-multiple
 
 ---
 
-## 真随机 vs 伪随机
+## 🎯 真随机 vs 伪随机
 
 ### 熵从哪里来
 

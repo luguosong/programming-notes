@@ -15,7 +15,7 @@ title: CMS 与 S/MIME
 - Sign-then-Encrypt 与 Encrypt-then-Sign 两种顺序的安全属性差异，以及 S/MIME 为何选择前者
 - 实现中的常见陷阱：Enveloping 签名验证、S/MIME 规范化、BouncyCastle 依赖
 
-## 为什么需要 CMS？
+## 🤔 为什么需要 CMS？
 
 假设你要给合作伙伴发送一份合同，要求同时满足三个安全属性：**机密性**（只有对方能看）、**完整性**（不能被篡改）、**认证**（证明是你发的）。你可能会想："我先用 AES 加密，再用 RSA 签名，把密文和签名拼在一起发送不就行了？"
 
@@ -55,7 +55,7 @@ graph TD
     E --> E1[加密的对称密钥 + 加密数据]
 ```
 
-## CMS 消息类型
+## 📨 CMS 消息类型
 
 CMS 定义了多种消息类型，最常用的有两个：`SignedData`（签名）和 `EnvelopedData`（加密）。理解这两个类型，就能覆盖绝大多数实际场景。
 
@@ -134,7 +134,7 @@ CMS 定义了四种收件人类型：
 | `kekri`（KEK） | 用对称密钥包装对称密钥 | 已有预共享密钥的场景 |
 | `pwri`（Password） | 用密码 + PBKDF2 派生密钥 | 人工交换密钥的场景 |
 
-## CMS 签名实战
+## ✍️ CMS 签名实战
 
 Java 标准库不直接支持 CMS，需要使用 BouncyCastle 的 `org.bouncycastle.cms` 包。下面通过具体代码演示两种签名模式。
 
@@ -217,7 +217,7 @@ assertTrue(signerInfo.verify(verifier)); // ✅ 签名验证通过
 
 ⚠️ **Enveloping 签名的验证陷阱**：直接从 `byte[]` 构造 `CMSSignedData` 时不保留嵌入内容。必须同时传入 `signedData.getSignedContent()` 才能提取原始数据。
 
-## CMS 加密实战
+## 🔐 CMS 加密实战
 
 ### 密钥传输加密
 
@@ -305,7 +305,7 @@ byte[] decryptedData = recipientInfo.getContent(
 
 ⚠️ 密码加密的密码复杂度非常重要。建议至少 14 个字符（约 112 bit 熵），不要使用简单密码。
 
-## S/MIME——将 CMS 用于邮件
+## 📧 S/MIME——将 CMS 用于邮件
 
 当你理解了 CMS 之后，S/MIME 就很简单了——它只是把 CMS 消息嵌入到 MIME 邮件格式中。
 
@@ -482,7 +482,7 @@ String content = (String) signed.getContent().getContent();
 
 > ⚠️ 注意操作顺序：**发送时先签名后加密**，**接收时先解密后验签**。若顺序搞反，会导致验签失败或无法提取原文。签名者的身份（证书）被加密层包裹，只有收件人解密后才能看到，保护了签名者隐私。
 
-## CMS vs S/MIME vs PGP 对比
+## ⚖️ CMS vs S/MIME vs PGP 对比
 
 你可能听说过 PGP（Pretty Good Privacy），它和 S/MIME 都能实现邮件的签名和加密。它们的关系是什么？
 
@@ -542,7 +542,7 @@ graph TD
 | 高合规要求（金融、政府） | `S/MIME` | `PKI` 合规性，「证书与 PKI」审计链清晰（详见 [证书与 PKI](../certificates-and-pki/)） |
 | 互联网邮件服务（ProtonMail） | `OpenPGP` | 开源、用户可验证端对端加密 |
 
-## 先签名还是先加密？
+## 🔄 先签名还是先加密？
 
 当你需要同时签名和加密一条消息时，操作顺序会显著影响安全性。有两种选择：
 
@@ -602,7 +602,7 @@ EteS 在某些场景下有其独特价值——当**签名需要公开可验证*
 
 但一般来说，如果你需要同时签名和加密，**先签名后加密是更安全的选择**。
 
-## 常见问题与陷阱
+## 🚨 常见问题与陷阱
 
 ### Enveloping 签名验证时提取不到数据
 
@@ -691,7 +691,7 @@ sequenceDiagram
 
 > ⚠️ 即使你升级到 `AES-GCM`，旧版邮件客户端仍可能降级协商使用 `CBC`。**最可靠的短期防御是：在邮件客户端中关闭"自动加载远程内容"设置**。EFAIL 提醒我们：密码学算法本身可能是安全的，但**算法与系统行为的组合**才是真正的攻击面。
 
-## 参考来源（本笔记增强部分）
+## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11
 - 章节文本：会话工作区 `files/rwc-chapters/ch11.txt`

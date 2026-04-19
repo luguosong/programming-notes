@@ -13,7 +13,7 @@ title: 基于密码的密钥生成
 - 密钥分割（Shamir's Secret Sharing）如何将一个密钥安全地分给多人保管
 - 密钥管理最佳实践：轮换策略、安全存储与安全销毁
 
-## 为什么不能直接用密码做密钥？
+## 🤔 为什么不能直接用密码做密钥？
 
 你已经知道，对称加密需要一个高质量的密钥——比如 AES-256 要求 256 位的随机密钥。但现实中，用户输入的密码往往只有 8-12 个字符，大多来自英文字母 + 数字 + 少量符号的组合。
 
@@ -139,7 +139,7 @@ graph LR
 
 更多关于 `SHA-2`、`SHA-3` 的设计原理，见「散列函数与完整性保护」。
 
-## PBKDF2（PKCS#5 Scheme 2）
+## 🔑 PBKDF2（PKCS#5 Scheme 2）
 
 ### PBKDF2 的工作原理
 
@@ -278,7 +278,7 @@ byte[] key = ((KeyParameter) generator
 
 构造函数传入的 `SHA256Digest` 决定了底层 HMAC 使用的哈希算法。`PKCS5PasswordToUTF8Bytes()` 负责将 `char[]` 转为 UTF-8 字节数组——这一点值得注意：不同 KDF 对密码编码的处理方式不同，有些会将字符当作 16 位处理，有些当作 7 位 ASCII，使用非 ASCII 字符时务必确认编码行为。
 
-## SCRYPT
+## 💪 SCRYPT
 
 ### 为什么需要 SCRYPT？
 
@@ -413,7 +413,7 @@ byte[] key = factory.generateSecret(
 | 标准化 | PKCS#5 / NIST SP 800-132 | RFC 7914 |
 | 适用场景 | 兼容性要求高的系统 | 新系统、密码存储 |
 
-## 其他 PBKDF
+## 🔧 其他 PBKDF
 
 ### Argon2：密码哈希的现代标准
 
@@ -557,7 +557,7 @@ java.util.Arrays.fill(keyBytes, (byte) 0);
 
 💡 与「随机性与密钥派生」中的 `HKDF` 不同——`HKDF` 适合从已有的高熵秘密（如 ECDH 输出）派生子密钥；`Argon2` / `PBKDF2` 适合从低熵口令起步。两者常配合使用：先 `Argon2` 把口令提升到高熵，再 `HKDF` 派生多个子密钥。
 
-## 密钥分割（Secret Sharing）
+## ✂️ 密钥分割（Secret Sharing）
 
 ### 为什么需要密钥分割？
 
@@ -640,7 +640,7 @@ for (int i = 0; i < originalKey.length; i++) {
 - **加密货币钱包**：多重签名和社交恢复的底层原理之一
 - **数据库加密主密钥**：企业级数据库加密的主密钥通常由多个安全负责人分担
 
-## 密钥管理最佳实践
+## 💡 密钥管理最佳实践
 
 ### 密钥轮换策略
 
@@ -729,7 +729,7 @@ graph LR
 
 选择算法时，最重要的原则是：**永远不要自己设计密码哈希方案**。使用经过密码学社区广泛审查的标准算法，正确设置参数，你就已经走在大多数人前面了。
 
-## 参考来源（本笔记增强部分）
+## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 2 "Hash functions" & Chapter 8 "Randomness and secrets"
 - 章节文本：会话工作区 `files/rwc-chapters/ch02.txt`、`ch08.txt`

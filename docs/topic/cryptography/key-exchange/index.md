@@ -12,7 +12,7 @@ title: 密钥交换
 - 密钥确认（Key Confirmation）如何防范中间人攻击
 - TLS 握手中的密钥交换机制，以及前向保密（Forward Secrecy）的重要性
 
-## 为什么需要密钥交换？
+## 🤔 为什么需要密钥交换？
 
 假设你和朋友想用 AES 加密通信。你们都需要同一把密钥，但你们之间只有一条互联网连接——任何人都可以监听。你怎么把密钥安全地送给对方？
 
@@ -27,7 +27,7 @@ title: 密钥交换
 
 两种方案在实际系统中经常搭配使用。接下来分别看看它们是怎么工作的。
 
-## 密钥传输（Key Transport）
+## 📦 密钥传输（Key Transport）
 
 ### 密钥传输的思路
 
@@ -52,7 +52,7 @@ SecretKey recoveredKey = (SecretKey) cipher.unwrap(
 
 💡 关于 RSA 签名、OAEP 填充细节的完整讨论，参考「数字签名」章节。
 
-## 密钥协商（Key Agreement）
+## 🤝 密钥协商（Key Agreement）
 
 ### 为什么需要密钥协商？
 
@@ -220,7 +220,7 @@ assert Arrays.equals(aliceSecret, bobSecret); // true
 
 💡 ECDH 可以使用与 ECDSA 相同的椭圆曲线参数集（如 NIST P-256、secp256k1 等），无需额外的参数生成步骤。
 
-## 密钥确认（Key Confirmation）
+## ✅ 密钥确认（Key Confirmation）
 
 ### 中间人攻击的威胁
 
@@ -255,7 +255,7 @@ sequenceDiagram
 
 > 💡 密钥确认可以检测到中间人攻击，但**不能阻止**攻击者拒绝服务。要真正防止 MITM，还需要配合身份认证机制（如数字证书），这在 TLS 协议中得到了完整实现。
 
-## 实际应用中的密钥交换
+## 🌐 实际应用中的密钥交换
 
 ### TLS 握手中的密钥交换
 
@@ -313,7 +313,7 @@ PFS 的安全性可以精确归约到"无长期密钥帮助下的 CDH 问题"：
 
 > 💡 TLS 1.3 更进一步，**强制要求**使用 ECDHE（或 FFDHE），完全移除了 RSA 密钥传输选项。如果你的服务还在使用 RSA 密钥传输，强烈建议升级到支持 ECDHE 的配置。
 
-## 小结
+## 📋 小结
 
 密钥交换是安全通信的基石。回顾一下核心要点：
 

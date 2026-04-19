@@ -15,7 +15,7 @@ title: ASN.1 基础
 - 常见 ASN.1 结构（`AlgorithmIdentifier`、`SubjectPublicKeyInfo`、`TBSCertificate`）如何组合成证书
 - 如何用 Bouncy Castle 的 ASN.1 API 在 Java 中读写 ASN.1 结构
 
-## 为什么需要了解 ASN.1？
+## 🤔 为什么需要了解 ASN.1？
 
 你打开一个 X.509 证书文件，看到的不是明文，而是一堆二进制数据。把这个文件扔进 OpenSSL 或 Bouncy Castle，它却能精确地告诉你：这个证书的颁发者是谁、公钥用什么算法、有效期到什么时候。
 
@@ -44,7 +44,7 @@ ASN.1 标准最早由 ISO 和 CCITT（现在的 ITU-T）在 1980 年代初联合
 
 这也解释了为什么理解 `ASN.1` 和 `DER` 是密码学工程实践的基础：处理任何证书、密钥或签名时，你都在操作 `ASN.1` 编码的数据——只是它可能包在 `PEM` 外壳里。
 
-## ASN.1 基础语法
+## 📝 ASN.1 基础语法
 
 在深入类型系统之前，先了解一下 ASN.1 的模块结构和注释语法，这样当你翻开 RFC 文档时不会一头雾水。
 
@@ -241,7 +241,7 @@ AttributeValue ::= CHOICE {
 
 ⚠️ **`CHOICE` 类型的标签必须使用 `EXPLICIT`**，无论模块的默认标签模式是什么。因为 `CHOICE` 的原始标签是解析器判断类型的唯一线索，如果用 `IMPLICIT` 覆盖了原始标签，就再也无法知道实际是什么类型了。Bouncy Castle 提供了 `ASN1Choice` 标记接口，建议在定义 `CHOICE` 类型时实现它。
 
-## DER 编码规则
+## 📦 DER 编码规则
 
 ASN.1 定义了多种编码规则（BER、DER、CER、PER、OER 等），但密码学实践中**几乎只用 DER**（Distinguished Encoding Rules，唯一编码规则）。原因是：DER 保证同一份数据永远生成完全相同的字节序列——这对数字签名和 MAC 至关重要，因为签名验证方必须能精确重现签名时的编码。
 
@@ -523,7 +523,7 @@ BER 支持 `indefinite-length`（不定长）编码——用 `0x80` 作为长度
 
 `DER` 的唯一性封堵了这个攻击面：每种 `ASN.1` 值只有**唯一一种**合法 `DER` 编码，攻击者无法在不改变逻辑数据的前提下操纵字节表示。
 
-## OID——对象标识符
+## 🏷️ OID——对象标识符
 
 ### 什么是 OID？
 
@@ -571,7 +571,7 @@ OID 的 DER 编码有一些特殊规则：
 
 注意前缀 `1.2.840.113549` 属于 RSA 公司（美国）的 OID 分支，`1.2.840.10045` 属于 ANSI（美国国家标准学会）分支，`2.16.840.1.101` 属于美国政府的 NIST 分支。
 
-## 常见 ASN.1 结构速查
+## 🗂️ 常见 ASN.1 结构速查
 
 在 X.509 证书、PKCS 等密码学标准中，你会反复遇到以下几个 ASN.1 结构。
 
@@ -614,7 +614,7 @@ TBSCertificate ::= SEQUENCE {
 
 `TBS` 表示"to be signed"——这个结构就是证书中实际被签名的部分。注意 `version` 字段使用了 `EXPLICIT` 标签 `[0]`，且带有 `DEFAULT` 值。
 
-## 在 Java 中使用 ASN.1
+## ☕ 在 Java 中使用 ASN.1
 
 Bouncy Castle 提供了完整的 ASN.1 API，位于 `org.bouncycastle.asn1` 包下。理解了 ASN.1 的基本概念后，用这个 API 就会很直观。
 
@@ -937,7 +937,7 @@ public class BuildDer {
 
 💡 **`PemObject` 类型字符串的约定**：`"CERTIFICATE"` / `"PRIVATE KEY"`（PKCS#8 未加密）/ `"ENCRYPTED PRIVATE KEY"`（PKCS#8 加密）/ `"PUBLIC KEY"`（SubjectPublicKeyInfo）/ `"CERTIFICATE REQUEST"`（CSR）。类型字符串不影响 `DER` 内容的解析，但错误的头部会让工具（如 OpenSSL）拒绝识别文件。
 
-## 参考来源（本笔记增强部分）
+## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 1 & 9 — 标准格式概览、X.509/PEM 编码说明
 - ITU-T X.690 (2021) — BER / DER / CER 编码规则官方标准

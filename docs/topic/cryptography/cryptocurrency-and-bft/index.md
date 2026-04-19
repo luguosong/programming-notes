@@ -1,6 +1,5 @@
 ---
 title: 加密货币与 BFT 共识
-icon: material/bitcoin
 ---
 
 # 加密货币与 BFT 共识

@@ -14,7 +14,7 @@ title: 数字签名
 - DSA、ECDSA、EdDSA、RSA 签名、SM2 国密签名各自的原理和 Java API 用法
 - 在实际项目中如何选择合适的签名算法
 
-## 为什么需要数字签名？
+## 🤔 为什么需要数字签名？
 
 你已经知道，对称加密解决了**机密性**问题，HMAC 解决了**完整性 + 认证**问题。但 HMAC 有一个根本限制——通信双方必须共享同一个密钥。如果你收到一条消息，HMAC 能告诉你"这条消息确实来自持有密钥的人"，但它无法帮你向第三方证明"这条消息来自 Alice 而不是 Bob"——因为 Alice 和 Bob 共享同一个密钥，谁都能生成有效的 HMAC。
 
@@ -70,7 +70,7 @@ sequenceDiagram
 - **确定性签名（deterministic）**：同一私钥对同一消息，每次产生的签名完全相同（如 RSA PKCS#1 v1.5）
 - **非确定性签名（non-deterministic）**：每次签名都会引入随机数，同一消息的签名每次不同（如 DSA、ECDSA）
 
-## 签名安全强度
+## 🛡️ 签名安全强度
 
 当你需要选择签名算法的密钥长度和摘要算法时，你会发现一个容易被忽视的问题：**签名的安全强度由多个组件共同决定**，其中最弱的那个组件决定了整体安全性。
 
@@ -126,7 +126,7 @@ NIST SP 800-57 定义了不同算法的安全强度：
 
 > ⚠️ 不要用 SHA-1 生成新签名。虽然验证旧的 SHA-1 签名在大多数场景下仍然可行，但生成新的 SHA-1 签名已被 FIPS 禁止，存在安全隐患。
 
-## Signature 类
+## ☕ Signature 类
 
 JCA 中，签名操作统一由 `java.security.Signature` 类提供。和 JCA 的其他引擎类一样，`Signature` 对象通过 `getInstance()` 工厂方法创建，而不是直接构造。
 
@@ -189,7 +189,7 @@ boolean isValid = signature.verify(signatureBytes);
 
 部分签名算法还需要调用 `setParameter()` 设置额外参数（如 RSA-PSS 的盐值长度、SM2 的用户 ID），这些将在对应章节中介绍。
 
-## DSA（Digital Signature Algorithm）
+## 🔐 DSA（Digital Signature Algorithm）
 
 DSA（Digital Signature Algorithm，数字签名算法）诞生于 1991 年，是 NIST 发布的第一个数字签名标准（FIPS PUB 186），至今仍是许多安全标准的基石。
 
@@ -278,7 +278,7 @@ boolean isValid = signature.verify(signatureBytes); // true
 
 在 Bouncy Castle 中，确定性 DSA 的算法名称为 `DDSA`（普通 DSA）和 `ECDDSA`（椭圆曲线 DSA）。注意：确定性签名可以由标准 DSA/ECDSA 验证器验证，无需特殊处理。
 
-## ECDSA（Elliptic Curve DSA）
+## 📈 ECDSA（Elliptic Curve DSA）
 
 当你需要与 DSA 相同安全强度但更短的密钥时，你会发现在椭圆曲线上实现 DSA——即 ECDSA（Elliptic Curve DSA，椭圆曲线数字签名算法）——是一个更好的选择。
 
@@ -356,7 +356,7 @@ byte[] signatureBytes2 = sig2.sign();
 | 参数生成速度 | 慢（大质数搜索） | 快（使用预定义曲线） |
 | 算法名称 | `SHA256withDSA` | `SHA256withECDSA` |
 
-## EdDSA（Edwards Curve DSA）
+## ⚡ EdDSA（Edwards Curve DSA）
 
 当你需要一种**天然确定性**且**抗侧信道攻击**的签名方案时，传统 DSA/ECDSA 的随机数依赖就成了一个负担。EdDSA（Edwards Curve Digital Signature Algorithm）通过巧妙的数学设计彻底消除了这个问题。
 
@@ -446,7 +446,7 @@ graph TD
 
 > 📌 `Ed25519` 本质上是 `Schnorr` 签名在 Edwards25519 曲线上的实例化，而 `ECDSA` 是为绕过 Schnorr 专利（2008 年到期）而设计的"扭曲变体"。专利到期后，`EdDSA` 终于可以直接继承 Schnorr 的所有优良性质。
 
-## Hash-and-Sign 范式与 FDH 签名方案
+## 🔧 Hash-and-Sign 范式与 FDH 签名方案
 
 ### 为什么必须先哈希再签名？
 
@@ -546,7 +546,7 @@ graph TD
 
 > 📌 ZKP 的应用远不止于签名：现代区块链（如 Zcash、zkSync）使用更通用的 ZK-SNARK / ZK-STARK 实现隐私保护的计算验证。这些进阶话题详见「下一代密码学」(`../next-generation/`)。参考「散列函数与完整性保护」(`../hashing-and-integrity/`) 了解哈希函数在 Fiat-Shamir 变换中承担的角色。
 
-## RSA 签名
+## 🔢 RSA 签名
 
 当你需要一种被几乎所有系统广泛支持的签名算法时，RSA 几乎是默认选择。自 1977 年发表以来，RSA 一直是公钥密码学的"主力军"。
 
@@ -711,7 +711,7 @@ sequenceDiagram
 
 > ⚠️ 签名延展性并不意味着签名方案被"攻破"——攻击者仍然无法伪造针对自己选定消息的签名（EUF-CMA 安全性不受影响）。但在**依赖"签名唯一性"的协议**（如区块链 txid 去重）中，延展性可能成为逻辑漏洞的入口。设计依赖签名的协议时，不要假设同一消息只会有一种合法签名。
 
-## SM2 国密签名
+## 🔏 SM2 国密签名
 
 当你的项目需要满足中国政府的合规要求时（如电子签章、政务系统、金融领域），SM2 是必须了解的签名算法。SM2 由中国国家密码管理局发布，基于 256 位椭圆曲线 `sm2p256v1`，搭配 SM3 摘要算法。
 
@@ -772,7 +772,7 @@ assertFalse(signature.verify(signatureBytes));
 
 SM2 签名由 (r, s) 两个 32 字节整数组成，DER 编码后通常为 70-72 字节。
 
-## 算法选择建议
+## 💡 算法选择建议
 
 当你面对一个需要数字签名的项目时，如何选择算法？以下对比表格覆盖了主要的决策维度：
 
@@ -800,7 +800,7 @@ SM2 签名由 (r, s) 两个 32 字节整数组成，DER 编码后通常为 70-72
 
 > 💡 如果没有特殊限制，**Ed25519 是当前最推荐的新项目选择**——确定性签名消除了随机数安全隐患，签名紧凑（64 字节），性能优秀，且被越来越多的协议和框架支持。
 
-## 参考来源（本笔记增强部分）
+## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 7: Signatures and zero-knowledge proofs
 - 章节文本：会话工作区 `files/rwc-chapters/ch07.txt`

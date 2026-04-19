@@ -13,7 +13,7 @@ title: 对称加密
 - 流密码（ChaCha20/Salsa20）的工作原理及适用场景
 - 如何用密钥包装（Key Wrapping）和 `SealedObject` 安全传输密钥与对象
 
-## 为什么对称加密是密码学的基础？
+## 🤔 为什么对称加密是密码学的基础？
 
 假设你需要加密一份 1GB 的文件。如果用非对称加密（如 RSA），每加密一个块都要做一次大数模幂运算——速度可能只有几十 KB/s，加密完这份文件要花好几分钟。而对称加密（如 AES）在硬件加速下可以达到 GB/s 级别的吞吐量，同样 1GB 不到一秒就搞定了。
 
@@ -23,7 +23,7 @@ title: 对称加密
 
 ⚠️ 正因为加解密用同一把密钥，**密钥分发**就成了对称加密最大的难题。这部分内容将在后续笔记中展开。
 
-## 完善安全与 Shannon 定理
+## 📐 完善安全与 Shannon 定理
 
 ### 从"绝对安全"到"够用就行"
 
@@ -55,7 +55,7 @@ $$\Pr[\mathcal{E}(k, m_0) = c] = \Pr[\mathcal{E}(k, m_1) = c]$$
 
 ⚠️ AES 的 128 位密钥远小于 GB 级消息长度，所以 AES 不是完善安全的——它是计算安全的。后面介绍的分组密码工作模式（CBC、CTR、GCM）就是用短密钥加密长消息的实用方案。
 
-## 分组密码基础
+## 🧱 分组密码基础
 
 ### 语义安全与 CPA 安全
 
@@ -142,7 +142,7 @@ SecretKey key = keyGen.generateKey(); // 默认生成 AES-256 密钥
 
 **参数管理**：很多工作模式依赖 IV（Initialization Vector，初始化向量）或 nonce（Number Used Once，一次性随机数）——两者作用相同，本文统一称为"IV / nonce"。如果同一个密钥 + IV 的组合被重用，后果可能非常严重——在 GCM 模式下，IV 重用会直接泄露明文 XOR。
 
-## 分组密码工作模式
+## ⚙️ 分组密码工作模式
 
 分组密码本身只定义了「一个块怎么加密」，但实际数据远超一个块的长度。**工作模式（mode of operation）** 就决定了如何将「单块加密」扩展到「多块数据流加密」。
 
@@ -328,7 +328,7 @@ $$\text{CPAadv} \leq \frac{2Q^2}{N} + 2 \cdot \text{PRFadv}$$
 
 🎯 **实践建议**：对于新系统，优先选择 CTR 模式或认证加密模式（如 GCM）。CBC 仅在兼容旧系统时考虑。OFB 存在密钥流循环的潜在风险，不推荐新项目使用。
 
-## 认证加密模式
+## 🔐 认证加密模式
 
 ### 为什么需要认证加密？
 
@@ -574,7 +574,7 @@ byte[] cipherText = cipher.doFinal("hello, world!".getBytes());
 
 🎯 **实践建议**：GCM 是目前的通用首选——硬件 AES-NI 加速让它的性能远超其他模式。EAX 在不支持 GCM 的环境下是不错的替代方案。
 
-## 流密码
+## 🌊 流密码
 
 ### ChaCha20-Poly1305
 
@@ -615,7 +615,7 @@ byte[] cipherText = cipher.doFinal("hello, world!".getBytes());
 
 💡 `ChaCha20-Poly1305` 与 `AES-GCM` 具有完全相同的 AEAD 接口，安全性同等（256 位密钥，96 位 nonce，128 位认证标签）。两者的差异只在于性能特征：有 `AES-NI` 的服务器更适合 `AES-GCM`；移动端 / 嵌入式优先选 `ChaCha20-Poly1305`。更多 AEAD 在传输层的应用，可参考「`「TLS」`」中的密码套件协商。
 
-## 密钥包装与 SealedObject
+## 📦 密钥包装与 SealedObject
 
 ### Key Wrapping
 
@@ -674,7 +674,7 @@ UserCredential recovered = (UserCredential) sealed.getObject(aesKey, "BC");
 
 ⚠️ `SealedObject` 基于 Java 序列化，存在反序列化攻击的风险。在生产环境中使用时，建议开启 JEP 290（ObjectInputFilter）来限制反序列化的类白名单。
 
-## 其他对称加密形态
+## 🗂️ 其他对称加密形态
 
 标准 AEAD（`AES-GCM` / `ChaCha20-Poly1305`）并非万能。现实中还有一些场景对加密有特殊要求——磁盘加密和数据库加密是两个典型。
 

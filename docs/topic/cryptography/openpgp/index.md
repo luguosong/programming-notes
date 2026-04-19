@@ -14,7 +14,7 @@ title: OpenPGP
 - OpenPGP 与 CMS 各自适用什么场景
 - 实现中的常见陷阱：Literal Data 数据包、MDC 完整性保护不可省略、`ArmoredOutputStream` 流关闭
 
-## 为什么需要 OpenPGP？
+## 🤔 为什么需要 OpenPGP？
 
 你已经在「CMS 与 S/MIME」中了解了如何用 S/MIME 保护邮件安全。S/MIME 基于 X.509 证书体系，需要一个可信的 CA（证书颁发机构）来签发证书。但现实中，大多数个人用户并没有 X.509 证书，也不愿意花钱向 CA 申请。
 
@@ -135,7 +135,7 @@ graph TD
     class E,F,G use
 ```
 
-## OpenPGP 核心概念
+## 🗂️ OpenPGP 核心概念
 
 ### 密钥环（Key Ring）
 
@@ -301,7 +301,7 @@ yxt0CF9DT05TT0xFXX9ONEhlbGxvLCB3b3JsZCE=
 
 在 Java 中，`ArmoredOutputStream` 用于生成 ASCII Armored 输出，`ArmoredInputStream` 用于解析。一个容易踩的坑是：`ArmoredOutputStream.close()` **不会**关闭底层流，因为一个流里可能写入多个 PGP 数据块。
 
-## 密钥环管理实战
+## 🔑 密钥环管理实战
 
 ### 生成 RSA 密钥环
 
@@ -449,7 +449,7 @@ gpg --auto-key-locate wkd --locate-keys alice@example.com
 
 ⚠️ WKD 要求域名必须通过 HTTPS 提供服务，且 TLS 证书有效。对于没有自己域名的普通用户，推荐使用 `keys.openpgp.org`——这是一个现代化密钥服务器，要求邮件验证后才能上传公钥，且支持删除操作，从根本上避免了 SKS 的污染问题。
 
-## OpenPGP 签名实战
+## ✍️ OpenPGP 签名实战
 
 ### 二进制签名与验证
 
@@ -551,7 +551,7 @@ signatureGenerator.generate().encode(armoredOut);
 
 ⚠️ 清文签名有一个容易踩的坑：**签名计算必须忽略行尾空格**。RFC 4880 Section 7.1 明确规定，每行末尾的空白字符不参与签名计算。如果发送方和接收方的文本处理不一致（比如编辑器自动去除了行尾空格），签名验证就会失败。Bouncy Castle 的 `ArmoredOutputStream` 会自动处理规范文本格式（canonicalization），但如果你手动拼接文本，就需要自己处理。
 
-## OpenPGP 加密实战
+## 🔐 OpenPGP 加密实战
 
 ### 公钥加密与解密
 
@@ -792,7 +792,7 @@ public static String decryptAndVerify(
 
 ⚠️ `OnePass` 签名模式（RFC 4880 Section 5.4）允许签名和数据在**同一个流**中顺序读取，无需将整个消息缓存到内存后再验证。这对于大文件特别重要。签名头（`PGPOnePassSignature`）在数据之前，实际签名（`PGPSignature`）在数据之后——接收方在流式读取数据的同时更新签名摘要，最后一步才验证签名。
 
-## CMS vs OpenPGP 对比
+## ⚖️ CMS vs OpenPGP 对比
 
 既然 CMS 和 OpenPGP 都能做签名和加密，怎么选择？以下是核心差异：
 
@@ -868,7 +868,7 @@ await signatures[0].verified; // ✅ 签名有效则 resolve，否则 reject
 
 ⚠️ 无论选择哪个库，核心的密码学原语（`RSA`、`ECDH`、`AES-256`、`SHA-256`）都是相同的——`OpenPGP` 的互操作性保证了不同实现生成的密文可以互相解密。选择库的重点在于**语言生态、API 易用性和安全维护状态**，而非密码学能力的差异。
 
-## 常见问题与陷阱
+## 🚨 常见问题与陷阱
 
 ### Literal Data 数据包
 
@@ -914,7 +914,7 @@ $$\text{MDC} = \text{SHA-1}(prefix || plaintext)$$
 
 `ArmoredOutputStream.close()` 的作用是触发 CRC 校验和的写入，而不是关闭底层流。这意味着你可以在同一个底层流上连续写入多个 PGP 数据块。反过来，如果你忘记调用 `close()`，输出的 Armored 数据将缺少尾部校验和，导致解析失败。
 
-## 参考来源（本笔记增强部分）
+## 📚 参考来源（本笔记增强部分）
 
 - David Wong, *Real-World Cryptography* (Manning, 2021), Chapter 11 — "Securing communications"
 - 章节文本：会话工作区 `files/rwc-chapters/ch11.txt`
