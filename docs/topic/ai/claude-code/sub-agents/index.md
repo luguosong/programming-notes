@@ -142,17 +142,21 @@ model: sonnet
 | 字段 | 必填 | 说明 |
 |------|------|------|
 | `name` | ✅ | 唯一标识符，使用小写字母和连字符 |
-| `description` | ✅ | 描述何时该委派给这个 Sub-agent |
-| `tools` | ❌ | 允许使用的工具（白名单）。省略则继承全部 |
+| `description` | ✅ | 描述何时该委派给这个 Sub-agent。写 `"PROACTIVELY"` 可让 Claude 主动触发 |
+| `tools` | ❌ | 允许使用的工具（白名单）。省略则继承全部。支持 `Agent(agent_type)` 语法限制可生成的子代理类型 |
 | `disallowedTools` | ❌ | 禁止使用的工具（黑名单） |
-| `model` | ❌ | 使用的模型：`sonnet`、`opus`、`haiku`、`inherit`（默认） |
-| `permissionMode` | ❌ | 权限模式：`default`、`acceptEdits`、`auto`、`plan` 等 |
+| `model` | ❌ | 使用的模型：`sonnet`、`opus`、`haiku`、完整模型 ID（如 `claude-opus-4-6`），或 `inherit`（默认） |
+| `permissionMode` | ❌ | 权限模式：`default`、`acceptEdits`、`auto`、`dontAsk`、`bypassPermissions`、`plan` |
 | `maxTurns` | ❌ | 最大对话轮数限制 |
-| `skills` | ❌ | 预加载的 Skills 列表 |
+| `skills` | ❌ | 预加载的 Skills 列表（完整内容直接注入，不只是让 Claude 知道有这个 Skill） |
+| `mcpServers` | ❌ | 此子代理专用的 MCP 服务器列表（服务器名字符串或内联 `{name: config}` 对象） |
 | `memory` | ❌ | 持久记忆范围：`user`、`project`、`local` |
-| `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行（v2.1.49 新增） |
+| `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行（无变更时自动清理，v2.1.49 新增） |
 | `background` | ❌ | 设为 `true` 时始终后台运行（v2.1.49 新增） |
-| `hooks` | ❌ | 生命周期钩子配置 |
+| `effort` | ❌ | 覆盖此子代理的思考力度：`low`、`medium`、`high`、`max`（Opus 4.6 限定）。默认继承会话设置 |
+| `initialPrompt` | ❌ | 当 Agent 作为主会话 agent 运行（通过 `--agent` 或 `agent` 设置）时，自动提交为第一轮用户输入。支持命令和 Skills 处理（v2.1.83 新增） |
+| `color` | ❌ | 在任务列表和 transcript 中显示的颜色：`red`、`blue`、`green`、`yellow`、`purple`、`orange`、`pink`、`cyan` |
+| `hooks` | ❌ | 生命周期钩子配置（`PreToolUse`、`PostToolUse`、`Stop` 最常用） |
 
 #### 工具限制：白名单 vs 黑名单
 
@@ -341,6 +345,20 @@ Teammate 在只读的 plan mode 下工作，方案完成后提交给 Lead 审批
 | `TeammateIdle` | Teammate 即将空闲 | `exit 2` 发送反馈让它继续工作 |
 | `TaskCreated` | 任务被创建 | `exit 2` 阻止创建并发送反馈 |
 | `TaskCompleted` | 任务被标记完成 | `exit 2` 阻止完成并发送反馈 |
+
+## 📦 官方内置 Agent
+
+Claude Code 随附了 5 个官方内置 Agent，可直接通过 `@"agent-name (agent)"` 语法或 `--agent` 参数使用：
+
+| Agent | 模型 | 可用工具 | 用途 |
+|-------|------|---------|------|
+| `general-purpose` | inherit | 全部 | 复杂多步骤任务，研究、代码搜索和自主工作的默认选择 |
+| `Explore` | haiku | 只读（无 Write/Edit） | 快速代码库搜索和探索，优化了文件查找和代码库问答 |
+| `Plan` | inherit | 只读（无 Write/Edit） | 在写代码前进行预规划研究——在 plan mode 下探索代码库并设计实现方案 |
+| `statusline-setup` | sonnet | Read, Edit | 配置用户的 Claude Code 状态栏设置 |
+| `claude-code-guide` | haiku | Glob, Grep, Read, WebFetch, WebSearch | 回答关于 Claude Code 功能、Agent SDK 和 Claude API 的问题 |
+
+💡 `Explore` 和 `Plan` 是使用最广泛的内置 Agent。`Explore` 适合需要快速了解代码库但不想消耗大量 token 的场景；`Plan` 适合复杂重构前先做只读探索和方案设计。
 
 ## 🎯 实践场景
 

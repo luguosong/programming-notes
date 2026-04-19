@@ -111,7 +111,8 @@ shell: bash
 | 字段 | 是否必填 | 说明 |
 |------|---------|------|
 | `name` | 否 | Skill 的显示名称，也是 `/` 命令的名字。省略时使用目录名。只能用小写字母、数字和连字符（最长 64 字符） |
-| `description` | **推荐** | 描述 Skill 的功能和适用场景。Claude 根据它判断是否自动加载。超过 1,536 字符会被截断（2.1.105 起；此前为 250 字符） |
+| `description` | **推荐** | 描述 Skill 的功能和适用场景。Claude 根据它判断是否自动加载。与 `when_to_use` 共享 1,536 字符预算（2.1.105 起） |
+| `when_to_use` | 否 | 补充说明"何时触发"——列举触发短语和示例请求。与 `description` 拼接后共享 1,536 字符预算 |
 | `argument-hint` | 否 | 自动补全时显示的参数提示，如 `[issue-number]` 或 `[filename] [format]` |
 | `disable-model-invocation` | 否 | 设为 `true` 禁止 Claude 自动触发，只能手动 `/命令` 调用 |
 | `user-invocable` | 否 | 设为 `false` 将 Skill 从 `/` 菜单隐藏（仅 Claude 可自动调用） |
@@ -123,6 +124,18 @@ shell: bash
 | `paths` | 否 | Glob 模式，限制 Skill 只在操作匹配的文件时才自动激活（v2.1.84 支持 YAML glob 列表） |
 | `shell` | 否 | Shell 命令执行环境：`bash`（默认）或 `powershell` |
 | `hooks` | 否 | 绑定到 Skill 生命周期的钩子（v2.1.0 新增） |
+
+`when_to_use` 是 `description` 的补充，两者拼接后计入 1,536 字符预算。最佳实践是：`description` 写简短的触发关键词（<50 字符），`when_to_use` 补充更详细的"什么时候用/不用"说明：
+
+```yaml
+---
+name: code-review
+description: Use for PR reviews with focus on correctness.
+when_to_use: |
+  Use when reviewing TypeScript PRs or when explicitly asked.
+  Avoid for large architectural reviews — use /design-review instead.
+---
+```
 
 💡 **两个关键字段的组合效果**：
 
@@ -269,84 +282,45 @@ description: Use for PR reviews with focus on correctness.
 
 关键原则：**把最关键的用例前置**，超出 1,536 字符的部分会被截断（2.1.105 起；此前为 250 字符）。
 
-### 🏷️ 三种典型 Skill 类型
+### 🏷️ 9 种 Skill 类型
 
-在实际使用中，Skill 通常可以分为三种类型，每种有不同的设计要点。
+Anthropic 内部实践总结出了 9 种常见 Skill 类别（来自 Thariq, 2026-3-17）。最好的 Skill 只属于其中一类，跨多类的往往边界模糊、难以维护。
 
-#### 类型一：检查清单型（质量门禁）
+| 类别 | 核心目的 | 典型示例 |
+|------|---------|---------|
+| **Library & API Reference** | 教 Claude 正确使用某个库/CLI/SDK，内部库或有"Claude 常踩坑"问题的库尤为适合 | `billing-lib`、`internal-cli` |
+| **Product Verification** | 验证产品功能是否工作——连接 Playwright、tmux 等工具，提供端到端验证流程 | `signup-flow-driver`、`checkout-verifier` |
+| **Data Fetching & Analysis** | 连接数据和监控栈，包含凭证、Dashboard ID、常用查询模式 | `funnel-query`、`grafana` |
+| **Business Process** | 把重复性工作流自动化为一条命令，可保存日志帮助模型保持一致性 | `standup-post`、`weekly-recap` |
+| **Code Scaffolding** | 为特定框架或模块生成样板代码，尤其适合有自然语言要求的脚手架 | `new-migration`、`create-app` |
+| **Code Quality & Review** | 执行代码审查和质量规范，可在 Hooks 或 CI 中自动触发 | `adversarial-review`、`testing-practices` |
+| **CI/CD & Deployment** | 拉取、推送、部署代码，通常依赖其他 Skill 采集数据 | `deploy-<service>`、`babysit-pr` |
+| **Runbooks** | 接收症状（Slack 告警、错误签名），引导多工具调查，输出结构化报告 | `<service>-debugging`、`oncall-runner` |
+| **Infrastructure Operations** | 常规运维和基础设施操作，涉及破坏性操作时需要内置护栏 | `<resource>-orphans`、`cost-investigation` |
 
-发布前或提交前跑一遍，确保不漏项：
+⚠️ **一个 Skill 跨多类时是警告信号**——意味着它承担了太多责任，考虑拆分。
 
-``` yaml title=".claude/skills/release-check/SKILL.md"
----
-name: release-check
-description: Use before cutting a release to verify build, version, and smoke test.
----
+### 编写高质量 Skill 的 9 个技巧
 
-## Pre-flight（All must pass）
+以下是 Anthropic 内部从大量 Skills 实践中总结的技巧（来自 Thariq）：
 
-- [ ] `cargo build --release` passes
-- [ ] `cargo clippy -- -D warnings` clean
-- [ ] Version bumped in Cargo.toml
-- [ ] CHANGELOG updated
-- [ ] `kaku doctor` passes on clean env
+1. **不要写废话** — Claude 已经熟悉通用编码模式，只写它不知道的东西。Skill 的最高价值在于"非常规知识"，不是重复文档
 
-## Output
+2. **必写 Gotchas 章节** — 把 Claude 踩过的坑汇集到一个 `## Gotchas` 章节。这是整个 Skill 信噪比最高的部分，随着使用不断补充
 
-Pass / Fail per item. Any Fail must be fixed before release.
-```
+3. **善用文件系统做渐进式披露** — Skill 是文件夹，不只是一个 markdown 文件。把详细的函数签名放 `references/api.md`，示例放 `examples/`，脚本放 `scripts/`。在 `SKILL.md` 里告诉 Claude 每个文件是什么、何时该读
 
-#### 类型二：工作流型（标准化操作）
+4. **不要太规定步骤** — 过于手把手的 step-by-step 会导致 Claude 死板执行、丧失适应能力。给出目标和约束，让 Claude 自己决定路径
 
-高风险操作显式调用 + 内置回滚步骤：
+5. **想清楚 Setup 环节** — 如果 Skill 需要用户提供配置信息，设计一个 `config.json` 文件模式：没有配置时让 Claude 用 `AskUserQuestion` 工具收集配置，然后存到 `config.json`
 
-``` yaml title=".claude/skills/config-migration/SKILL.md"
----
-name: config-migration
-description: Migrate config schema. Run only when explicitly requested.
-disable-model-invocation: true
----
+6. **description 是写给模型看的触发器** — 不是人类读的摘要。写"何时触发这个 Skill"而不是"这个 Skill 做什么"
 
-## Steps
+7. **用 Skill 目录存状态** — 可以在 Skill 目录里存 JSON、文本日志甚至 SQLite。用 `${CLAUDE_PLUGIN_DATA}` 存需要跨升级保留的数据（Skill 目录升级时可能被删除）
 
-1. Backup: `cp ~/.config/app/config.toml ~/.config/app/config.toml.bak`
-2. Dry run: `app config migrate --dry-run`
-3. Apply: remove `--dry-run` after confirming output
-4. Verify: `app doctor` all pass
+8. **给 Claude 预制脚本** — 把常用的操作封装成脚本放进 Skill 目录，让 Claude 组合调用，而不是每次从头生成。Claude 的时间应该花在"决定做什么"上，而不是"重写样板代码"
 
-## Rollback
-
-`cp ~/.config/app/config.toml.bak ~/.config/app/config.toml`
-```
-
-#### 类型三：领域专家型（封装决策框架）
-
-运行时出问题时让 Claude 按固定路径收集证据，不要瞎猜：
-
-``` yaml title=".claude/skills/runtime-diagnosis/SKILL.md"
----
-name: runtime-diagnosis
-description: Use when app crashes, hangs, or behaves unexpectedly at runtime.
----
-
-## Evidence Collection
-
-1. Run `app doctor` and capture full output
-2. Last 50 lines of `~/.local/share/app/logs/`
-3. Plugin state: `app --list-plugins`
-
-## Decision Matrix
-
-| Symptom | First Check |
-|---------|-------------|
-| Crash on startup | doctor output → config syntax error |
-| Rendering glitch | GPU backend / terminal capability |
-| Config not applied | Config path + schema version |
-
-## Output Format
-
-Root cause / Blast radius / Fix steps / Verification command
-```
+9. **用按需 Hooks 增强高风险 Skill** — Skill 可以注册只在该 Skill 运行期间生效的 Hooks。例如：`/careful` Skill 激活时阻断 `rm -rf`、`DROP TABLE` 等危险命令；`/freeze` 激活时阻止在特定目录外写文件
 
 ### 📊 频率策略：auto-invoke 还是手动触发
 
@@ -410,3 +384,17 @@ agent: Explore
 权限确认弹窗频繁出现会打断工作节奏。v2.1.111 新增的 `/less-permission-prompts` 内置 Skill 可以自动解决这个问题——它会扫描你的 transcript，找出常见的只读 Bash 和 MCP 工具调用，然后为 `.claude/settings.json` 生成一个优先级排序的允许列表建议。运行一次就能显著减少重复授权。
 
 📝 **小结**：Skill 是 Claude Code 中性价比最高的扩展方式。一个几十行的 `SKILL.md` 文件，就能让 Claude 在你的项目中表现得像一个熟悉代码库、遵循团队规范的「老员工」。从编写项目的代码风格规范开始，逐步扩展到工作流自动化，你会发现 Skill 越写越多、Claude 越来越好用。
+
+## 📦 官方内置 Skills
+
+Anthropic 随 Claude Code 附带了 5 个开箱即用的内置 Skill（无需安装）：
+
+| Skill | 功能说明 |
+|-------|---------|
+| `simplify` | 审查改动后的代码，消除重复、改进质量和效率 |
+| `batch` | 在多个文件或 Git Worktree 上批量并行执行操作 |
+| `debug` | 系统化调试失败的命令或代码 |
+| `loop` | 按设定间隔反复执行某个 prompt 或斜杠命令（最长 3 天） |
+| `claude-api` | 使用 Claude API 或 Anthropic SDK 构建应用（检测到 `anthropic` 或 `@anthropic-ai/sdk` 导入时自动触发） |
+
+💡 社区和官方维护的可安装 Skill 集合见 [Skills Repository](https://github.com/anthropics/skills)。
