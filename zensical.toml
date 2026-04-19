@@ -121,10 +121,22 @@ nav = [
     ] },
     { "专题研究" = [
         "topic/index.md",
-        { "Zensical" = [
-            "topic/zensical/index.md",
-            { "基本使用" = "topic/zensical/basic/index.md" },
-            { "更新日志" = "topic/zensical/changelog/index.md" }
+        { "Git" = [
+            "topic/git/index.md",
+            { "Git 起步" = "topic/git/getting-started/index.md" },
+            { "基础操作" = "topic/git/basics/index.md" },
+            { "查看历史" = "topic/git/history/index.md" },
+            { "撤销时光机" = "topic/git/undo/index.md" },
+            { "分支机制" = "topic/git/branching/index.md" },
+            { "变基详解" = "topic/git/rebase/index.md" },
+            { "远程协作" = "topic/git/remote/index.md" },
+            { "贮藏与清理" = "topic/git/stash-clean/index.md" },
+            { "高级工具" = "topic/git/advanced-tools/index.md" },
+            { "重写历史" = "topic/git/rewrite-history/index.md" },
+            { "子模块" = "topic/git/submodule/index.md" },
+            { "Git 钩子" = "topic/git/hooks/index.md" },
+            { "内部原理" = "topic/git/internals/index.md" },
+            { "提交规范与最佳实践" = "topic/git/best-practices/index.md" }
         ] },
         { "密码学" = [
             "topic/cryptography/index.md",
@@ -164,10 +176,6 @@ nav = [
             { "实战：授权服务器" = "topic/oauth/spring-auth-server/index.md" },
             { "实战：客户端与资源服务器" = "topic/oauth/spring-client-resource/index.md" },
             { "OAuth 2.1 演进" = "topic/oauth/oauth2-1/index.md" }
-        ] },
-        { "Windows" = [
-            "topic/windows/index.md",
-            { "DOS 命令" = "topic/windows/dos/index.md" }
         ] },
         { "Docker" = [
             "topic/docker/index.md",
@@ -245,22 +253,14 @@ nav = [
             ] },
             { "双工具协同实践" = "topic/ai/dual-tool-practice/index.md" }
         ] },
-        { "Git" = [
-            "topic/git/index.md",
-            { "Git 起步" = "topic/git/getting-started/index.md" },
-            { "基础操作" = "topic/git/basics/index.md" },
-            { "查看历史" = "topic/git/history/index.md" },
-            { "撤销时光机" = "topic/git/undo/index.md" },
-            { "分支机制" = "topic/git/branching/index.md" },
-            { "变基详解" = "topic/git/rebase/index.md" },
-            { "远程协作" = "topic/git/remote/index.md" },
-            { "贮藏与清理" = "topic/git/stash-clean/index.md" },
-            { "高级工具" = "topic/git/advanced-tools/index.md" },
-            { "重写历史" = "topic/git/rewrite-history/index.md" },
-            { "子模块" = "topic/git/submodule/index.md" },
-            { "Git 钩子" = "topic/git/hooks/index.md" },
-            { "内部原理" = "topic/git/internals/index.md" },
-            { "提交规范与最佳实践" = "topic/git/best-practices/index.md" }
+        { "Windows" = [
+            "topic/windows/index.md",
+            { "DOS 命令" = "topic/windows/dos/index.md" }
+        ] },
+        { "Zensical" = [
+            "topic/zensical/index.md",
+            { "基本使用" = "topic/zensical/basic/index.md" },
+            { "更新日志" = "topic/zensical/changelog/index.md" }
         ] }
     ] },
     { "数学" = [

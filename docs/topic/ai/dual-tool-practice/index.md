@@ -116,6 +116,91 @@ ln -s ~/.copilot/AGENTS.md ~/.claude/CLAUDE.md
 
 `不要同时维护` `CLAUDE.md` 和 `.github/copilot-instructions.md`，内容重复不仅需要人工同步，还会双倍消耗上下文 token。Copilot CLI 1.0.26 起已支持自动去重，但语义冗余仍然存在。
 
+### 📄 三文件同步：以 docs/ 为权威来源
+
+同时维护 README.md + CLAUDE.md + copilot-instructions.md 时，三份文件极易内容重叠、更新时漏掉一份。根本解法是把"谁是权威来源"按信息类型切分清楚。
+
+**推荐目录结构**
+
+```text
+项目根目录/
+├── README.md                     # 面向人类：项目介绍、安装、使用
+├── docs/
+│   ├── ARCHITECTURE.md           # 架构、技术栈（人和 AI 共用）
+│   ├── CONVENTIONS.md            # 代码约定、命名规则（人和 AI 共用）
+│   └── COMMANDS.md               # 常用命令（测试 / 构建 / lint）
+├── CLAUDE.md                     # 仅 Claude 特有的偏好 / 提醒
+└── .github/
+    └── copilot-instructions.md   # 仅 Copilot 特有的偏好 / 提醒
+```
+
+`docs/` 里的文件是权威来源，CLAUDE.md 和 copilot-instructions.md 都**引用**它们，不复制内容。
+
+**README.md（只给人看，不写 AI 指令）**
+
+在 README 里塞"请遵循 xxx"之类的 AI 指令，会让人类读者困惑，也让 README 失焦。只写项目入口，链接到 `docs/`：
+
+```markdown
+## 开发者文档
+- 架构说明：docs/ARCHITECTURE.md
+- 代码约定：docs/CONVENTIONS.md
+- 常用命令：docs/COMMANDS.md
+```
+
+**CLAUDE.md（只写 Claude 特有内容，用 @ 引用共享文档）**
+
+Claude Code 支持 `@文件路径` 语法，会自动把引用的文件加载进上下文，无需复制内容：
+
+``` markdown title="CLAUDE.md"
+# Claude Code 工作指引
+
+请先阅读以下文件了解项目：
+- @docs/ARCHITECTURE.md
+- @docs/CONVENTIONS.md
+- @docs/COMMANDS.md
+
+## Claude 特定约定
+- 修改任何 migration 文件前先询问
+- 新增依赖前说明理由
+- 提交信息用中文，遵循 Conventional Commits
+```
+
+**.github/copilot-instructions.md（只写 Copilot 特有内容）**
+
+Copilot CLI 没有 `@` 引用机制，但在需要时会读取被提到的文件路径：
+
+``` markdown title=".github/copilot-instructions.md"
+# Copilot 工作指引
+
+项目架构见 docs/ARCHITECTURE.md
+代码约定见 docs/CONVENTIONS.md
+常用命令见 docs/COMMANDS.md
+
+## Copilot 特定约定
+- 生成代码前优先参考现有模式
+```
+
+**效果**：更新技术栈只改 `docs/ARCHITECTURE.md` 一处，三个地方自然同步，不会漂移。
+
+**进阶：用生成脚本代替手动引用**
+
+如果希望两个工具直接拿到完整上下文（而非靠引用），可以用脚本从 `docs/` 拼装出各自的指令文件，再追加工具专有内容：
+
+``` bash title="scripts/sync-ai-context.sh"
+#!/bin/bash
+# 拼装 CLAUDE.md：共享文档 + Claude 特有尾部
+cat docs/ARCHITECTURE.md docs/CONVENTIONS.md docs/COMMANDS.md > CLAUDE.md
+cat .claude/claude-specific.md >> CLAUDE.md
+
+# 拼装 copilot-instructions.md：共享文档 + Copilot 特有尾部
+cat docs/ARCHITECTURE.md docs/CONVENTIONS.md docs/COMMANDS.md > .github/copilot-instructions.md
+cat .github/copilot-specific.md >> .github/copilot-instructions.md
+```
+
+脚本放进 pre-commit hook 或手动执行。缺点是生成文件体积更大，每次运行都会覆盖，不适合频繁手动编辑的场景——两个工具都支持文件引用时，优先用引用方式，脚本留给必须内联完整上下文的场合（如 CI 机器人）。
+
+---
+
 ### 目录级规范：各有所长
 
 | 层级 | Claude Code | Copilot CLI | 建议 |
