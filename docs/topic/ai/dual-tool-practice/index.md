@@ -377,6 +377,160 @@ disable-model-invocation: false
 
 ---
 
+## 🏗️ Monorepo / 多仓库场景：分层上下文管理
+
+多仓库场景下，AI 工具面临一个三角矛盾：**需要全局视野来协调跨项目任务，又需要局部细节来干活，还不能每次把所有文档都塞进上下文**。解决方案是把文档像代码一样做模块化——分层加载 + 按需引用。
+
+### 推荐目录结构
+
+```text
+workspace/
+├── README.md                       # 工作区总览：有哪些项目、怎么协同
+├── CLAUDE.md                       # 根级 AI 指引：路由 + 跨项目规则
+├── .github/copilot-instructions.md # 同上，给 Copilot
+├── docs/
+│   ├── ARCHITECTURE.md             # 全局架构：服务拓扑、数据流
+│   ├── CONVENTIONS.md              # 跨项目共享约定
+│   └── WORKFLOWS.md                # 跨项目工作流（联调、发布）
+├── apps/
+│   ├── web-frontend/
+│   │   ├── README.md               # 这个前端的介绍
+│   │   ├── CLAUDE.md               # 前端特定的 AI 指引
+│   │   └── docs/CONVENTIONS.md     # 前端特定约定（覆盖全局）
+│   └── api-backend/
+│       ├── README.md
+│       ├── CLAUDE.md
+│       └── docs/
+├── packages/
+│   ├── shared-types/               # 前后端共享的 API 契约
+│   │   ├── README.md
+│   │   └── CLAUDE.md               # 可选，简单库可不写
+│   └── ui-components/
+└── services/
+    └── auth-service/
+        ├── README.md
+        └── CLAUDE.md
+```
+
+### Claude Code 的分层加载特性
+
+Claude Code 会**自动向上递归查找 CLAUDE.md**——当你在 `apps/web-frontend/` 下工作时，它同时加载：
+
+- `apps/web-frontend/CLAUDE.md`（局部，覆盖优先）
+- `workspace/CLAUDE.md`（根级，全局规则）
+
+利用这个机制，**根级写全局规则，子项目级写特殊规则**，自然形成局部覆盖全局的层叠效果。
+
+### 根级 CLAUDE.md：只当"调度台"
+
+根目录的 CLAUDE.md 不写实现细节，只做三件事——列项目地图、写跨项目规则、引用共享文档：
+
+``` markdown title="workspace/CLAUDE.md"
+# Workspace AI 指引
+
+## 项目地图
+本工作区包含以下子项目，进入对应目录前请先阅读其 CLAUDE.md：
+- apps/web-frontend/      — React 前端，见 @apps/web-frontend/CLAUDE.md
+- apps/api-backend/       — Go 后端 API，见 @apps/api-backend/CLAUDE.md
+- packages/shared-types/  — TS 类型定义（前后端共用）
+- services/auth-service/  — 独立鉴权微服务
+
+## 跨项目全局规则
+- 共享类型**必须**放 packages/shared-types，禁止在 app 里重复定义
+- API 契约变更需同步更新 shared-types 并通知前后端
+- 跨项目重构前先检查 docs/ARCHITECTURE.md 的依赖关系
+
+## 工作流
+- 全局架构：@docs/ARCHITECTURE.md
+- 联调/发布：@docs/WORKFLOWS.md
+- 通用约定：@docs/CONVENTIONS.md
+
+## 路由提示
+用户问题涉及单个子项目时，优先读该子项目的 CLAUDE.md，
+不要把所有子项目文档都加载进来。
+```
+
+### 子项目 CLAUDE.md：聚焦局部
+
+子项目 CLAUDE.md 只写这个项目自己的事——技术栈、特定约定、常用命令、与其他项目的关系：
+
+``` markdown title="apps/web-frontend/CLAUDE.md"
+# web-frontend AI 指引
+
+## 技术栈
+Next.js 14 App Router + TypeScript + Tailwind + TanStack Query
+
+## 本项目特定约定
+- 组件用函数式，禁用 class 组件
+- 状态管理优先 React Query，全局状态用 Zustand
+- 样式只用 Tailwind，禁止写 .css 文件
+- API 调用必须用 packages/shared-types 的类型
+
+## 常用命令
+pnpm dev / pnpm test / pnpm build
+
+## 与其他项目的关系
+- 调用 apps/api-backend 的 REST API（见 src/lib/api-client.ts）
+- 使用 packages/ui-components 的组件
+- 鉴权对接 services/auth-service（OIDC 流程）
+```
+
+### Copilot CLI 的适配
+
+Copilot CLI 的 `.github/copilot-instructions.md` **不会**像 Claude Code 那样自动分层加载，需要手动处理：
+
+| 方案 | 做法 | 优劣 |
+|------|------|------|
+| 方案 A | 只在根目录放一份，列清项目地图，让 Copilot 按需读对应目录 | 简单但上下文精准度差 |
+| 方案 B | 每个子项目也放 `.github/copilot-instructions.md` | 精准但冗余，维护成本高 |
+
+Claude Code 在多仓库场景的原生支持明显更强——这也是它更适合跨项目复杂任务的原因之一。
+
+### 四条防冗余硬规则
+
+**规则一：README.md 永远不写 AI 指令**
+子项目 README 就是给人看的——介绍这个模块做什么、怎么跑起来。AI 指令统一走 CLAUDE.md。
+
+**规则二：全局信息只在根 docs/ 写一次**
+"用什么数据库"、"服务怎么部署"这类跨项目事实，只在 `docs/ARCHITECTURE.md` 写。子项目 CLAUDE.md 里引用：`完整架构见 @../../docs/ARCHITECTURE.md`。
+
+**规则三：局部信息只在子项目写**
+前端用什么 UI 库，不要污染根 CLAUDE.md。根 CLAUDE.md 只负责"告诉 AI 去哪找"，不负责"AI 该知道什么"。
+
+**规则四：跨项目契约单独放一处，代码即文档**
+前后端共享的 API schema、事件格式、错误码——最容易两边各写一份造成漂移。正确做法是放 `packages/shared-types` 或 OpenAPI 文件里，两边 CLAUDE.md 都指向它。
+
+### 上下文预算
+
+AI 工具的上下文窗口再大也是有限的，尤其在大 monorepo 里。给 CLAUDE.md 设个硬性预算：
+
+- **根 CLAUDE.md：不超过 100 行** — 只做路由和全局规则
+- **子项目 CLAUDE.md：不超过 200 行** — 聚焦本项目
+- 超出就拆到 `docs/` 下，按需用 `@` 引用
+
+这样无论 AI 在哪个子目录工作，加载的上下文都是精准的、不冗余的。
+
+### 决策树：一条信息该放哪里？
+
+面对一条新内容，问三个问题：
+
+```
+给谁看？
+├── 只给人看       → README.md
+├── 只给 AI 看     → CLAUDE.md
+└── 都需要看       → docs/ARCHITECTURE.md 或 docs/CONVENTIONS.md
+
+作用范围？
+├── 全局（跨项目） → 根目录 docs/ 或根目录 CLAUDE.md
+└── 单项目局部    → 子项目 CLAUDE.md
+
+是否是跨项目契约？
+├── 是             → packages/ 或 docs/，两边 @引用
+└── 否             → 放在实际负责该逻辑的子项目下
+```
+
+---
+
 ## 🚫 防冗余检查清单
 
 在添加新配置前，先过一遍这个清单：
