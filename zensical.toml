@@ -217,7 +217,8 @@ nav = [
                     { "官方市场 copilot-plugins" = "topic/ai/github-copilot-cli/resources/copilot-plugins/index.md" },
                     { "社区市场 awesome-copilot" = "topic/ai/github-copilot-cli/resources/awesome-copilot/index.md" }
                 ] },
-                { "更新日志" = "topic/ai/github-copilot-cli/changelog/index.md" }
+                { "更新日志" = "topic/ai/github-copilot-cli/changelog/index.md" },
+                { "Copilot CLI+Claude Code双工具协同实践" = "topic/ai/github-copilot-cli/dual-tool-practice/index.md" }
             ] },
             { "Claude Code" = [
                 "topic/ai/claude-code/index.md",
@@ -250,8 +251,7 @@ nav = [
                 ] },
                 { "更新日志" = "topic/ai/claude-code/changelog/index.md" },
                 { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
-            ] },
-            { "双工具协同实践" = "topic/ai/dual-tool-practice/index.md" }
+            ] }
         ] },
         { "Windows" = [
             "topic/windows/index.md",

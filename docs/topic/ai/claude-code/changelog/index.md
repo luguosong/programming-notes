@@ -15,6 +15,48 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.116（2026-04-20）
+
+> 📝 **笔记定位**：[/resume 性能](../context-engineering/index.md) · [MCP 启动](../mcp/index.md) · [思考进度](../how-it-works/index.md) · [/config 搜索](../configuration/index.md) · [插件依赖](../plugins/index.md) · [沙箱安全](../configuration/index.md#-配置层级与优先级)
+
+### ⚡ 性能
+
+- **`/resume` 速度提升 66%+**：大型会话（40MB+）加载更快，更高效处理含多个死分支的会话
+- **MCP 启动加速**：配置多个 stdio 服务器时启动更快；`resources/templates/list` 延迟到首次 `@` 提及时加载
+- **终端滚动优化**：VS Code、Cursor 和 Windsurf 中全屏滚动更流畅，`/terminal-setup` 可配置编辑器滚动灵敏度
+
+### ✨ 新功能
+
+- **思考进度内联显示**：思考旋转器内联显示进度（"still thinking"、"thinking more"、"almost done thinking"）
+- **`/config` 搜索增强**：可匹配选项值（如搜索 "vim" 可找到编辑器模式设置）
+- **`/doctor` 异步打开**：无需等待当前轮次完成，可在 Claude 响应时打开
+- **插件依赖自动安装**：`/reload-plugins` 和后台插件自动更新可从已添加的市场自动安装缺失的依赖
+- **GitHub API 限流提示**：`gh` 命令触发 GitHub API 限流时显示提示，便于 Agent 主动退避
+- **Usage 标签页即时显示**：Settings 中的 Usage 标签页立即显示 5 小时和每周用量，限流时不再失败
+- **Agent 前置事项钩子**：通过 `--agent` 运行主线程代理时，`hooks:` 前置事项可触发
+- **斜杠命令无匹配提示**：筛选结果为零时显示 "No commands match"
+
+### 🔒 安全
+
+- **沙箱 `rm`/`rmdir` 加固**：针对 `/`、`$HOME` 或其他关键系统目录不再绕过危险路径安全检查
+
+### 🐛 修复
+
+- 修复天城文字和印度文字在终端 UI 中列对齐错误
+- 修复 VS Code 集成终端滚动时的空白单元格和界面消失问题
+- 修复短终端高度时模态搜索对话框溢出屏幕、遮盖搜索框和键盘提示
+- 修复 Ctrl+- 在 Kitty 协议终端（iTerm2、Ghostty、WezTerm 等）中不触发撤销
+- 修复 Cmd+Left/Right 在 Kitty 协议终端（Warp、kitty、Ghostty、WezTerm）中不跳转行首/行尾
+- 修复通过包装进程启动（`npx`、`bun run`）时 Ctrl+Z 挂起终端
+- 修复内联模式中终端调整大小或大量输出时的回滚重复问题
+- 修复并行请求期间的间歇性 API 400 错误（缓存控制 TTL 顺序）
+- 修复 `/branch` 拒绝大于 50MB 的会话文本记录
+- 修复 `/resume` 在大型会话文件上无声显示空对话
+- 修复 `/plugin` Installed 标签页重复显示条目
+- 修复 `/update` 和 `/tui` 在进入工作树后不工作
+
+---
+
 ## 📦 2.1.114（2026-04-17）
 
 ### 🐛 修复

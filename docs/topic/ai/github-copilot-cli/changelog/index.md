@@ -15,6 +15,39 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.34（2026-04-20）
+
+### 🔧 改进
+
+- 限流错误提示从"global rate limit"更新为"session rate limit"，表意更精确
+
+---
+
+## 📦 1.0.33（2026-04-20）
+
+> 📝 **笔记定位**：[斜杠命令](../basic/index.md#-常用斜杠命令速查) · [配额警告](../modes/index.md#实用标志)
+
+### ✨ 新功能
+
+- **新增命令别名**：`/bug`、`/continue`、`/release-notes`、`/export`、`/reset` 和 `/upgrade`
+- **斜杠命令选择器拼写建议**：输入拼写错误时提示相近命令
+- **更早显示配额警告**：在达到 50% 和 95% 配额时显示使用量警告（原为 75% 和 90%）
+
+### 🔧 改进
+
+- vim 风格导航（`j`/`k`）和任务终止（`x`）在任务对话框中可用
+- Auto 模式下子 Agent 继承当前会话模型
+- Reasoning 显示开关在帮助文档中有说明
+
+### 🐛 修复
+
+- 修复大型仓库内容策略导致的 grep 超时问题
+- 修复非交互模式在退出前未等待后台 Agent 完成
+- 修复技能选择器中 CJK/日文文本被截断
+- 修复斜杠命令选择器的命令选择行为
+
+---
+
 ## 📦 1.0.32（2026-04-17）
 
 > 📝 **笔记定位**：[实用标志](../modes/index.md#实用标志) · [远程会话控制](../modes/index.md#-远程会话控制) · [Plan 模式](../modes/index.md#-plan-模式) · [斜杠命令](../basic/index.md#-常用斜杠命令速查) · [恢复会话](../context/index.md#恢复会话) · [Skill 管理](../skills/index.md#-skill-管理命令) · [智能规划](../workflows/index.md#-智能规划从-issue-到实现蓝图)
