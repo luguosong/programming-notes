@@ -27,6 +27,7 @@ title: 表单
 <iframe class="html-demo" loading="lazy" src="demo/basic-structure.html" style="height:100px"></iframe>
 
 !!! note "MDN"
+
     `form` 的三个核心属性：
 
     | 属性 | 说明 | 示例 |
@@ -75,6 +76,7 @@ title: 表单
 <iframe class="html-demo" loading="lazy" src="demo/file-input-attributes.html" style="height:300px"></iframe>
 
 !!! note "MDN"
+
     除上述类型外，`input` 还支持以下 `type` 值：`search`、`tel`、`url`、`hidden`、`submit`、`reset`、`button`、`image`、`range`、`color`、`month`、`time`、`week`、`datetime-local`。完整列表见文末速查表。
 
 ### input 通用属性
@@ -180,6 +182,7 @@ title: 表单
 <iframe class="html-demo" loading="lazy" src="demo/button-types.html" style="height:100px"></iframe>
 
 !!! note "MDN"
+
     `<button>` 在 `<form>` 内部时，`type` 默认为 `submit`。这意味着如果忘了写 `type`，点击按钮会`意外提交表单`。最佳实践：`始终显式声明 type`。
 
 ✅ 始终声明 `type`：
@@ -244,6 +247,7 @@ title: 表单
 <iframe class="html-demo" loading="lazy" src="demo/fieldset-grouping.html" style="height:400px"></iframe>
 
 !!! note "MDN"
+
     `fieldset` 还有一个 `disabled` 属性——设置后，组内**所有**表单控件都会被禁用，无需逐个设置。这在表单分步填写、条件显示等场景下很实用。
 
 ``` html title="fieldset 禁用整组控件"
@@ -269,6 +273,7 @@ title: 表单
 ### output / progress / meter
 
 !!! note "MDN"
+
     HTML5 引入了几个用于展示数据的语义化标签，虽然不属于传统「表单控件」，但常配合表单使用。
 
 **`output`——计算结果输出**

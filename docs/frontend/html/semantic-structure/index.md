@@ -33,6 +33,7 @@ title: 语义化结构
 语义化标签用标签名本身来表达内容的含义，而不是依赖 `class` 属性。它带来三个核心好处：
 
 !!! note "MDN"
+
     语义化 HTML（Semantic HTML）是指使用 HTML 元素来传达页面结构和内容含义的实践。语义化标签不仅让代码更易读，还能显著提升 SEO、无障碍访问和代码可维护性。
 
 | 好处 | 说明 |
@@ -136,6 +137,7 @@ title: 语义化结构
 ### address / hgroup / search
 
 !!! note "MDN"
+
     `address` 元素提供其最近的 `article` 或 `body` 祖先元素的联系信息。`hgroup` 元素表示标题及其副标题或标语。`search` 元素表示包含搜索控件的部分。
 
 **`address`**——联系信息

@@ -63,6 +63,7 @@ title: 字符实体与交互元素
 ### details 与 summary
 
 !!! note "MDN"
+
     `<details>` 创建一个可折叠/展开的 disclosure widget，默认处于收起状态。`<summary>` 作为 `<details>` 的标题，用户点击后切换展开/收起。
 
 以前实现可折叠内容需要写不少 JavaScript，现在 HTML 原生就支持了——只需要两个标签：
@@ -82,6 +83,7 @@ title: 字符实体与交互元素
 <iframe class="html-demo" loading="lazy" src="demo/details-open.html"></iframe>
 
 !!! note "MDN"
+
     `<details>` 的 `open` 属性使其默认显示内容。可以通过 JavaScript 的 `toggle` 事件监听展开/收起状态变化。
 
 `details` 里面不只能放文字，可以放任意 HTML 内容：
@@ -103,6 +105,7 @@ title: 字符实体与交互元素
 ### dialog 标签
 
 !!! note "MDN"
+
     `<dialog>` 是原生对话框元素。添加 `open` 属性使其默认显示（非模态）；通过 JavaScript 的 `showModal()` 方法可以打开模态对话框，`close()` 方法关闭。
 
 以前弹窗要么用 `alert()`（简陋且无法自定义样式），要么自己用 `div` 模拟。现在 HTML 提供了原生的 `<dialog>` 标签：

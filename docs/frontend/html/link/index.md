@@ -103,6 +103,7 @@ title: 超链接
 | `tel:` | 在移动端唤起拨号界面（桌面端需 VoIP 软件） | `tel:+8613800138000` |
 
 !!! note "MDN"
+
     `tel:` 协议链接在移动设备上特别实用。用户点击后直接跳转到拨号界面，拨号号码已预填，只需确认拨打即可。
 
 ⚠️ `mailto:` 链接会暴露邮箱地址到 HTML 源码中，容易被爬虫抓取。公司网站或大流量站点慎用，否则会收到大量垃圾邮件。更安全的做法是使用联系表单。
@@ -120,6 +121,7 @@ title: 超链接
 <iframe class="html-demo" loading="lazy" src="demo/base-tag.html"></iframe>
 
 !!! note "MDN"
+
     `<base>` 标签最多只能出现一次，且必须包含 `href` 或 `target` 属性（或两者都有）。它会影响页面中所有使用相对 URL 的资源，包括 `<a>`、`<img>`、`<link>` 等标签。
 
 💡 `<base>` 在单页应用（SPA）部署到子路径时会用到，但日常开发中并不常见。了解即可，遇到相对路径奇怪的问题时记得排查是否有 `<base>` 标签。
@@ -140,6 +142,7 @@ title: 超链接
 | `noreferrer` | 不向目标网站发送来源信息（`Referer` 请求头） | 推荐配合使用 |
 
 !!! note "MDN"
+
     不加 `rel="noopener"` 时，通过 `target="_blank"` 打开的新页面可以使用 `window.opener` 获取原页面的 `window` 对象，进而修改原页面的 URL 甚至窃取信息。现代浏览器（Chrome 88+、Firefox 79+）已默认为新标签页设置 `noopener`，但为了兼容旧浏览器，仍然建议手动添加。
 
 ⚠️ 如果使用了 `rel="noreferrer"`，某些依赖 `Referer` 头来做统计分析的网站可能会丢失来源数据。需要根据实际场景权衡。

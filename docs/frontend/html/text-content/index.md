@@ -68,6 +68,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 ### br 换行与 hr 分隔线
 
 !!! note "MDN"
+
     `br`（break）产生一个换行；`hr`（horizontal rule）在页面中插入一条主题分隔线，用于分隔不同主题的内容区域。
 
 ``` html title="br 与 hr 演示"
@@ -200,6 +201,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 ### blockquote 与 q
 
 !!! note "MDN"
+
     `blockquote` 用于块级长引用，`cite` 属性可指定来源 URL；`q` 用于行内短引用，浏览器会自动添加引号。
 
 ``` html title="引用演示"
@@ -219,6 +221,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 ### code 与 pre
 
 !!! note "MDN"
+
     `code` 用于行内代码片段，默认使用等宽字体；`pre` 用于预格式化文本，会保留源代码中的空格、换行和缩进。
 
 ``` html title="code 行内代码"
@@ -246,6 +249,7 @@ HTML 文档的核心就是「文本」——标题、段落、强调、引用、
 ### kbd 与 samp
 
 !!! note "MDN"
+
     `kbd` 表示键盘输入，`samp` 表示程序输出示例——它们都是行内语义标签。
 
 ``` html title="kbd 与 samp 演示"
@@ -265,6 +269,7 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 ### mark / small / abbr / time
 
 !!! note "MDN"
+
     `mark` 用于高亮标记（类似荧光笔效果）；`small` 表示附注或小字；`abbr` 表示缩写；`time` 表示时间，`datetime` 属性提供机器可读格式。
 
 ``` html title="mark 与 small 演示"
@@ -294,6 +299,7 @@ HTML 还提供了一系列精细的行内语义标签，用于标记文本的特
 ### sub / sup / wbr / data / var
 
 !!! note "MDN"
+
     `sub` 和 `sup` 分别表示下标和上标；`wbr`（word break opportunity）建议浏览器在此处换行；`data` 关联机器可读数据；`var` 表示变量（数学或编程中的变量名）。
 
 ``` html title="sub 与 sup 演示"

@@ -152,6 +152,7 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 💡 简单来说：`defer` 是"等文档读完再执行，且按书写顺序"，`async` 是"谁先下载完谁先执行"。现代开发中，大多数脚本推荐使用 `defer`。
 
 !!! tip "延伸阅读"
+
     JavaScript 的详细用法（变量、函数、DOM 操作、事件处理等）将在 JavaScript 笔记中展开。
 
 ### canvas 绘图
@@ -175,6 +176,7 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 💡 `canvas` 的应用场景非常广泛——数据可视化图表（如 Chart.js）、游戏画面、图片处理、动画效果等都依赖它。但它的本质就是一块"让 JavaScript 画画的板子"，标签本身不提供任何绘图能力。
 
 !!! tip "延伸阅读"
+
     `canvas` 的详细绘图 API（路径、渐变、动画、像素操作等）将在 JavaScript 笔记中展开。
 
 ## 🧩 怎么复用 HTML 片段？——template 与 slot
@@ -202,6 +204,7 @@ HTML 提供了多种方式将外部内容嵌入到当前页面中。就像在墙
 <iframe class="html-demo" loading="lazy" src="demo/slot-demo.html"></iframe>
 
 !!! note "MDN"
+
     `template` 和 `slot` 是 Web Components 规范的一部分，与 `Custom Elements`、`Shadow DOM` 配合使用可以实现完整的原生组件化方案。这部分内容较为进阶，将在后续独立整理。目前只需了解它们的存在和基本概念即可。
 
 💡 现代前端框架（React、Vue）中的"组件"概念，本质上就是从这些原生能力中演化而来的——只不过框架提供了更简洁、更强大的语法糖。
