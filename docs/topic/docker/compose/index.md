@@ -9,6 +9,7 @@ title: Docker Compose
 当你的应用需要同时运行数据库、缓存、消息队列等多个服务时，逐个 `docker run` 不仅繁琐还容易出错。Docker Compose 就是为这种场景设计的：通过一个 `docker-compose.yml` 文件，将所有服务、网络、卷统一配置，一条命令启动整个环境。
 
 ???+ note "版本说明"
+
     Docker Compose V2 已内置于 Docker Desktop 和新版 Docker Engine，命令从 `docker-compose`（V1，需单独安装）改为 `docker compose`（V2，空格而非连字符）。本文统一使用 V2 语法。
 
 ---
@@ -319,6 +320,7 @@ services:
 ```
 
 ???+ tip "环境变量转义"
+
     在 `healthcheck.test` 中引用环境变量时，需要用 `$$` 转义（避免 Compose 提前解析），实际传给 shell 时为 `$`。
 
 #### 资源限制
@@ -658,6 +660,7 @@ docker compose watch --quiet
 ```
 
 ???+ tip "Watch vs volume bind mount"
+
     | 方式 | 优势 | 劣势 |
     |------|------|------|
     | `bind mount`（`-v ./src:/app/src`） | 简单，即时生效 | 无法按文件类型区分行为、无法自动重建 |
@@ -739,6 +742,7 @@ docker compose up -d
 ```
 
 ???+ tip "Profiles vs 多个 Compose 文件"
+
     - `Profiles`：适合少量服务的开关（如调试工具、监控组件），一个文件搞定
     - `多个 Compose 文件叠加`：适合整个服务配置的大幅差异（如开发 vs 生产的不同端口、资源限制）
 

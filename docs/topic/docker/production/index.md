@@ -42,6 +42,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 | `gcr.io/distroless/java17` | ~100 MB | 最好（无 shell） | 需适应无 shell 调试 |
 
 ???+ tip "distroless 注意事项"
+
     `distroless` 镜像没有 `sh`/`bash`，无法 `docker exec` 进入。调试时可临时使用 `debug` 变体：
     ``` bash
     # 调试时使用带 shell 的变体
@@ -286,6 +287,7 @@ services:
 ```
 
 ???+ warning "restart: always 的注意事项"
+
     手动 `docker stop` 的容器，在 Docker daemon 重启后**不会**被自动拉起（与 `always` 不同）。如果希望 daemon 重启后也自动拉起，使用 `always`。
 
 ---
@@ -329,6 +331,7 @@ services:
 - [ ] 使用 HTTPS（配置 TLS 证书）
 
 ???+ tip "自动化 Checklist"
+
     可以在 CI/CD 中使用 `hadolint`（Dockerfile Linter）和 `docker-compose config` 验证配置，自动拦截不合规项：
     ``` bash
     # Dockerfile 静态检查

@@ -79,6 +79,7 @@ docker stop my-nginx-2 && docker rm my-nginx-2
 ```
 
 ???+ success "你刚才经历了什么？"
+
     1. `docker pull` — 从 Docker Hub 下载了一个镜像（`nginx:latest`）
     2. `docker run` — 基于镜像创建并启动了一个容器
     3. `docker exec` — 在运行中的容器里执行了命令

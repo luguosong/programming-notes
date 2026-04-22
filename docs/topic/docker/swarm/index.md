@@ -9,6 +9,7 @@ title: Docker Swarm
 Docker Swarm 是 Docker 官方内置的容器编排工具，将多台 Docker 主机组成一个`集群（Swarm）`，以`服务（Service）`为单位统一管理和调度容器，提供高可用、负载均衡与滚动更新能力。
 
 ???+ tip "Swarm vs Kubernetes"
+
     Swarm 配置简单、与 Docker 原生集成；Kubernetes 功能更全、生态更大。小规模项目或已有 Docker Compose 经验的团队可优先考虑 Swarm。
 
 ---

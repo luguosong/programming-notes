@@ -40,6 +40,7 @@ graph LR
 | `runc` | OCI 标准的底层运行时，实际创建和运行容器进程 |
 
 ???+ tip "理解调用链的价值"
+
     排错时，这个调用链能帮你快速定位问题层级：
     - `docker run` 报错 → 检查 Client 与 Daemon 的通信（权限、TCP/Socket）
     - 容器启动失败 → 检查 containerd 日志（`journalctl -u containerd`）
@@ -367,6 +368,7 @@ docker run -d -v "${PWD}:/app" myapp
 ```
 
 ???+ warning "bind mount 注意事项"
+
     - 宿主机路径必须使用`绝对路径`
     - 挂载后容器内该路径的原有文件会被宿主机内容`覆盖`
     - 生产环境推荐使用 Volume，开发环境可使用 bind mount
@@ -390,6 +392,7 @@ docker run -d \
 | `rw` / `ro` | 读写 / 只读 |
 
 ??? warning "tmpfs 限制"
+
     - 仅在 **Linux** 上可用
     - 数据存储在内存中，容器停止即丢失——不能替代持久化存储
     - 大量写入可能影响宿主机可用内存
