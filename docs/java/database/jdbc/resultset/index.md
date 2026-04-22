@@ -39,6 +39,7 @@ description: JDBC ResultSet 游标遍历、按列名/索引取值、ResultSetMet
 ```
 
 !!! note "按索引 vs 按列名"
+
     - 按列名（`rs.getString("name")`）：可读性好，不受 SELECT 列顺序变化影响，`推荐`
     - 按列索引（`rs.getString(2)`）：性能略高，但列顺序变化后容易出错
 

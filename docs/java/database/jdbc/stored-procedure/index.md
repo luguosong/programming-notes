@@ -102,4 +102,5 @@ cs.registerOutParameter(2, Types.INTEGER);
 | `Types.TIMESTAMP` | `TIMESTAMP` | `getTimestamp()` |
 
 !!! note "H2 数据库限制"
+
     H2 不支持原生 OUT/INOUT 参数。上述示例通过返回 `ResultSet` 的函数模拟，代码注释中附带了 MySQL 原生写法。实际项目中如需使用存储过程，建议在 MySQL / PostgreSQL / Oracle 等完整功能数据库上测试。

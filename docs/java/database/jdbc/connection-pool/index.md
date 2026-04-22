@@ -62,6 +62,7 @@ sequenceDiagram
 ```
 
 !!! note "如何选择连接池"
+
     - `HikariCP`：性能最优，Spring Boot 默认，大多数场景首选
     - `Druid`：功能丰富，需要 SQL 监控/慢查询统计/连接池状态监控时首选
 

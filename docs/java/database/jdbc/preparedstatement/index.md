@@ -71,7 +71,9 @@ description: JDBC PreparedStatement 参数化查询，防 SQL 注入、预编译
 ```
 
 !!! warning "BLOB 大小限制"
+
     MySQL 默认 `max_allowed_packet` 为 64 MB，存储超大文件建议使用对象存储（OSS/S3），数据库只存元数据和文件路径。
 
 !!! tip "优先使用 PreparedStatement"
+
     任何含用户输入的 SQL 都应使用 `PreparedStatement`。即使是内部系统无注入风险的场景，预编译带来的性能提升和代码可读性提升也值得优先选择 `PreparedStatement`。

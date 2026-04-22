@@ -74,4 +74,5 @@ graph TB
 ```
 
 !!! note "现代项目无需手动注册"
+
     使用 Maven/Gradle 引入驱动 JAR 后，JDBC 4.0 SPI 机制会在 `DriverManager` 初始化时自动完成注册。实际项目中`无需编写任何注册代码`，直接调用 `DriverManager.getConnection()` 即可。

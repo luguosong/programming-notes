@@ -57,5 +57,6 @@ jdbc:<子协议>:<子名称>
 ```
 
 !!! warning "务必关闭连接"
+
     数据库连接属于稀缺资源。未关闭的连接会持续占用数据库服务器端的槽位，最终导致连接耗尽（`Too many connections` 错误）。
     `始终使用 try-with-resources 包裹 Connection、Statement、ResultSet。`
