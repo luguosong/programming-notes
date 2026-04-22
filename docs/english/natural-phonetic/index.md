@@ -37,7 +37,8 @@ icon: material/translate
 | **建议**   | 先学自然拼读打好基础      | 后学音标补充精确度   |
 
 !!! tip "学习建议"
-建议先通过自然拼读建立字母与发音的直觉，再学习音标来精确化你的发音。两者是互补关系，不是替代关系。
+
+    建议先通过自然拼读建立字母与发音的直觉，再学习音标来精确化你的发音。两者是互补关系，不是替代关系。
 
 ## 🔤 26 个字母能发多少种音？
 
@@ -171,8 +172,10 @@ icon: material/translate
 | z    | /z/  | <button class="md-pronounce-btn" data-word="zoo" title="听 /z/"><i class="fa fa-volume-up"></i></button> `zoo`, <button class="md-pronounce-btn" data-word="zip" title="点击发音"><i class="fa fa-volume-up"></i></button> `zip`, <button class="md-pronounce-btn" data-word="buzz" title="点击发音"><i class="fa fa-volume-up"></i></button> `buzz`  |
 
 !!! note "特殊辅音字母"
-- `c` 和 `g` 有两种常见发音（硬音和软音），详见「辅音的特殊发音」章节 - `q` 几乎总是和 `u` 一起出现，发 /kw/ - `y`
-可以做辅音（/j/），也可以做元音（/aɪ/ 或 /ɪ/）
+
+    - `c` 和 `g` 有两种常见发音（硬音和软音），详见「辅音的特殊发音」章节
+    - `q` 几乎总是和 `u` 一起出现，发 /kw/
+    - `y` 可以做辅音（/j/），也可以做元音（/aɪ/ 或 /ɪ/）
 
 ### 元音字母简介
 
@@ -281,12 +284,14 @@ graph LR
 ```
 
 !!! tip "拼读方法"
-按 C → V → C 的顺序逐个读出音，然后加速连读：`c` + `a` + `t` → `cat`
+
+    按 C → V → C 的顺序逐个读出音，然后加速连读：`c` + `a` + `t` → `cat`
 
 ### 练习：拼读 CVC 单词
 
 ???+ example "练习"
-**一、拼读题**：运用短元音规则，尝试拼读以下单词：
+
+    **一、拼读题**：运用短元音规则，尝试拼读以下单词：
 
     1. b __ t （短元音 /æ/）
     2. p __ n （短元音 /ɛ/）
@@ -303,6 +308,7 @@ graph LR
     10. `gum` → /æ/, /ɛ/, /ɪ/, /ɒ/, /ʌ/？
 
     ??? "答案"
+
         1. bat /bæt/
         2. pen /pɛn/
         3. hip /hɪp/
@@ -334,9 +340,10 @@ graph LR
 sh · <button class="md-pronounce-btn" data-word="think" title="点击发音"><i class="fa fa-volume-up"></i></button> th
 
 !!! note "th 的清浊之分"
-- **清音 /θ/**：声带不振动，如 `think`, `three`, `tooth`
-- **浊音 /ð/**：声带振动，如 `this`, `that`, `the`
-- 区分方法：手指按住喉咙，发 /θ/ 时无振动感，发 /ð/ 时有振动感
+
+    - **清音 /θ/**：声带不振动，如 `think`, `three`, `tooth`
+    - **浊音 /ð/**：声带振动，如 `this`, `that`, `the`
+    - 区分方法：手指按住喉咙，发 /θ/ 时无振动感，发 /ð/ 时有振动感
 
 ### 辅音连缀
 
@@ -403,12 +410,15 @@ st · <button class="md-pronounce-btn" data-word="swim" title="点击发音"><i 
 <button class="md-pronounce-btn" data-word="blue" title="点击发音"><i class="fa fa-volume-up"></i></button> 听辅音连缀
 
 !!! tip "二合辅音 vs 辅音连缀"
-- `二合辅音`（如 sh）：两个字母发**一个**新音 → /ʃ/ - `辅音连缀`（如 bl）：两个字母各发各的音，快速连读 → /b/ + /l/
+
+    - `二合辅音`（如 sh）：两个字母发**一个**新音 → /ʃ/
+    - `辅音连缀`（如 bl）：两个字母各发各的音，快速连读 → /b/ + /l/
 
 ### 练习：辅音组合拼读
 
 ???+ example "练习"
-**一、判断题**：以下字母组合是二合辅音还是辅音连缀？
+
+    **一、判断题**：以下字母组合是二合辅音还是辅音连缀？
 
     1. `sh` → ？
     2. `bl` → ？
@@ -425,6 +435,7 @@ st · <button class="md-pronounce-btn" data-word="swim" title="点击发音"><i 
     10. st__p （辅音连缀 /st/ + 短元音 /ɒ/）
 
     ??? "答案"
+
         1. 二合辅音（发 /ʃ/，一个新音）
         2. 辅音连缀（/b/ + /l/，各自保留发音）
         3. 二合辅音（发 /θ/ 或 /ð/，一个新音）
@@ -466,7 +477,8 @@ graph LR
 <button class="md-pronounce-btn" data-word="kite" title="点击发音"><i class="fa fa-volume-up"></i></button> 听 Magic E
 
 !!! tip "记忆口诀"
-「结尾有 e，前面元音就喊自己的名字！」
+
+    「结尾有 e，前面元音就喊自己的名字！」
 
     比如 `kite` 中的 `i` 就喊出了自己的名字「I」/aɪ/。
 
@@ -516,12 +528,14 @@ graph LR
 | ue           | <button class="md-pronounce-btn" data-word="blue" title="点击发音"><i class="fa fa-volume-up"></i></button> `blue`, <button class="md-pronounce-btn" data-word="true" title="点击发音"><i class="fa fa-volume-up"></i></button> `true`, <button class="md-pronounce-btn" data-word="glue" title="点击发音"><i class="fa fa-volume-up"></i></button> `glue` | /bluː/, /truː/, /ɡluː/  |
 
 !!! note "长元音发音提示"
-所有长元音其实就是元音字母「自己的名字」：A 读 /eɪ/，E 读 /iː/，I 读 /aɪ/，O 读 /oʊ/，U 读 /juː/。记住了字母名，就记住了长元音。
+
+    所有长元音其实就是元音字母「自己的名字」：A 读 /eɪ/，E 读 /iː/，I 读 /aɪ/，O 读 /oʊ/，U 读 /juː/。记住了字母名，就记住了长元音。
 
 ### 练习：Magic E 单词
 
 ???+ example "练习"
-**一、转换题**：给以下短元音单词加上 Magic E，写出新单词和发音：
+
+    **一、转换题**：给以下短元音单词加上 Magic E，写出新单词和发音：
 
     1. `mat` → m__t__e → ? /?
     2. `hop` → h__p__e → ? /?
@@ -538,6 +552,7 @@ graph LR
     10. `home` → 长/短？
 
     ??? "答案"
+
         1. mate /meɪt/（a 发 /eɪ/）
         2. hope /hoʊp/（o 发 /oʊ/）
         3. bite /baɪt/（i 发 /aɪ/）
@@ -576,8 +591,11 @@ ea · <button class="md-pronounce-btn" data-word="boat" title="点击发音"><i 
 oa · <button class="md-pronounce-btn" data-word="pie" title="点击发音"><i class="fa fa-volume-up"></i></button> ie
 
 !!! warning "ea 的例外"
-`ea` 并不总是发 /iː/，常见的例外有： - `bread` /brɛd/（面包）、`head` /hɛd/（头）、`dead` /dɛd/（死的）→ 发 /ɛ/ - `break`
-/breɪk/（打破）、`great` /ɡreɪt/（伟大的）→ 发 /eɪ/
+
+    `ea` 并不总是发 /iː/，常见的例外有：
+
+    - `bread` /brɛd/（面包）、`head` /hɛd/（头）、`dead` /dɛd/（死的）→ 发 /ɛ/
+    - `break` /breɪk/（打破）、`great` /ɡreɪt/（伟大的）→ 发 /eɪ/
 
 #### 不遵循「首个元音说话」的组合
 
@@ -601,12 +619,16 @@ ou · <button class="md-pronounce-btn" data-word="cow" title="点击发音"><i c
 /oʊ/ · <button class="md-pronounce-btn" data-word="coin" title="点击发音"><i class="fa fa-volume-up"></i></button> oi
 
 !!! note "oo 的长短之分"
-- **长音 /uː/**：`moon`, `food`, `zoo`, `pool`, `school`
-- **短音 /ʊ/**：`book`, `look`, `good`, `wood`, `foot`
-- 没有绝对规则，需要逐个记忆常见单词
+
+    - **长音 /uː/**：`moon`, `food`, `zoo`, `pool`, `school`
+    - **短音 /ʊ/**：`book`, `look`, `good`, `wood`, `foot`
+    - 没有绝对规则，需要逐个记忆常见单词
 
 !!! note "ow 的两种发音"
-- `/aʊ/`（如 `cow`, `how`）：在大多数单词中 - `/oʊ/`（如 `snow`, `grow`）：在少数单词中 - 需要根据单词记忆
+
+    - `/aʊ/`（如 `cow`, `how`）：在大多数单词中
+    - `/oʊ/`（如 `snow`, `grow`）：在少数单词中
+    - 需要根据单词记忆
 
 ### R 控制元音
 
@@ -626,8 +648,12 @@ ir · <button class="md-pronounce-btn" data-word="horse" title="点击发音"><i
 or · <button class="md-pronounce-btn" data-word="burn" title="点击发音"><i class="fa fa-volume-up"></i></button> ur
 
 !!! tip "er, ir, ur 同音记忆"
-`er`、`ir`、`ur` 都发 /ɜːr/ 这个音，可以通过例词记忆： - **er**：`her`（她）、`water`（水） - **ir**：`bird`（鸟）、`girl`（女孩） - *
-*ur**：`burn`（燃烧）、`turn`（转）
+
+    `er`、`ir`、`ur` 都发 /ɜːr/ 这个音，可以通过例词记忆：
+
+    - **er**：`her`（她）、`water`（水）
+    - **ir**：`bird`（鸟）、`girl`（女孩）
+    - **ur**：`burn`（燃烧）、`turn`（转）
 
 ### 其他重要元音组合
 
@@ -644,12 +670,14 @@ or · <button class="md-pronounce-btn" data-word="burn" title="点击发音"><i 
 | ough | /ʌf/ | <button class="md-pronounce-btn" data-word="tough" title="点击发音"><i class="fa fa-volume-up"></i></button> `tough`, <button class="md-pronounce-btn" data-word="rough" title="点击发音"><i class="fa fa-volume-up"></i></button> `rough`, <button class="md-pronounce-btn" data-word="enough" title="点击发音"><i class="fa fa-volume-up"></i></button> `enough`     | 困难、粗糙、足够 |
 
 !!! warning "ough 是英语中最不规则的字母组合"
-`ough` 至少有 6 种不同的发音，没有统一规则，只能逐词记忆。
+
+    `ough` 至少有 6 种不同的发音，没有统一规则，只能逐词记忆。
 
 ### 练习：元音组合辨析
 
 ???+ example "练习"
-**一、辨析题**：判断以下单词中高亮字母组合的发音：
+
+    **一、辨析题**：判断以下单词中高亮字母组合的发音：
 
     1. `rain`（ai）→ /eɪ/, /iː/, /oʊ/？
     2. `book`（oo）→ /uː/, /ʊ/？
@@ -666,6 +694,7 @@ or · <button class="md-pronounce-btn" data-word="burn" title="点击发音"><i 
     10. st__ r （star，/ɑːr/）
 
     ??? "答案"
+
         1. /eɪ/
         2. /ʊ/（短音）
         3. /ɜːr/
@@ -716,7 +745,8 @@ enough
 | <button class="md-pronounce-btn" data-word="laugh" title="点击发音"><i class="fa fa-volume-up"></i></button> `laugh`    | /læf/     | 笑（例外！） |
 
 !!! warning "laugh 是 augh 的例外"
-大多数 `augh` 发 /ɔː/，但 `laugh` 发 /læf/，需单独记忆。
+
+    大多数 `augh` 发 /ɔː/，但 `laugh` 发 /læf/，需单独记忆。
 
 ### 辅音的特殊发音
 
@@ -793,8 +823,11 @@ eye · <button class="md-pronounce-btn" data-word="listen" title="点击发音">
 listen
 
 !!! tip "视觉词学习方法"
-1. 不要试图用拼读规则来读这些词 2. 把它们当作整体图像来记忆（看到形状就认出意思） 3. 每次记忆 5-10 个，通过反复阅读巩固 4.
-制作闪卡（正面写单词，背面写发音和释义）
+
+    1. 不要试图用拼读规则来读这些词
+    2. 把它们当作整体图像来记忆（看到形状就认出意思）
+    3. 每次记忆 5-10 个，通过反复阅读巩固
+    4. 制作闪卡（正面写单词，背面写发音和释义）
 
 ## 🧩 遇到长单词怎么拆开读？
 
@@ -877,12 +910,14 @@ graph TD
 <button class="md-pronounce-btn" data-word="fantastic" title="点击发音"><i class="fa fa-volume-up"></i></button> 听多音节
 
 !!! tip "熟能生巧"
-多音节词拼读需要大量练习。建议每天练习 5-10 个多音节单词，逐渐建立对音节划分的直觉。
+
+    多音节词拼读需要大量练习。建议每天练习 5-10 个多音节单词，逐渐建立对音节划分的直觉。
 
 ### 练习：多音节单词拼读
 
 ???+ example "练习"
-**一、音节划分**：为以下单词划分音节，判断每个音节的类型：
+
+    **一、音节划分**：为以下单词划分音节，判断每个音节的类型：
 
     1. `sunflower` → __·____·____（__·__·__）
     2. `basketball` → __·____·____（__·__·__）
@@ -899,6 +934,7 @@ graph TD
     10. `river` → ri（长/短）· ver（长/短）？
 
     ??? "答案"
+
         1. sun·flow·er（闭·VCe·R控制）
         2. bas·ket·ball（闭·闭·闭）
         3. im·por·tant（闭·R控制·闭）
@@ -941,10 +977,12 @@ graph TD
 ### 常见发音习惯问题
 
 !!! warning "中国学习者特别注意"
-1. **不要在词尾加元音**：`cat` 读成 /kæt/，不要读成 /kætə/；`dog` 读 /dɒɡ/，不要读 /dɒɡə/ 2. **注意 /l/ 的发音**
-：中文没有舌尖顶住上齿龈的 l 音，练习 `leg`、`ball` 时注意舌头位置 3. **/r/ 和中文 r 不同**：英语 /r/ 嘴唇微突但不卷舌，`run`
-不是「润」 4. **/θ/ 和 /ð/ 需要舌头伸出**：发这两个音时，舌尖要轻轻接触上齿，这是中文中没有的动作 5. **长元音要真正拉长**：
-`see` /siː/ 的 /iː/ 要明显比 `sit` /sɪt/ 的 /ɪ/ 长
+
+    1. **不要在词尾加元音**：`cat` 读成 /kæt/，不要读成 /kætə/；`dog` 读 /dɒɡ/，不要读 /dɒɡə/
+    2. **注意 /l/ 的发音**：中文没有舌尖顶住上齿龈的 l 音，练习 `leg`、`ball` 时注意舌头位置
+    3. **/r/ 和中文 r 不同**：英语 /r/ 嘴唇微突但不卷舌，`run` 不是「润」
+    4. **/θ/ 和 /ð/ 需要舌头伸出**：发这两个音时，舌尖要轻轻接触上齿，这是中文中没有的动作
+    5. **长元音要真正拉长**：`see` /siː/ 的 /iː/ 要明显比 `sit` /sɪt/ 的 /ɪ/ 长
 
 ## 📈 学习路线与资源
 
@@ -990,8 +1028,11 @@ graph TD
 | Oxford Phonics World | 牛津大学出版社的自然拼读课程    | 牛津自然拼读教材系列                                          |
 
 !!! tip "每天练习建议"
-- **10 分钟**：复习已学的拼读规则 - **10 分钟**：练习拼读新的单词（5-10 个） - **5 分钟**：做一个小练习或游戏 - **坚持比强度更重要
-**：每天 25 分钟 > 周末突击 3 小时
+
+    - **10 分钟**：复习已学的拼读规则
+    - **10 分钟**：练习拼读新的单词（5-10 个）
+    - **5 分钟**：做一个小练习或游戏
+    - **坚持比强度更重要**：每天 25 分钟 > 周末突击 3 小时
 
 ## 📋 快速参考：自然拼读规则一览
 
