@@ -124,6 +124,7 @@ scope=openid profile email
 ```
 
 !!! info inline end "ABNF（RFC 6749 Appendix A）"
+
     `scope = scope-token *(SP scope-token)`，其中 `scope-token = 1*NQCHAR`（不含引号和空格的可见 ASCII 字符）
 
 `Scope 的关键特性：`

@@ -124,6 +124,7 @@ sequenceDiagram
 | `temporarily_unavailable` | 授权服务器暂时过载或维护中 |
 
 !!! info inline end "ABNF（RFC 6749 Appendix A）"
+
     `code = 1*VSCHAR`（一个或多个可见 ASCII 字符），`state = 1*VSCHAR`
 
 ### Token 响应格式
@@ -218,6 +219,7 @@ sequenceDiagram
 PKCE 用 `code_verifier`/`code_challenge` 绑定替代 `client_secret`，即使授权码被截获，攻击者也无法在 Token 端点使用（因为不知道 `code_verifier`）。
 
 !!! tip "OAuth 2.1 草案变化"
+
     OAuth 2.1 草案已将 PKCE 对所有授权码流程设为强制（包括机密客户端），即使今天使用 OAuth 2.0 实现，也建议始终开启 PKCE。
 
 PKCE 的安全分析详见「安全实践 · PKCE」。
@@ -285,6 +287,7 @@ sequenceDiagram
 4. `返回资源`：资源服务器验证 Token 后返回数据。
 
 !!! note "无 Refresh Token"
+
     客户端凭证流程通常不颁发 Refresh Token，Access Token 过期后直接重新请求即可。
 
 ## 设备授权流程（Device Flow）
@@ -322,6 +325,7 @@ sequenceDiagram
 ## 隐式流程（Implicit）— ⚠️ 已弃用
 
 !!! danger "已弃用"
+
     隐式流程因严重安全缺陷已在 OAuth 2.1 中移除。现代应用应使用`授权码流程 + PKCE` 替代。此处仅作历史参考。
 
 隐式流程最初为`纯前端应用（SPA）`设计——当时浏览器无法安全保存 `client_secret`，也没有 PKCE 机制。它的做法是跳过授权码这个中间步骤，直接在授权端点通过 URL 片段（`fragment`）返回 Access Token。
@@ -362,6 +366,7 @@ sequenceDiagram
 ## 资源所有者密码凭证（ROPC）— ⚠️ 已弃用
 
 !!! danger "已弃用"
+
     ROPC 因违反 OAuth 核心设计原则已在 OAuth 2.1 中移除。现代应用应使用`授权码流程 + PKCE` 替代。此处仅作历史参考。
 
 ROPC 的做法是`用户直接将用户名和密码交给客户端`，由客户端代为向授权服务器换取 Token。这完全违背了 OAuth 的初衷——`让应用不接触用户密码`。

@@ -86,6 +86,7 @@ Host: server.example.com
 RFC 6750 明确指出这种方式存在**严重安全隐患**：URL 会被记录在浏览器历史记录、Web 服务器访问日志、代理服务器日志中，还可能通过 `Referer` 头泄露给第三方网站。OAuth 2.1 已`完全禁止`此方式。
 
 !!! warning "额外要求"
+
     使用 URI Query Parameter 方式时，客户端`应`同时发送 `Cache-Control: no-store` 头，防止响应被缓存。资源服务器在成功响应中`应`包含 `Cache-Control: private` 头。
 
 ### WWW-Authenticate 错误响应

@@ -147,6 +147,7 @@ public class ApiClientConfig {
 ```
 
 !!! tip "纯服务端应用（无用户登录）的注意点"
+
     上面示例的 `DefaultOAuth2AuthorizedClientManager` 依赖 `HttpServletRequest`/`HttpServletResponse`，适用于`有用户会话的 Web 应用`。若是纯后台服务（如批处理任务、定时任务），需改用不依赖 Servlet 上下文的 `AuthorizedClientServiceOAuth2AuthorizedClientManager`：
 
     ``` java
@@ -276,6 +277,7 @@ public class OpaqueResourceServerConfig {
 在测试中使用 `SecurityMockMvcRequestPostProcessors.jwt()` 模拟 JWT：
 
 !!! warning "@WithMockUser 不适用于资源服务器测试"
+
     `@WithMockUser` 只能设置表单登录认证的 `UsernamePasswordAuthenticationToken`，无法设置 JWT `Principal`。资源服务器测试**必须使用 `jwt()` Post Processor**，否则 `@AuthenticationPrincipal Jwt` 注入的对象将为 `null`。
 
 ``` java title="ApiControllerTest.java"

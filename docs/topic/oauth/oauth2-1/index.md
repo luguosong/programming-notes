@@ -54,6 +54,7 @@ OAuth 2.1 将以下规范的核心要求合并为一个文档：
 | `code_challenge_method` | `plain` 或 `S256` | 推荐 `S256`（`plain` 仅在技术上无法支持 SHA256 时允许） |
 
 !!! tip "影响"
+
     所有授权请求必须携带 `code_challenge` 参数，所有 Token 请求必须携带 `code_verifier` 参数。不提供 PKCE 参数的授权请求应被拒绝。
 
 PKCE 的详细流程机制见「授权流程」中的 PKCE 章节。
@@ -65,6 +66,7 @@ OAuth 2.1 `完全移除`了隐式流程（`response_type=token`）。
 移除原因：隐式流程将 Access Token 放在 URL 片段中返回（`response_type=token`），这些 Token 容易通过浏览器历史记录、Referer 头等方式泄露，且无法进行发送者约束（DPoP/mTLS 绑定）。授权码流程 + PKCE 已经完全替代了隐式流程的使用场景。
 
 !!! warning "迁移指引"
+
     仍在使用隐式流程的 SPA 应用应迁移至`授权码流程 + PKCE`。详见「授权流程」中的授权码流程。
 
 ### 3. 移除资源所有者密码凭证（ROPC）
@@ -74,6 +76,7 @@ OAuth 2.1 `完全移除`了密码授权类型（`grant_type=password`）。
 移除原因：ROPC 要求客户端在内存中明文持有用户密码，无法使用 MFA、SSO 等高级认证方式，且密码一旦泄露会影响用户在授权服务器上的所有账户。应使用授权码流程替代。
 
 !!! note "遗留系统迁移"
+
     对于因历史原因仍在使用 ROPC 的系统，建议逐步迁移到授权码流程。若应用本身就是资源所有者（即第一方应用），可考虑直接使用授权服务器的登录页面。
 
 ### 4. redirect_uri 必须精确字符串匹配
@@ -157,6 +160,7 @@ OAuth 2.1 与 OAuth 2.0 保持`向后兼容`：
 - 已有的 OAuth 2.0 基础设施（授权服务器、资源服务器）通常只需`配置调整`而非代码重写即可满足 2.1 要求
 
 !!! info "OAuth 2.1 不是替代品"
+
     OAuth 2.1 没有引入新的授权流程或令牌类型。它的价值在于`将分散的安全要求集中为一个文档`，让开发者不再需要同时参考多个 RFC 来实现安全的 OAuth 系统。OAuth 2.0 生态中的扩展规范（如 Token Exchange RFC 8693、Device Authorization Grant RFC 8628 等）不受影响，继续独立适用。
 
 ## ✅ 迁移检查清单
@@ -176,6 +180,7 @@ OAuth 2.1 与 OAuth 2.0 保持`向后兼容`：
 ## 📊 OAuth 2.1 规范状态
 
 !!! note "当前状态"
+
     截至撰写时，OAuth 2.1（`draft-ietf-oauth-v2-1`）仍为 IETF 草案阶段，但其包含的所有安全要求已在 RFC 9700（OAuth 2.0 Security Best Current Practice）中被正式采纳为最佳实践。主流授权服务器（如 Spring Authorization Server、Keycloak、Auth0）已全面支持这些要求。
 
 ---

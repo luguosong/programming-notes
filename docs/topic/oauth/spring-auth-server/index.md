@@ -13,6 +13,7 @@ title: 实战：授权服务器
     - 本文以 1.5.x 为主，文末提供 7.0 迁移要点
 
 !!! info "配置方式说明"
+
     Spring Authorization Server 提供两种配置方式：
 
     - `方式一（推荐）`：手动创建授权服务器 Filter Chain，灵活可扩展，本文采用此方式
@@ -278,6 +279,7 @@ spring:
 ```
 
 !!! note "UserDetailsService Bean 的优先级"
+
     若已在代码中定义了 `UserDetailsService` Bean（如上方的 `InMemoryUserDetailsManager`），Spring Boot Auto-configuration 会`忽略` `spring.security.user` 属性配置。`application.yml` 中的 `spring.security.user` 仅在没有 `UserDetailsService` Bean 时生效，用于快速测试。
 
 ## 🔄 Spring Security 7.0 迁移要点
@@ -291,6 +293,7 @@ spring:
 | `@Import(OAuth2AuthorizationServerConfiguration.class)` | 极简场景可用（不推荐生产使用） | 通过 Security Filter Chain 配置 |
 
 !!! tip "关注官方迁移指南"
+
     Spring Security 7.0 发布后，请参考官方迁移文档（本笔记站持续更新中）以及 [Spring Security 官方 Release Notes](https://github.com/spring-projects/spring-security/releases)。
 
 ---

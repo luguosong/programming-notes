@@ -56,6 +56,7 @@ sequenceDiagram
 :   需要持有`初始访问令牌`（Initial Access Token）才能调用注册端点。初始令牌通常通过授权服务器的`开发者门户`手动获取。适用于需要审核第三方接入的场景。
 
 !!! tip "两种模式可以共存"
+
     同一个授权服务器可以同时支持开放注册和受保护注册——对信任的合作伙伴提供受保护注册，对普通开发者开放自助注册。
 
 ## 📋 注册时要填哪些信息？——客户端元数据
@@ -95,6 +96,7 @@ sequenceDiagram
 | `software_version` | string | 软件版本号，每次更新软件时应变更 |
 
 !!! warning "`jwks_uri` 和 `jwks` 互斥"
+
     两者不能同时出现在同一请求或响应中。优先使用 `jwks_uri`，因为它支持远程密钥轮换，无需重新注册。
 
 ## 🔗 授权类型与响应类型的对应关系
@@ -200,6 +202,7 @@ Pragma: no-cache
 | `client_secret_expires_at` | 颁发 secret 时必须 | `client_secret` 的过期时间（0 表示永不过期） |
 
 !!! note "授权服务器可以修改元数据"
+
     授权服务器可以拒绝或替换客户端请求的任何元数据值。例如，客户端请求 `scope=read write admin`，授权服务器可能只批准 `scope=read write`。客户端应检查响应中的实际值，确认是否满足使用需求。如果不满，可通过 RFC 7592（注册管理协议）尝试更新。
 
 ### 错误响应
@@ -270,6 +273,7 @@ Host: server.example.com
 - 如果不信任或不支持软件声明，则`忽略`软件声明，使用普通 JSON 中的值
 
 !!! tip "软件声明的推荐做法"
+
     - 推荐使用 `RS256` 签名算法
     - 推荐包含 `software_id` 声明，便于授权服务器关联同一软件的不同实例
     - 软件声明随所有客户端实例分发，获取方式不在 RFC 7591 范围内（通常是开发者向软件发布者注册获取）
@@ -302,6 +306,7 @@ Host: server.example.com
 - 验证 `client_uri`、`policy_uri`、`tos_uri` 等展示型 URL 是否指向有效页面
 
 !!! warning "展示型 URL 的安全风险"
+
     恶意客户端可能在 `policy_uri` 等字段中放置恶意链接（如下载木马），诱导用户在授权页面点击。授权服务器应尽量验证这些 URL 的安全性，甚至可以在跳转前展示一个`中间警告页`。
 
 ### 客户端密钥安全
@@ -384,6 +389,7 @@ Authorization: Bearer reg-23410913-abewfq.123483
 成功返回 `200 OK`，包含所有已注册的元数据。
 
 !!! important "响应中可能包含新的凭证"
+
     读取响应中的 `client_secret` 和 `registration_access_token` `可能`与之前不同——授权服务器可能在读取时轮换凭证。客户端收到新凭证后`必须立即丢弃`旧凭证。
 
 ### 更新注册信息（PUT）
@@ -434,6 +440,7 @@ Authorization: Bearer reg-23410913-abewfq.123483
 成功返回 `204 No Content`。
 
 !!! tip "删除后的清理"
+
     授权服务器`应该`同时撤销与该客户端关联的所有授权许可、Access Token 和 Refresh Token，彻底清理客户端的痕迹。
 
 ### 凭证轮换
@@ -453,6 +460,7 @@ Authorization: Bearer reg-23410913-abewfq.123483
 ```
 
 !!! warning "轮换频率由服务器决定"
+
     客户端`不能主动请求`凭证轮换，是否轮换以及轮换频率完全由授权服务器控制。如果 `registration_access_token` 在非读取/更新的情况下过期或失效，客户端将`无法再管理`自己的注册信息，只能重新注册（会获得新的 `client_id`）。
 
 ### 管理端点的安全考量
