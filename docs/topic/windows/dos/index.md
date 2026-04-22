@@ -5,6 +5,7 @@ title: DOS 命令
 # DOS 命令速查手册
 
 !!! note "适用范围"
+
     本手册收录 Windows `命令提示符（CMD）` 内置命令及常用外部命令。PowerShell 专有命令不在本手册范围内。
     打开 CMD：++win+r++ 输入 `cmd` 回车，或在文件夹地址栏输入 `cmd` 回车（自动定位到当前目录）。
 
@@ -370,6 +371,7 @@ net start               :: 列出所有已启动的服务
 通过 WMI 查询进程详情，支持丰富的过滤与格式化输出。
 
 !!! warning "已弃用"
+
     `wmic` 在 Windows 11 22H2+ 中已被微软标记为弃用，执行时会出现警告。
     建议改用 PowerShell：`Get-Process`、`Get-WmiObject` 或 `Get-CimInstance`。
 
@@ -386,6 +388,7 @@ wmic process where "processid=1234" call terminate
 通过命令行读写 Windows 注册表，常用于脚本自动化配置。
 
 !!! warning "注意事项"
+
     修改注册表前建议先导出备份。错误的注册表修改可能导致系统不稳定。
 
 ### 查询注册表 reg query
@@ -514,6 +517,7 @@ hostname
 Windows Management Instrumentation 命令行工具，可查询硬件、软件、OS 等几乎所有系统信息。
 
 !!! warning "已弃用"
+
     `wmic` 在 Windows 11 22H2+ 中已被微软标记为弃用，执行时会出现警告。
     建议改用 PowerShell：`Get-WmiObject` 或 `Get-CimInstance`。
 
@@ -879,6 +883,7 @@ CMD 没有内置去重命令，可借助临时文件 + `sort /unique`（需要 P
 管理 Windows EFS（加密文件系统）加密。`/e` 加密，`/d` 解密，`/s` 递归目录，`/w` 安全擦除磁盘空闲空间（防数据恢复）。
 
 !!! note "EFS 使用前提"
+
     EFS 只在 NTFS 文件系统上可用，且依赖用户账户的证书。迁移文件前需导出证书，否则换机后无法解密。
 
 ``` bat
@@ -926,6 +931,7 @@ takeown /f C:\inaccessible /r /d y
 ```
 
 ???+ tip "takeown 之后"
+
     取得所有权后，还需用 `icacls` 授予修改权限才能编辑文件：
     ``` bat
     takeown /f C:\Windows\System32\drivers\etc\hosts
@@ -961,6 +967,7 @@ certutil -hashfile installer.exe MD5
 | `/b` | 重新评估坏扇区列表（需先使用 `/r`） |
 
 !!! warning "注意"
+
     对系统盘（通常 C:）运行 `chkdsk /f` 时，系统会要求重启后在启动阶段执行。
 
 ``` bat
@@ -1021,6 +1028,7 @@ DISM /Online /Cleanup-Image /RestoreHealth
 ```
 
 ???+ tip "SFC + DISM 修复顺序"
+
     系统文件损坏时，推荐先运行 DISM 修复映像，再运行 SFC 修复文件：
     ``` bat
     DISM /Online /Cleanup-Image /RestoreHealth
@@ -1032,6 +1040,7 @@ DISM /Online /Cleanup-Image /RestoreHealth
 交互式磁盘分区工具，支持创建/删除/格式化分区、设置活动分区等。需要管理员权限。
 
 !!! danger "危险操作"
+
     `diskpart` 的 `clean`、`delete partition` 等命令会`立即销毁数据`，操作前务必确认目标磁盘编号。
 
 ``` bat
@@ -1053,6 +1062,7 @@ exit                 :: 退出 diskpart
 格式化指定驱动器。`/fs` 指定文件系统（NTFS/FAT32/exFAT），`/q` 快速格式化，`/v` 设置卷标，`/x` 格式化前强制卸载。
 
 !!! danger "数据丢失警告"
+
     格式化会`清除磁盘上的所有数据`，操作前请确认驱动器盘符正确。
 
 ``` bat
