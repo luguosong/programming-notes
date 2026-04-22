@@ -870,6 +870,7 @@ npm update -g @github/copilot
 > 📝 **笔记定位**：[Hook 配置别名](../hooks/index.md#-hook-配置字段)
 
 !!! success "General Availability"
+
     此版本标志着 GitHub Copilot CLI 正式发布（GA），从 0.x 预览阶段进入稳定版本。
 
 ### 🔧 改进
@@ -890,6 +891,7 @@ npm update -g @github/copilot
 > 📝 **笔记定位**：[MCP 带外交互](../mcp/index.md#-mcp-oauth-认证)
 
 !!! info "最终 Pre-GA 版本"
+
     这是 GA 正式发布前的最后预览版本之一。
 
 ### ✨ 新功能
@@ -914,6 +916,7 @@ npm update -g @github/copilot
 > 📝 **笔记定位**：[个人 Hook 目录](../hooks/index.md#-创建-hook) · [快捷键增强](../basic/index.md#-快捷键) · [enabledPlugins](../plugins/index.md#-extensions实验性)
 
 !!! info "最终 Pre-GA 版本"
+
     这是 GA 正式发布前的最后预览版本之一。
 
 ### ✨ 新功能
