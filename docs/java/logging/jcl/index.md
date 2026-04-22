@@ -34,6 +34,7 @@ JCL 的核心设计思路很简单：
 | **自带 SimpleLog** | JCL jar 包自带了一个功能很弱的 `SimpleLog` 实现，容易与真正的日志实现混淆 |
 
 !!! info "JCL 的现状"
+
     Apache Commons Logging 仍在维护（最新版本 1.3.x），主要用于 Spring Framework 等遗留项目。新项目请使用 SLF4J。Spring Boot 从 1.4 版本起通过 `jcl-over-slf4j` 桥接器将 JCL 调用重定向到 SLF4J。
 
 ## 🧱 核心组件
@@ -124,6 +125,7 @@ JCL 只需要一个依赖：
 ```
 
 !!! info "不需要额外依赖"
+
     与 SLF4J 不同，JCL 自带了 `SimpleLog` 作为兜底实现。即使 classpath 中没有任何日志框架，JCL 也能正常工作——只是输出功能很弱。
 
 ### 默认行为：使用 JUL 输出
@@ -270,4 +272,5 @@ public Log getInstance(Class clazz) throws LogConfigurationException {
 JCL 只能通过系统属性 `org.apache.commons.logging.Log` 来覆盖绑定，没有像 SLF4J 的 `slf4j-static-marker.jar` 那样的编译期绑定机制。这意味着你无法在编译时就发现绑定错误。
 
 !!! tip "Spring Boot 的解决方案"
+
     Spring Boot 通过 `jcl-over-slf4j` 桥接器解决了 JCL 的问题。这个库提供了与 JCL 完全相同的 API（`org.apache.commons.logging.Log`），但将所有调用重定向到 SLF4J。这样既保持了与遗留代码的兼容性，又享受了 SLF4J 的稳定绑定机制。

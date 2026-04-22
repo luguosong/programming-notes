@@ -129,6 +129,7 @@ logger.log(Level.INFO, "用户 {0} 登录成功，耗时 {1} ms",
 ```
 
 !!! tip "性能提示"
+
     方式一和方式二无论日志是否被输出，都会执行字符串拼接/格式化。方式三和方式四同样如此。如果你需要性能优化，可以先检查级别：
 
     ``` java
@@ -213,6 +214,7 @@ logger.fine("这行调试信息现在能看到了");
 ```
 
 !!! warning "注意 Handler 级别"
+
     日志是否被输出取决于 **Logger 级别**和 **Handler 级别**的双重过滤。Logger 先判断级别是否满足，通过后再交给 Handler，Handler 再判断一次。如果你发现 `FINE` 级别的日志没有输出，检查两个地方的级别设置。
 
 ### 配置文件配置
@@ -324,4 +326,5 @@ graph TD
 10. **父 Logger 传递**：如果 `useParentHandlers` 为 `true`（默认），`LogRecord` 还会传递给父 `Logger`，重复步骤 5~9
 
 !!! info "双重级别过滤的意义"
+
     你可能会问：为什么 Logger 和 Handler 各自都要检查级别？这是为了灵活性。比如 Logger 设为 `ALL`（全部放行），但 ConsoleHandler 设为 `INFO`（只显示重要信息），FileHandler 设为 `ALL`（记录所有细节）。这样你可以做到控制台只看关键信息，文件中保留完整调试记录。

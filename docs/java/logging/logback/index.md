@@ -149,6 +149,7 @@ Maven 在运行测试时，`src/test/resources` 的文件会覆盖 `src/main/res
 | `%X` | MDC（映射诊断上下文） | `userId=admin` |
 
 !!! warning "性能提示"
+
     `%class`、`%method`、`%line`、`%file` 这些占位符需要通过堆栈跟踪获取调用者信息，性能开销较大。生产环境应避免使用，仅在调试时开启。
 
 常用格式模板：
@@ -186,6 +187,7 @@ Maven 在运行测试时，`src/test/resources` 的文件会覆盖 `src/main/res
 | `append` | `true` = 追加模式（默认），`false` = 每次启动覆盖 |
 
 !!! warning "FileAppender 的局限"
+
     和 Log4j 1.x 一样，`FileAppender` 会把所有日志写入同一个文件，随着时间推移文件会无限增长。实际项目应使用 `RollingFileAppender` 来自动归档。
 
 ### HTMLLayout：HTML 格式输出

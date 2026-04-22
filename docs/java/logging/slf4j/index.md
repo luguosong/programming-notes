@@ -96,6 +96,7 @@ graph TD
 | 需要适配器 | Log4j 2 | `log4j-slf4j2-impl` + `log4j-api` + `log4j-core` | Log4j 2 有自己的门面 API，需要适配层 |
 
 !!! question "为什么 Log4j 和 JUL 需要适配器？"
+
     SLF4J 的绑定依赖一个关键类：`org.slf4j.impl.StaticLoggerBinder`。这个类需要由日志实现方提供。Log4j 1.x 和 JUL 在 SLF4J 诞生之前就已经发布了，它们的代码中不可能包含这个类。因此 SLF4J 为它们提供了适配器 jar（如 `slf4j-log4j12`），适配器中包含 `StaticLoggerBinder`，负责把 SLF4J 的调用翻译成 Log4j 或 JUL 的 API。
 
 ## 🚀 快速上手
@@ -147,6 +148,7 @@ logger.debug("计算结果: {}", result);
 ```
 
 !!! tip "占位符的性能边界"
+
     `{}` 占位符在日志级别不匹配时会跳过字符串拼接，但**方法参数本身的求值不会被跳过**。如果参数计算昂贵（如 `logger.debug("数据: {}", heavyOperation())`），仍需用 `isDebugEnabled()` 包裹：
 
     ``` java
@@ -262,6 +264,7 @@ JUL 是 JDK 自带的，无需额外引入实现依赖。日志行为由 `loggin
 ```
 
 !!! question "为什么需要 log4j-api？"
+
     Log4j 2 本身也是一个日志门面（提供自己的 API），`log4j-core` 依赖 `log4j-api`。SLF4J 不直接调用 `log4j-core` 的实现，而是通过 `log4j-slf4j2-impl` 适配器调用 Log4j 2 的门面 API（`log4j-api`），再由 `log4j-core` 提供实际的日志输出。
 
 ### 整合依赖速查表
@@ -348,6 +351,7 @@ graph LR
 | `jul-to-slf4j` | JUL（`java.util.logging`） | `org.slf4j:jul-to-slf4j` |
 
 !!! warning "桥接器与适配器不能同时存在"
+
     桥接器（如 `log4j-over-slf4j`）和适配器（如 `slf4j-log4j12`）不能同时出现在 classpath 中。它们会形成死循环：
 
     - `log4j-over-slf4j`：Log4j API → SLF4J
@@ -415,4 +419,5 @@ mvn dependency:tree | grep slf4j
 ```
 
 !!! tip "Spring Boot 的自动管理"
+
     Spring Boot 的 `spring-boot-starter-logging` 已经默认引入了 `logback-classic`，并通过 `jcl-over-slf4j`、`log4j-over-slf4j`、`jul-to-slf4j` 桥接了所有旧 API。只要你使用 Spring Boot 的 starter 依赖，通常不会遇到多实现冲突。冲突往往出现在手动引入额外日志依赖时。

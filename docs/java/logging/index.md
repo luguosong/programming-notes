@@ -176,6 +176,7 @@ graph TD
 ```
 
 !!! warning "常见错误：直接依赖日志实现"
+
     新手常犯的错误是直接在代码中 `import` 具体日志实现（如 `ch.qos.logback.classic.Logger`），而不是通过门面接口（如 `org.slf4j.Logger`）。这会把你锁死在某个实现上，将来想换就得大面积改代码。
 
     ```java

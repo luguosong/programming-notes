@@ -121,6 +121,7 @@ logging:
 | `%clr{...}{颜色}` | Spring Boot 颜色扩展（仅控制台） | `%clr{%d}{cyan}` |
 
 !!! warning "颜色仅限控制台"
+
     `file` 格式中不要使用 `%clr` 颜色标记，文件不支持 ANSI 颜色码。
 
 ### 文件输出
@@ -207,6 +208,7 @@ logging:
 | 推荐程度 | 不推荐在 Spring Boot 项目中使用 | **推荐** |
 
 !!! warning "命名不要搞错"
+
     如果你在 Spring Boot 项目中使用了 `logback.xml`（而不是 `logback-spring.xml`），Spring Boot 的日志配置（如 `logging.level.*`、`logging.pattern.*`）将不会生效，因为 Logback 框架先于 Spring Boot 加载了 `logback.xml`。
 
 ### 按环境区分配置：springProfile
@@ -369,6 +371,7 @@ graph LR
 这两个桥接器的作用完全相反，同时存在会导致 `StackOverflowError`。Spring Boot 默认引入的是 `log4j-over-slf4j`（把旧 Log4j API 的日志桥接到 SLF4J），如果你又手动加了 `slf4j-over-log4j`，就中招了。
 
 !!! danger "务必检查"
+
     添加任何日志相关依赖时，检查它是否传递引入了与现有桥接器方向相反的桥接器。用 `mvn dependency:tree | grep slf4j` 快速排查。
 
 ### logback.xml vs logback-spring.xml 加载时机差异
