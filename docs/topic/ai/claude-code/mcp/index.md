@@ -346,6 +346,7 @@ claude mcp serve
 6. **代理设置**：如果通过代理访问，确认 `ANTHROPIC_BASE_URL` 配置正确（非官方代理可能导致 Tool Search 失效）
 
 !!! tip "导入已有配置"
+
     如果你之前在 Claude Desktop 中已经配置了 MCP 服务器，可以直接导入到 Claude Code，无需重新配置。同样，在 Claude.ai 中配置的 MCP 服务器也会自动同步到 Claude Code。
 
 📝 小结：MCP 是 Claude Code 扩展能力的核心机制。通过配置 MCP 服务器，你可以让 Claude Code 连接到几乎所有外部服务——从代码托管平台到数据库、从监控系统到设计工具。关键是选对传输方式（HTTP 优先）、配对作用域（团队用 project，个人用 local），并注意上下文成本的管控。

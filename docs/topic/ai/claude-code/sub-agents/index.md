@@ -277,6 +277,7 @@ Agent Teams 最适合以下场景：
 - 🔗 **跨层协调**：前端、后端、测试分别由不同 Teammate 负责
 
 !!! warning "注意开销"
+
     Agent Teams 的 Token 消耗远高于单会话。每个 Teammate 都有独立的上下文窗口，Token 用量随 Teammate 数量线性增长。对于顺序任务、同文件编辑或强依赖任务，单会话或 Sub-agent 更合适。
 
 ### Team 的协调机制

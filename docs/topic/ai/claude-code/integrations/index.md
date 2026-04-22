@@ -117,6 +117,7 @@ export ANTHROPIC_BEDROCK_GUARDRAILS_ARN="arn:aws:bedrock:us-east-1:123456789012:
 ```
 
 !!! warning "Guardrails 的影响"
+
     启用 Guardrails 后，如果模型的输出被过滤，Claude Code 可能收到空响应，导致功能异常。建议先在测试环境验证 Guardrails 规则不会误拦截正常的编码助手回复。
 
 #### Mantle 接入（v2.1.94 新增）
@@ -174,6 +175,7 @@ export VERTEX_REGION_EU_WEST4=europe-west4
 ```
 
 !!! tip "1M Token 上下文窗口"
+
     使用 `CLOUD_ML_REGION=global` 时，可以享受 100 万 token 的上下文窗口。这意味着你可以让 Claude Code 分析更大的代码库，或在一次对话中处理更多文件。
 
 ### Microsoft Foundry
@@ -277,6 +279,7 @@ model_list:
 ```
 
 !!! tip "统一端点策略"
+
     建议将 Gateway 配置为统一的 API 端点（格式兼容 `/v1/messages`），这样 Claude Code 的配置最简单，只需设置 `ANTHROPIC_BASE_URL` 即可。
 
 ## 💬 Slack 集成
@@ -373,12 +376,15 @@ Computer Use 默认关闭，需要手动启用：
 ### 重要限制
 
 !!! danger "平台限制"
+
     Computer Use **仅支持 macOS**，无法在 Linux 和 Windows 的 CLI 环境中使用。
 
 !!! warning "每次会话需逐个应用授权"
+
     Claude Code 无法直接操控所有应用。每次会话中，对于每个需要操控的应用，你需要手动授予屏幕录制和辅助功能权限。
 
 !!! warning "不支持第三方提供商"
+
     Computer Use 目前仅在使用 Anthropic 直连时可用。通过 Bedrock、Vertex AI 或自定义 Gateway 接入时，此功能不可用。
 
 ### 使用技巧
