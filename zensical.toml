@@ -250,6 +250,7 @@ nav = [
                     { "官方插件目录" = "topic/ai/claude-code/resources/claude-plugins-official/index.md" }
                 ] },
                 { "更新日志" = "topic/ai/claude-code/changelog/index.md" },
+                { "更新日志（≤2.1.98）" = "topic/ai/claude-code/changelog-archive/index.md" },
                 { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
             ] }
         ] },
