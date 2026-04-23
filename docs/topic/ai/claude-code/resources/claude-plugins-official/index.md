@@ -3,7 +3,7 @@ title: 官方插件目录
 description: claude-plugins-official 市场全部插件分类速查
 ---
 
-Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](https://github.com/anthropics/claude-plugins-official)）提供了 **30+ 内部插件** 和 **17+ 外部集成**。本页按功能分类列出所有插件，方便快速查找和安装。
+Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](https://github.com/anthropics/claude-plugins-official)）提供了 **33 个内部插件** 和 **15 个外部集成**。本页按功能分类列出所有插件，方便快速查找和安装。
 
 💡 安装任意插件：
 
@@ -78,6 +78,7 @@ typescript-language-server --version
 |--------|------|------|
 | `claude-code-setup` | Skills | 分析代码库结构，推荐适合的自动化配置（Hooks、Skills、MCP） |
 | `claude-md-management` | Skills、Commands | `CLAUDE.md` 维护工具，支持质量审计和会话学习成果捕获 |
+| `session-report` | Skills | 分析 Claude Code 会话用量，生成可交互 HTML 仪表盘（Token、缓存、子代理、Skill 统计及优化建议） |
 
 ## 🎨 输出风格
 
@@ -109,9 +110,7 @@ typescript-language-server --version
 | `asana` | 项目管理 | Asana | 任务和项目管理集成 |
 | `linear` | 项目管理 | Linear | 问题跟踪和项目管理集成 |
 | `firebase` | 基础设施 | Firebase | Google Firebase 服务集成 |
-| `supabase` | 基础设施 | Supabase | Supabase 后端服务集成 |
 | `terraform` | 基础设施 | Terraform | 基础设施即代码管理 |
-| `slack` | 通讯 | Slack | 连接 Slack 工作区 |
 | `discord` | 通讯 | Discord | 连接 Discord Bot，支持回复、反应和编辑消息 |
 | `telegram` | 通讯 | Telegram | 连接 Telegram Bot，支持回复、反应和编辑消息 |
 | `imessage` | 通讯 | iMessage | 读取 `chat.db` 历史并通过 Messages.app 发送消息 |
@@ -129,7 +128,7 @@ typescript-language-server --version
 | 代码智能（LSP） | 12 | 实时类型检查、跳转定义、查找引用 |
 | 开发工作流 | 8 | Git 命令、PR 审查、功能开发流程 |
 | 插件与扩展开发 | 5 | 插件/SDK/MCP/Skill 开发工具 |
-| 项目配置 | 2 | CLAUDE.md 管理、自动化推荐 |
+| 项目配置 | 3 | CLAUDE.md 管理、自动化推荐、会话用量报告 |
 | 输出风格 | 3 | 教学模式、学习模式、playground |
 | 专项能力 | 2 | 前端设计、竞赛数学 |
-| 外部集成 | 17 | 源码/项目管理/基础设施/通讯等 |
+| 外部集成 | 15 | 源码/项目管理/基础设施/通讯等 |
