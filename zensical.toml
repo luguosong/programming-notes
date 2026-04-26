@@ -301,6 +301,7 @@ nav = [
             ] },
             { "框架中的设计模式" = [
                 "topic/design-patterns/frameworks/index.md",
+                { "JDK 源码" = "topic/design-patterns/frameworks/jdk/index.md" },
                 { "Spring 框架" = "topic/design-patterns/frameworks/spring/index.md" },
                 { "MyBatis 框架" = "topic/design-patterns/frameworks/mybatis/index.md" }
             ] }
