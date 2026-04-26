@@ -298,6 +298,11 @@ nav = [
                 { "备忘录模式" = "topic/design-patterns/behavioral-patterns/memento/index.md" },
                 { "访问者模式" = "topic/design-patterns/behavioral-patterns/visitor/index.md" },
                 { "解释器模式" = "topic/design-patterns/behavioral-patterns/interpreter/index.md" }
+            ] },
+            { "框架中的设计模式" = [
+                "topic/design-patterns/frameworks/index.md",
+                { "Spring 框架" = "topic/design-patterns/frameworks/spring/index.md" },
+                { "MyBatis 框架" = "topic/design-patterns/frameworks/mybatis/index.md" }
             ] }
         ] }
     ] },
