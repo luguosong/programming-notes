@@ -51,11 +51,39 @@ classDiagram
 
 ## 三种常见代理类型
 
-| 类型 | 创建时机 | 特点 |
-|------|---------|------|
-| 静态代理 | 编译时手动编写 | 简单，但每个接口都要写代理类 |
-| JDK 动态代理 | 运行时自动生成（需接口） | `Proxy.newProxyInstance()` + `InvocationHandler` |
-| CGLIB 动态代理 | 运行时通过字节码生成子类 | 无需接口，Spring AOP 默认使用 |
+| 类型 | 创建时机 | 是否需要接口 | 核心 API |
+|------|---------|------------|---------|
+| 静态代理 | 编译期手动编写 | ✅ 需要 | 手动实现接口 |
+| JDK 动态代理 | 运行时自动生成 | ✅ 需要 | `Proxy.newProxyInstance()` + `InvocationHandler` |
+| CGLIB 动态代理 | 运行时通过字节码生成子类 | ❌ 不需要 | `Enhancer` + `MethodInterceptor` |
+
+### 静态代理
+
+代理类在**编译期**就已手动编写完成。优点是实现简单、直观；缺点是每新增一个接口方法，代理类也要同步修改，接口越多代理类越多。
+
+``` java title="StaticProxyExample.java"
+--8<-- "code/topic/design-patterns/src/main/java/com/example/structural/proxy/static_proxy/StaticProxyExample.java"
+```
+
+### JDK 动态代理
+
+利用 `java.lang.reflect.Proxy` 在**运行时**自动生成代理类，无需为每个接口单独编写代理。所有方法调用都汇聚到 `InvocationHandler.invoke()` 统一拦截处理，一个 `InvocationHandler` 可复用于任意接口。
+
+**限制**：被代理对象必须实现接口（代理类是接口的实现类，不是目标类的子类）。
+
+``` java title="JdkDynamicProxyExample.java"
+--8<-- "code/topic/design-patterns/src/main/java/com/example/structural/proxy/jdk_proxy/JdkDynamicProxyExample.java"
+```
+
+### CGLIB 动态代理
+
+CGLIB 通过字节码工具在**运行时**生成目标类的**子类**作为代理，无需目标类实现接口。Spring AOP 在目标类没有接口时默认使用此方式（`@Transactional`、`@Cacheable` 等本质上都是 CGLIB 代理）。
+
+**限制**：无法代理 `final` 类或 `final` 方法（子类无法覆写）。Java 17+ 运行需要 `--add-opens` JVM 参数；Spring Boot 项目无需手动配置，框架已处理。
+
+``` java title="CglibProxyExample.java"
+--8<-- "code/topic/design-patterns/src/main/java/com/example/structural/proxy/cglib_proxy/CglibProxyExample.java"
+```
 
 ## 优缺点
 

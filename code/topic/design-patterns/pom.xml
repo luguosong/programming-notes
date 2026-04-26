@@ -22,5 +22,11 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- CGLIB 动态代理（代理模式示例） -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
+        </dependency>
     </dependencies>
 </project>
