@@ -68,7 +68,7 @@ classDiagram
         +request() void
     }
     Target <|.. Adapter : 实现目标接口
-    Adapter ..> Adaptee : 调用
+    Adapter --> Adaptee : 持有引用
     Component <|.. ConcreteComponent : 实现
     Component <|.. Decorator : 实现（接口不变）
     Decorator o--> Component : 包装

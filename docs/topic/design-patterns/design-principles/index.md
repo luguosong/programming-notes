@@ -410,7 +410,7 @@ classDiagram
     DiscountStrategy <|.. VipDiscount : 扩展（不改已有代码）
     DiscountStrategy <|.. StudentDiscount : 扩展（不改已有代码）
     DiscountStrategy <|.. EmployeeDiscount : 扩展（不改已有代码）
-    OrderService ..> DiscountStrategy : 依赖抽象
+    OrderService --> DiscountStrategy : 持有（依赖抽象）
     note for DiscountStrategy "扩展点接口（对扩展开放）"
     note for OrderService "对修改关闭"
 ```
@@ -561,10 +561,10 @@ classDiagram
         +eat() void
         +fly() void
     }
-    Dog ..|> Eatable : 实现
-    Dog ..|> Swimmable : 实现
-    Bird ..|> Eatable : 实现
-    Bird ..|> Flyable : 实现
+    Eatable <|.. Dog : 实现
+    Swimmable <|.. Dog : 实现
+    Eatable <|.. Bird : 实现
+    Flyable <|.. Bird : 实现
     note for Eatable "细粒度接口（按能力维度）"
     note for Dog "只实现能力匹配的接口"
 ```
@@ -637,7 +637,7 @@ classDiagram
     }
     UserRepository <|.. MySQLUserRepository : 实现
     UserRepository <|.. MongoUserRepository : 实现
-    UserService ..> UserRepository : 依赖抽象
+    UserService --> UserRepository : 持有（依赖抽象）
     note for UserRepository "抽象层（高层/低层都依赖它）"
     note for UserService "高层模块（业务逻辑）"
     note for MySQLUserRepository "低层模块（基础设施）"
