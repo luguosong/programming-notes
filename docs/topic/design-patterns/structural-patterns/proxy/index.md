@@ -4,11 +4,11 @@ title: 代理模式
 
 # 代理模式
 
-## 定义
+## 🔍 定义
 
 代理模式（Proxy）为其他对象提供一种代理，以控制对这个对象的访问。代理与真实对象实现相同接口，对调用方完全透明。
 
-## 不使用代理存在的问题
+## ⚠️ 不使用代理存在的问题
 
 直接使用 `UserService` 时，每次都需要手动处理访问控制、日志记录和缓存：
 
@@ -16,7 +16,7 @@ title: 代理模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/proxy/ProxyBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -43,13 +43,13 @@ classDiagram
 
 代理（`CachingUserServiceProxy`）与真实对象实现相同接口，客户端只依赖接口，无感知地通过代理访问真实对象。
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="ProxyExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/proxy/ProxyExample.java"
 ```
 
-## 三种常见代理类型
+## 🔄 三种常见代理类型
 
 | 类型 | 创建时机 | 是否需要接口 | 核心 API |
 |------|---------|------------|---------|
@@ -85,7 +85,7 @@ CGLIB 通过字节码工具在**运行时**生成目标类的**子类**作为代
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/proxy/cglib_proxy/CglibProxyExample.java"
 ```
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -98,7 +98,7 @@ CGLIB 通过字节码工具在**运行时**生成目标类的**子类**作为代
 - 每个接口需要一个代理类（静态代理），代码量增多
 - 动态代理增加了一定的反射开销
 
-## 与其它模式的关系
+## 🔗 与其它模式的关系
 
 **相似模式防混淆：**
 
@@ -108,7 +108,7 @@ CGLIB 通过字节码工具在**运行时**生成目标类的**子类**作为代
 | 装饰器（Decorator） | ❌ 不变 | 被装饰对象由客户端传入 | 动态增强功能 |
 | 适配器（Adapter） | ✅ 改变 | — | 兼容接口 |
 
-## 应用场景
+## 🗂️ 应用场景
 
 - 访问控制（保护代理）：调用前检查权限
 - 延迟加载（虚拟代理）：大对象只在首次访问时才真正创建

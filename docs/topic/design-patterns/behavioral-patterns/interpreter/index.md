@@ -4,11 +4,11 @@ title: 解释器模式
 
 # 解释器模式
 
-## 定义
+## 🔍 定义
 
 解释器模式（Interpreter）为一个语言定义文法，并建立一个解释器来解释该语言中的句子。每条文法规则对应一个类，通过组合这些类构建语法树（AST），最后递归解释执行。
 
-## 不使用解释器存在的问题
+## ⚠️ 不使用解释器存在的问题
 
 权限系统需要支持灵活的规则表达式，如 `"isLoggedIn AND (hasRole('ADMIN') OR hasPermission('EDIT'))"` ——如果用字符串拼接硬编码处理，逻辑复杂且不可扩展：
 
@@ -16,7 +16,7 @@ title: 解释器模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/interpreter/InterpreterBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -53,13 +53,13 @@ classDiagram
 
 每种文法规则对应一个类，组合后形成语法树，`interpret()` 递归求值。
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="InterpreterExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/interpreter/InterpreterExample.java"
 ```
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -77,7 +77,14 @@ classDiagram
 
     解释器模式适合**语法简单**的场景（SQL WHERE 片段、规则表达式、数学公式）。语法复杂时应使用专业的解析器生成工具（如 ANTLR、JavaCC），而非手写解释器。
 
-## 应用场景
+## 🔗 与其它模式的关系
+
+- **组合模式**：解释器模式常用**组合模式**构建抽象语法树（AST）——终结符表达式是叶节点，非终结符表达式是复合节点，二者共同实现 `Expression` 接口
+- **访问者模式**：遍历并操作 AST 各节点时可引入**访问者模式**，将操作逻辑（如求值、打印、类型检查）从表达式类中解耦
+- **策略模式**：当只有单条规则需要动态切换时，**策略模式**是更轻量的替代方案；解释器适合规则组合与语法文法场景
+- **模板方法模式**：解释器的 `interpret()` 方法常作为模板方法的一个具体步骤，父类定义解释流程骨架
+
+## 🗂️ 应用场景
 
 - 简单 DSL（领域专用语言）的解析与执行
 - 规则引擎（布尔表达式、权限规则）

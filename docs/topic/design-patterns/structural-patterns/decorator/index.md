@@ -4,11 +4,11 @@ title: 装饰器模式
 
 # 装饰器模式
 
-## 定义
+## 🔍 定义
 
 装饰器模式（Decorator）动态地为对象添加额外功能，比继承更灵活——通过包装对象而不是修改类，在运行时叠加任意组合的功能。
 
-## 不使用装饰器存在的问题
+## ⚠️ 不使用装饰器存在的问题
 
 咖啡店系统中，基础饮品（Espresso、Americano）可以加各种配料（牛奶、糖、奶泡）。用继承实现每种组合：
 
@@ -16,7 +16,7 @@ title: 装饰器模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/decorator/DecoratorBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -51,13 +51,13 @@ classDiagram
 
 装饰器（`CondimentDecorator`）既实现 `Beverage` 接口，又持有一个 `Beverage` 对象，从而可以链式叠加。
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="DecoratorExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/decorator/DecoratorExample.java"
 ```
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -71,7 +71,7 @@ classDiagram
 - 多层装饰器叠套后，调试时调用链较长
 - 如果装饰顺序很重要，需要额外说明
 
-## 与其它模式的关系
+## 🔗 与其它模式的关系
 
 **相似模式防混淆：**
 
@@ -85,7 +85,7 @@ classDiagram
 
 装饰器可与组合模式结合：对树形结构中的每个叶子节点套上装饰器，添加权限检查或日志记录功能。
 
-## 应用场景
+## 🗂️ 应用场景
 
 - 需要给对象动态添加功能，且功能组合多变
 - 不能通过继承扩展（如 `final` 类）

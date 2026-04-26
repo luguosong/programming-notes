@@ -4,11 +4,11 @@ title: 模板方法模式
 
 # 模板方法模式
 
-## 定义
+## 🔍 定义
 
 模板方法模式（Template Method）在父类中定义一个算法的骨架，将某些步骤延迟到子类中实现。子类可以在不改变算法整体结构的前提下，重新定义某些特定步骤。
 
-## 不使用模板方法存在的问题
+## ⚠️ 不使用模板方法存在的问题
 
 数据导出功能支持导出 Excel 和 CSV，两种格式的整体流程（获取数据→处理数据→写入文件→发送通知）完全相同，只有写入格式不同：
 
@@ -16,7 +16,7 @@ title: 模板方法模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/template_method/TemplateMethodBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -40,13 +40,13 @@ classDiagram
 
 父类 `DataExporter` 中的 `export()` 是模板方法——定义了固定流程；`writeFile()` 是抽象钩子，由子类实现。
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="TemplateMethodExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/template_method/TemplateMethodExample.java"
 ```
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -60,7 +60,7 @@ classDiagram
 - 模板方法中步骤越多，子类的灵活性越受限
 - 可能导致类层次结构增多
 
-## 与其它模式的关系
+## 🔗 与其它模式的关系
 
 **相似模式防混淆：**
 
@@ -75,7 +75,7 @@ classDiagram
 
 模板方法中的钩子方法可以返回策略对象，让子类提供不同策略而非直接实现算法。
 
-## 应用场景
+## 🗂️ 应用场景
 
 - 多个类有相同的流程，只有某些步骤不同
 - 想控制子类扩展：只允许重写特定步骤，不允许改变整体流程

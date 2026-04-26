@@ -4,11 +4,11 @@ title: 命令模式
 
 # 命令模式
 
-## 定义
+## 🔍 定义
 
 命令模式（Command）将一个请求封装为一个对象，从而让你可以用不同的请求对客户进行参数化、对请求排队、记录日志，以及支持可撤销操作。
 
-## 不使用命令存在的问题
+## ⚠️ 不使用命令存在的问题
 
 文本编辑器有多种操作（写入、删除、格式化），需要支持撤销/重做：
 
@@ -16,7 +16,7 @@ title: 命令模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/command/CommandBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -55,13 +55,13 @@ classDiagram
     EditorHistory o--> Command
 ```
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="CommandExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/command/CommandExample.java"
 ```
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -75,7 +75,7 @@ classDiagram
 - 每个操作都需要一个命令类，类数量增多
 - 简单调用场景下有些过度设计
 
-## 与其它模式的关系
+## 🔗 与其它模式的关系
 
 **相似模式防混淆：**
 
@@ -89,7 +89,7 @@ classDiagram
 
 命令可与备忘录模式结合实现更强大的撤销——命令的 `undo()` 利用备忘录恢复执行前的完整状态。
 
-## 应用场景
+## 🗂️ 应用场景
 
 - 需要支持撤销/重做的操作（文本编辑器、图形编辑器、IDE）
 - 需要将操作排入队列或延迟执行（任务队列、批处理）

@@ -4,11 +4,11 @@ title: 适配器模式
 
 # 适配器模式
 
-## 定义
+## 🔍 定义
 
 适配器模式（Adapter）将一个类的接口转换成客户端期望的另一个接口，使原本因接口不兼容而不能在一起工作的类可以协同工作。
 
-## 不使用适配器存在的问题
+## ⚠️ 不使用适配器存在的问题
 
 你新接入了一家第三方支付 SDK，但它的方法签名与系统内部的统一接口完全不同：
 
@@ -16,7 +16,7 @@ title: 适配器模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/adapter/AdapterBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -38,13 +38,13 @@ classDiagram
 
 适配器（`AlipayAdapter`）实现目标接口（`PaymentGateway`），内部持有被适配类（`AlipaySDK`），在 `pay()` 方法中完成参数转换后调用 SDK。
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="AdapterExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/structural/adapter/AdapterExample.java"
 ```
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -57,7 +57,7 @@ classDiagram
 - 增加一个中间层，代码复杂度略有上升
 - Java 单继承限制，类适配器（通过继承）受限，通常只能用对象适配器（组合）
 
-## 与其它模式的关系
+## 🔗 与其它模式的关系
 
 **相似模式防混淆：**
 
@@ -70,7 +70,7 @@ classDiagram
 
 > 关键区分：适配器是**改变已有接口**；装饰器和代理是在**接口不变**的前提下增强或控制。
 
-## 应用场景
+## 🗂️ 应用场景
 
 - 接入第三方库或遗留系统，其接口与现有代码不兼容
 - 需要复用多个已有类，但它们缺少共同接口

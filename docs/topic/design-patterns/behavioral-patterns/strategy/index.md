@@ -4,11 +4,11 @@ title: 策略模式
 
 # 策略模式
 
-## 定义
+## 🔍 定义
 
 策略模式（Strategy）定义一族算法，将每种算法封装为独立的类，并使它们可以相互替换。让算法的变化独立于使用算法的客户端。
 
-## 不使用策略存在的问题
+## ⚠️ 不使用策略存在的问题
 
 电商促销系统需要根据用户类型使用不同的折扣策略：
 
@@ -16,7 +16,7 @@ title: 策略模式
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/strategy/StrategyBadExample.java"
 ```
 
-## 设计模式结构说明
+## 🏗️ 设计模式结构说明
 
 ```mermaid
 classDiagram
@@ -44,7 +44,7 @@ classDiagram
     OrderService o--> DiscountStrategy
 ```
 
-## 设计模式举例说明
+## 💻 设计模式举例说明
 
 ``` java title="StrategyExample.java"
 --8<-- "code/topic/design-patterns/src/main/java/com/example/behavioral/strategy/StrategyExample.java"
@@ -54,7 +54,7 @@ classDiagram
 
     策略接口只有一个方法时，可以用 Lambda 直接替换：`service.setStrategy(price -> price * 0.9);`
 
-## 优缺点
+## ⚖️ 优缺点
 
 **优点：**
 
@@ -67,7 +67,7 @@ classDiagram
 - 策略数量多时，类的数量也会增多
 - 调用方需要知道有哪些策略，并自行选择（可结合工厂模式解决）
 
-## 与其它模式的关系
+## 🔗 与其它模式的关系
 
 **相似模式防混淆：**
 
@@ -77,7 +77,7 @@ classDiagram
 | 模板方法（Template Method） | 算法骨架 | 子类填充部分步骤 |
 | 命令（Command） | 请求/操作 | 支持撤销、队列、日志 |
 
-## 应用场景
+## 🗂️ 应用场景
 
 - 需要在运行时切换算法（排序算法、支付方式、路由策略）
 - 多个相似的类只在行为上有所不同
