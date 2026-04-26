@@ -27,6 +27,7 @@ title: 外观模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class HomeTheaterFacade {
         -lights: Lights
         -projector: Projector

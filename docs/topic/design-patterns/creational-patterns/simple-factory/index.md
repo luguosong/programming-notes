@@ -30,6 +30,7 @@ title: 简单工厂模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Pizza {
         <<abstract>>
         #name: String

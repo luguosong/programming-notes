@@ -30,6 +30,7 @@ title: 桥接模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Notification {
         <<abstract>>
         #channel: MessageChannel

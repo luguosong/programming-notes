@@ -26,6 +26,7 @@ title: 命令模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class RemoteCommand {
         <<interface>>
         +execute() void

@@ -26,6 +26,7 @@ title: 享元模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class TreeType {
         -name: String
         -color: String

@@ -26,6 +26,7 @@ title: 备忘录模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class TextEditor {
         -content: String
         -cursorPos: int

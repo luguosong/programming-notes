@@ -28,6 +28,7 @@ title: 访问者模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class FileNode {
         <<interface>>
         +accept(visitor FileVisitor) void

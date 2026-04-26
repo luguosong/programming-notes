@@ -34,6 +34,7 @@ WeatherData 直接调用每个具体面板，新增面板就要改源码：
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Subject {
         <<interface>>
         +registerObserver(o) void

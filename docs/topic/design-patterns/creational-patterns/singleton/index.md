@@ -26,6 +26,7 @@ title: 单例模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class ChocolateBoiler {
         -empty: boolean
         -boiled: boolean

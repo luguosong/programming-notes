@@ -37,6 +37,7 @@ title: 代理模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class UserService {
         <<interface>>
         +getUserById(id Long) User

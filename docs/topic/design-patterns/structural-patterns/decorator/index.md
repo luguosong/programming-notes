@@ -28,6 +28,7 @@ Starbuzz 是增长最快的咖啡连锁店。他们的菜单系统有一个 `Bev
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Beverage {
         <<abstract>>
         #description: String

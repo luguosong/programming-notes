@@ -29,6 +29,7 @@ title: 迭代器模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class MenuIterator {
         <<interface>>
         +hasNext() boolean

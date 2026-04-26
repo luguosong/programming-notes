@@ -26,6 +26,7 @@ title: 中介者模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class ChatMediator {
         <<interface>>
         +sendMessage(message, sender) void

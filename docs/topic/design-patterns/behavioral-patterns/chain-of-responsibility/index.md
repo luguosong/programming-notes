@@ -26,6 +26,7 @@ HTTP 请求处理需要依次进行认证、限流、日志记录，写在一个
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class RequestHandler {
         <<abstract>>
         #next: RequestHandler

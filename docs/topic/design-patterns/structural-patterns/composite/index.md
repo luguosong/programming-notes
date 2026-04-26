@@ -26,6 +26,7 @@ title: 组合模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class MenuComponent {
         <<abstract>>
         +add(component) void

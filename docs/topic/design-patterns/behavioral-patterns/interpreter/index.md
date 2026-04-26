@@ -26,6 +26,7 @@ HR 系统需要支持灵活的权限规则，例如：`"isLoggedIn AND (hasRole(
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Expression {
         <<interface>>
         +interpret(ctx) boolean

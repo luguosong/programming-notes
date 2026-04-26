@@ -32,6 +32,7 @@ title: 模板方法模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class CaffeineBeverage {
         <<abstract>>
         +prepareRecipe() void

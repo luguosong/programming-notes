@@ -178,6 +178,7 @@ stateDiagram-v2
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     direction TB
     class Component {
         +paint(Graphics g)

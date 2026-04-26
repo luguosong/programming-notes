@@ -26,6 +26,7 @@ title: 适配器模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Duck {
         <<interface>>
         +quack() void

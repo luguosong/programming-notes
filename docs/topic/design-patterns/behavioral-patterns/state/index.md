@@ -44,6 +44,7 @@ stateDiagram-v2
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class GumballState {
         <<interface>>
         +insertQuarter() void

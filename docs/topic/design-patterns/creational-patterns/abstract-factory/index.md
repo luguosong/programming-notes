@@ -28,6 +28,7 @@ title: 抽象工厂模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class PizzaIngredientFactory {
         <<interface>>
         +createDough() Dough

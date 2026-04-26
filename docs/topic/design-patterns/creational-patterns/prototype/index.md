@@ -30,6 +30,7 @@ title: 原型模式
 
 ```mermaid
 classDiagram
+    classDef default fill:transparent,stroke:#768390
     class Prototype {
         <<interface>>
         +clone() Prototype
