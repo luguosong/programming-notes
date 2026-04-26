@@ -137,6 +137,78 @@ public class WeatherData implements Subject {
 
     观察者模式就是松耦合原则在一对多通知场景下的具体实现——主题（Subject）和观察者（Observer）可以独立复用和扩展，相互之间只通过接口认识对方。
 
+### 组合优于继承
+
+> **多用组合，少用继承。**（《Head First》第 1 章）
+
+继承在代码量少时很方便，但一旦类的变化维度超过一个，就会触发**继承爆炸**问题。
+
+假设你要为汽车制造商创建一个目录系统，车辆有三个维度的变化：
+
+- **车型**：轿车、卡车
+- **动力**：电动、汽油
+- **驾驶**：手动、自动驾驶
+
+用继承实现，需要创建 2 × 2 × 2 = **8 个子类**——增加任何一个维度（如混合动力），类的数量立刻翻倍：
+
+```mermaid
+graph TD
+    Vehicle --> Car
+    Vehicle --> Truck
+    Car --> ElectricCar
+    Car --> CombustionCar
+    ElectricCar --> ElectricCarManual
+    ElectricCar --> ElectricCarAuto
+    CombustionCar --> CombustionCarManual
+    CombustionCar --> CombustionCarAuto
+```
+
+用**组合**改写——把每个变化维度独立为接口，车辆对象持有对应接口的引用：
+
+``` java title="组合优于继承 — 三个维度各自独立，组合使用"
+// 三个变化维度各自独立为接口
+public interface Engine {
+    void run();
+}
+
+public interface DriveControl {
+    void control();
+}
+
+// 具体实现：电动 / 汽油
+public class ElectricEngine implements Engine { ... }
+public class CombustionEngine implements Engine { ... }
+
+// 具体实现：手动 / 自动驾驶
+public class ManualControl  implements DriveControl { ... }
+public class AutopilotControl implements DriveControl { ... }
+
+// 车辆通过组合持有各维度的实现
+public class Car {
+    private Engine engine;           // 可以是 ElectricEngine 或 CombustionEngine
+    private DriveControl control;    // 可以是 ManualControl 或 AutopilotControl
+
+    public Car(Engine engine, DriveControl control) {
+        this.engine = engine;
+        this.control = control;
+    }
+}
+
+// 使用时按需组合，无需预先创建所有组合子类
+Car electricAutoCar = new Car(new ElectricEngine(), new AutopilotControl());
+Car gasManualTruck = new Car(new CombustionEngine(), new ManualControl());
+```
+
+新增一个维度（如混合动力）只需加一个 `HybridEngine` 实现类，**不需要修改任何现有代码**。
+
+!!! tip "继承 vs 组合的选择依据"
+
+    **继承**适合于：IS-A 关系成立，且子类确实是父类行为的扩展（Rectangle → ColoredRectangle）。
+
+    **组合**适合于：HAS-A 关系，或类的变化来自多个维度（车型 × 动力 × 驾驶）——此时继承会导致子类数量爆炸。
+
+    实践口诀：「先考虑组合，继承有理由再用」。
+
 ## SOLID 原则
 
 SOLID 是五条面向对象设计原则的缩写，由 Robert C. Martin（"Uncle Bob"）整理推广：

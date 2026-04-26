@@ -265,6 +265,7 @@ nav = [
         ] },
         { "设计模式" = [
             "topic/design-patterns/index.md",
+            { "面向对象基础" = "topic/design-patterns/oop-basics/index.md" },
             { "设计原则" = "topic/design-patterns/design-principles/index.md" },
             { "创建型模式" = [
                 "topic/design-patterns/creational-patterns/index.md",
