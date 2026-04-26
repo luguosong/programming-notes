@@ -120,3 +120,46 @@ classDiagram
             .method("POST")
             .build();
     ```
+
+## 工业视角
+
+### 三种对象创建方式的适用边界
+
+| 方式 | 适用场景 | 主要问题 |
+|------|---------|---------|
+| 构造函数 | 参数少（≤4个），全部必填 | 参数多时可读性差，易传错顺序 |
+| set() 方法 | 参数多，大部分可选，允许对象可变 | 无法创建不可变对象；必填项校验无处安放；对象可能处于中间无效状态 |
+| Builder | 参数多、有必填/可选之分、参数间有约束、需要不可变对象 | 代码量略多，需多写一个 Builder 内部类 |
+
+Builder 模式真正解决的三个问题：
+1. **必填项校验集中**：所有校验逻辑在 `build()` 方法中统一执行，避免遗漏
+2. **参数间约束验证**：如 `maxIdle <= maxTotal` 这类跨字段约束，set 方法无法优雅处理
+3. **不可变对象**：构造完成后目标类不暴露任何 setter，线程安全
+
+``` java title="Builder 模式：校验集中，创建不可变对象"
+// build() 中统一做必填项 + 约束条件校验
+public ResourcePoolConfig build() {
+    if (StringUtils.isBlank(name)) {
+        throw new IllegalArgumentException("name 为必填项");
+    }
+    if (maxIdle > maxTotal) {
+        throw new IllegalArgumentException("maxIdle 不能大于 maxTotal");
+    }
+    if (minIdle > maxIdle) {
+        throw new IllegalArgumentException("minIdle 不能大于 maxIdle");
+    }
+    return new ResourcePoolConfig(this); // 目标类构造函数私有
+}
+```
+
+### Builder 与工厂模式的区别
+
+两者都是创建对象，但关注点不同：
+
+- **工厂模式**：关注"创建**哪种**对象"——根据类型参数返回不同子类实例，调用方不关心具体类
+- **Builder 模式**：关注"如何**配置**同一种对象"——创建的是同一个类，但参数组合复杂
+
+!!! tip "Lombok 的 @Builder"
+
+    在 Java 项目中，Lombok 的 `@Builder` 注解可以自动生成 Builder 内部类，省去大量样板代码。
+    但注意：Lombok 生成的 Builder **不会自动添加必填项校验和约束检查**，如有需要仍需手写 `build()` 方法中的逻辑。

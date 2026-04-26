@@ -108,3 +108,61 @@ classDiagram
     务必对所有**可变引用类型**字段进行深拷贝：`new HashMap<>(original.getSettings())`。
     
     对于嵌套层次很深的对象，可以考虑使用序列化方案（Jackson/Kryo）实现通用深拷贝，但性能较手写深拷贝差。
+
+## 工业视角
+
+### 原型模式的真实动机：高成本对象的增量更新
+
+原型模式不是为了"少写一个构造函数"，它真正的应用场景是：**对象的创建成本很高，且新对象与已有对象大部分数据相同**。
+
+典型案例：系统内存中维护了 10 万条搜索关键词的 `HashMap` 索引，每隔 10 分钟需要更新。如果每次都从数据库重新加载全量数据重建 HashMap，代价极高。原型模式的解法是：
+
+1. 浅拷贝当前 `HashMap` 得到 `newKeywords`（只需复制索引，O(n) 但比重建 DB 查询快得多）
+2. 从数据库只取出**增量更新**（上次更新时间之后有变化的条目）
+3. 将增量更新写入 `newKeywords`
+4. 原子切换：`currentKeywords = newKeywords`
+
+``` java title="原型模式：浅拷贝 + 增量更新"
+public void refresh() {
+    // ① 浅拷贝当前索引作为基础
+    HashMap<String, SearchWord> newKeywords =
+        (HashMap<String, SearchWord>) currentKeywords.clone();
+
+    // ② 只从 DB 取增量数据
+    List<SearchWord> updates = getSearchWords(lastUpdateTime);
+    for (SearchWord sw : updates) {
+        newKeywords.put(sw.getKeyword(), sw); // 新对象替换旧引用
+    }
+    // ③ 原子切换，currentKeywords 始终是完整的某一版本
+    currentKeywords = newKeywords;
+}
+```
+
+### 浅拷贝的陷阱：共享可变引用会导致数据版本混乱
+
+`HashMap.clone()` 只复制了索引层（Entry 数组），不复制 Value 对象（`SearchWord`）。如果在 `newKeywords` 上直接修改已有 `SearchWord` 对象的字段（如更新计数），`currentKeywords` 中同一个对象也会被修改，导致两个"版本"互相污染。
+
+正确做法：更新时**创建新的 `SearchWord` 对象**替换引用，而不是修改已有对象的字段。
+
+``` java title="正确：替换引用，不修改共享对象"
+// ✅ 新建对象替换引用，currentKeywords 中的旧引用不受影响
+newKeywords.put(sw.getKeyword(), sw);
+
+// ❌ 错误：直接修改共享的 SearchWord 对象
+SearchWord old = newKeywords.get(sw.getKeyword());
+old.setCount(sw.getCount()); // currentKeywords 中的同一个对象也被修改了！
+```
+
+### Java `Cloneable` 接口的局限性
+
+Java 的原型机制设计存在几个已知缺陷：
+
+- `Cloneable` 是标记接口，本身没有 `clone()` 方法；`clone()` 来自 `Object`，且是 `protected`——需要子类 `override` 并改为 `public` 才能从外部调用
+- `clone()` 默认是浅拷贝，深拷贝需要递归手写，容易遗漏
+- 对于嵌套层次深或含循环引用的对象，手写深拷贝极易出错
+
+!!! tip "实践中的深拷贝方案"
+
+    - **手写深拷贝**：逐字段 `new`，性能最好，但维护成本高（每次新增字段都要更新）
+    - **序列化方案**：`Jackson ObjectMapper` 或 `Kryo` 序列化再反序列化，通用但有性能开销
+    - **构造函数拷贝**：`new SearchWord(original.getKeyword(), original.getCount(), ...)`——最直白，推荐用于简单对象

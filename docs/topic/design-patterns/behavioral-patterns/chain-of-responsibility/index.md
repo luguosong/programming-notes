@@ -77,3 +77,55 @@ classDiagram
 - Servlet `Filter` 链（`FilterChain.doFilter()`）
 - Spring Security 的 `SecurityFilterChain`
 - Netty 的 `ChannelPipeline`
+
+## 工业视角
+
+### 两种实现风格：链表 vs 数组
+
+GoF 经典定义中，Handler 持有 `next` 形成链表，但这种实现有一个隐患：每个子类都必须在业务逻辑后手动调用 `successor.handle()`，稍有遗漏就是 bug。更健壮的做法是结合**模板方法**将传链逻辑提升到抽象父类，子类只需实现自己的业务：
+
+``` java title="链表实现 + 模板方法加固"
+public abstract class Handler {
+    protected Handler successor;
+
+    public final void handle() {           // final：不允许子类覆盖传链逻辑
+        boolean handled = doHandle();
+        if (!handled && successor != null) {
+            successor.handle();
+        }
+    }
+
+    protected abstract boolean doHandle(); // 子类只实现业务，无需关心传链
+}
+```
+
+第二种实现使用 `List<Handler>` 在 `HandlerChain` 内部统一遍历，Handler 只返回 `boolean` 表示是否已处理。这种方式更简洁，也更接近 Spring MVC `HandlerExecutionChain` 的真实设计。
+
+### Servlet Filter 的递归传链与双向拦截
+
+Tomcat `ApplicationFilterChain` 用数组保存所有 Filter，以 `pos` 游标推进。其核心技巧在于 `doFilter()` 是**递归**调用——Filter 在 `chain.doFilter()` 之前的代码拦截**请求**，之后的代码拦截**响应**，一个方法实现双向拦截：
+
+``` java title="Tomcat ApplicationFilterChain 核心逻辑（简化）"
+public void doFilter(ServletRequest request, ServletResponse response) {
+    if (pos < n) {
+        Filter filter = filters[pos++].getFilter();
+        filter.doFilter(request, response, this); // 递归：this 就是 chain
+    } else {
+        servlet.service(request, response);       // 所有 Filter 执行完毕
+    }
+}
+```
+
+!!! tip "Servlet Filter vs Spring Interceptor 的实现差异"
+
+    Servlet Filter 的双向拦截写在同一个 `doFilter()` 中（before → `chain.doFilter()` → after），依赖递归展开，可以在同一调用栈中 try-catch 包裹整个请求生命周期；Spring MVC `HandlerExecutionChain` 将拦截拆成 `preHandle()`、`postHandle()`、`afterCompletion()` 三个独立钩子，逻辑更直观，但三段代码不在同一调用栈中，无法用单个 try-catch 统一处理异常。
+
+### 职责链作为框架扩展点
+
+职责链在框架中的核心价值不只是"处理一个请求"，而是**向外暴露扩展点**：Servlet Filter、Spring Interceptor、Dubbo Filter、Netty ChannelPipeline、MyBatis Plugin，无一不是这个思路——框架固化核心执行流，将横切关注点（鉴权、限流、日志、加密）的扩展权交给使用者，且使用者无需修改框架源码，完全符合开闭原则。
+
+!!! warning "Filter / Interceptor / AOP 选型参考"
+
+    - **Servlet Filter**：最早介入，可拿到原始 HTTP 请求/响应，但拿不到 Spring Bean 和 Controller 信息。适合跨域、编解码、全局限流。
+    - **Spring Interceptor**：在 DispatcherServlet 之后，能拿到 Handler（Controller 方法），适合登录校验、操作日志。
+    - **Spring AOP**：粒度最细，能拿到方法参数和返回值，但无法直接拿到 `HttpServletRequest`。适合事务、方法级权限、性能埋点。

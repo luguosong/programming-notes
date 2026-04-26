@@ -93,3 +93,60 @@ classDiagram
 - 需要在两个独立维度上扩展的系统（如"类型 × 平台"、"形状 × 颜色"）
 - 希望在运行时切换实现（如动态切换通知渠道）
 - JDK：`JDBC` 驱动设计——`Connection`/`Statement` 是抽象，不同数据库驱动是实现
+
+## 工业视角
+
+### JDBC 是桥接模式最权威的工业案例
+
+GoF 对桥接模式的定义——"将抽象和实现解耦，让它们可以独立变化"——读起来令人困惑，因为这里的"抽象"和"实现"**不是**抽象类与实现类的意思。JDBC 是最好的诠释：
+
+``` java title="JDBC 切换数据库只需换一行"
+// 切换到 MySQL：只改这一行（或改配置文件）
+Class.forName("com.mysql.jdbc.Driver");
+// 切换到 Oracle：
+// Class.forName("oracle.jdbc.driver.OracleDriver");
+
+String url = "jdbc:mysql://localhost:3306/mydb";
+Connection con = DriverManager.getConnection(url);
+Statement stmt = con.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT * FROM users");
+```
+
+在这里，`DriverManager` / `Connection` / `Statement` 是"抽象"（与具体数据库无关的操作骨架），`com.mysql.jdbc.Driver` 等是"实现"（真正与数据库通信的类库）。两者通过 `DriverManager.registerDriver()` 组合在一起，独立演化，互不侵入。
+
+!!! tip "桥接模式的两种理解方式"
+
+    第一种（GoF 原版）：将抽象类库与实现类库解耦，通过**对象组合**桥接，JDBC 是典型。第二种（更通用）：当一个类存在两个或多个**独立变化的维度**时，用组合代替继承，避免类数量指数级增长。两种理解的代码结构相同，后者更容易在日常设计中识别和应用。
+
+### 消息通知系统：识别"两个独立维度"的实战示范
+
+王争用告警通知系统演示了桥接模式的第二种理解方式。原始设计把"消息紧急程度"和"发送渠道"混在一个 `Notification` 类里，导致大量 `if-else`。重构思路是**识别两个独立维度，将其拆分为独立的继承体系，再通过组合桥接**：
+
+``` java title="桥接模式重构后：抽象层与实现层独立扩展"
+// 实现层：发送渠道（独立变化的维度 1）
+public interface MsgSender {
+    void send(String message);
+}
+public class TelephoneMsgSender implements MsgSender { /*...*/ }
+public class EmailMsgSender    implements MsgSender { /*...*/ }
+public class WechatMsgSender   implements MsgSender { /*...*/ }
+
+// 抽象层：消息紧急程度（独立变化的维度 2）
+public abstract class Notification {
+    protected MsgSender msgSender; // ← 桥接点
+    public Notification(MsgSender msgSender) {
+        this.msgSender = msgSender;
+    }
+    public abstract void notify(String message);
+}
+public class SevereNotification extends Notification {
+    public void notify(String message) { msgSender.send("[严重] " + message); }
+}
+public class UrgencyNotification extends Notification { /*...*/ }
+```
+
+新增一种渠道只需新增 `MsgSender` 实现；新增一种紧急级别只需新增 `Notification` 子类。两个维度**互不影响**，符合开闭原则。
+
+!!! warning "桥接模式在工程中并不常见"
+
+    桥接模式要求**设计阶段**就能预判出两个独立变化的维度，门槛较高。实际项目中如果维度只有一个，或两个维度耦合紧密，强行套用反而增加复杂度。相比之下，第二种理解方式（"组合代替继承"）在日常重构中更频繁出现，你可以把它视为"组合优于继承"原则的一种具体落地结构。
