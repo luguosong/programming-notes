@@ -59,6 +59,36 @@ servlet.service(
 
     外观模式通常被介绍为"简化接口"，但 `RequestFacade` 展示了它的另一个价值：**接口权限控制**——通过只暴露必要的接口，防止调用方越权访问内部实现细节。这在 SDK 设计、模块化架构中是值得借鉴的安全边界手段。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class HttpServletRequest {
+        <<interface>>
+        +getMethod() String
+        +getHeader(name) String
+        +getParameter(name) String
+    }
+    class Request {
+        +getMethod() String
+        +getHeader(name) String
+        +setRemoteAddr(addr) void
+        +setRequestURI(uri) void
+    }
+    class RequestFacade {
+        -request: Request
+        +getMethod() String
+        +getHeader(name) String
+        +getParameter(name) String
+    }
+    HttpServletRequest <|.. Request : 实现
+    HttpServletRequest <|.. RequestFacade : 实现
+    RequestFacade o--> Request : 包装（隐藏内部方法）
+    note for HttpServletRequest "目标接口（对外暴露）"
+    note for Request "真实对象（含危险内部方法）"
+    note for RequestFacade "外观（安全边界）"
+```
+
 ## 组合模式：Container 四层嵌套
 
 Tomcat 用组合模式实现了多应用托管的层级结构。四种 `Container` 实现从外到内依次嵌套：
@@ -95,6 +125,43 @@ public interface Container {
 请求到达时，处理逻辑从 Engine 开始递归向下传递：Engine 找到匹配的 Host → Host 找到匹配的 Context → Context 找到匹配的 Wrapper → Wrapper 调用对应 Servlet。
 
 组合模式使 Tomcat 可以用**同一套 `Container` API** 操作整个层级，无论是注册生命周期监听、统计运行状态，还是热重载某个应用，都不需要区分"是哪一层 Container"。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Container {
+        <<interface>>
+        +addChild(child) void
+        +findChild(name) Container
+        +findChildren() Container[]
+        +getPipeline() Pipeline
+    }
+    class StandardEngine {
+        +addChild(child) void
+        +findChild(name) Container
+    }
+    class StandardHost {
+        +addChild(child) void
+        +findChild(name) Container
+    }
+    class StandardContext {
+        +addChild(child) void
+        +findChild(name) Container
+    }
+    class StandardWrapper {
+        +addChild(child) void
+        +findChild(name) Container
+    }
+    Container <|.. StandardEngine : 实现
+    Container <|.. StandardHost : 实现
+    Container <|.. StandardContext : 实现
+    Container <|.. StandardWrapper : 实现
+    StandardEngine o--> Container : 持有子节点
+    note for Container "组件接口(Component)"
+    note for StandardEngine "组合节点(Composite)"
+    note for StandardWrapper "叶子节点(Leaf)"
+```
 
 ## 责任链模式：Pipeline/Valve 内部链
 
@@ -165,6 +232,29 @@ protected void service(HttpServletRequest req, HttpServletResponse resp)
 
 开发者只需覆写 `doGet()` 和 `doPost()`，HTTP 解析、分发、默认响应（HEAD、OPTIONS、TRACE）全部由父类模板处理。这是"框架调用你，你不调用框架"（好莱坞原则）的最直观体现。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class HttpServlet {
+        <<abstract>>
+        +service(req, resp) void
+        #doGet(req, resp)* void
+        #doPost(req, resp)* void
+        #doPut(req, resp)* void
+        #doDelete(req, resp)* void
+        #doOptions(req, resp) void
+        #doTrace(req, resp) void
+    }
+    class UserServlet {
+        #doGet(req, resp) void
+        #doPost(req, resp) void
+    }
+    HttpServlet <|-- UserServlet : 继承
+    note for HttpServlet "模板骨架(AbstractClass)\nservice() 是模板方法"
+    note for UserServlet "具体实现(ConcreteClass)\n只需覆写感兴趣的方法"
+```
+
 ## 观察者模式：Servlet 生命周期监听
 
 Servlet 规范定义了三级事件监听器，以观察者模式实现容器生命周期和请求生命周期的感知：
@@ -199,6 +289,44 @@ public class RequestLogger implements ServletRequestListener {
 ```
 
 Tomcat 在相应事件发生时遍历已注册的监听器列表并逐一触发，开发者不感知触发时机，只需关注事件处理逻辑——这正是观察者模式"发布者与订阅者解耦"的核心价值。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class ServletContextListener {
+        <<interface>>
+        +contextInitialized(event) void
+        +contextDestroyed(event) void
+    }
+    class HttpSessionListener {
+        <<interface>>
+        +sessionCreated(event) void
+        +sessionDestroyed(event) void
+    }
+    class ServletRequestListener {
+        <<interface>>
+        +requestInitialized(event) void
+        +requestDestroyed(event) void
+    }
+    class AppStartupListener {
+        +contextInitialized(event) void
+        +contextDestroyed(event) void
+    }
+    class SessionTracker {
+        +sessionCreated(event) void
+        +sessionDestroyed(event) void
+    }
+    class RequestLogger {
+        +requestInitialized(event) void
+    }
+    ServletContextListener <|.. AppStartupListener : 实现
+    HttpSessionListener <|.. SessionTracker : 实现
+    ServletRequestListener <|.. RequestLogger : 实现
+    note for ServletContextListener "观察者接口(Observer)\nWeb 应用级"
+    note for HttpSessionListener "观察者接口(Observer)\nSession 级"
+    note for AppStartupListener "具体观察者(ConcreteObserver)"
+```
 
 ## Servlet/Tomcat 设计模式速查
 
