@@ -262,6 +262,43 @@ nav = [
             "topic/zensical/index.md",
             { "基本使用" = "topic/zensical/basic/index.md" },
             { "更新日志" = "topic/zensical/changelog/index.md" }
+        ] },
+        { "设计模式" = [
+            "topic/design-patterns/index.md",
+            { "设计原则" = "topic/design-patterns/design-principles/index.md" },
+            { "创建型模式" = [
+                "topic/design-patterns/creational-patterns/index.md",
+                { "单例模式" = "topic/design-patterns/creational-patterns/singleton/index.md" },
+                { "简单工厂模式" = "topic/design-patterns/creational-patterns/simple-factory/index.md" },
+                { "工厂方法模式" = "topic/design-patterns/creational-patterns/factory-method/index.md" },
+                { "抽象工厂模式" = "topic/design-patterns/creational-patterns/abstract-factory/index.md" },
+                { "建造者模式" = "topic/design-patterns/creational-patterns/builder/index.md" },
+                { "原型模式" = "topic/design-patterns/creational-patterns/prototype/index.md" }
+            ] },
+            { "结构型模式" = [
+                "topic/design-patterns/structural-patterns/index.md",
+                { "外观模式" = "topic/design-patterns/structural-patterns/facade/index.md" },
+                { "适配器模式" = "topic/design-patterns/structural-patterns/adapter/index.md" },
+                { "代理模式" = "topic/design-patterns/structural-patterns/proxy/index.md" },
+                { "装饰器模式" = "topic/design-patterns/structural-patterns/decorator/index.md" },
+                { "桥接模式" = "topic/design-patterns/structural-patterns/bridge/index.md" },
+                { "组合模式" = "topic/design-patterns/structural-patterns/composite/index.md" },
+                { "享元模式" = "topic/design-patterns/structural-patterns/flyweight/index.md" }
+            ] },
+            { "行为模式" = [
+                "topic/design-patterns/behavioral-patterns/index.md",
+                { "模板方法模式" = "topic/design-patterns/behavioral-patterns/template-method/index.md" },
+                { "策略模式" = "topic/design-patterns/behavioral-patterns/strategy/index.md" },
+                { "状态模式" = "topic/design-patterns/behavioral-patterns/state/index.md" },
+                { "命令模式" = "topic/design-patterns/behavioral-patterns/command/index.md" },
+                { "责任链模式" = "topic/design-patterns/behavioral-patterns/chain-of-responsibility/index.md" },
+                { "观察者模式" = "topic/design-patterns/behavioral-patterns/observer/index.md" },
+                { "中介者模式" = "topic/design-patterns/behavioral-patterns/mediator/index.md" },
+                { "迭代器模式" = "topic/design-patterns/behavioral-patterns/iterator/index.md" },
+                { "备忘录模式" = "topic/design-patterns/behavioral-patterns/memento/index.md" },
+                { "访问者模式" = "topic/design-patterns/behavioral-patterns/visitor/index.md" },
+                { "解释器模式" = "topic/design-patterns/behavioral-patterns/interpreter/index.md" }
+            ] }
         ] }
     ] },
     { "数学" = [
