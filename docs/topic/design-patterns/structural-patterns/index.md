@@ -28,3 +28,74 @@ GoF 定义了 7 种结构型模式，每种模式都有独立的详细笔记：
 | 装饰器 | ❌ 接口不变 | 动态增强功能 |
 | 代理 | ❌ 接口不变 | 控制/延迟访问 |
 
+三者的结构差异一图对比：
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Target {
+        <<interface>>
+        +request() void
+    }
+    class Adaptee {
+        +specificRequest() void
+    }
+    class Adapter {
+        -adaptee: Adaptee
+        +request() void
+    }
+    class Component {
+        <<interface>>
+        +operation() void
+    }
+    class ConcreteComponent {
+        +operation() void
+    }
+    class Decorator {
+        -component: Component
+        +operation() void
+    }
+    class Subject {
+        <<interface>>
+        +request() void
+    }
+    class RealSubject {
+        +request() void
+    }
+    class Proxy {
+        -realSubject: RealSubject
+        +request() void
+    }
+    Target <|.. Adapter : 实现目标接口
+    Adapter ..> Adaptee : 调用
+    Component <|.. ConcreteComponent : 实现
+    Component <|.. Decorator : 实现（接口不变）
+    Decorator o--> Component : 包装
+    Subject <|.. RealSubject : 实现
+    Subject <|.. Proxy : 实现（接口不变）
+    Proxy o--> RealSubject : 持有
+    note for Adapter "改变接口\n让不兼容的类协作"
+    note for Decorator "接口不变\n动态叠加功能"
+    note for Proxy "接口不变\n控制对真实对象的访问"
+```
+
+## 模式选型参考
+
+```mermaid
+graph TD
+    A[需要组合/包装对象] --> B{需要改变\n对外接口？}
+    B -- 是 --> C[适配器模式]
+    B -- 否 --> D{需要动态\n叠加功能？}
+    D -- 是 --> E[装饰器模式]
+    D -- 否 --> F{需要控制\n对象访问？}
+    F -- 是 --> G[代理模式]
+    F -- 否 --> H{构建树形\n整体-部分结构？}
+    H -- 是 --> I[组合模式]
+    H -- 否 --> J{简化复杂\n子系统接口？}
+    J -- 是 --> K[外观模式]
+    J -- 否 --> L{两个维度\n独立扩展？}
+    L -- 是 --> M[桥接模式]
+    L -- 否 --> N[享元模式\n（大量相似对象共享）]
+```
+
