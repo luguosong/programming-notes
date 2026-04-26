@@ -52,6 +52,9 @@ classDiagram
     MenuComponent <|-- CompositeMenuItem
     MenuComponent <|-- CompositeMenu
     CompositeMenu o--> MenuComponent
+    note for MenuComponent "抽象组件(Component)"
+    note for CompositeMenuItem "叶子(Leaf)"
+    note for CompositeMenu "容器(Composite)"
 ```
 
 | 角色 | 说明 |

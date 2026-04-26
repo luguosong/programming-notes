@@ -53,6 +53,11 @@ classDiagram
     Turkey <|.. WildTurkey
     Duck <|.. TurkeyAdapter
     TurkeyAdapter o--> Turkey
+    note for Duck "目标接口(Target)"
+    note for Turkey "被适配接口(Adaptee)"
+    note for TurkeyAdapter "适配器(Adapter)"
+    note for MallardDuck "具体目标(ConcreteTarget)"
+    note for WildTurkey "被适配者(Adaptee)"
 ```
 
 核心角色：

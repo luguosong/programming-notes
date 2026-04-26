@@ -49,7 +49,10 @@ classDiagram
         +getPrototype(key) Prototype
     }
     Prototype <|.. TenantConfig
-    PrototypeRegistry --> Prototype
+    PrototypeRegistry o--> Prototype
+    note for Prototype "原型接口(Prototype)"
+    note for TenantConfig "具体原型(ConcretePrototype)"
+    note for PrototypeRegistry "原型注册表(Registry)"
 ```
 
 核心角色：

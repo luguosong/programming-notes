@@ -52,6 +52,8 @@ classDiagram
     }
     CaffeineBeverage <|-- Coffee
     CaffeineBeverage <|-- Tea
+    note for CaffeineBeverage "抽象类(AbstractClass)"
+    note for Coffee "具体类(ConcreteClass)"
 ```
 
 | 角色 | 说明 |

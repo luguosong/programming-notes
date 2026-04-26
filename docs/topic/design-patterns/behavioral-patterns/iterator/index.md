@@ -54,6 +54,10 @@ classDiagram
     PancakeHouseMenu ..> MenuIterator
     DinerMenu ..> MenuIterator
     Waitress --> Menu
+    note for MenuIterator "迭代器接口(Iterator)"
+    note for Menu "聚合接口(Aggregate)"
+    note for PancakeHouseMenu "具体聚合(ConcreteAggregate)"
+    note for Waitress "客户端(Client)"
 ```
 
 | 角色 | 说明 |

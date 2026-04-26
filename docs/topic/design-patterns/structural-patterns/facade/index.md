@@ -55,10 +55,15 @@ classDiagram
         +play(title) void
         +stop() void
     }
-    HomeTheaterFacade --> Lights
-    HomeTheaterFacade --> Projector
-    HomeTheaterFacade --> Amplifier
-    HomeTheaterFacade --> DVDPlayer
+    HomeTheaterFacade o--> Lights
+    HomeTheaterFacade o--> Projector
+    HomeTheaterFacade o--> Amplifier
+    HomeTheaterFacade o--> DVDPlayer
+    note for HomeTheaterFacade "外观(Facade)"
+    note for Lights "子系统(Subsystem)"
+    note for Projector "子系统(Subsystem)"
+    note for Amplifier "子系统(Subsystem)"
+    note for DVDPlayer "子系统(Subsystem)"
 ```
 
 外观类聚合所有子系统，暴露 `watchMovie()` / `endMovie()` 两个简单操作。子系统依然存在，高级用户也可以绕过外观直接使用——外观不锁住任何功能。

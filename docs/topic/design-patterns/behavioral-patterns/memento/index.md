@@ -46,6 +46,9 @@ classDiagram
     }
     TextEditor ..> Memento
     UndoManager o--> Memento
+    note for TextEditor "原发器(Originator)"
+    note for Memento "备忘录(Memento)"
+    note for UndoManager "负责人(Caretaker)"
 ```
 
 `TextEditor` 自己创建和恢复 `Memento`，外部（`UndoManager`）只存储不读取——封装性得到保护。

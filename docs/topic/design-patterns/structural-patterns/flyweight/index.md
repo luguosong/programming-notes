@@ -42,8 +42,11 @@ classDiagram
         -type: TreeType
         +draw() void
     }
-    Tree --> TreeType
-    TreeTypeFactory --> TreeType
+    Tree o--> TreeType
+    TreeTypeFactory ..> TreeType
+    note for TreeType "享元(Flyweight)"
+    note for TreeTypeFactory "享元工厂(FlyweightFactory)"
+    note for Tree "情境(Context)"
 ```
 
 `TreeType` 存储可共享的内部状态（名称、颜色、纹理），`Tree` 只存储不可共享的外部状态（坐标），通过工厂缓存保证相同类型的 `TreeType` 对象只创建一次。

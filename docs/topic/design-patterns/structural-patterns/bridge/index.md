@@ -57,6 +57,10 @@ classDiagram
     Notification o--> MessageChannel
     MessageChannel <|.. EmailChannel
     MessageChannel <|.. SmsChannel
+    note for Notification "抽象(Abstraction)"
+    note for UrgentNotification "扩展抽象(RefinedAbstraction)"
+    note for MessageChannel "实现接口(Implementor)"
+    note for EmailChannel "具体实现(ConcreteImplementor)"
 ```
 
 抽象层（`Notification` 及子类）通过组合持有实现层（`MessageChannel`），两个维度各自独立扩展。

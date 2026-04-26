@@ -68,6 +68,9 @@ classDiagram
     GumballState <|.. SoldState
     GumballState <|.. SoldOutState
     GumballMachine o--> GumballState
+    note for GumballState "状态接口(State)"
+    note for NoQuarterState "具体状态(ConcreteState)"
+    note for GumballMachine "上下文(Context)"
 ```
 
 | 角色 | 说明 |

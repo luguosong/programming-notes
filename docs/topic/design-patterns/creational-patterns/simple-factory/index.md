@@ -56,6 +56,10 @@ classDiagram
     Pizza <|-- ClamPizza
     SimplePizzaFactory ..> Pizza
     PizzaStore o--> SimplePizzaFactory
+    note for Pizza "抽象产品(AbstractProduct)"
+    note for CheesePizza "具体产品(ConcreteProduct)"
+    note for SimplePizzaFactory "工厂(Factory)"
+    note for PizzaStore "客户端(Client)"
 ```
 
 工厂类集中管理 `new` 操作，`PizzaStore` 只依赖 `SimplePizzaFactory` 和抽象 `Pizza`。

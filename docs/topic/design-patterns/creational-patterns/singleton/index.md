@@ -36,7 +36,7 @@ classDiagram
         +boil() void
         +drain() void
     }
-    note for ChocolateBoiler "构造函数私有\n静态方法返回唯一实例"
+    note for ChocolateBoiler "单例(Singleton)"
 ```
 
 ## 💻 三种线程安全实现

@@ -62,6 +62,10 @@ classDiagram
     PizzaIngredientFactory <|.. ChicagoPizzaIngredientFactory
     AFPizza <|-- AFCheesePizza
     AFCheesePizza o--> PizzaIngredientFactory
+    note for PizzaIngredientFactory "抽象工厂(AbstractFactory)"
+    note for NYPizzaIngredientFactory "具体工厂(ConcreteFactory)"
+    note for AFPizza "抽象产品(AbstractProduct)"
+    note for AFCheesePizza "具体产品(ConcreteProduct)"
 ```
 
 核心角色：

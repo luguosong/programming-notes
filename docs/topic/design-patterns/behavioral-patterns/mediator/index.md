@@ -43,8 +43,11 @@ classDiagram
         +receive(from, message) void
     }
     ChatMediator <|.. ChatRoom
-    ChatUser --> ChatMediator
+    ChatUser o--> ChatMediator
     ChatRoom o--> ChatUser
+    note for ChatMediator "抽象中介者(Mediator)"
+    note for ChatRoom "具体中介者(ConcreteMediator)"
+    note for ChatUser "同事类(Colleague)"
 ```
 
 各 `ChatUser` 只持有 `ChatMediator` 引用，不再直接持有其他用户——N 个用户共享 1 个中介者。

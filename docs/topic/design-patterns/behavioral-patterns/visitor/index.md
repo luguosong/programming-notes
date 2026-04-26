@@ -61,6 +61,10 @@ classDiagram
     FileNode <|.. TextFile
     FileVisitor <|.. SizeCalculator
     FileVisitor <|.. Compressor
+    note for FileNode "元素接口(Element)"
+    note for ImageFile "具体元素(ConcreteElement)"
+    note for FileVisitor "访问者接口(Visitor)"
+    note for SizeCalculator "具体访问者(ConcreteVisitor)"
 ```
 
 ## 💻 设计模式举例说明

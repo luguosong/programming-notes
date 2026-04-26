@@ -89,6 +89,11 @@ classDiagram
     Duck <|-- RubberDuck
     Duck o--> FlyBehavior
     Duck o--> QuackBehavior
+    note for Duck "上下文(Context)"
+    note for FlyBehavior "策略接口(FlyStrategy)"
+    note for QuackBehavior "策略接口(QuackStrategy)"
+    note for FlyWithWings "具体策略(ConcreteStrategy)"
+    note for MallardDuck "具体上下文(ConcreteContext)"
 ```
 
 ## 💻 设计模式举例说明

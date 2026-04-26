@@ -54,8 +54,12 @@ classDiagram
     }
     UserService <|.. UserServiceImpl
     UserService <|.. CachingUserServiceProxy
-    CachingUserServiceProxy --> UserService
+    CachingUserServiceProxy o--> UserService
     Client ..> UserService
+    note for UserService "主体接口(Subject)"
+    note for UserServiceImpl "真实主体(RealSubject)"
+    note for CachingUserServiceProxy "代理(Proxy)"
+    note for Client "客户端(Client)"
 ```
 
 代理（`CachingUserServiceProxy`）与真实对象实现相同接口，客户端只依赖接口，无感知地通过代理访问真实对象。

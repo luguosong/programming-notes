@@ -66,6 +66,10 @@ classDiagram
     FMPizza <|-- ChicagoStyleCheesePizza
     NYPizzaStore ..> NYStyleCheesePizza
     ChicagoPizzaStore ..> ChicagoStyleCheesePizza
+    note for FMPizzaStore "抽象创建者(Creator)"
+    note for NYPizzaStore "具体创建者(ConcreteCreator)"
+    note for FMPizza "抽象产品(Product)"
+    note for NYStyleCheesePizza "具体产品(ConcreteProduct)"
 ```
 
 核心角色：

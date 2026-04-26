@@ -76,6 +76,10 @@ classDiagram
     DisplayElement <|.. StatisticsDisplay
     DisplayElement <|.. ForecastDisplay
     WeatherData o--> Observer
+    note for Subject "主题接口(Subject)"
+    note for Observer "观察者接口(Observer)"
+    note for WeatherData "具体主题(ConcreteSubject)"
+    note for CurrentConditionsDisplay "具体观察者(ConcreteObserver)"
 ```
 
 ## 💻 设计模式举例说明

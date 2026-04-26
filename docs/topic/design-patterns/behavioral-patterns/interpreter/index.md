@@ -55,6 +55,9 @@ classDiagram
     AndExpression o--> Expression
     OrExpression  o--> Expression
     NotExpression o--> Expression
+    note for Expression "抽象表达式(AbstractExpression)"
+    note for VariableExpression "终结符(Terminal)"
+    note for AndExpression "非终结符(Nonterminal)"
 ```
 
 每种文法规则对应一个类，组合后形成语法树，`interpret()` 递归求值。

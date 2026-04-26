@@ -60,8 +60,14 @@ classDiagram
     RemoteCommand <|.. NoCommand
     RemoteCommand <|.. LightOnCommand
     RemoteCommand <|.. MacroCommand
-    LightOnCommand --> Light
+    LightOnCommand o--> Light
     RemoteControl o--> RemoteCommand
+    note for RemoteCommand "命令接口(Command)"
+    note for LightOnCommand "具体命令(ConcreteCommand)"
+    note for MacroCommand "宏命令(MacroCommand)"
+    note for NoCommand "空命令(NullCommand)"
+    note for RemoteControl "调用者(Invoker)"
+    note for Light "接收者(Receiver)"
 ```
 
 核心角色：

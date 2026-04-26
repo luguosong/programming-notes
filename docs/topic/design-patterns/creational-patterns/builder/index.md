@@ -56,6 +56,8 @@ classDiagram
     }
     HttpRequest *-- Builder : 内部类
     Builder ..> HttpRequest : 创建
+    note for HttpRequest "产品(Product)"
+    note for Builder "建造者(Builder)"
 ```
 
 核心角色：

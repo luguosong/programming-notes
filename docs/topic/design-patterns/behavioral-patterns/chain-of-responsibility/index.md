@@ -44,7 +44,9 @@ classDiagram
     RequestHandler <|-- AuthHandler
     RequestHandler <|-- RateLimitHandler
     RequestHandler <|-- BusinessHandler
-    RequestHandler --> RequestHandler
+    RequestHandler o--> RequestHandler : next
+    note for RequestHandler "抽象处理者(Handler)"
+    note for AuthHandler "具体处理者(ConcreteHandler)"
 ```
 
 ## 💻 设计模式举例说明

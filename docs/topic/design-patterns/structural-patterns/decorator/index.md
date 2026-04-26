@@ -68,6 +68,10 @@ classDiagram
     CondimentDecorator <|-- Mocha
     CondimentDecorator <|-- Whip
     CondimentDecorator <|-- Milk
+    note for Beverage "抽象组件(Component)"
+    note for Espresso "具体组件(ConcreteComponent)"
+    note for CondimentDecorator "抽象装饰器(Decorator)"
+    note for Mocha "具体装饰器(ConcreteDecorator)"
 ```
 
 装饰器（`CondimentDecorator`）继承 `Beverage`，并**持有一个 `Beverage` 对象**。这里的继承不是为了复用代码，而是为了保持相同的类型，让装饰器可以无缝替换被装饰的对象。
