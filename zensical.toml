@@ -254,6 +254,87 @@ nav = [
                 { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
             ] }
         ] },
+        { "Linux" = [
+            "topic/linux/index.md",
+            { "基础篇" = [
+                "topic/linux/intro/index.md",
+                { "Linux 简介与发行版" = "topic/linux/intro/index.md" },
+                { "磁盘分区规划" = "topic/linux/disk-partition/index.md" },
+                { "首次登录与线上求助" = "topic/linux/getting-started/index.md" },
+                { "文件权限体系" = "topic/linux/file-permissions/index.md" },
+                { "目录结构（FHS）" = "topic/linux/fhs/index.md" },
+                { "文件与目录操作" = "topic/linux/file-management/index.md" },
+                { "文件内容查看工具" = "topic/linux/file-content/index.md" },
+                { "文件与命令查找" = "topic/linux/file-search/index.md" }
+            ] },
+            { "存储篇" = [
+                "topic/linux/filesystem/index.md",
+                { "文件系统原理" = "topic/linux/filesystem/index.md" },
+                { "磁盘分区、格式化与挂载" = "topic/linux/disk-ops/index.md" },
+                { "LVM 逻辑卷管理" = "topic/linux/lvm/index.md" },
+                { "软件 RAID" = "topic/linux/raid/index.md" },
+                { "磁盘配额" = "topic/linux/quota/index.md" },
+                { "压缩与归档" = "topic/linux/compress/index.md" },
+                { "备份策略" = "topic/linux/backup/index.md" }
+            ] },
+            { "Shell 篇" = [
+                "topic/linux/vim/index.md",
+                { "vim 编辑器" = "topic/linux/vim/index.md" },
+                { "Bash Shell 基础" = "topic/linux/bash/index.md" },
+                { "重定向与管道" = "topic/linux/redirection/index.md" },
+                { "正则表达式" = "topic/linux/regex/index.md" },
+                { "文本处理工具" = "topic/linux/text-tools/index.md" },
+                { "Shell 脚本编程" = "topic/linux/shell-script/index.md" }
+            ] },
+            { "账户与权限" = [
+                "topic/linux/user-management/index.md",
+                { "用户与组管理" = "topic/linux/user-management/index.md" },
+                { "ACL 与特殊权限" = "topic/linux/acl/index.md" },
+                { "sudo 与 PAM" = "topic/linux/sudo-pam/index.md" }
+            ] },
+            { "系统管理" = [
+                "topic/linux/process/index.md",
+                { "进程管理与工作控制" = "topic/linux/process/index.md" },
+                { "SELinux 与 AppArmor" = "topic/linux/selinux/index.md" },
+                { "systemd 服务管理" = "topic/linux/systemd/index.md" },
+                { "计划任务" = "topic/linux/crontab/index.md" },
+                { "日志管理" = "topic/linux/logging/index.md" },
+                { "开机流程与 GRUB" = "topic/linux/boot/index.md" },
+                { "系统基本配置" = "topic/linux/system-config/index.md" }
+            ] },
+            { "软件安装" = [
+                "topic/linux/compile/index.md",
+                { "源码编译安装" = "topic/linux/compile/index.md" },
+                { "软件包管理" = "topic/linux/package-management/index.md" }
+            ] },
+            { "网络基础" = [
+                "topic/linux/tcp-ip/index.md",
+                { "TCP/IP 网络基础" = "topic/linux/tcp-ip/index.md" },
+                { "网络命令与诊断" = "topic/linux/network-commands/index.md" },
+                { "网络安全基础" = "topic/linux/network-security/index.md" },
+                { "防火墙与 NAT" = "topic/linux/firewall-nat/index.md" }
+            ] },
+            { "服务器实战" = [
+                "topic/linux/ssh/index.md",
+                { "SSH 远程连接" = "topic/linux/ssh/index.md" },
+                { "DHCP 服务器" = "topic/linux/dhcp/index.md" },
+                { "文件共享：NFS 与 Samba" = "topic/linux/nfs-samba/index.md" },
+                { "时间同步与 NTP" = "topic/linux/ntp/index.md" },
+                { "DNS 服务器" = "topic/linux/dns/index.md" },
+                { "Web 服务器" = "topic/linux/web-server/index.md" },
+                { "邮件服务器" = "topic/linux/mail-server/index.md" },
+                { "FTP 服务器" = "topic/linux/ftp/index.md" }
+            ] },
+            { "系统编程" = [
+                { "Linux 编程接口基础" = "topic/linux/linux-api/index.md" },
+                { "高级文件 I/O" = "topic/linux/file-io-adv/index.md" },
+                { "进程生命周期" = "topic/linux/process-advanced/index.md" },
+                { "信号机制" = "topic/linux/signals/index.md" },
+                { "进程间通信" = "topic/linux/ipc/index.md" },
+                { "POSIX 线程" = "topic/linux/threads/index.md" },
+                { "Socket 编程" = "topic/linux/socket-programming/index.md" }
+            ] }
+        ] },
         { "Windows" = [
             "topic/windows/index.md",
             { "DOS 命令" = "topic/windows/dos/index.md" }
