@@ -209,6 +209,43 @@ Car gasManualTruck = new Car(new CombustionEngine(), new ManualControl());
 
     实践口诀：「先考虑组合，继承有理由再用」。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Engine {
+        <<interface>>
+        +run() void
+    }
+    class DriveControl {
+        <<interface>>
+        +control() void
+    }
+    class ElectricEngine {
+        +run() void
+    }
+    class CombustionEngine {
+        +run() void
+    }
+    class ManualControl {
+        +control() void
+    }
+    class AutopilotControl {
+        +control() void
+    }
+    class Car {
+        -engine: Engine
+        -control: DriveControl
+    }
+    Engine <|.. ElectricEngine : 实现
+    Engine <|.. CombustionEngine : 实现
+    DriveControl <|.. ManualControl : 实现
+    DriveControl <|.. AutopilotControl : 实现
+    Car o--> Engine : 组合
+    Car o--> DriveControl : 组合
+    note for Car "通过组合持有各维度接口\n无需创建 N×N 个子类"
+```
+
 ## SOLID 原则
 
 SOLID 是五条面向对象设计原则的缩写，由 Robert C. Martin（"Uncle Bob"）整理推广：
@@ -271,6 +308,31 @@ public class UserLogger {
 
     判断是否违反 SRP，可以问：「这个类为什么会被修改？」如果有多个答案，就需要拆分。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class User {
+        -name: String
+        -email: String
+    }
+    class EmailService {
+        +sendWelcomeEmail(user) void
+    }
+    class UserLogger {
+        +logCreation(user) void
+    }
+    class UserController {
+        +register(user) void
+    }
+    UserController ..> User : 使用
+    UserController ..> EmailService : 使用
+    UserController ..> UserLogger : 使用
+    note for User "职责一：数据存储"
+    note for EmailService "职责二：发送邮件"
+    note for UserLogger "职责三：日志记录"
+```
+
 ### 开闭原则
 
 每次修改已有代码都有引入新 bug 的风险，而扩展新代码只会增加，不会破坏已有逻辑。
@@ -323,6 +385,35 @@ public class EmployeeDiscount implements DiscountStrategy {
 !!! tip "实践提示"
 
     "关闭修改"不等于"永不修改"——bug 修复和重构仍然需要修改代码。OCP 的重点是设计扩展点，让新需求通过"加法"而非"改法"来实现。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class DiscountStrategy {
+        <<interface>>
+        +calculate(amount) double
+    }
+    class VipDiscount {
+        +calculate(amount) double
+    }
+    class StudentDiscount {
+        +calculate(amount) double
+    }
+    class EmployeeDiscount {
+        +calculate(amount) double
+    }
+    class OrderService {
+        -strategy: DiscountStrategy
+        +calculateDiscount(order) double
+    }
+    DiscountStrategy <|.. VipDiscount : 扩展（不改已有代码）
+    DiscountStrategy <|.. StudentDiscount : 扩展（不改已有代码）
+    DiscountStrategy <|.. EmployeeDiscount : 扩展（不改已有代码）
+    OrderService ..> DiscountStrategy : 依赖抽象
+    note for DiscountStrategy "扩展点接口（对扩展开放）"
+    note for OrderService "对修改关闭"
+```
 
 ### 里氏替换原则
 
@@ -377,6 +468,33 @@ public class Square    implements Shape { ... }
 
     不是所有"IS-A"的语义关系都适合用继承——正方形在数学上是矩形，但在代码里不一定是。用继承前先问：「子类是否完全满足父类的所有契约？」
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Shape {
+        <<interface>>
+        +area() int
+    }
+    class Rectangle {
+        -width: int
+        -height: int
+        +setWidth(w) void
+        +setHeight(h) void
+        +area() int
+    }
+    class Square {
+        -side: int
+        +setSide(s) void
+        +area() int
+    }
+    Shape <|.. Rectangle : 实现
+    Shape <|.. Square : 实现
+    note for Shape "共同抽象（满足 LSP）"
+    note for Rectangle "矩形：独立契约"
+    note for Square "正方形：独立契约\n不继承 Rectangle"
+```
+
 ### 接口隔离原则
 
 一个接口方法越多，实现它的类就越可能被迫实现"用不到"的方法，导致空实现或异常抛出。
@@ -418,6 +536,38 @@ public class Bird implements Eatable, Flyable {
 !!! tip "实践提示"
 
     接口不是越细越好——过度拆分会导致接口爆炸。合理的粒度是"按角色"或"按能力维度"划分，而非"一个方法一个接口"。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Eatable {
+        <<interface>>
+        +eat() void
+    }
+    class Flyable {
+        <<interface>>
+        +fly() void
+    }
+    class Swimmable {
+        <<interface>>
+        +swim() void
+    }
+    class Dog {
+        +eat() void
+        +swim() void
+    }
+    class Bird {
+        +eat() void
+        +fly() void
+    }
+    Dog ..|> Eatable : 实现
+    Dog ..|> Swimmable : 实现
+    Bird ..|> Eatable : 实现
+    Bird ..|> Flyable : 实现
+    note for Eatable "细粒度接口（按能力维度）"
+    note for Dog "只实现能力匹配的接口"
+```
 
 ### 依赖倒置原则
 
@@ -463,6 +613,35 @@ public class UserService {
 !!! tip "实践提示"
 
     DIP 是 Spring IoC（控制反转）的理论基础。你写 `@Autowired UserRepository repository` 时，就是在践行依赖倒置原则。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class UserRepository {
+        <<interface>>
+        +findById(id) User
+        +save(user) void
+    }
+    class UserService {
+        -repository: UserRepository
+        +findById(id) User
+    }
+    class MySQLUserRepository {
+        +findById(id) User
+        +save(user) void
+    }
+    class MongoUserRepository {
+        +findById(id) User
+        +save(user) void
+    }
+    UserRepository <|.. MySQLUserRepository : 实现
+    UserRepository <|.. MongoUserRepository : 实现
+    UserService ..> UserRepository : 依赖抽象
+    note for UserRepository "抽象层（高层/低层都依赖它）"
+    note for UserService "高层模块（业务逻辑）"
+    note for MySQLUserRepository "低层模块（基础设施）"
+```
 
 ## 其他常用原则
 
