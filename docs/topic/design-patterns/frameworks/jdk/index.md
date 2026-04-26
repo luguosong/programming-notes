@@ -40,6 +40,31 @@ employees.sort(Comparator.comparing(Employee::getDept)
 
 `Comparable` 适合"有唯一自然顺序"的值对象（如 `Integer`、`String`）；`Comparator` 适合"排序规则需要在调用时决定"的领域对象。这是策略模式的**内部化**与**外部化**两种取舍。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Comparable {
+        <<interface>>
+        +compareTo(other T) int
+    }
+    class Comparator {
+        <<interface>>
+        +compare(o1 T, o2 T) int
+        +reversed() Comparator
+        +thenComparing(other) Comparator
+    }
+    class Employee {
+        -salary: int
+        +compareTo(other Employee) int
+    }
+    Employee ..|> Comparable : 内置策略\n(规则写在类内)
+    Employee ..> Comparator : 外部策略\n(调用时注入)
+    note for Comparable "内置策略接口"
+    note for Comparator "外部策略接口(Strategy)"
+    note for Employee "上下文(Context)"
+```
+
 ### 函数式接口：策略的"语言级"实现
 
 Java 8 的 `java.util.function` 包将常见策略接口标准化，并通过 `@FunctionalInterface` 标注使 lambda 可以直接赋值：
@@ -107,6 +132,42 @@ class FixedSizeList<E> extends AbstractList<E> {
 
     定义接口（`List`），同时提供抽象骨架类（`AbstractList`）。使用者：要完全自定义实现就直接实现接口；要省力就继承骨架类，只覆写少数关键方法。两者互不干涉——这是组合接口和继承优势的最佳实践。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class List {
+        <<interface>>
+        +get(index) E
+        +size() int
+        +indexOf(o) int
+        +contains(o) boolean
+    }
+    class AbstractList {
+        <<abstract>>
+        +get(index)* E
+        +size()* int
+        +indexOf(o) int
+        +contains(o) boolean
+        +iterator() Iterator
+    }
+    class ArrayList {
+        +get(index) E
+        +size() int
+    }
+    class FixedSizeList {
+        -array: Object[]
+        +get(index) E
+        +size() int
+    }
+    List <|.. AbstractList : 实现
+    AbstractList <|-- ArrayList : 继承
+    AbstractList <|-- FixedSizeList : 继承
+    note for AbstractList "模板骨架(AbstractClass)"
+    note for ArrayList "具体实现(ConcreteClass)"
+    note for FixedSizeList "具体实现(ConcreteClass)"
+```
+
 ## 装饰器：Collections 的「能力包装家族」
 
 `java.io` 的装饰链在「装饰器模式」笔记中已详细分析（`FilterInputStream` 解决委托传递问题）。这里关注另一个同样经典的装饰器集群：`java.util.Collections` 的包装方法族：
@@ -134,6 +195,47 @@ unmodifiable.add("d"); // ❌ 抛出 UnsupportedOperationException
 !!! tip "防御性编程最佳实践"
 
     将集合暴露给外部时，用 `Collections.unmodifiableList()` 包装后再返回——调用方无法意外修改内部状态，同时没有创建新集合的内存开销。这是装饰器在"安全边界"场景的常见用法。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class List {
+        <<interface>>
+        +add(e) boolean
+        +get(index) E
+        +size() int
+    }
+    class ArrayList {
+        +add(e) boolean
+        +get(index) E
+    }
+    class UnmodifiableList {
+        -list: List
+        +add(e) boolean
+        +get(index) E
+    }
+    class SynchronizedList {
+        -list: List
+        +add(e) boolean
+        +get(index) E
+    }
+    class CheckedList {
+        -list: List
+        -type: Class
+        +add(e) boolean
+    }
+    List <|.. ArrayList : 实现
+    List <|.. UnmodifiableList : 实现
+    List <|.. SynchronizedList : 实现
+    List <|.. CheckedList : 实现
+    UnmodifiableList o--> List : delegate（被装饰）
+    SynchronizedList o--> List : delegate（被装饰）
+    CheckedList o--> List : delegate（被装饰）
+    note for List "组件接口(Component)"
+    note for ArrayList "具体组件(ConcreteComponent)"
+    note for UnmodifiableList "装饰器(Decorator)"
+```
 
 ## 命令模式：从 Runnable 到 FutureTask 的状态演化
 

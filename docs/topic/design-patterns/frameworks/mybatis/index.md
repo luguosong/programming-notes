@@ -71,6 +71,43 @@ public abstract class BaseExecutor implements Executor {
 
 **MyBatis 的命名约定**：模板方法与其对应抽象方法之间，加 `do` 前缀区分。`query()` 对应 `doQuery()`、`update()` 对应 `doUpdate()`，让方法的主从关系一目了然——这是值得借鉴的命名实践。
 
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Executor {
+        <<interface>>
+        +query(...) List
+        +update(...) int
+    }
+    class BaseExecutor {
+        <<abstract>>
+        +query(...) List
+        +update(...) int
+        #doQuery(...)* List
+        #doUpdate(...)* int
+    }
+    class SimpleExecutor {
+        #doQuery(...) List
+        #doUpdate(...) int
+    }
+    class BatchExecutor {
+        #doQuery(...) List
+        #doUpdate(...) int
+    }
+    class ReuseExecutor {
+        #doQuery(...) List
+        #doUpdate(...) int
+    }
+    Executor <|.. BaseExecutor : 实现
+    BaseExecutor <|-- SimpleExecutor : 继承
+    BaseExecutor <|-- BatchExecutor : 继承
+    BaseExecutor <|-- ReuseExecutor : 继承
+    note for Executor "组件接口(Component)"
+    note for BaseExecutor "模板骨架(AbstractClass)"
+    note for SimpleExecutor "具体实现(ConcreteClass)"
+```
+
 ## 解释器模式：动态 SQL 的树形解析
 
 MyBatis 的动态 SQL（`<if>`、`<trim>`、`<where>`、`<foreach>` 等标签）通过解释器模式实现。每种标签对应一个 `SqlNode` 实现类：
@@ -93,6 +130,45 @@ class StaticTextSqlNode implements SqlNode { ... } // 纯静态文本
 !!! note "#{} vs ${}"
 
     `#{}` 是 `PreparedStatement` 占位符，MyBatis 用 `ParameterMapping` 处理，防止 SQL 注入；`${}` 是字符串直接替换，属于解释器的 `TextSqlNode` 处理路径，使用不当会引入 SQL 注入风险。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class SqlNode {
+        <<interface>>
+        +apply(context) boolean
+    }
+    class MixedSqlNode {
+        -contents: List
+        +apply(context) boolean
+    }
+    class IfSqlNode {
+        -test: String
+        -contents: SqlNode
+        +apply(context) boolean
+    }
+    class TrimSqlNode {
+        +apply(context) boolean
+    }
+    class ForeachSqlNode {
+        +apply(context) boolean
+    }
+    class StaticTextSqlNode {
+        -text: String
+        +apply(context) boolean
+    }
+    SqlNode <|.. MixedSqlNode : 实现
+    SqlNode <|.. IfSqlNode : 实现
+    SqlNode <|.. TrimSqlNode : 实现
+    SqlNode <|.. ForeachSqlNode : 实现
+    SqlNode <|.. StaticTextSqlNode : 实现
+    MixedSqlNode o--> SqlNode : 子节点列表
+    IfSqlNode o--> SqlNode : 内容节点
+    note for SqlNode "抽象表达式(AbstractExpression)"
+    note for MixedSqlNode "非终结符表达式(NonTerminal)"
+    note for StaticTextSqlNode "终结符表达式(Terminal)"
+```
 
 ## 单例变形：ErrorContext 的线程唯一单例
 
@@ -145,6 +221,46 @@ cache = new SynchronizedCache(cache);  // 外包线程安全
 ```
 
 与继承相比，装饰器组合避免了类数量的组合爆炸（9 个功能两两组合需要 2⁹ = 512 个子类），任意功能的增减只需在装饰链中增删一层。
+
+```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
+classDiagram
+    classDef default fill:transparent,stroke:#768390
+    class Cache {
+        <<interface>>
+        +getObject(key) Object
+        +putObject(key, value) void
+        +removeObject(key) Object
+    }
+    class PerpetualCache {
+        -cache: HashMap
+        +getObject(key) Object
+        +putObject(key, value) void
+    }
+    class LruCache {
+        -delegate: Cache
+        +getObject(key) Object
+        +putObject(key, value) void
+    }
+    class LoggingCache {
+        -delegate: Cache
+        +getObject(key) Object
+    }
+    class SynchronizedCache {
+        -delegate: Cache
+        +getObject(key) Object
+    }
+    Cache <|.. PerpetualCache : 实现
+    Cache <|.. LruCache : 实现
+    Cache <|.. LoggingCache : 实现
+    Cache <|.. SynchronizedCache : 实现
+    LruCache o--> Cache : delegate
+    LoggingCache o--> Cache : delegate
+    SynchronizedCache o--> Cache : delegate
+    note for Cache "组件接口(Component)"
+    note for PerpetualCache "具体组件(ConcreteComponent)"
+    note for LruCache "装饰器(Decorator)"
+```
 
 ## 迭代器模式：PropertyTokenizer 的惰性属性解析
 
@@ -215,6 +331,24 @@ executor.query(...);
 !!! warning "插件的使用边界"
 
     MyBatis 插件可拦截 `Executor`、`ParameterHandler`、`ResultSetHandler`、`StatementHandler` 四个接口的所有方法。但插件对整个执行链路的侵入性很强，**只在必须的场景下使用**（如分页、数据权限），避免把通用工具类包装成插件增加理解成本。
+
+```mermaid
+sequenceDiagram
+    participant App as 应用代码
+    participant P2 as Plugin2代理
+    participant P1 as Plugin1代理
+    participant SE as SimpleExecutor（真实对象）
+
+    App->>P2: executor.query(...)
+    P2->>P2: Interceptor2 拦截逻辑
+    P2->>P1: invoke()
+    P1->>P1: Interceptor1 拦截逻辑
+    P1->>SE: doQuery(...)
+    SE-->>P1: 结果
+    P1-->>P2: 结果
+    P2-->>App: 结果
+    Note over P2,SE: 每个插件 = 一层动态代理（InvocationHandler）
+```
 
 ## MyBatis 10 种模式速查
 
