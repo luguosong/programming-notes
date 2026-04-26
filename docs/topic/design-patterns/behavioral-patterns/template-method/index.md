@@ -103,7 +103,7 @@ classDiagram
 - JDK：`AbstractList`（`get()`/`size()` 是抽象方法，其余是模板）
 - Spring：`JdbcTemplate`（固定获取连接→执行SQL→处理结果的流程）
 
-## 工业视角
+## 🏭 工业视角
 
 ### 模板方法的两大作用：复用与扩展
 

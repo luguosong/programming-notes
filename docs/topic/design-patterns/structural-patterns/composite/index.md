@@ -100,7 +100,7 @@ classDiagram
 - UI 组件（按钮 + 容器面板）
 - JDK：`java.awt.Container`（包含 `Component`，`Component` 是公共接口）
 
-## 工业视角
+## 🏭 工业视角
 
 ### 数据结构视角：组合模式是树形结构的模式化
 

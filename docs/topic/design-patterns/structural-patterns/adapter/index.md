@@ -102,7 +102,7 @@ classDiagram
 - JDK：`Arrays.asList()` 将数组适配为 `List`；`InputStreamReader` 将字节流适配为字符流
 - Spring：`HandlerAdapter` 将不同类型的 Controller 适配为统一处理接口
 
-## 工业视角
+## 🏭 工业视角
 
 ### 类适配器 vs 对象适配器：优先选组合
 

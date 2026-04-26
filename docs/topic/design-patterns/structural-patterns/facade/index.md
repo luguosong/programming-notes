@@ -95,7 +95,7 @@ classDiagram
 - 对遗留系统封装，向外提供清晰的接口
 - Spring：`JdbcTemplate` 封装了 `DataSource`/`Connection`/`Statement`/`ResultSet` 的操作细节
 
-## 工业视角
+## 🏭 工业视角
 
 ### 接口粒度困境：细粒度与粗粒度的博弈
 

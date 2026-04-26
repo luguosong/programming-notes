@@ -114,7 +114,7 @@ classDiagram
 - JDK：`Collection.iterator()` 是工厂方法的经典体现（每种集合返回自己的迭代器）
 - Spring `BeanFactory.getBean()` 根据配置决定创建哪种 Bean 实例
 
-## 工业视角
+## 🏭 工业视角
 
 ### 工厂方法用多态消除了 if-else，但并未消除选择逻辑
 

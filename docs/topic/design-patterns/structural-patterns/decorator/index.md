@@ -112,7 +112,7 @@ classDiagram
 - JDK：`InputStream → FileInputStream → BufferedInputStream → DataInputStream` 就是经典装饰器链
 - Spring：`HttpServletRequestWrapper`
 
-## 工业视角
+## 🏭 工业视角
 
 ### Java IO 是教科书级装饰器实现，但藏着一个设计细节
 

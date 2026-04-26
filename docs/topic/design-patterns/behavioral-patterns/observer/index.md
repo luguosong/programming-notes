@@ -116,7 +116,7 @@ classDiagram
 - Spring：`ApplicationEvent` + `@EventListener`、`@TransactionalEventListener`
 - JDK：`PropertyChangeListener`、`Flow.Publisher`/`Flow.Subscriber`（Reactive Streams）
 
-## 工业视角
+## 🏭 工业视角
 
 ### 同步阻塞 vs 异步非阻塞：性能与耦合的权衡
 

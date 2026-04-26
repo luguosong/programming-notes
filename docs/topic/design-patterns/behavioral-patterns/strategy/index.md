@@ -130,7 +130,7 @@ classDiagram
 - Spring：`PasswordEncoder` 策略、`ResourceLoader` 策略
 - Java 标准库：`Comparator` 就是一个典型的策略接口，传入不同 lambda 就是不同排序策略
 
-## 工业视角
+## 🏭 工业视角
 
 ### 策略模式三部分：定义、创建、使用各司其职
 

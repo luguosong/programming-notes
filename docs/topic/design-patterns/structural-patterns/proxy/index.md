@@ -133,7 +133,7 @@ CGLIB 通过字节码工具在**运行时**生成目标类的**子类**作为代
 - Spring AOP：`@Transactional`、`@Cacheable`、`@Async` 底层都是动态代理
 - MyBatis：Mapper 接口没有实现类，调用时是 JDK 动态代理执行 SQL
 
-## 工业视角
+## 🏭 工业视角
 
 ### 从"业务代码被污染"到动态代理的演进
 

@@ -87,7 +87,7 @@ classDiagram
 - JDK：`Runtime.getRuntime()`、`System.console()`
 - Spring Bean 默认 `@Scope("singleton")`（容器级别唯一，非 JVM 级别）
 
-## 工业视角
+## 🏭 工业视角
 
 ### 单例的五宗罪：为什么它被称为反模式
 

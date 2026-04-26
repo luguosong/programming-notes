@@ -4,6 +4,12 @@ title: 桥接模式
 
 # 桥接模式
 
+## 从消息通知维度爆炸说起
+
+告警通知系统需要支持两个维度的组合：**消息紧急程度**（普通、紧急、严重）× **发送渠道**（短信、邮件、微信）。用继承来实现所有组合，就需要 `UrgencySmsSender`、`UrgencyEmailSender`、`SevereSmsSender`……3×3=9 个类。再加一种渠道，就要多写 3 个类——类数量按**乘法**增长，稍有扩展就爆炸。
+
+桥接模式的解法是：把两个维度**各自独立成体系**，再用**对象组合**桥接起来。新增渠道只需新增一个渠道类，不碰任何紧急程度类；新增紧急程度同理，扩展从"乘法"变成"加法"。
+
 ## 🔍 定义
 
 桥接模式（Bridge）将抽象部分与其实现部分分离，使两者可以独立变化。通过**组合代替继承**，避免多维度扩展时的类爆炸。
@@ -94,7 +100,7 @@ classDiagram
 - 希望在运行时切换实现（如动态切换通知渠道）
 - JDK：`JDBC` 驱动设计——`Connection`/`Statement` 是抽象，不同数据库驱动是实现
 
-## 工业视角
+## 🏭 工业视角
 
 ### JDBC 是桥接模式最权威的工业案例
 
@@ -102,7 +108,7 @@ GoF 对桥接模式的定义——"将抽象和实现解耦，让它们可以独
 
 ``` java title="JDBC 切换数据库只需换一行"
 // 切换到 MySQL：只改这一行（或改配置文件）
-Class.forName("com.mysql.jdbc.Driver");
+Class.forName("com.mysql.cj.jdbc.Driver"); // MySQL Connector/J 8.x 推荐（旧名 com.mysql.jdbc.Driver 在 8.x 中已弃用）
 // 切换到 Oracle：
 // Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -112,7 +118,7 @@ Statement stmt = con.createStatement();
 ResultSet rs = stmt.executeQuery("SELECT * FROM users");
 ```
 
-在这里，`DriverManager` / `Connection` / `Statement` 是"抽象"（与具体数据库无关的操作骨架），`com.mysql.jdbc.Driver` 等是"实现"（真正与数据库通信的类库）。两者通过 `DriverManager.registerDriver()` 组合在一起，独立演化，互不侵入。
+在这里，`DriverManager` / `Connection` / `Statement` 是"抽象"（与具体数据库无关的操作骨架），`com.mysql.cj.jdbc.Driver` 等是"实现"（真正与数据库通信的类库）。两者通过 `DriverManager.registerDriver()` 组合在一起，独立演化，互不侵入。
 
 !!! tip "桥接模式的两种理解方式"
 

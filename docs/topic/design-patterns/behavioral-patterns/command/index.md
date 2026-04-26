@@ -117,7 +117,7 @@ classDiagram
 - 事务性操作（所有命令成功才提交，失败则逐一 undo）
 - Java `Runnable`/`Callable`、Spring `TransactionCallback` 都是命令模式的体现
 
-## 工业视角
+## 🏭 工业视角
 
 ### 将函数封装为对象：命令模式的本质
 

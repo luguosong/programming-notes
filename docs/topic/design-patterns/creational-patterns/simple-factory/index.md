@@ -98,7 +98,7 @@ classDiagram
 - 需要将对象创建逻辑与使用逻辑分离，降低客户端耦合
 - JDK：`Calendar.getInstance()`、`NumberFormat.getInstance()` 内部使用了类似思路
 
-## 工业视角
+## 🏭 工业视角
 
 ### 简单工厂的本质：封装变化，隔离创建与使用
 

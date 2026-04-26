@@ -97,7 +97,7 @@ classDiagram
 - 为同一集合提供多种遍历顺序（正向、逆向、按条件过滤）
 - JDK：`java.util.Iterator`、`ListIterator`、所有 `Collection` 实现类的 `iterator()`
 
-## 工业视角
+## 🏭 工业视角
 
 ### 迭代器相比 for 循环的三大优势
 
