@@ -27,6 +27,7 @@ Starbuzz 是增长最快的咖啡连锁店。他们的菜单系统有一个 `Bev
 ## 🏗️ 设计模式结构（Starbuzz 咖啡）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Beverage {

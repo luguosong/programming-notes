@@ -20,6 +20,7 @@ title: 面向对象程序设计基础
 以猫为例：
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Cat {
@@ -44,6 +45,7 @@ classDiagram
 真实程序不只有一个类。当多个类有共同属性和行为时，可以抽取共同部分到父类：
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Organism {
@@ -219,6 +221,7 @@ public class Professor {
 UML 表示：虚线箭头 `..>`（A → B 表示 A 依赖 B）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Professor {
@@ -248,6 +251,7 @@ public class Professor {
 UML 表示：实线箭头 `-->`（A → B 表示 A 关联 B）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Professor {
@@ -287,6 +291,7 @@ public class Department {
 UML 表示：空心菱形 `o-->` 指向组件（整体这端是菱形）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Department {
@@ -323,6 +328,7 @@ public class University {
 UML 表示：实心菱形 `*-->` 指向组件（与聚合相同，但菱形是实心的）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class University {
@@ -349,6 +355,7 @@ classDiagram
 | **继承**（`extends`） | 空心三角 + 实线 `<|--` | 类 A 继承类 B 的接口和实现，可扩展 |
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Flyable {
@@ -419,6 +426,7 @@ graph LR
 下面是一个包含多种关系的完整示例——策略模式的类图：
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Context {

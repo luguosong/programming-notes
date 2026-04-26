@@ -31,6 +31,7 @@ title: 模板方法模式
 ## 🏗️ 设计模式结构（咖啡因饮料）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class CaffeineBeverage {

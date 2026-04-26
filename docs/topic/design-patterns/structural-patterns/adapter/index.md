@@ -25,6 +25,7 @@ title: 适配器模式
 ## 🏗️ 设计模式结构（鸭子/火鸡适配器）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Duck {

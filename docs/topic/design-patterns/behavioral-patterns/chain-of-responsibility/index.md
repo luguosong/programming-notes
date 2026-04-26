@@ -25,6 +25,7 @@ HTTP 请求处理需要依次进行认证、限流、日志记录，写在一个
 ## 🏗️ 设计模式结构说明
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class RequestHandler {

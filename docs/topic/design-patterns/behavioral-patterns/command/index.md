@@ -25,6 +25,7 @@ title: 命令模式
 ## 🏗️ 设计模式结构（家电遥控器）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class RemoteCommand {

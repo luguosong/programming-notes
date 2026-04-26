@@ -177,6 +177,7 @@ stateDiagram-v2
 `java.awt` 是 JDK 中组合模式的原始应用。`Component` 是统一的抽象节点，`Container` 既是 `Component`（可被嵌套）又可以包含子 `Component`：
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     direction TB

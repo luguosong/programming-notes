@@ -28,6 +28,7 @@ title: 迭代器模式
 ## 🏗️ 设计模式结构（菜单迭代器）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class MenuIterator {

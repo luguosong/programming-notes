@@ -29,6 +29,7 @@ title: 建造者模式
 ## 🏗️ 设计模式结构说明
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class HttpRequest {

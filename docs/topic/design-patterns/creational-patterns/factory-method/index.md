@@ -36,6 +36,7 @@ if (style.equals("ny")) {
 ## 🏗️ 设计模式结构（披萨连锁店）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class FMPizzaStore {

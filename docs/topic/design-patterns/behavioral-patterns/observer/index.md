@@ -33,6 +33,7 @@ WeatherData 直接调用每个具体面板，新增面板就要改源码：
 ## 🏗️ 设计模式结构（气象站）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class Subject {

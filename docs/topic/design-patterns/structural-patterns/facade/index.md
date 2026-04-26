@@ -26,6 +26,7 @@ title: 外观模式
 ## 🏗️ 设计模式结构（家庭影院）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class HomeTheaterFacade {

@@ -27,6 +27,7 @@ title: 抽象工厂模式
 ## 🏗️ 设计模式结构（披萨原料工厂）
 
 ```mermaid
+%%{init: {'themeVariables': {'noteBkgColor': 'transparent', 'noteBorderColor': '#768390'}}}%%
 classDiagram
     classDef default fill:transparent,stroke:#768390
     class PizzaIngredientFactory {
