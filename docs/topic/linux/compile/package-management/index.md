@@ -327,7 +327,7 @@ flatpak remove org.mozilla.firefox             # 卸载
 | 操作历史 | `dnf history` | `cat /var/log/apt/history.log` |
 | 锁定版本 | `dnf versionlock pkg` | `apt-mark hold pkg` |
 
-## 发行版差异详解
+## 发行版差异
 
 === "Debian / Ubuntu"
 

@@ -381,7 +381,7 @@ exit
 reboot
 ```
 
-## 发行版差异速查
+## 发行版差异
 
 === "Debian / Ubuntu"
 

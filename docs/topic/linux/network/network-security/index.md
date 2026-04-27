@@ -345,38 +345,10 @@ fail2ban-client set sshd banip 1.2.3.4
 
 ## SELinux / AppArmor 简介
 
-即使防火墙、Fail2ban 一切配置正确，一旦某个服务（如 Nginx、PHP-FPM）
-存在 RCE 漏洞被攻破，攻击者仍可以以该服务的权限在系统内横向移动。
-强制访问控制（MAC）在此补上最后一道防线。
+SELinux 和 AppArmor 是 Linux 的强制访问控制（MAC）机制，用于限制已入侵进程的破坏范围。详细原理与配置参见专题页面：
 
-**SELinux（Security-Enhanced Linux）**
-
-- 由 NSA 开发，集成于 Linux 内核，RHEL/CentOS/Fedora 默认启用
-- 核心模型：每个进程和文件都有 **安全上下文（Security Context）**，由 `type` 标签控制访问
-- 即使 `httpd` 被攻陷取得 root，SELinux 策略也会阻止它读取 `/etc/shadow`
-
-``` bash title="查看 SELinux 状态"
-getenforce        # Enforcing / Permissive / Disabled
-sestatus          # 详细状态
-```
-
-**AppArmor**
-
-- Debian/Ubuntu 默认使用，基于路径而非标签，配置相对简单
-- 为每个程序定义一个「Profile」，指定允许访问的文件路径和网络权限
-
-``` bash title="查看 AppArmor 状态"
-aa-status
-apparmor_status
-```
-
-!!! tip "架构定位"
-
-    SELinux / AppArmor 不是防火墙的替代，而是纵深防御（Defense in Depth）
-    的最后一层：**防火墙拦截外部流量 → Fail2ban 防暴力破解 →
-    SELinux/AppArmor 限制已入侵进程的破坏范围**。
-
-    详细配置参见「SELinux 详解」和「AppArmor 详解」专题页面。
+- [SELinux 详解](../process/selinux/index.md)
+- [AppArmor 详解](../process/apparmor/index.md)
 
 ## 用户账号安全
 

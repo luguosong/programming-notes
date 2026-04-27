@@ -1,8 +1,8 @@
 ---
-title: vim 编辑器
+title: Shell 与文本处理
 ---
 
-# vim 编辑器
+# Shell 与文本处理
 
 **本文你会学到**：
 

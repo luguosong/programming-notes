@@ -1,5 +1,5 @@
 ---
-title: Linux 编程接口基础
+title: Linux 编程接口
 ---
 
 # Linux 编程接口基础
@@ -636,4 +636,16 @@ graph TD
     | 进程启动时的环境变量？ | `cat /proc/PID/environ \| tr '\0' '\n'` |
     | 磁盘空间被幽灵文件占用？ | `lsof \| grep deleted` |
     | 某个系统调用/库函数的行为和 errno？ | `man 2 syscall` / `man 3 func` |
+
+### 内存分配概览
+
+动态内存分配是 C 程序最基础的操作之一。Linux 提供从 `malloc` 到 `mmap` 的多层分配机制，涵盖堆内存、内存映射、共享内存等不同场景：
+
+→ [内存管理](memory/index.md)
+
+### 定时器概览
+
+Linux 提供从秒级 `sleep` 到纳秒级 `timerfd` 的多种定时机制，满足不同精度和场景的需求，包括间隔定时器、POSIX 定时器、基于文件描述符的 timerfd 等：
+
+→ [定时器与休眠](timers/index.md)
 

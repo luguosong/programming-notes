@@ -26,14 +26,14 @@ title: 计划任务
 
 `at` 依赖 `atd` 后台服务。部分发行版默认未安装：
 
-=== "Debian/Ubuntu"
+=== "Debian / Ubuntu"
 
     ``` bash
     apt install at
     systemctl enable --now atd
     ```
 
-=== "RHEL/CentOS"
+=== "Red Hat / RHEL"
 
     ``` bash
     dnf install at
@@ -195,13 +195,13 @@ crontab -u alice -l  # root 查看指定用户的 crontab
 
 **查看 cron 日志**：
 
-=== "Debian/Ubuntu"
+=== "Debian / Ubuntu"
 
     ``` bash
     grep CRON /var/log/syslog
     ```
 
-=== "RHEL/CentOS"
+=== "Red Hat / RHEL"
 
     ``` bash
     grep CRON /var/log/cron
@@ -328,7 +328,7 @@ journalctl -u backup.service     # 查看任务执行日志
 
 ## 发行版差异
 
-=== "Debian/Ubuntu"
+=== "Debian / Ubuntu"
 
     - cron 守护进程：`cron`（通常预装，`apt install cron`）
     - 服务名：`cron.service`
@@ -336,7 +336,7 @@ journalctl -u backup.service     # 查看任务执行日志
     - `at` 需要单独安装：`apt install at`
     - 查看 cron 日志：`grep CRON /var/log/syslog`
 
-=== "RHEL/CentOS"
+=== "Red Hat / RHEL"
 
     - cron 守护进程：`crond`（`dnf install cronie`）
     - 服务名：`crond.service`

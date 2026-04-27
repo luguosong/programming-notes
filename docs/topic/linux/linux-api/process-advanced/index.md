@@ -165,6 +165,28 @@ graph TD
 | 退出处理函数 | `atexit()` 注册的函数全部清除 |
 | 共享内存映射 | 非继承的 `mmap()` 区域清除 |
 
+### #! 脚本解释器机制
+
+Linux 内核通过 `#!`（shebang）机制识别脚本文件。当 `execve()` 执行的文件的头两个字节为 `#!` 时，内核会解析后续的解释器路径和可选参数，转而执行解释器程序，并将原脚本路径作为参数传入：
+
+``` bash
+#!/bin/bash          # execve 执行时，内核实际执行 /bin/bash script.sh
+#!/usr/bin/python3   # 内核实际执行 /usr/bin/python3 script.py
+#!/usr/bin/env node  # 内核实际执行 /usr/bin/env node script.js
+```
+
+内核层面的执行流程：
+
+1. `execve("script.sh", ...)` 读取文件头部，发现 `#!/bin/bash`
+2. 内核拼接出实际执行路径：`/bin/bash script.sh`
+3. 等同于调用 `execve("/bin/bash", ["/bin/bash", "script.sh", ...], ...)`
+
+!!! tip "解释器脚本的局限"
+
+    - `#!` 后只能跟一个可选参数（例如 `#!/usr/bin/python3 -E` 合法，但 `#!/usr/bin/python3 -E -s` 会被视为 `(-E -s)` 整体一个参数）
+    - 内核只识别 `#!`，忽略空格和缩进，格式必须严格：`#!<path>[ <single-arg>]`
+    - 可通过 `execve` 的 `argv[0]` 向解释器传递脚本文件名（某些解释器据此确定脚本目录）
+
 ### fork + exec：启动新程序的标准范式
 
 Linux（UNIX）的进程创建哲学与 Windows 完全不同：

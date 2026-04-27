@@ -1,5 +1,5 @@
 ---
-title: 进程管理与工作控制
+title: 进程与服务
 ---
 
 # 进程管理与工作控制
@@ -253,6 +253,31 @@ renice -n 10 -u alice       # 将 alice 所有进程的 nice 值改为 10
 ```
 
 也可以在 `top` 中按 `r` 键，然后输入 PID 和新的 nice 值来交互式调整。
+
+### 调度策略
+
+Linux 内核支持多种调度策略，决定就绪进程被 CPU 执行的顺序和时间片长度。策略分为两类：
+
+| 策略 | 调度算法 | 优先级范围 | 适用场景 |
+|------|---------|-----------|---------|
+| `SCHED_OTHER`（默认） | 完全公平调度（CFS） | nice -20~19 | 普通进程 |
+| `SCHED_FIFO` | 先进先出（实时） | 1~99（静态优先级） | 实时进程，需防止被其他进程抢占 |
+| `SCHED_RR` | 时间片轮转（实时） | 1~99（静态优先级） | 实时进程，允许同优先级轮转切换 |
+
+- **`SCHED_FIFO`**：一旦获得 CPU，除非自愿阻塞或被更高优先级的实时进程抢占，否则一直运行。同优先级下先进先出
+- **`SCHED_RR`**：与 `SCHED_FIFO` 类似，但同优先级进程按时间片轮转
+- **`SCHED_OTHER`**：默认策略，CFS 根据 nice 值分配 CPU 时间比例
+
+``` c title="设置实时调度策略（需要 root 或 CAP_SYS_NICE）"
+#include <sched.h>
+
+struct sched_param sp = { .sched_priority = 50 };
+sched_setscheduler(0, SCHED_FIFO, &sp);   // 0 = 当前进程
+```
+
+!!! warning "实时策略的注意事项"
+
+    实时策略（`SCHED_FIFO` / `SCHED_RR`）的优先级高于所有普通进程。若实时进程进入死循环且没有休眠或释放 CPU，将**锁死系统**，连 `bash` 和 SSH 都无法响应。生产环境中务必谨慎使用，配合 `sched_setaffinity` 绑定特定核心。
 
 ## 工作控制（Job Control）
 

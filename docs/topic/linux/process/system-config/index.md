@@ -374,7 +374,7 @@ sysctl --system                              # 加载所有配置文件（推荐
     ufw delete allow 80/tcp
     ```
 
-## 发行版差异汇总
+## 发行版差异
 
 | 配置项 | Debian / Ubuntu | Red Hat / RHEL |
 |--------|----------------|----------------|

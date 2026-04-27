@@ -198,6 +198,26 @@ programming-notes/
 
 **注意**：`docs/custom/`、`docs/assert/` 等资源目录无需注册 nav。
 
+#### 分组 index 页面规则（重要）
+
+带子项的分组中，第一项 `"分类/index.md"` 作为分组的父页面（匿名项），**禁止**在列表中再以命名方式重复注册同一路径：
+
+```toml
+# ✅ 正确：index.md 仅作为匿名父页面出现一次
+{ "用户与权限" = [
+    "topic/linux/user-management/index.md",
+    { "sudo 与 PAM" = "topic/linux/user-management/sudo-pam/index.md" },
+    { "ACL 与特殊权限" = "topic/linux/user-management/acl/index.md" }
+] }
+
+# ❌ 错误：index.md 被重复注册为命名子页面
+{ "用户与权限" = [
+    "topic/linux/user-management/index.md",
+    { "用户与组管理" = "topic/linux/user-management/index.md" },  # 与父页面重复！
+    { "sudo 与 PAM" = "topic/linux/user-management/sudo-pam/index.md" }
+] }
+```
+
 ### Java 示例模块结构
 
 `code/java/` 下采用两级聚合 POM 组织：

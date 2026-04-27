@@ -182,7 +182,9 @@ sudo updatedb
 find [搜索路径] [条件选项] [执行动作]
 ```
 
-### 按文件名查找
+### find 查询条件
+
+#### 按文件名查找
 
 ``` bash
 # 精确匹配文件名（大小写敏感）
@@ -195,7 +197,7 @@ find /etc -name "*httpd*"
 find /home -iname "readme.txt"
 ```
 
-### 按文件类型查找
+#### 按文件类型查找
 
 | 类型参数 | 说明 |
 |---------|------|
@@ -215,7 +217,7 @@ find /run -type s
 find /usr/bin -type l
 ```
 
-### 按修改时间查找
+#### 按修改时间查找
 
 `find` 的时间参数以**天**为单位，正负号含义不同：
 
@@ -246,7 +248,7 @@ find /var -mtime 4
     - `mtime`（modification time）：最后**内容**修改时间（最常用）
     - `ctime`（change time）：最后**属性**变更时间（包括权限、所有者等）
 
-### 按文件大小查找
+#### 按文件大小查找
 
 ``` bash
 find [路径] -size [+-]SIZE
@@ -265,7 +267,7 @@ find /tmp -size -10k
 find . -size 100c
 ```
 
-### 按权限查找
+#### 按权限查找
 
 ``` bash
 # 权限恰好等于 755
@@ -278,7 +280,7 @@ find /usr/bin -perm -4000    # 包含 SUID
 find /usr/bin /usr/sbin -perm /6000    # 含 SUID 或 SGID
 ```
 
-### 按用户与组查找
+#### 按用户与组查找
 
 ``` bash
 # 找属于某个用户的所有文件
@@ -294,7 +296,9 @@ find / -nouser
 find / -nogroup
 ```
 
-### 执行动作：-exec 与 -delete
+### find 动作与组合
+
+#### 执行动作：-exec 与 -delete
 
 找到文件后，`find` 可以直接对结果执行操作：
 
@@ -315,7 +319,7 @@ find /etc -name "*.conf" -print
 
     `{}` 代表每一个查找结果，`\;` 是命令结束符（`;` 在 bash 中有特殊含义，需转义）。
 
-### 逻辑组合
+#### 逻辑组合
 
 多个条件可以用逻辑运算符组合：
 
