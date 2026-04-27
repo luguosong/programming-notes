@@ -69,9 +69,7 @@ unit 文件分散在三个目录，**优先级从低到高**：
 
 ## systemctl 常用操作
 
-### 服务启停与管理
-
-#### 服务控制
+### 服务控制
 
 ``` bash
 # 启动 / 停止 / 重启服务
@@ -86,7 +84,7 @@ systemctl reload nginx
 systemctl status nginx
 ```
 
-#### 开机自启管理
+### 开机自启管理
 
 ``` bash
 # 设置开机自启 / 取消自启
@@ -101,9 +99,7 @@ systemctl is-enabled nginx    # enabled / disabled / static
 systemctl is-active nginx     # active / inactive
 ```
 
-### 信息查询
-
-#### 查看 Unit 列表
+### 查看 Unit 列表
 
 ``` bash
 # 当前运行中的服务
@@ -116,7 +112,7 @@ systemctl list-units --type=service --all
 systemctl list-unit-files --type=service
 ```
 
-#### 依赖关系分析
+### 依赖关系分析
 
 ``` bash
 # 查看 nginx 依赖哪些 unit
@@ -126,9 +122,7 @@ systemctl list-dependencies nginx
 systemctl list-dependencies --reverse nginx
 ```
 
-### 配置更新
-
-#### 重载配置
+### 重载配置
 
 ``` bash
 # 修改 unit 文件后必须执行，否则 systemd 不会感知变化
@@ -265,9 +259,7 @@ systemctl hibernate     # 休眠（状态保存到磁盘）
 
 systemd 内置的 **journald** 负责收集所有服务的日志，统一通过 `journalctl` 查询，彻底告别四处找 `/var/log/*.log` 的烦恼。
 
-### 日志查询
-
-#### 查看服务日志
+### 查看服务日志
 
 ``` bash
 # nginx 的全部历史日志
@@ -283,7 +275,7 @@ journalctl -u nginx -n 50
 journalctl -u nginx --since "1 hour ago"
 ```
 
-#### 系统范围日志
+### 系统范围日志
 
 ``` bash
 # 本次启动的全部日志
@@ -299,9 +291,7 @@ journalctl -p err
 journalctl --since "2024-01-01 00:00" --until "2024-01-01 12:00"
 ```
 
-### 日志维护
-
-#### 日志清理
+### 日志清理
 
 ``` bash
 # 查看 journal 占用磁盘空间
@@ -314,7 +304,7 @@ journalctl --vacuum-size=500M
 journalctl --vacuum-time=30d
 ```
 
-#### 持久化日志
+### 持久化日志
 
 默认情况下，journald 将日志保存在内存中，重启后丢失。要让日志持久存储：
 

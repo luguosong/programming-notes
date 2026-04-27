@@ -269,6 +269,7 @@ nav = [
             ] },
             { "Shell 与文本处理" = [
                 "topic/linux/shell/index.md",
+                { "Vim 编辑器" = "topic/linux/shell/vim/index.md" },
                 { "Bash Shell 基础" = "topic/linux/shell/bash/index.md" },
                 { "重定向与管道" = "topic/linux/shell/redirection/index.md" },
                 { "正则表达式" = "topic/linux/shell/regex/index.md" },

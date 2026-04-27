@@ -41,7 +41,7 @@ Linux 的设计哲学是「一切皆文件」。Socket 也不例外——`socket
 - 可以通过 `fcntl()` 修改其属性（如设为非阻塞）
 - 继承了文件描述符的所有基础语义（引用计数、fork 继承等）
 
-```c title="创建一个 TCP socket"
+``` c title="创建一个 TCP socket"
 int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 // sockfd 就是普通的文件描述符，值为 3、4、5...
 ```
@@ -74,7 +74,7 @@ int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
 当你需要写一个 TCP 服务器时，必须经过以下五个步骤：
 
-```c title="TCP 服务端骨架代码"
+``` c title="TCP 服务端骨架代码"
 // 第一步：创建监听 socket
 int listenfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -104,7 +104,7 @@ close(connfd);
 
 ### 客户端三步骤
 
-```c title="TCP 客户端骨架代码"
+``` c title="TCP 客户端骨架代码"
 // 第一步：创建 socket
 int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -160,7 +160,7 @@ bind: Address already in use
 
 **解决方案**：在 `bind()` 之前设置 `SO_REUSEADDR`：
 
-```c title="设置 SO_REUSEADDR"
+``` c title="设置 SO_REUSEADDR"
 int opt = 1;
 setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 // 之后再调用 bind()
@@ -196,7 +196,7 @@ setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
 Socket 选项通过 `setsockopt()` 设置，原型如下：
 
-```c title="setsockopt 原型"
+``` c title="setsockopt 原型"
 int setsockopt(int sockfd, int level, int optname,
                const void *optval, socklen_t optlen);
 // level: SOL_SOCKET（通用选项）或 IPPROTO_TCP（TCP 选项）
@@ -208,7 +208,7 @@ int setsockopt(int sockfd, int level, int optname,
 
 - **`SO_REUSEPORT`**：允许多个进程或线程各自 `bind()` 并 `listen()` 在同一端口。内核会对新连接进行负载均衡分发。
 
-```c title="多进程监听同一端口（SO_REUSEPORT）"
+``` c title="多进程监听同一端口（SO_REUSEPORT）"
 int opt = 1;
 setsockopt(listenfd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
 ```
@@ -219,7 +219,7 @@ setsockopt(listenfd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
 
 TCP 连接建立后，如果双方长时间不通信，中间的 NAT 设备可能已经把这条连接的映射表项清除，但两端进程却仍以为连接存活——这就是「僵尸连接」。
 
-```c title="开启 TCP 保活探测"
+``` c title="开启 TCP 保活探测"
 int opt = 1;
 setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &opt, sizeof(opt));
 
@@ -240,7 +240,7 @@ setsockopt(sockfd, IPPROTO_TCP, TCP_KEEPCNT,    &count,    sizeof(count));
 
 Nagle 算法将小数据包缓冲后合并发送，以减少网络中的小包数量，但这会带来**额外延迟**。对于低延迟敏感的场景（数据库客户端、Redis、实时游戏），应禁用它：
 
-```c title="禁用 Nagle 算法"
+``` c title="禁用 Nagle 算法"
 int opt = 1;
 setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &opt, sizeof(opt));
 ```
@@ -249,7 +249,7 @@ setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &opt, sizeof(opt));
 
 ### SO_SNDBUF / SO_RCVBUF：发送/接收缓冲区
 
-```c title="调整 socket 缓冲区大小"
+``` c title="调整 socket 缓冲区大小"
 int sndbuf = 256 * 1024;  // 256KB 发送缓冲区
 int rcvbuf = 256 * 1024;  // 256KB 接收缓冲区
 setsockopt(sockfd, SOL_SOCKET, SO_SNDBUF, &sndbuf, sizeof(sndbuf));
@@ -264,7 +264,7 @@ setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &rcvbuf, sizeof(rcvbuf));
 
 默认的 `close()` 是非阻塞的——立即返回，内核在后台完成 FIN 四次挥手。通过 `SO_LINGER` 可以改变这个行为：
 
-```c title="SO_LINGER 配置"
+``` c title="SO_LINGER 配置"
 struct linger lg;
 
 // 场景一：等待数据发送完毕后再 close（阻塞 close）
@@ -282,7 +282,7 @@ setsockopt(sockfd, SOL_SOCKET, SO_LINGER, &lg, sizeof(lg));
 
 ### SO_RCVTIMEO / SO_SNDTIMEO：读写超时
 
-```c title="设置读写操作超时"
+``` c title="设置读写操作超时"
 struct timeval tv = {
     .tv_sec  = 5,   // 5 秒超时
     .tv_usec = 0
@@ -313,7 +313,7 @@ setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, &tv, sizeof(tv));
 
 ### 设置非阻塞模式
 
-```c title="将 socket 设为非阻塞"
+``` c title="将 socket 设为非阻塞"
 #include <fcntl.h>
 
 int flags = fcntl(sockfd, F_GETFL, 0);
@@ -326,7 +326,7 @@ fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
 - `write()` 缓冲区满时立即返回 `-1`，`errno` 设为 `EAGAIN`
 - `accept()` 没有新连接时立即返回 `-1`，`errno` 设为 `EAGAIN`
 
-```c title="非阻塞 read 的正确处理方式"
+``` c title="非阻塞 read 的正确处理方式"
 ssize_t n = read(sockfd, buf, sizeof(buf));
 if (n < 0) {
     if (errno == EAGAIN || errno == EWOULDBLOCK) {
@@ -357,7 +357,7 @@ if (n < 0) {
 
 **边缘触发（Edge Triggered）**：只在状态发生**变化**时通知一次（新数据到达时触发）。必须一次性读完所有数据，否则可能错过通知，因此通常配合非阻塞 I/O 使用。
 
-```c title="epoll 基本用法"
+``` c title="epoll 基本用法"
 // 1. 创建 epoll 实例
 int epfd = epoll_create1(0);
 
@@ -432,7 +432,7 @@ Unix Domain Socket（`AF_UNIX`）直接在内核内部传递数据，**不经过
 
 ### 地址结构 sockaddr_un
 
-```c title="Unix Domain Socket 地址结构"
+``` c title="Unix Domain Socket 地址结构"
 #include <sys/un.h>
 
 struct sockaddr_un {
@@ -443,7 +443,7 @@ struct sockaddr_un {
 
 使用示例：
 
-```c title="创建并绑定 Unix Domain Socket"
+``` c title="创建并绑定 Unix Domain Socket"
 int sockfd = socket(AF_UNIX, SOCK_STREAM, 0);
 
 struct sockaddr_un addr;
@@ -492,7 +492,7 @@ lsof /var/run/docker.sock
 
 UDP 不需要建立连接，每次发送都要显式指定目标地址：
 
-```c title="UDP 服务端"
+``` c title="UDP 服务端"
 int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
 struct sockaddr_in addr = {
@@ -527,7 +527,7 @@ UDP 牺牲可靠性换取**低延迟**。适合的场景：
 
 UDP socket 也可以调用 `connect()`，但**这不是真正的连接建立**：
 
-```c title="UDP connect 的含义"
+``` c title="UDP connect 的含义"
 // connect() 只是在内核记录「默认目标地址」
 connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
 

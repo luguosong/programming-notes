@@ -141,6 +141,17 @@ less /etc/man_db.conf
 
     查看日志时，按 `G` 直接跳到末尾（最新条目），然后用 `?ERROR` 向上搜索错误信息，用 `N` 反复跳到上一条匹配。
 
+    ``` bash
+    # 追踪日志（类似 tail -f 的交互版）
+    less +F /var/log/syslog        # 开启 follow 模式（Ctrl+C 停止，G 转到末尾）
+
+    # 检查多个文件
+    less file1 file2 file3
+    # :n — 下一个文件
+    # :p — 前一个文件
+    # :f — 显示当前文件名
+    ```
+
 ## 截取头尾行
 
 ### head — 取前 N 行
@@ -280,11 +291,19 @@ iconv -f GBK -t UTF-8 input.txt -o output.txt
 
 # 不生成新文件，直接输出转换结果
 iconv -f GBK -t UTF-8 input.txt
+
+# 忽略无法转换的字符
+iconv -f GBK -t UTF-8//IGNORE input.txt
+
+# 批量转换目录下所有 .txt 文件
+for f in *.txt; do
+  iconv -f GBK -t UTF-8 "$f" > "${f%.txt}_utf8.txt"
+done
 ```
 
 !!! tip "乱码排查流程"
 
-    先用 `file` 或 `od` 判断文件实际编码，再用 `iconv -f <原编码> -t UTF-8` 转换。常见场景：Windows 上保存的 GBK 文件传到 Linux 后乱码。
+    先用 `file -i` 检测实际编码，再用 `iconv -f <原编码> -t UTF-8` 转换。常见场景：Windows 上保存的 GBK 文件传到 Linux 后乱码。
 
 ## 三种时间戳
 
@@ -328,10 +347,6 @@ touch newfile.txt
 
 # 将时间改为两天前
 touch -d "2 days ago" somefile
-
-# 将时间改为指定时间点
-touch -t 202406150202 somefile
-```
 
 # 将时间改为指定时间点
 touch -t 202406150202 somefile
@@ -386,110 +401,3 @@ strings /var/lib/database.db | grep -i password
 # 检查可执行文件中的依赖库或版本号
 strings /usr/bin/gcc | grep "gcc version"
 ```
-
-## 文本编码深度
-
-### iconv — 字符编码转换（详细版）
-
-处理来自不同系统的文本文件时常需要转换编码。
-
-``` bash
-# 查看系统支持的所有编码
-iconv --list | head -20
-
-# 将 GBK 文件转换为 UTF-8 并保存
-iconv -f GBK -t UTF-8 input.txt > output.txt
-
-# 原地转换（用 -o 覆盖原文件）
-iconv -f GBK -t UTF-8 -o input.txt input.txt
-
-# 批量转换目录下所有 .txt 文件
-for f in *.txt; do
-  iconv -f GBK -t UTF-8 "$f" > "${f%.txt}_utf8.txt"
-done
-```
-
-!!! warning "转换前先检测"
-
-    某些编码错误可能导致转换失败。用 `--from-code` 和 `--to-code` 保险：
-    
-    ``` bash
-    iconv -f GBK -t UTF-8//IGNORE input.txt    # 忽略无法转换的字符
-    ```
-
-### 检测和转换乱码
-
-乱码三步排查法：
-
-1. **用 `file` 检测实际编码**
-   ``` bash
-   file -i myfile.txt
-   # myfile.txt: text/plain; charset=ISO-8859-1
-   ```
-
-2. **用 `od` 或 `xxd` 查看原始字节**
-   ``` bash
-   od -c myfile.txt | head   # 显示实际字节及其 ASCII 解释
-   ```
-
-3. **用 `iconv` 转换**
-   ``` bash
-   iconv -f ISO-8859-1 -t UTF-8 myfile.txt
-   ```
-
-## 文本分页和翻阅补充
-
-### more — 向下翻页（经典但受限）
-
-`more` 是最古老的分页工具，只能向下翻页。
-
-``` bash
-more /var/log/syslog
-
-# 按键：
-# 空格键 — 翻下一屏
-# Enter — 翻下一行
-# b — 上翻一屏
-# / — 搜索
-# q — 退出
-
-# 底部显示 --More--(28%) 表示进度
-```
-
-### less — 日常首选的分页工具（功能更强）
-
-`less` 是 `more` 的改进版，支持向上和向下翻页，搜索更灵活。
-
-``` bash
-less /var/log/syslog
-
-# 按键：
-# 空格或 Page Down — 向下翻页
-# b 或 Page Up — 向上翻页
-# /pattern — 向下搜索（n 继续下一个，N 前一个）
-# ?pattern — 向上搜索
-# g — 跳到文件开头
-# G — 跳到文件末尾
-# = 或 Ctrl+G — 显示当前行号和文件大小
-# m{a-z} — 标记位置（类似 vim 的 mark）
-# '{a-z} — 跳到标记
-# v — 调用编辑器编辑当前位置
-# q — 退出
-```
-
-实战技巧：
-
-``` bash
-# 追踪日志（类似 tail -f 的交互版）
-less +F /var/log/syslog        # 开启 follow 模式（Ctrl+C 停止，G 转到末尾）
-
-# 检查多个文件
-less file1 file2 file3
-
-# 在 less 中：
-# :n — 下一个文件
-# :p — 前一个文件
-# :f — 显示当前文件名
-```
-
-

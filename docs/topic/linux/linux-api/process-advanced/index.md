@@ -62,7 +62,7 @@ fork() 调用后，父子进程读同一页 → 不复制
 | 定时器（timer） | 子进程不继承父进程的间隔定时器 |
 | 已注册退出处理程序的状态 | 子进程继承退出处理函数，但 `exec()` 时会清除 |
 
-```c title="fork() 基本用法"
+``` c title="fork() 基本用法"
 #include <unistd.h>
 #include <stdio.h>
 
@@ -194,7 +194,7 @@ Linux（UNIX）的进程创建哲学与 Windows 完全不同：
 - **Windows**：`CreateProcess()` — 一步完成创建+执行
 - **UNIX**：**两步走** — `fork()` 复制自身，然后子进程调用 `exec()` 加载新程序
 
-```c title="fork + exec 范式"
+``` c title="fork + exec 范式"
 pid_t pid = fork();
 if (pid == 0) {
     /* 子进程：可在此做 exec() 前的准备工作 */
@@ -238,7 +238,7 @@ ps aux | grep 'Z'
 
 ### wait() vs waitpid()
 
-```c title="wait() 基本用法"
+``` c title="wait() 基本用法"
 #include <sys/wait.h>
 
 pid_t wait(int *status);  /* 等待任意子进程，阻塞直到有子进程终止 */
@@ -251,7 +251,7 @@ pid_t wait(int *status);  /* 等待任意子进程，阻塞直到有子进程终
 
 `waitpid()` 解决了这些问题：
 
-```c title="waitpid() 用法"
+``` c title="waitpid() 用法"
 #include <sys/wait.h>
 
 /* pid > 0：等待特定子进程 */
@@ -273,7 +273,7 @@ pid_t waitpid(pid_t pid, int *status, int options);
 
 `wait()`/`waitpid()` 返回的 `status` 值需要用宏来解析，不能直接读取：
 
-```c title="退出状态宏用法"
+``` c title="退出状态宏用法"
 int status;
 pid_t pid = waitpid(-1, &status, 0);
 
@@ -299,7 +299,7 @@ if (WIFEXITED(status)) {
 
 对于长期运行的程序（如服务器进程），用阻塞的 `wait()` 等待子进程不实际。更好的方式是：为 `SIGCHLD` 信号设置处理函数，在处理函数中循环调用 `waitpid()` 直到没有更多已退出的子进程：
 
-```c title="SIGCHLD 处理函数模板"
+``` c title="SIGCHLD 处理函数模板"
 #include <signal.h>
 #include <sys/wait.h>
 #include <errno.h>
@@ -412,7 +412,7 @@ cat /proc/$$/status | grep -E '^(Uid|Gid):'
 
 在没有 systemd 的传统环境中，创建守护进程需要以下步骤：
 
-```c title="创建守护进程的经典步骤"
+``` c title="创建守护进程的经典步骤"
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -503,7 +503,7 @@ journalctl -u myapp -f           # 实时跟踪日志
 
 守护进程通常只应有一个实例在运行。传统的防多开机制是**锁文件（pidfile）**：
 
-```c title="锁文件防止多实例"
+``` c title="锁文件防止多实例"
 #include <fcntl.h>
 #include <sys/file.h>
 
@@ -586,7 +586,7 @@ graph TD
 
 `setsid()` 让当前进程脱离原会话，创建一个新会话并成为新会话的领导者：
 
-```c title="setsid() 用法"
+``` c title="setsid() 用法"
 #include <unistd.h>
 
 pid_t sid = setsid();

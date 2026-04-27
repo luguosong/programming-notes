@@ -25,7 +25,7 @@ icon: simple/linux
 
     vim、Bash、重定向与管道、正则表达式、文本处理工具、Shell 脚本
 
-    [:octicons-arrow-right-24: 查看](vim/index.md)
+    [:octicons-arrow-right-24: 查看](shell/index.md)
 
 - :material-account-key: **账户与权限**
 
@@ -49,13 +49,13 @@ icon: simple/linux
 
     TCP/IP 协议、网络命令与诊断、网络安全基础、防火墙与 NAT
 
-    [:octicons-arrow-right-24: 查看](tcp-ip/index.md)
+    [:octicons-arrow-right-24: 查看](network/index.md)
 
 - :material-server: **服务器实战**
 
     SSH、DHCP、NFS/Samba、NTP、DNS、Web 服务器、邮件、FTP
 
-    [:octicons-arrow-right-24: 查看](ssh/index.md)
+    [:octicons-arrow-right-24: 查看](network/services/ssh/index.md)
 
 - :material-code-braces: **系统编程**
 

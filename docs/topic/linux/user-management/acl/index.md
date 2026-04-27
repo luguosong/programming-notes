@@ -75,7 +75,7 @@ other::r--                 # 其他人的权限
 
 ### setfacl：设置 ACL
 
-#### 针对用户授权
+### 针对用户授权
 
 ``` bash
 # 为 alice 设置 rwx
@@ -91,14 +91,14 @@ setfacl -m u:eve:- file.txt
 setfacl -m u::rwx file.txt
 ```
 
-#### 针对组授权
+### 针对组授权
 
 ``` bash
 # 为 devteam 组设置 rw
 setfacl -m g:devteam:rw file.txt
 ```
 
-#### 默认 ACL（目录继承）
+### 默认 ACL（目录继承）
 
 在**目录**上设置默认 ACL 后，该目录下**新建的文件和子目录**会自动继承这些规则：
 
@@ -120,7 +120,7 @@ default:mask::rwx
 default:other::---
 ```
 
-#### 删除与清除
+### 删除与清除
 
 ``` bash
 # 删除 alice 的 ACL 条目（不加权限字段）
@@ -136,7 +136,7 @@ setfacl -b file.txt
 setfacl -k /srv/project/
 ```
 
-#### 递归与批量
+### 递归与批量
 
 ``` bash
 # 递归设置目录下所有文件
