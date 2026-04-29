@@ -187,7 +187,7 @@ Claude 并不是把所有 Skill 全部加载进上下文——那样太浪费 to
 
 ### 手动调用（/命令）
 
-所有 `user-invocable` 为 `true`（默认）的 Skill 都可以通过 `/` 命令手动调用。在 Claude Code 中输入 `/` 即可看到所有可用的 Skill 和内置命令列表（v2.1.111 改进：`/skills` 菜单现在支持按 `t` 键按估算 token 数排序，帮你快速定位最耗上下文的 Skill）。
+所有 `user-invocable` 为 `true`（默认）的 Skill 都可以通过 `/` 命令手动调用。在 Claude Code 中输入 `/` 即可看到所有可用的 Skill 和内置命令列表（v2.1.111 改进：`/skills` 菜单现在支持按 `t` 键按估算 token 数排序，帮你快速定位最耗上下文的 Skill）。v2.1.121 进一步优化了 `/skills` 界面，新增输入搜索框，在列表很长时可以快速定位目标 Skill。
 
 除了自定义 Skill，内置斜杠命令（如 `/init`、`/review`、`/security-review`）也可以被模型通过 Skill tool 发现和调用（v2.1.108 新增）——这意味着模型能自主选择合适的内置命令来完成任务。
 

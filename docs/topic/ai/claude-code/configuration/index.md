@@ -37,6 +37,10 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 📝 一些实用的配置项：
 
 - `autoScrollEnabled`（v2.1.110 新增）：全屏模式下禁用对话自动滚动。当 Claude 输出很长而你正在回看上方内容时，关闭自动滚动可以防止页面自动跳到底部
+- `/config` 设置持久化（v2.1.119 新增）：通过 `/config` 修改的设置（主题、编辑器模式、verbose 等）现在会持久化到 `~/.claude/settings.json`，并参与项目/本地/策略覆盖优先级——之前这些设置只在当前会话生效，重启后就丢失了
+- Auto mode `$defaults`（v2.1.118 新增）：在 `autoMode.allow`、`autoMode.soft_deny` 或 `autoMode.environment` 中使用 `"$defaults"` 可以在内置默认列表旁添加自定义规则，而不必全部手动重写
+- Auto mode "Don't ask again"（v2.1.118 新增）：在 auto mode 选择加入提示中新增"不再询问"选项，确认后不再每次弹出
+- `--dangerously-skip-permissions` 写入放宽（v2.1.121 改进）：不再提示对 `.claude/skills/`、`.claude/agents/` 和 `.claude/commands/` 目录的写入——这些目录本身就是 Claude 工作空间的组成部分
 
 ### 配置文件位置
 

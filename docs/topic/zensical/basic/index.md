@@ -467,6 +467,18 @@ password: secret
 ![描述文字](https://example.com/image.png){ loading=lazy }
 ```
 
+### 图片缩放与画廊（GLightbox）
+
+> 📦 0.0.35 新增
+
+当你需要为图片添加点击放大、画廊浏览等交互效果时，可以启用 `glightbox` 扩展。在 `zensical.toml` 中添加以下配置即可：
+
+```toml
+[project.markdown_extensions.zensical.extensions.glightbox]
+```
+
+启用后，文档中的图片会自动获得缩放和画廊功能——点击图片可放大查看，同一页面内的多张图片可通过左右箭头切换浏览。
+
 ---
 
 ## 🔲 网格布局
@@ -684,6 +696,10 @@ hide:
 
 `hide` 可隐藏的元素：`navigation`（左侧导航栏）、`toc`（右侧目录）。
 
+!!! tip "zensical.toml 配置可读性提升"
+
+    配置解析器已更新至 TOML v1.1.0（0.0.34 新增），支持内联表格中的换行。这意味着 `zensical.toml` 中的复杂配置项（如 `nav` 数组中的长条目）可以跨行书写，不再必须挤在一行中。
+
 ---
 
 ## 🔘 按钮
@@ -731,3 +747,11 @@ hide:
 <!-- 不推荐：直接链接到 HTML（部署路径变更后会失效） -->
 参考 [数学公式](../math/) 章节。
 ```
+
+---
+
+## 🎨 可安装的主题扩展
+
+> 📦 0.0.37 新增
+
+当你需要将项目中的主题覆盖（`overrides/` 目录中的模板、样式等）打包为可复用的主题包时，可以使用可安装主题扩展（installable themes）。将主题文件打包后通过 `pip` 安装，只需在 `mkdocs.themes` 入口点注册即可被 Zensical 识别。这样就能在多个项目间共享同一套主题定制，而不需要每次都复制 `overrides/` 目录。

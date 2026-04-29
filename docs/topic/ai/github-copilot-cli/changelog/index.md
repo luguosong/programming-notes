@@ -15,6 +15,137 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.39（2026-04-28）
+
+> 📝 **笔记定位**：[后台运行任务](../basic/index.md#快捷键) · [ACP 客户端扩展](../mcp/index.md#acp-客户端扩展) · [会话选择器排序](../context/index.md#删除会话1035-新增) · [远程状态提示](../modes/index.md#远程会话控制)
+
+### ✨ 新功能
+
+- **ACP 客户端权限切换**：ACP 客户端可通过会话配置切换 allow-all 权限模式
+- **ACP 斜杠命令扩展**：ACP 会话支持 `/compact`、`/context`、`/usage`、`/env` 斜杠命令
+- **后台运行任务**：按 `Ctrl+X → B` 将当前正在运行的任务或 Shell 命令移至后台
+
+### 🔧 改进
+
+- 子进程 stdio 流上的瞬态管道错误不再导致崩溃或触发误报的错误报告
+- `/remote` 状态输出为每个连接状态显示可操作的提示
+- 改进 `--resume` 会话选择器：更好的标签布局、状态显示和渐进式加载
+- 斜杠命令参数选择器在精确命令边界处立即打开，无需尾随空格
+
+---
+
+## 📦 1.0.37（2026-04-27）
+
+> 📝 **笔记定位**：[权限持久化](../basic/index.md#模式与权限) · [Shell 补全](../basic/index.md#shell-补全) · [会话选择器排序](../context/index.md#删除会话1035-新增) · [ACP 模型配置](../mcp/index.md#acp-客户端扩展)
+
+### ✨ 新功能
+
+- **基于位置的权限持久化**：权限持久化默认启用，同一目录下的审批在跨会话时自动保留
+- **Shell 补全脚本生成**：新增 `copilot completion <bash|zsh|fish>` 子命令，生成静态 Shell 补全脚本
+- **会话选择器排序**：在会话选择器中按 `s` 切换排序方式：相关性、最近使用、创建时间或名称
+
+### 🔧 改进
+
+- ACP 模型配置选项新增 description 和 metadata，供使用 `configOptions` API 的客户端使用
+- 重新选择相同模型或 effort level 时不再显示模型和 effort 变更通知
+- Linux 上剪贴板写入不再泄漏 X11 handles
+- 待处理消息指示器与 prompt frames 并排正确显示
+- `/ask` 响应现在渲染 Markdown，包括表格和格式化链接
+
+### 🐛 修复
+
+- 修复切换到 `git branch --show-current` 后 detached HEAD 检测始终返回 false 的问题
+- 修复有错误或警告的 Skill 在 Skill 选择器列表中显示不全的问题
+
+---
+
+## 📦 1.0.36（2026-04-24）
+
+> 📝 **笔记定位**：[matcher 修复](../hooks/index.md#hook-配置字段) · [远程控制状态](../modes/index.md#远程会话控制) · [Agent 目录隔离](../agents/index.md#agent-存放位置) · [禁用 Skill 过滤](../skills/index.md#skill-管理命令) · [gitignored 指令加载](../instructions/index.md#仓库级指令)
+
+### ✨ 新功能
+
+- **子命令选择器指示器**：子命令选择器在高亮项旁显示选择指示器（`❯`）
+- **`/keep-alive` 正式可用**：无需开启实验模式即可使用 `/keep-alive` 防止系统休眠
+- **`/remote` 状态管理**：`/remote` 命令显示当前状态，并支持 `/remote on` 和 `/remote off` 切换远程控制
+- **`changes` 状态栏切换**：新增 `changes` 状态栏项，显示会话中新增/删除的行数
+
+### 🔧 改进
+
+- 多个 Copilot 许可证检测时显示更清晰的错误信息和直接链接
+- 禁用的 Skills 不再出现在斜杠命令列表中
+- 需要双击 `Esc` 取消进行中的工作，防止意外中断
+- 保存 debug 日志或反馈 bundle 不再覆盖已存在的归档文件
+- `~/.claude/` 中的自定义 Agents、Skills 和 Commands 不再被 Copilot CLI 加载
+- Claude Opus 4.6 默认使用中等 reasoning effort
+
+### 🐛 修复
+
+- 修复 `preToolUse.matcher` 被忽略的问题。升级后，带 `matcher` 的 Hook 仅对完全匹配正则表达式的工具名称运行
+- 自定义指令文件在 `.gitignored` 目录（如 `.github/instructions/`）中现在正确加载
+
+---
+
+## 📦 1.0.35（2026-04-23）
+
+> 📝 **笔记定位**：[HTTP Hook](../hooks/index.md#hook-配置字段) · [会话删除与命名](../context/index.md#会话管理) · [多路径搜索](../context/index.md#glob-模式匹配) · [斜杠命令补全](../basic/index.md#常用斜杠命令速查) · [Ctrl+Y 补全](../basic/index.md#快捷键) · [限流自动降级](../modes/index.md#autopilot-模式实验性) · [Agent 名称显示](../agents/index.md#使用-agent) · [MCP OAuth 改进](../mcp/index.md#mcp-oauth-认证) · [插件即时生效](../plugins/index.md#管理插件)
+
+### ✨ 新功能
+
+- **斜杠命令 Tab 补全**：斜杠命令支持参数和子命令的 Tab 补全
+- **Shell 转义命令使用 `$SHELL`**：Shell 转义命令（`!`）现在使用 `$SHELL` 环境变量（已设置时），而非始终调用 `/bin/sh`
+- **会话选择器增强**：会话选择器显示分支名称、空闲/使用状态，并改进搜索和光标支持
+- **`COPILOT_GH_HOST` 环境变量**：支持 `COPILOT_GH_HOST` 环境变量指定 GitHub 主机名，优先于 `GH_HOST`
+- **`Ctrl+Y` 接受补全**：在补全弹窗中按 `Ctrl+Y`（除 `Tab` 外）接受高亮选项（`@` 提及、路径补全、斜杠命令）
+- **`/session delete` 命令**：新增 `/session delete`、`delete <id>` 和 `delete-all` 子命令，以及会话选择器中的 `x` 快捷键
+- **`--name` 命名会话**：通过 `--name` 命名会话，使用 `--resume=<name>` 按名称恢复
+- **`continueOnAutoMode` 配置**：新增 `continueOnAutoMode` 配置项，在限流时自动切换到 auto 模型而非暂停
+- **GitHub 贡献图**：新增 GitHub 风格的贡献图到 `/usage`，适配终端颜色模式
+- **HTTP Hook 支持**：新增 HTTP Hook 支持，可将 JSON payload POST 到配置的 URL 而非运行本地命令
+- **隐藏子 Agent 思考**：子 Agent 的思考过程从时间线中隐藏
+- **自定义 Agent 名称显示**：自定义 Agent 名称现在在状态栏底部可见，可通过 `/statusline` 切换
+- **`grep` 和 `glob` 多路径搜索**：`grep` 和 `glob` 工具现在接受多个搜索路径
+
+### 🔧 改进
+
+- 权限提示在远程会话的 CLI TUI 中正确显示
+- 模型变更通知同时显示旧模型和新模型名称
+- `/update` 和 `/version` 命令遵循配置的更新通道
+- 会话同步提示使用更清晰的标签，并说明 GitHub.com 跨设备同步
+- MCP 服务器名称支持空格和特殊字符
+- Skill 斜杠命令（如 `/skill-name`）通过 `-i` 作为初始 prompt 时在启动时正确识别
+- Shell 补全通知不再重复
+- `--continue` 优先从当前工作目录恢复会话，而非最近使用的会话
+- 状态栏脚本现在包含与模型徽章和 `/context` 输出匹配的上下文窗口字段
+- 用户设置存储在 `~/.copilot/settings.json`，与 `config.json` 中的内部状态分离
+- Configure Copilot Agent 在 Windows 上现在具有 shell 访问权限
+- Linux 上缺少剪贴板工具（`wl-clipboard` 或 `xclip`）时显示安装说明
+- LSP 服务器配置支持可配置的 spawn、initialization 和 warmup 超时
+- 上下文窗口指示器在状态栏中默认隐藏
+- MCP OAuth 迁移到共享运行时流程，移除 MCP 服务器时清除关联 OAuth 状态
+- 自动纠正自定义工具调用在 Agent 循环中的错误
+- 光标移动、删除和渲染对 emoji 和多码点字符正常工作
+- 工具可用性检测在 Windows 上正常工作
+- 会话令牌过期时自动处理，无需重新发送消息
+- 初始 `Tab` 和方向键导航在 `/cwd` 和 `/add-dir` 路径选择器中选择正确项
+- 瞬态 I/O 错误在 IDE 或扩展断开时不再显示为红色错误条目
+- `~/.claude/` 中的自定义 Agents 和 Skills 不再被错误加载为 Copilot 项目配置
+- 登录命令在认证后正确恢复交互输入
+- 提升大量文本在时间线中的渲染性能
+- 同步任务调用在 `MULTI_TURN_AGENTS` 下阻塞直到完成，而非 60 秒后自动提升为后台
+- Tab 导航支持 `Home`/`End` 键跳转到第一个和最后一个标签
+- 插件安装后立即生效，无需重启
+- 模式特定的指令文件不再在每次会话中将完整正文包含在系统提示中
+
+### 🐛 修复
+
+- Auto 模式在切换到不支持配置 reasoning effort 的模型时不再失败
+- 扩展关闭错误不再在每次会话退出时显示为错误级别日志噪声
+- LSP 重构工具在首次轮次存在 LSP 配置时正确注册
+- 按下 `Escape` 在启动对话框上不再导致竞态条件
+
+---
+
 ## 📦 1.0.34（2026-04-20）
 
 ### 🔧 改进

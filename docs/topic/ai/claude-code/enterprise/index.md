@@ -163,6 +163,17 @@ export OTEL_LOG_RAW_API_BODIES=1
 
 当 Claude Code 通过 SDK 或 headless 模式在微服务架构中使用时，追踪请求链路至关重要。SDK/headless 会话现在会自动从环境变量读取 `TRACEPARENT` 和 `TRACESTATE` 用于分布式追踪链接（v2.1.110 改进），可以无缝融入现有的 OpenTelemetry 追踪体系。
 
+### OTel 事件持续增强
+
+v2.1.122 对 OpenTelemetry 事件做了多项增强：
+
+- **数值属性类型修正**：`api_request`/`api_error` 日志事件的数值属性现在以数字类型而非字符串输出，方便在 Grafana 等工具中直接做数值聚合和告警
+- **`@`-mention 事件**：新增 `claude_code.at_mention` 日志事件，追踪 `@`-mention 解析行为
+- **`tool_use_id` 关联**：`tool_result` 和 `tool_decision` 事件新增 `tool_use_id`，可以将工具决策与工具结果精确关联
+- **`tool_input_size_bytes`**：`tool_result` 事件新增输入大小字段，帮助分析工具调用对上下文的压力
+
+v2.1.121 进一步增强了 LLM 请求 span，新增 `stop_reason`、`gen_ai.response.finish_reasons` 和 `user_system_prompt` 属性，让你对每次 API 请求的终止原因和系统提示有更完整的可见性。
+
 ### OTel Collector 架构
 
 实际部署中，通常不会让 Claude Code 直接将数据发送给最终存储后端，而是在中间放一个 OTel Collector 做中转：

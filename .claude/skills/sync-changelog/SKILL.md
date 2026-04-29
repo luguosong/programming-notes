@@ -1,177 +1,248 @@
 ---
 name: sync-changelog
-description: '将 changelog 中的新版本变更同步到对应主题笔记页面，并标注版本号。支持 Copilot CLI 和 Claude Code 两套笔记。触发词：同步 changelog、sync changelog、同步更新日志、changelog 同步笔记、sync notes。'
+description: '一键并行更新所有 changelog 文件（从 GitHub Releases 拉取），再将新版本变更同步到主题笔记。触发词：同步 changelog、sync changelog、同步更新日志、changelog 同步笔记、sync notes。'
 ---
 
-# Changelog → 主题笔记同步
+# Changelog 全量同步
 
-读取 changelog 中的新版本条目，将有价值的变更同步到对应主题笔记页面，并标注版本来源。
+一键从 GitHub Releases 拉取所有工具的最新版本，更新 changelog 文件，再将有价值的新变更并行同步到对应主题笔记。
 
-## 适用工具与路径映射
+## Changelog 源注册表
 
-### Copilot CLI
+| ID | 名称 | GitHub 仓库 | changelog 路径 | 笔记根目录 | 映射文件 |
+|----|------|-------------|---------------|-----------|---------|
+| `claude-code` | Claude Code | `anthropics/claude-code` | `docs/topic/ai/claude-code/changelog/index.md` | `docs/topic/ai/claude-code/` | `mappings/claude-code.md` |
+| `copilot-cli` | Copilot CLI | `github/copilot-cli` | `docs/topic/ai/github-copilot-cli/changelog/index.md` | `docs/topic/ai/github-copilot-cli/` | `mappings/copilot-cli.md` |
+| `zensical` | Zensical | `zensical/zensical` | `docs/topic/zensical/changelog/index.md` | `docs/topic/zensical/` | `mappings/zensical.md` |
 
-| 路径 | 说明 |
-|------|------|
-| **changelog** | `docs/topic/ai/github-copilot-cli/changelog/index.md` |
-| **笔记根目录** | `docs/topic/ai/github-copilot-cli/` |
+> **新增源**：在上表添加一行 + 在 `mappings/` 下新建 `{id}.md` 映射文件即可。
 
-主题页面映射：
-
-| 关键词/领域 | 目标文件 |
-|------------|---------|
-| Hook、preToolUse、postToolUse、notification hook | `hooks/index.md` |
-| MCP、mcp enable、mcp disable、mcp auth、OAuth | `mcp/index.md` |
-| Skill、内置 skill、skill 目录 | `skills/index.md` |
-| Agent、explore、task、code-review、Critic Agent | `agents/index.md` |
-| Plugin、marketplace、插件 | `plugins/index.md` |
-| 上下文、session、resume、compact、rewind | `context/index.md` |
-| 模式、plan、autopilot、interactive | `modes/index.md` |
-| 安装、更新、启动、认证 | `basic/index.md` |
-| 工作流、diff、pr、commit、delegate | `workflows/index.md` |
-| 自定义指令、CLAUDE.md、instructions | `instructions/index.md` |
-| 推荐扩展、最佳实践 | `practices/index.md` |
-
-### Claude Code
-
-| 路径 | 说明 |
-|------|------|
-| **changelog** | `docs/topic/ai/claude-code/changelog/index.md` |
-| **笔记根目录** | `docs/topic/ai/claude-code/` |
-
-主题页面映射：
-
-| 关键词/领域 | 目标文件 |
-|------------|---------|
-| Hook、preToolUse、postToolUse、CwdChanged、FileChanged、TaskCreated、WorktreeCreate、PermissionRequest | `hooks/index.md` |
-| MCP、mcp enable、OAuth、elicitation、SSE、list_changed、defer_loading、transport、tool description cap | `mcp/index.md` |
-| Skill、skill 目录、skillDirectories、reload-skills | `skills/index.md` |
-| Sub-agent、background agent、task、fleet、Agent Teams、explore agent、worktree isolation | `sub-agents/index.md` |
-| Plugin、marketplace、plugin install、reload-plugins、plugin pinning | `plugins/index.md` |
-| 上下文、session、resume、compact、context、prompt caching、compaction | `context-engineering/index.md` |
-| 平台、Windows、macOS、Linux、WSL、sandbox、Desktop、Chrome 扩展、Teleport、DevContainer | `platforms/index.md` |
-| 安装、更新、启动、认证、login、CLI 参考 | `getting-started/index.md` |
-| 工作原理、工具、Bash、Edit、Write、PowerShell tool、Agentic Loop、checkpoint、LSP | `how-it-works/index.md` |
-| 配置、CLAUDE.md、settings、permissions、keybindings | `configuration/index.md` |
-| 自动化、-p、headless、SDK、CI、/loop、cron、Channels、remote control、GitHub Actions | `automation/index.md` |
-| 企业、managed settings、managed-settings.d、BYOK、ZDR、compliance、disableAllHooks | `enterprise/index.md` |
-| 集成、IDE、VSCode、Bedrock、Vertex、Foundry、Opus、Slack、Computer Use、1M context | `integrations/index.md` |
-| 最佳实践、Token 节省、工作流 | `best-practices/index.md` |
+---
 
 ## 执行流程
 
-### 第一步：确认同步范围
+### Phase 1：更新 Changelog 文件（并行 subagent）
 
-使用 `ask_user` 确认：
+为注册表中每个源创建一个 `general-purpose` subagent，**单条消息多个 Agent 调用**并行执行。
 
-1. **同步哪个工具**（如未从对话上下文推断出）：Copilot CLI 还是 Claude Code
-2. **同步哪些版本**：
-   - 「最新版本」——只同步 changelog 中最顶部的版本
-   - 「指定版本」——如 `1.0.19` 或 `2.1.92`
-   - 「自某版本起」——如 `1.0.17 之后的所有版本`
+```markdown
+Agent({
+  description: "更新 Claude Code changelog",
+  subagent_type: "general-purpose",
+  prompt: "<Phase 1 prompt>"
+})
+Agent({
+  description: "更新 Copilot CLI changelog",
+  subagent_type: "general-purpose",
+  prompt: "<Phase 1 prompt>"
+})
+Agent({
+  description: "更新 Zensical changelog",
+  subagent_type: "general-purpose",
+  prompt: "<Phase 1 prompt>"
+})
+```
 
-### 第二步：读取 changelog 并提取变更
+**等待所有 Phase 1 subagent 完成后**，收集各源的更新结果（新增版本列表）。
 
-1. 读取对应的 changelog 文件
-2. 提取目标版本的所有条目
-3. **过滤**：只保留对主题笔记有价值的条目（跳过纯 Bug 修复中的边缘情况和 UI 微调）
-4. 按主题映射表将条目分组到目标文件
+#### Phase 1 Subagent Prompt 模板
 
-### 第三步：检查目标页面现有内容
+```
+你负责更新 {名称} 的 changelog 文件。
+
+## 任务
+
+1. 读取当前 changelog 文件：{changelog_path}
+   - 提取文件中已记录的最新版本号（第一个 `## 📦` 或 `## v` 标题中的版本号）
+2. **获取最新版本列表**（双数据源策略，按顺序尝试）：
+   - **方式 A（推荐）**：用 Bash 执行 `curl -sL "https://api.github.com/repos/{github_repo}/releases?per_page=15" | grep -E '"tag_name"|"published_at"|"prerelease"' | head -45` 获取 release 列表。注意 `rtk` 前缀不适用于 curl，直接使用 `curl`
+   - **方式 B（备用）**：如果方式 A 因 API 速率限制失败，用 `mcp__web_reader__webReader` 访问 `https://github.com/{github_repo}/releases` 获取 release 列表
+3. 筛选出比已记录版本更新的 **稳定版** release（排除 `prerelease: true` 的版本），按发布时间倒序
+4. 对每个新版本，用 `mcp__web_reader__webReader` 访问 `https://github.com/{github_repo}/releases/tag/v{版本号}` 获取完整 release notes
+5. 如果没有新版本，返回"无新版本"
+6. 如果有新版本，按现有 changelog 格式追加到文件顶部（在 front matter 之后、第一个已有版本条目之前）
+
+## 格式要求
+
+严格参照当前 changelog 文件中已有条目的格式。典型格式：
+
+  ## 📦 版本号（发布日期）
+
+  ### ⚡ 性能
+  - **条目**：说明
+
+  ### ✨ 新功能
+  - **条目**：说明
+
+  ### 🔧 改进
+  - 条目
+
+  ### 🐛 Bug 修复
+  - 条目
+
+  ---
+
+注意：
+- 分类标题使用对应的 Emoji 前缀（⚡ 性能 / ✨ 新功能 / 🔧 改进 / 🐛 Bug 修复 / 💥 破坏性变更）
+- 每个版本条目之间用 `---` 分隔
+- 新增条目放在最上面（时间倒序）
+- 从 GitHub release 中提取的条目，保留原始的技术细节和功能描述
+
+## 返回
+
+更新摘要，格式：
+- 源：{名称}
+- 新增版本：v1.0.0, v1.0.1（或"无新版本"）
+- 新增条目数：N 条
+```
+
+### Phase 2：同步笔记（并行 subagent）
+
+根据 Phase 1 结果，为每个**有新版本**的源创建一个 `general-purpose` subagent，**单条消息多个 Agent 调用**并行执行。
+
+如果所有源都没有新版本，跳过 Phase 2，直接报告。
+
+```markdown
+Agent({
+  description: "同步 Claude Code 笔记",
+  subagent_type: "general-purpose",
+  prompt: "<Phase 2 prompt>"
+})
+Agent({
+  description: "同步 Copilot CLI 笔记",
+  subagent_type: "general-purpose",
+  prompt: "<Phase 2 prompt>"
+})
+...
+```
+
+#### Phase 2 Subagent Prompt 模板
+
+```
+你负责将 {名称} 的新版本 changelog 同步到主题笔记。
+
+## 输入信息
+
+- 映射文件：.claude/skills/sync-changelog/mappings/{id}.md
+- Changelog 路径：{changelog_path}
+- 笔记根目录：{notes_root}
+- 新版本列表：{从 Phase 1 获取的具体版本号}
+
+## 执行步骤
+
+### 步骤一：读取映射和 changelog
+
+1. 读取映射文件，获取关键词→笔记文件的映射关系
+2. 读取 changelog 文件中新版本的所有条目
+3. **过滤**：只保留对主题笔记有价值的条目（跳过纯边缘 Bug 修复和 UI 微调）
+4. 按映射表将条目分组到目标文件
+
+### 步骤二：更新目标笔记
 
 对每个需要更新的目标页面：
 
 1. 读取目标文件全文
-2. 搜索是否已包含该版本号的标注（避免重复同步）
-3. 确定新内容应插入的位置（找到最相关的 H2/H3 章节）
-
-### 第四步：更新主题笔记
-
-对每个目标页面执行编辑：
+2. **幂等检查**：搜索是否已包含该版本号的标注（如"1.0.19 新增"），跳过已标注的内容
+3. 找到最相关的 H2/H3 章节作为插入位置
+4. 执行编辑
 
 #### 版本标注格式
 
-**行内标注**——在新增/修改的内容末尾或段落开头标注：
+**行内标注**——在功能描述末尾标注：
 
-```markdown
-`/mcp enable` 和 `/mcp disable` 的配置现在跨会话持久化（1.0.19 新增）。
-```
+    `功能说明`（版本号 新增）
 
-对于新增的独立段落或列表项：
+**列表项**：
 
-```markdown
-- 自动模式下被拒绝的命令会显示通知，并出现在 `/permissions` → Recent 标签页（2.1.89 新增）
-```
+    - 功能描述（版本号 新增）
 
-对于新增的独立 H3 小节：
+**新增 H3 小节**：
 
-```markdown
-### Critic Agent
+    ### 小节标题
 
-> 📦 1.0.18 新增
+    > 📦 版本号 新增
 
-在执行计划和复杂实现时，自动使用互补模型进行审查，提前捕获错误。目前为 Claude 模型的实验性功能。
-```
+    内容说明。
 
 #### 编辑原则
 
-1. **不要逐条搬运 changelog**——将同一主题的多个 changelog 条目合并为连贯的说明段落
-2. **保持笔记的教学风格**——changelog 是事实列表，笔记要解释"这个功能有什么用"
-3. **遵循项目的教学风格约束**——问题驱动、类比优先、循序渐进（参见 CLAUDE.md）
-4. **版本标注位置**——紧跟功能描述，使用半角括号 `（版本号 新增）` 或 `（版本号 改进）`
-5. **不修改已有内容的措辞**——只新增或扩展，不重写现有段落
-6. **技术术语使用反引号**——如 `PreToolUse`、`/mcp enable`
+1. **合并同主题条目**——不逐条搬运，将同一主题的多个 changelog 条目合并为连贯的说明段落
+2. **保持教学风格**——解释"这个功能有什么用"，而非罗列 changelog 原文
+3. **问题驱动**——用"当你需要 X 时"开头，说明功能价值
+4. **不修改已有措辞**——只新增或扩展，不重写现有段落
+5. **技术术语用反引号**——如 `PreToolUse`、`/mcp enable`
 
-### 第五步：在 changelog 中添加笔记导航链接
+### 步骤三：添加 changelog 导航链接
 
-对每个被同步的版本，在版本标题下方添加引用块形式的导航链接，方便读者从 changelog 快速跳转到笔记页面中的详细说明。
+对每个被同步的版本，在版本标题下方添加导航链接。
 
-#### 导航链接格式
+#### 格式
 
-```markdown
-## 📦 1.0.19（2026-04-06）
+    ## 📦 版本号（日期）
 
-> 📝 **笔记定位**：[MCP 持久化](../mcp/index.md#管理-mcp-服务器) · [Hook macOS 权限](../hooks/index.md#错误时发送通知) · [Agent 文件名映射](../agents/index.md#agent-存放位置)
+    > 📝 **笔记定位**：[链接文字](../目标文件/index.md#锚点) · [链接文字](../目标文件/index.md#锚点)
 
-### 🔧 改进
-...
-```
+    ### ⚡ 性能
+    ...
 
 #### 规则
 
-1. **位置**：紧跟版本标题 `## 📦 版本号（日期）` 的下一行空行之后，在分类标题（`### ✨`）之前
-2. **链接文字**：2-6 字，简要概括同步到该页面的内容主题
-3. **锚点**：项目已配置 `pymdownx.slugs.slugify(case='lower')`（见 `zensical.toml`），中文保留、Emoji 剥离（H2 前缀 Emoji 会产生前导 `-`）、标点删除。示例：`## 🔧 管理 MCP 服务器` → `#-管理-mcp-服务器`。如不确定，用脚本模拟 `slugify` + `unique` 验证
+1. **位置**：紧跟版本标题的下一行空行后，在分类标题之前
+2. **链接文字**：2-6 字，概括同步到该页面的内容主题
+3. **锚点**：项目使用 `pymdownx.slugs.slugify(case='lower')`，中文保留、Emoji 剥离、标点删除
+   - 示例：`## 🔧 管理 MCP 服务器` → `#-管理-mcp-服务器`
 4. **多个链接**：用 ` · `（空格+中点+空格）分隔
 5. **相对路径**：从 changelog 文件出发的相对路径（如 `../mcp/index.md`）
-6. **无同步则不加**：如果某版本没有任何内容被同步到笔记，不添加导航行
-7. **幂等更新**：如果该版本已有 `📝 **笔记定位**` 行，替换其内容而非重复添加
+6. **无同步则不加**：某版本没有内容被同步到笔记，不添加导航行
+7. **幂等更新**：已有 `📝 **笔记定位**` 行则替换内容
 
-### 第六步：输出同步报告
+## 返回
 
-完成所有编辑后，输出摘要：
-
-```
-## 同步报告
-
-**工具**：Copilot CLI
-**版本**：1.0.19
+同步报告，格式：
 
 | 目标文件 | 操作 | 内容摘要 |
 |---------|------|---------|
 | mcp/index.md | 新增段落 | MCP 配置持久化说明 |
-| context/index.md | 更新列表 | 时间线命令名称改进 |
+| hooks/index.md | 更新列表 | Hook 生命周期扩展 |
 
-共更新 2 个文件，新增 N 行。
-changelog 已添加 1 条笔记导航链接。
+共更新 N 个文件。
+Changelog 已添加 N 条笔记导航链接。
 ```
 
-然后使用 `ask_user` 询问是否还需要调整。
+### 汇总报告
+
+Phase 2 全部完成后，输出汇总报告：
+
+```markdown
+## 同步报告
+
+### Changelog 更新
+
+| 源 | 新增版本 | 状态 |
+|----|---------|------|
+| Claude Code | v2.1.118, v2.1.119 | 已更新 |
+| Copilot CLI | 无新版本 | 跳过 |
+| Zensical | v0.0.34 | 已更新 |
+
+### 笔记同步
+
+| 源 | 更新文件数 | 导航链接数 |
+|----|-----------|-----------|
+| Claude Code | 5 | 2 |
+| Zensical | 1 | 1 |
+
+共更新 X 个 changelog 文件，同步 Y 个笔记文件。
+```
+
+然后使用 `AskUserQuestion` 询问是否需要调整。
+
+---
 
 ## 注意事项
 
 - **幂等性**：同步前检查版本标注是否已存在，避免重复添加
 - **最小改动**：每次只添加必要内容，不重构现有结构
 - **保持一致**：新增内容的语气、格式与同一页面已有内容保持一致
-- 如果某个 changelog 条目不明确属于哪个主题页面，跳过并在报告中说明
-- 如果目标文件不存在或为空，在报告中说明，不创建新文件
+- **无映射则跳过**：如果某个 changelog 条目不明确属于哪个主题页面，跳过并在报告中说明
+- **目标文件不存在则跳过**：不创建新文件，在报告中说明
+- **Phase 1 失败不影响其他源**：某个源的 GitHub 拉取失败时，继续处理其他源

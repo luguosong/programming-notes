@@ -194,6 +194,8 @@ When compressing, preserve in priority order:
 
 `/resume` 用于恢复之前的会话。选择器默认显示当前目录的 session，按 `Ctrl+A` 切换为显示所有项目（v2.1.108 改进）。此外，`--resume` / `--continue` 现在还会恢复未过期的计划任务（v2.1.110 新增），让你继续上次中断的定时任务。
 
+v2.1.122 进一步增强了 `/resume` 的搜索能力：在搜索框中粘贴 PR URL 现在可以找到创建该 PR 的会话（支持 GitHub、GitHub Enterprise、GitLab 和 Bitbucket）。v2.1.119 则扩展了 `--continue`/`--resume` 的匹配范围，现在也能找到通过 `/add-dir` 添加当前目录的会话。
+
 !!! tip "长上下文会话压缩修复"
 
     从 v2.1.113 起，对已恢复的长上下文会话执行 compact 不再失败（之前会报 "Extra usage is required for long context requests"）——长会话现在可以放心地恢复后再压缩。

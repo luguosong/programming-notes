@@ -6,6 +6,77 @@ title: 更新日志
 
 本文记录 Zensical 每个版本的变更内容，按发布时间倒序排列。数据来源于 [GitHub Releases](https://github.com/zensical/zensical/releases)。
 
+## v0.0.37（2026-04-27）
+
+> 📝 **笔记定位**：[主题扩展](../basic/index.md#可安装的主题扩展)
+
+### 新功能
+
+- 支持可安装的主题扩展（installable themes），可将主题覆盖打包为自定义主题并通过 `pip` 安装，主题只需在 `mkdocs.themes` 入口点注册即可
+
+### Bug 修复
+
+- 修复嵌套元数据（nested metadata）未正确清理的问题
+- 修复图片旁边的文本被错误包含在 lightbox 图片链接中的问题
+- 修复目录（Table of Contents）节标题中锚点链接被保留的问题
+- 修复 lightbox 图片未正确应用属性的问题
+
+### 重构
+
+- 子类化 `Markdown` 处理器以扩展功能
+- 为 tree-processor 和 post-processor 使用相同名称
+
+## v0.0.36（2026-04-23）
+
+### Bug 修复
+
+- UI 更新至 v0.0.15（补充 v0.0.35 遗漏的 UI 更新）
+
+> v0.0.35 缺少部分 UI 变更，请更新至 v0.0.36。
+
+## v0.0.35（2026-04-23）
+
+> 📝 **笔记定位**：[图片缩放](../basic/index.md#图片缩放与画廊glightbox)
+
+### 新功能
+
+- 原生支持 GLightbox，可为图片添加缩放和画廊功能。通过新增的 `glightbox` Markdown 扩展自动为图片添加标注，在 `zensical.toml` 中添加 `[project.markdown_extensions.zensical.extensions.glightbox]` 即可启用
+- 目录（Table of Contents）中的节标题现在支持 HTML 标记渲染，可在目录中正确显示 Emoji 等内联特性（原 Material for MkDocs 中的 `typeset` 插件功能）
+- 正确解析原始 HTML 中的相对链接（原 MkDocs 不支持）
+
+### Bug 修复
+
+- 修复原始 HTML 中的相对链接未正确解析的问题
+- 修复 `GLightboxExtension` 中 `img` 属性被错误移至父元素的问题
+- 修复原始 HTML 中的图片被 `GLightboxExtension` 重复处理的问题
+- 修复 `GlightboxExtension` 添加 `None` 属性的问题
+- 支持 `uv` 的 symlink 模式
+
+### 重构
+
+- 将 `GLightbox` 扩展迁移为常规 `Postprocessor`
+
+## v0.0.34（2026-04-21）
+
+> 📝 **笔记定位**：[配置可读性](../basic/index.md#front-matter)
+
+### 新功能
+
+- 配置解析器更新至 TOML v1.1.0，支持内联表格中的换行，使 `zensical.toml` 配置更具可读性
+
+### Bug 修复
+
+- UI 更新至 v0.0.14
+- 禁止脚注反向引用（footnote backrefs）上的即时预览
+- 修复 Markdown 页面引用的代码片段（snippets）更新后页面未重建的问题
+- 修复禁用目录 URL 时 `README.html` 链接未更新为 `index.html` 的问题
+- 修复非根目录的 `index.md` 被错误视为首页的问题（与 MkDocs 行为对齐）
+- 升级 `rand` 至 0.9.4 以缓解 CVE 安全漏洞
+
+### 重构
+
+- 更新 ZRX（Zensical 运行时基础）至 v0.0.21，包含模块系统和调度器/流式 API 的全面重写
+
 ## v0.0.33（2026-04-14）
 
 ### 破坏性变更

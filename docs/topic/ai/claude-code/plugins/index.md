@@ -102,6 +102,20 @@ claude plugin uninstall formatter@my-marketplace --keep-data
 
 Claude Code 会重新加载所有活跃的插件，并显示插件、Skills、Agents、Hooks、MCP 服务器和 LSP 服务器的数量统计。
 
+### 清理孤立依赖
+
+随着插件的安装和卸载，`node_modules` 中可能积累不再被任何插件使用的孤立依赖。v2.1.121 新增了清理命令：
+
+```bash
+# 移除所有孤立的自动安装插件依赖
+claude plugin prune
+
+# 卸载插件时自动级联清理
+claude plugin uninstall plugin-name@marketplace --prune
+```
+
+当另一个插件的版本约束导致某个插件自动更新并被跳过时，`/doctor` 和 `/plugin` Errors 标签页会显示提示（v2.1.118 新增），方便你发现版本约束冲突。
+
 ### 插件错误处理与诊断
 
 当插件依赖不满足时，Claude Code 会进行智能降级处理（v2.1.111 改进）：依赖错误现在区分冲突、无效和过于复杂的版本要求，给出更明确的错误提示。在 headless 模式下使用 `--output-format stream-json` 时，如果插件因依赖问题被降级，init 事件中会包含 `plugin_errors` 字段（v2.1.111 新增），方便自动化脚本检测和告警。

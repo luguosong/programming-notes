@@ -265,6 +265,8 @@ jobs:
 
 Claude Code 会读取上下文（Issue 内容、PR diff 等），然后执行相应操作。
 
+v2.1.119 扩展了 `--from-pr` 参数的支持范围：现在除了 GitHub PR URL 外，还接受 GitLab merge-request、Bitbucket pull-request 和 GitHub Enterprise PR URL。结合 `owner/repo#N` 链接主机检测的改进（现在使用 git remote 的主机而非总是指向 github.com），在多平台 Git 环境中使用更加顺畅。
+
 ### 常用配置参数
 
 | 参数 | 说明 | 示例 |

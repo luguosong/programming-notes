@@ -84,7 +84,7 @@ copilot --agent explore -p "找出所有未使用的导入"
 > 写入后台 Agent：重点关注 src/auth/ 目录
 ```
 
-子 Agent 会获得基于名称的可读 ID（如 `math-helper-0`）而非随机字符串（1.0.6 新增），方便在 `/tasks` 视图中识别。空闲子 Agent 在 `/tasks` 视图中 2 分钟后自动隐藏（1.0.8 改进）。
+子 Agent 会获得基于名称的可读 ID（如 `math-helper-0`）而非随机字符串（1.0.6 新增），方便在 `/tasks` 视图中识别。空闲子 Agent 在 `/tasks` 视图中 2 分钟后自动隐藏（1.0.8 改进）。子 Agent 的思考过程从时间线中隐藏（1.0.35 改进），减少时间线中的视觉噪音，让你更专注于实际的工具调用和结果。
 
 Sub-agent 现在有深度和并发限制，防止 Agent 无限递归生成子 Agent（1.0.22 新增）。
 
@@ -169,6 +169,12 @@ tools:
     ```
 
     仅本机可用，不提交到 Git。
+
+    自定义 Agent 名称现在在状态栏底部可见（1.0.35 新增），可通过 `/statusline` 切换显示。这让多 Agent 切换场景下更容易确认当前使用的是哪个 Agent。
+
+!!! warning "Copilot CLI 不加载 ~/.claude/ 目录（1.0.36）"
+
+    从 1.0.36 起，`~/.claude/` 目录中的自定义 Agents、Skills 和 Commands 不再被 Copilot CLI 加载——它们是 Claude Code 专属目录。Copilot CLI 的个人级扩展应放在 `~/.copilot/` 目录下。此前版本会错误加载 `~/.claude/` 中的内容，可能导致意外行为。
 
 === "组织级"
 

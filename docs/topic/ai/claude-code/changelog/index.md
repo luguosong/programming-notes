@@ -15,6 +15,208 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.123（2026-04-29）
+
+### 🐛 修复
+
+- 修复 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` 设置时 OAuth 认证因 401 重试循环失败
+
+---
+
+## 📦 2.1.122（2026-04-29）
+
+> 📝 **笔记定位**：[Bedrock 服务层级](../integrations/index.md#amazon-bedrock) · [/resume PR 搜索](../context-engineering/index.md#恢复会话resume) · [OTel 事件增强](../enterprise/index.md#otel-事件持续增强)
+
+### ✨ 新功能
+
+- **`ANTHROPIC_BEDROCK_SERVICE_TIER` 环境变量**：选择 Bedrock 服务层级（`default`、`flex` 或 `priority`），以 `X-Amzn-Bedrock-Service-Tier` 头发送
+- **`/resume` PR URL 搜索**：在 `/resume` 搜索框粘贴 PR URL 现在可找到创建该 PR 的会话（支持 GitHub、GitHub Enterprise、GitLab 和 Bitbucket）
+- **`/mcp` 连接器去重提示**：当 claude.ai 连接器被手动添加的同 URL 服务器隐藏时显示提示
+- **OpenTelemetry 数值属性**：`api_request`/`api_error` 日志事件的数值属性现在以数字类型而非字符串输出
+- **OpenTelemetry `@`-mention 事件**：新增 `claude_code.at_mention` 日志事件用于 `@`-mention 解析
+
+### 🐛 修复
+
+- 修复 `/branch` 在源会话包含回退时间线条目时生成失败（"tool_use ids were found without tool_result blocks"）
+- 修复 `/model` 在 Bedrock application inference profile ARN 上不显示 Effort 选项，且 ARN 不接收 `output_config.effort`
+- 修复 Vertex AI / Bedrock 在 session-title 生成等结构化输出查询时返回 `invalid_request_error: output_config: Extra inputs are not permitted`
+- 修复 Vertex AI `count_tokens` 端点对代理网关用户返回 400 错误
+- 修复 `spinnerTipsOverride.excludeDefault` 未抑制基于时间的 spinner 提示
+- 修复 `ToolSearch` 在非阻塞模式下遗漏会话启动后连接的 MCP 工具
+- 修复 `!exit` / `!quit` 在 bash 模式下终止 CLI 而非作为 shell 命令运行
+- 修复发送到新模型的图片被调整为 2576px 而非正确的 2000px 最大值
+- 修复远程控制会话空闲状态每秒重绘两次，可能淹没 `tmux -CC` 控制管道并暂停终端
+- 修复助手消息因过期视图偏好而在某些会话中显示为空白
+- 修复 `settings.json` 中格式错误的 hooks 条目不再使整个文件失效
+- 修复语音模式下绑定到 Caps Lock 的键绑定现在显示错误（终端不传递 Caps Lock 键事件）
+
+---
+
+## 📦 2.1.121（2026-04-28）
+
+> 📝 **笔记定位**：[MCP alwaysLoad 与自动重试](../mcp/index.md#alwaysload-选项跳过工具搜索延迟) · [PostToolUse 替换输出](../hooks/index.md#posttooluse-替换工具输出) · [插件清理](../plugins/index.md#清理孤立依赖) · [SDK Forked Subagent](../sub-agents/index.md#sdk-中的-forked-subagent) · [权限放宽](../configuration/index.md#配置文件有哪几层) · [/skills 搜索](../skills/index.md#手动调用命令) · [内存泄漏修复](../best-practices/index.md#稳定性改进)
+
+### ✨ 新功能
+
+- **MCP `alwaysLoad` 选项**：设为 `true` 时，该服务器的所有工具跳过工具搜索延迟，始终可用
+- **`claude plugin prune` 命令**：移除孤立的自动安装插件依赖；`plugin uninstall --prune` 级联清理
+- **`/skills` 搜索过滤**：新增输入搜索框，在长列表中快速定位 skill
+- **PostToolUse hooks 替换工具输出**：所有工具的 PostToolUse hooks 现在可通过 `hookSpecificOutput.updatedToolOutput` 替换工具输出（之前仅限 MCP）
+- **Fullscreen 模式滚动优化**：在向上滚动阅读后，输入 prompt 不再跳回底部
+- **对话框滚动支持**：溢出终端的对话框现在支持方向键、PgUp/PgDn、Home/End 和鼠标滚轮滚动（全屏和非全屏模式）
+- **全屏模式长 URL 点击**：跨行换行的 URL 现在点击任意行都可打开完整 URL
+- **SDK `CLAUDE_CODE_FORK_SUBAGENT=1`**：非交互式会话中也可使用 forked subagent
+- **`--dangerously-skip-permissions` 放宽**：不再提示对 `.claude/skills/`、`.claude/agents/` 和 `.claude/commands/` 的写入
+- **`/terminal-setup` iTerm2 剪贴板**：启用 iTerm2 的"Applications in terminal may access clipboard"设置，使 `/copy` 在 tmux 中也可用
+- **MCP 服务器启动自动重试**：瞬态错误时自动重试最多 3 次，而非保持断开
+- **终端标签页标题本地化**：现在按配置的 `language` 设置生成
+- **claude.ai 连接器去重**：相同上游 URL 的连接器自动去重
+- **Vertex AI X.509 证书支持**：支持基于证书的 Workload Identity Federation（mTLS ADC）
+- **LSP 诊断摘要展开**：点击/Ctrl+O 可展开，并显示展开提示
+- **SDK `mcp_authenticate` redirectUri**：支持自定义 scheme 完成和 claude.ai 连接器
+- **OpenTelemetry span 增强**：LLM 请求 span 新增 `stop_reason`、`gen_ai.response.finish_reasons` 和 `user_system_prompt`
+
+### ⚡ 性能
+
+- **启动加速**：移除 release-notes splash 中的 Recent Activity 面板
+- **`/usage` 内存泄漏修复**：修复泄漏高达约 2GB 内存
+- **无界内存增长修复**：修复处理大量图片时的无界内存增长（多 GB RSS）
+- **长时间工具内存泄漏修复**：修复长时间运行工具未发出明确进度事件时的内存泄漏
+
+### 🔧 改进
+
+- **默认 effort 调整**：Pro/Max 订阅用户在 Opus 4.6 和 Sonnet 4.6 上默认 effort 从 `medium` 提升至 `high`
+
+### 🐛 修复
+
+- 修复 Bash 工具在 Claude 启动目录被删除或移动后永久不可用
+- 修复 `--resume` 在外部构建中启动崩溃
+- 修复 `--resume` 在大会话因非正常关闭导致行损坏时失败（现在跳过损坏行）
+- 修复使用 Bedrock application inference profile ARN 时 `thinking.type.enabled is not supported` 错误
+- 修复 Microsoft 365 MCP OAuth 因重复或不支持的 `prompt` 参数失败
+- 修复在 tmux、GNOME Terminal、Windows Terminal 和 Konsole 中按 Ctrl+L 或触发重绘时的回滚重复
+- 修复 claude.ai MCP 连接器在启动时遇到瞬态认证错误时静默消失
+- 修复远程会话中内置工具的 "Always allow" 规则在 worker 重启后不保留
+- 修复 `NO_PROXY` 在原生构建中通过 `managed-settings.json` 设置时不被所有 HTTP 客户端尊重
+- 修复托管设置审批提示即使被接受也退出会话（现在应用设置并继续）
+- 修复 `/usage` 在过期 OAuth token 后返回 "rate limited"（现在自动刷新）
+- 修复 `settings.json` 中无效的遗留枚举值使整个设置文件失效
+- 修复 `/usage` 对话框在无闪烁模式关闭时内容被裁剪
+- 修复 `/focus` 在全屏渲染器关闭时显示 "Unknown command"（现在解释如何启用）
+- 修复嵌入式 grep/find/rg shell wrapper 在运行中二进制被删除时失败（现在回退到已安装工具）
+- 减少大型目录树中 Bash 工具 `find` 的峰值文件描述符使用
+
+---
+
+## 📦 2.1.119（2026-04-24）
+
+> 📝 **笔记定位**：[/config 持久化](../configuration/index.md#配置文件有哪几层) · [PostToolUse duration_ms](../hooks/index.md#hook-输入增强) · [插件清理命令](../plugins/index.md#清理孤立依赖) · [/skills 搜索过滤](../skills/index.md#手动调用命令) · [--from-pr 扩展](../automation/index.md#通过-claude-触发)
+
+### ✨ 新功能
+
+- **`/config` 设置持久化**：`/config` 中的设置（主题、编辑器模式、verbose 等）现在持久化到 `~/.claude/settings.json` 并参与项目/本地/策略覆盖优先级
+- **`prUrlTemplate` 设置**：将底部 PR 徽章指向自定义代码审查 URL
+- **`CLAUDE_CODE_HIDE_CWD` 环境变量**：在启动 logo 中隐藏工作目录
+- **`--from-pr` 扩展支持**：现在接受 GitLab merge-request、Bitbucket pull-request 和 GitHub Enterprise PR URL
+- **`--print` 模式 agent 遵从**：`--print` 模式现在遵循 agent 的 `tools:` 和 `disallowedTools:` frontmatter
+- **`--agent` 权限模式**：`--agent <name>` 现在遵循 agent 定义的 `permissionMode`
+- **PowerShell 工具命令自动批准**：PowerShell 工具命令现在可在权限模式下自动批准
+- **PostToolUse hooks `duration_ms`**：`PostToolUse` 和 `PostToolUseFailure` hook 输入现在包含 `duration_ms`（工具执行时间，排除权限提示和 PreToolUse hooks）
+- **Subagent/SDK MCP 并行连接**：子代理和 SDK MCP 服务器重新配置现在并行连接
+- **插件版本约束自动更新**：被另一插件版本约束固定的插件现在自动更新到最高满足版本
+- **Vim 模式改进**：INSERT 模式下 Esc 不再将排队消息拉回输入；再按一次 Esc 中断
+- **斜杠命令建议高亮**：现在高亮显示与查询匹配的字符
+- **斜杠命令选择器换行**：长描述换行到第二行而非截断
+- **`owner/repo#N` 链接主机检测**：现在使用 git remote 的主机而非总是指向 github.com
+- **安全加固 `blockedMarketplaces`**：现在正确执行 `hostPattern` 和 `pathPattern` 条目
+- **OpenTelemetry 增强**：`tool_result` 和 `tool_decision` 事件新增 `tool_use_id`；`tool_result` 新增 `tool_input_size_bytes`
+- **状态栏 stdin JSON**：新增 `effort.level` 和 `thinking.enabled` 字段
+
+### 🐛 修复
+
+- 修复粘贴 CRLF 内容（Windows 剪贴板、Xcode 控制台）时每行之间插入额外空行
+- 修复使用 kitty 键盘协议的终端中多行粘贴丢失换行符
+- 修复原生 macOS/Linux 构建中 Bash 工具被拒绝时 Glob 和 Grep 工具消失
+- 修复全屏模式中每次工具完成后滚动回底部
+- 修复 MCP HTTP 连接在服务器对 OAuth discovery 请求返回非 JSON body 时失败（"Invalid OAuth error response"）
+- 修复 Rewind overlay 对包含图片附件的消息显示 "(no prompt)"
+- 修复 auto mode 以冲突的 "Execute immediately" 指令覆盖 plan mode
+- 修复异步 `PostToolUse` hooks 无响应时向会话 transcript 写入空条目
+- 修复 spinner 在子代理任务通知孤立时持续显示
+- 修复 ToolSearch 在 Vertex AI 上默认禁用（因不支持的 beta header 错误，可通过 `ENABLE_TOOL_SEARCH` 选择启用）
+- 修复 `@`-file Tab 补全在斜杠命令中使用绝对路径时替换整个 prompt
+- 修复 macOS Terminal.app 中通过 Docker 或 SSH 启动时 prompt 出现杂散 `p` 字符
+- 修复 `${ENV_VAR}` 占位符在 HTTP/SSE/WebSocket MCP 服务器的 `headers` 中未替换
+- 修复 MCP OAuth `--client-secret` 存储的 client secret 在需要 `client_secret_post` 的服务器 token 交换时未发送
+- 修复 `/skills` Enter 键关闭对话框而非在 prompt 中预填 `/<skill-name>`
+- 修复 `/agents` 详情视图将主代理不可用的内置工具误标为 "Unrecognized"
+- 修复 Windows 上插件缓存不完整时插件 MCP 服务器不启动
+- 修复 `/export` 显示当前默认模型而非对话实际使用的模型
+- 修复 verbose 输出设置重启后不持久化
+- 修复 `/usage` 进度条与 "Resets ..." 标签重叠
+- 修复插件 MCP 服务器在 `${user_config.*}` 引用可选字段为空时失败
+- 修复包含句末数字的列表项将数字换到单独一行
+- 修复 `/plan` 和 `/plan open` 在进入 plan mode 时不作用于现有计划
+- 修复 auto-compaction 前调用的 skill 在下一条用户消息上重新执行
+- 修复 `/reload-plugins` 和 `/doctor` 对已禁用插件报告加载错误
+- 修复 Agent 工具 `isolation: "worktree"` 重用先前会话的过期 worktree
+- 修复禁用的 MCP 服务器在 `/status` 中显示为 "failed"
+- 修复 `TaskList` 以任意文件系统顺序返回任务而非按 ID 排序
+- 修复 `gh` 输出中 PR 标题提到 "rate limit" 时的虚假 "GitHub API rate limit exceeded" 提示
+- 修复 SDK/bridge `read_file` 未正确执行对增长文件的大小上限检查
+- 修复在 git worktree 中工作时 PR 未关联到会话
+- 修复 `/doctor` 对被更高优先级作用域覆盖的 MCP 服务器条目发出警告
+- Windows：移除虚假的 "Windows requires 'cmd /c' wrapper" MCP 配置警告
+- VS Code：修复语音听写在 macOS 上首次录音因麦克风权限提示显示而无输出
+
+---
+
+## 📦 2.1.118（2026-04-23）
+
+> 📝 **笔记定位**：[Hook mcp_tool 类型](../hooks/index.md#hook-的四种类型) · [PostToolUse 替换输出](../hooks/index.md#posttooluse-替换工具输出) · [MCP OAuth 修复](../mcp/index.md#自动-oauth-认证) · [DISABLE_UPDATES](../getting-started/index.md#更新与卸载) · [Auto mode $defaults](../configuration/index.md#配置文件有哪几层) · [WSL 设置继承](../platforms/index.md#windows-专属特性) · [Vim 可视模式](../how-it-works/index.md#vim-可视模式) · [/usage 合并](../getting-started/index.md#常用斜杠命令)
+
+### ✨ 新功能
+
+- **Vim 可视模式**：新增 visual mode（`v`）和 visual-line mode（`V`），支持选择、操作符和视觉反馈
+- **`/usage` 命令合并**：`/cost` 和 `/stats` 合并为 `/usage`，两者仍作为快捷键打开对应标签页
+- **自定义主题**：从 `/theme` 创建和切换命名自定义主题，或手动编辑 `~/.claude/themes/` 中的 JSON 文件；插件也可通过 `themes/` 目录分发主题
+- **Hooks 调用 MCP 工具**：hooks 现在可通过 `type: "mcp_tool"` 直接调用 MCP 工具
+- **`DISABLE_UPDATES` 环境变量**：完全阻止所有更新路径（包括手动 `claude update`），比 `DISABLE_AUTOUPDATER` 更严格
+- **WSL 继承 Windows 设置**：WSL on Windows 现在可通过 `wslInheritsWindowsSettings` 策略键继承 Windows 侧的托管设置
+- **Auto mode `"$defaults"`**：在 `autoMode.allow`、`autoMode.soft_deny` 或 `autoMode.environment` 中包含 `"$defaults"` 可在内置列表旁添加自定义规则
+- **Auto mode "Don't ask again" 选项**：在 auto mode 选择加入提示中新增不再询问选项
+- **`claude plugin tag` 命令**：为插件创建发布 git tag，带版本验证
+- **`--continue`/`--resume` 搜索扩展**：现在找到通过 `/add-dir` 添加当前目录的会话
+- **`/color` 同步**：将会话强调色同步到 claude.ai/code（Remote Control 连接时）
+- **`/model` 自定义网关**：模型选择器在使用自定义 `ANTHROPIC_BASE_URL` 网关时遵循 `ANTHROPIC_DEFAULT_*_MODEL_NAME`/`_DESCRIPTION` 覆盖
+- **插件版本约束跳过提示**：自动更新因另一插件版本约束而跳过时，在 `/doctor` 和 `/plugin` Errors 标签页显示
+
+### 🐛 修复
+
+- 修复 `/mcp` 菜单对使用 `headersHelper` 配置的服务器隐藏 OAuth 操作，以及带自定义 headers 的 HTTP/SSE MCP 服务器在瞬态 401 后卡在 "needs authentication"
+- 修复 MCP 服务器 OAuth token 响应缺少 `expires_in` 时每小时需要重新认证
+- 修复 MCP step-up authorization 在服务器 `insufficient_scope` 403 指定 token 已有 scope 时静默刷新而非提示重新同意
+- 修复 MCP 服务器 OAuth 流超时或取消时未处理的 promise rejection
+- 修复 MCP OAuth 刷新在竞争条件下缺少跨进程锁
+- 修复 macOS keychain 竞争条件（并发 MCP token 刷新覆盖刚刷新的 OAuth token，导致意外的 "Please run /login" 提示）
+- 修复 OAuth token 刷新在服务器撤销 token 后失败
+- 修复 Linux/Windows 上凭据保存崩溃导致 `~/.claude/.credentials.json` 损坏
+- 修复 `/login` 在 `CLAUDE_CODE_OAUTH_TOKEN` 启动的会话中无效（现在清除 env token 使磁盘凭据生效）
+- 修复 "new messages" 滚动药丸和 `/plugin` 徽章中文字不可读
+- 修复 plan 接受对话框在使用 `--dangerously-skip-permissions` 时提供 "auto mode" 而非 "bypass permissions"
+- 修复 agent-type hooks 在配置为 `Stop` 或 `SubagentStop` 以外的事件时报 "Messages are required for agent hooks"
+- 修复 `prompt` hooks 被 agent-hook verifier 子代理的工具调用重新触发
+- 修复 `/fork` 将完整父对话写入磁盘（现在写入指针并在读取时加载）
+- 修复 Alt+K / Alt+X / Alt+^ / Alt+_ 冻结键盘输入
+- 修复连接远程会话时覆盖本地 `model` 设置
+- 修复粘贴以 `/` 开头的文件路径时 typeahead 显示 "No commands match" 错误
+- 修复 `plugin install` 对已安装插件未重新解析安装了错误版本的依赖
+- 修复无效路径或 fd 耗尽时文件监视器的未处理错误
+- 修复 Remote Control 会话在 JWT 刷新期间瞬态 CCR 初始化问题后被归档
+- 修复通过 `SendMessage` 恢复的子代理未恢复其生成时的显式 `cwd`
+
+---
+
 ## 📦 2.1.117（2026-04-22）
 
 > 📝 **笔记定位**：[Forked Subagent](../sub-agents/index.md) · [Agent MCP 加载](../mcp/index.md) · [/model 持久化](../configuration/index.md) · [/resume 智能摘要](../context-engineering/index.md) · [MCP 并发连接](../mcp/index.md) · [插件依赖改进](../plugins/index.md) · [原生构建搜索](../how-it-works/index.md) · [Opus 4.7 上下文窗口](../how-it-works/index.md) · [清理周期扩展](../configuration/index.md) · [OpenTelemetry 增强](../enterprise/index.md)
