@@ -15,6 +15,53 @@ npm update -g @github/copilot
 
 ---
 
+## 📦 1.0.40（2026-05-01）
+
+> 📝 **笔记定位**：[OAuth 无头认证](../mcp/index.md#-mcp-oauth-认证) · [深度研究改进](../agents/index.md#-内置-agent) · [ACP Agent 切换](../agents/index.md#-使用-agent) · [Autopilot 续接限制](../modes/index.md#-autopilot-模式实验性) · [Prompt 安全门控](../modes/index.md#-programmatic-模式) · [会话历史开放](../context/index.md#-会话管理) · [ACP Skill 命令](../skills/index.md#-skill-管理命令)
+
+### ✨ 新功能
+
+- **MCP `client_credentials` OAuth 授权**：MCP 服务器支持 `client_credentials` OAuth 授权类型，可实现无需浏览器的完全无头认证
+- **`/research` 深度研究改进**：`/research` 使用编排器/子 Agent 模型，提供更全面可靠的深度研究结果
+- **Autopilot 续接限制**：Autopilot 模式默认将续接消息限制为 5 次（可通过 `--max-autopilot-continues` 配置）
+- **会话历史与文件追踪**：会话历史、文件追踪和 `/chronicle` 命令现已对所有用户开放
+- **ACP 客户端 Skill 斜杠命令**：Skills 在 ACP 客户端中可用作斜杠命令，与 CLI 体验一致
+- **ACP 客户端实时计划展示**：ACP 客户端（如 Zed）现在实时显示 Agent 处理多步任务时的计划
+- **ACP 客户端自定义 Agent 切换**：ACP 客户端可通过 `agent` 配置选项列出和切换自定义 Agent
+- **自定义 statusLine 切换**：状态栏选择器中新增自定义 `statusLine.command` 可见性的开关
+- **Prompt 模式安全门控**：Prompt 模式（`-p`）默认禁止加载仓库 Hook 和工作区 MCP，需通过 `GITHUB_COPILOT_PROMPT_MODE_REPO_HOOKS` 和 `GITHUB_COPILOT_PROMPT_MODE_WORKSPACE_MCP` 环境变量显式启用
+
+### 🔧 改进
+
+- PR 分支装饰在状态栏中正确显示，不受模型名称长度影响
+- `/clear` 和 `/new` 重置当前选中的自定义 Agent
+- Assistant 响应流式传输更平滑
+- `copilot plugin list` 在 `copilot plugin update` 后显示正确的版本号
+- 子 Agent 正确评估自身模型的工具搜索支持，而非继承父会话的设置
+- `/new` 或 `/resume` 切换会话时不再将待处理消息带到新会话
+- Resume 会话选择器不再为同一 Mission Control 支持的会话显示重复条目
+- 会话恢复选择器将摘要显示为单行，截断以适应列宽
+- 在 Prompt 模式下按 `Ctrl+C` 时立即向 stderr 输出 "Exiting…"，使关闭进度可见
+- 自动更新时清理磁盘上的旧版本 CLI 包
+- 远程会话状态栏显示远程工作目录和分支，而非本地上下文
+- `/update` 重启后不再重新提交原始 `-i` prompt
+- 自动检测 Azure DevOps 仓库并禁用 GitHub MCP 服务器
+- `--config-dir` 现在正确传播到插件子命令；`--config-dir` 已弃用，推荐使用 `COPILOT_HOME`
+- `/ask` 响应对话框打开时鼠标选择可用，可高亮和复制内容
+- 异步加载自定义 CA 证书，提升 CLI 启动速度
+- 远程控制链接在时间线中显示完整 URL，而非 "Open in browser"
+- MCP OAuth 令牌在多个服务器共享相同 URL 但使用不同静态 OAuth 客户端 ID 时正确缓存
+- MCP 工具名称中的点号或其他无效字符现在被正确清理
+- `Ctrl+C` 和双击 `Esc` 逐条移除排队的消息，而非一次性清除全部
+- 斜杠命令建议将前缀匹配排在模糊匹配之上
+
+### 🐛 修复
+
+- 修复发送大文件附件时 CLI 在 100% CPU 下挂起的问题
+- 修复恢复会话时，前一个 CLI 进程异常退出后误报会话正在使用的问题
+
+---
+
 ## 📦 1.0.39（2026-04-28）
 
 > 📝 **笔记定位**：[后台运行任务](../basic/index.md#快捷键) · [ACP 客户端扩展](../mcp/index.md#acp-客户端扩展) · [会话选择器排序](../context/index.md#删除会话1035-新增) · [远程状态提示](../modes/index.md#远程会话控制)
