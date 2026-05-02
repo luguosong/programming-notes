@@ -332,7 +332,8 @@ nav = [
         ] },
         { "Windows" = [
             "topic/windows/index.md",
-            { "DOS 命令" = "topic/windows/dos/index.md" }
+            { "DOS 命令" = "topic/windows/dos/index.md" },
+            { "WSL 使用指南" = "topic/windows/wsl/index.md" }
         ] },
         { "Zensical" = [
             "topic/zensical/index.md",

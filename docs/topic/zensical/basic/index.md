@@ -748,6 +748,38 @@ hide:
 参考 [数学公式](../math/) 章节。
 ```
 
+### 链接与脚注验证
+
+> 📦 0.0.38 新增
+
+当你的文档站点规模逐渐变大，内部链接和脚注引用难免会出现失效或遗漏。手动逐一排查既耗时又容易遗漏。Zensical 现在内置了构建时验证功能，自动检查所有内部引用并报告问题，包含精确的源码位置信息。
+
+与 MkDocs 仅验证最终渲染链接不同，Zensical 的验证覆盖范围更广——还会检查未解析的引用、未使用的定义和被遮蔽的定义。以下检查项均默认启用：
+
+| 检查项 | 说明 |
+|--------|------|
+| `unresolved_references` | 引用了不存在的链接目标 |
+| `unresolved_footnotes` | 引用了未定义的脚注 |
+| `unused_definitions` | 定义了但从未被引用的链接 |
+| `unused_footnotes` | 定义了但从未被引用的脚注 |
+| `shadowed_definitions` | 链接定义被后续同名定义覆盖 |
+| `shadowed_footnotes` | 脚注定义被后续同名定义覆盖 |
+| `invalid_links` | 链接指向了不存在的页面 |
+| `invalid_link_anchors` | 链接锚点指向了页面中不存在的标题 |
+
+在 CI 流水线中，可以配合 `--strict` 标志强制链接完整性——任何验证检查触发时都会使构建失败：
+
+```bash
+zensical build --strict
+```
+
+如需禁用验证，可在 `zensical.toml` 中设置：
+
+```toml
+[project]
+validation = false
+```
+
 ---
 
 ## 🎨 可安装的主题扩展
