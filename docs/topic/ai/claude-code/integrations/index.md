@@ -286,6 +286,8 @@ model_list:
 
     建议将 Gateway 配置为统一的 API 端点（格式兼容 `/v1/messages`），这样 Claude Code 的配置最简单，只需设置 `ANTHROPIC_BASE_URL` 即可。
 
+当你使用自定义 `ANTHROPIC_BASE_URL` 指向 Anthropic 兼容网关时，模型选择器（`/model`）现在会从网关的 `/v1/models` 端点自动拉取可用模型列表（v2.1.126 新增）。此前使用网关时模型选择器只显示静态列表，无法感知网关实际提供的模型。配合 `ANTHROPIC_DEFAULT_*_MODEL_NAME`/`_DESCRIPTION` 覆盖（v2.1.118 新增），你可以完整控制网关环境下的模型展示和默认选择。
+
 ## 💬 Slack 集成
 
 Slack 集成让你可以在 Slack 频道中直接 `@Claude` 来触发编码会话——无需切换到终端。

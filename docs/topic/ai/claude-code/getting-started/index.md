@@ -105,6 +105,8 @@ claude
 
 登录成功后，凭证会自动保存，后续不需要重复登录。如果需要切换账户，在交互模式中输入 `/login` 即可。
 
+当浏览器回调无法到达 localhost（如 WSL2、SSH 远程会话或容器环境）时，`claude auth login` 现在支持在终端中粘贴 OAuth code 来完成认证（v2.1.126 新增），不再需要配置端口转发。
+
 你也可以通过 `claude auth` 子命令预先认证（v2.1.41 新增）：
 
 ``` bash
@@ -126,6 +128,8 @@ claude update    # 立即更新到最新版
 你还可以通过 `/config` 切换更新通道（Release Channel）：`stable`（稳定版）或 `latest`（最新版，可能包含实验性功能）。（v2.1.3 新增）
 
 如果你需要完全阻止所有更新（包括手动 `claude update`），可以设置 `DISABLE_UPDATES` 环境变量（v2.1.118 新增）。它比 `DISABLE_AUTOUPDATER` 更严格，会阻止一切更新路径。
+
+当你需要彻底清理某个项目的所有 Claude Code 状态时，可以使用 `claude project purge`（v2.1.126 新增）。它会删除项目的 transcripts、tasks、文件历史和配置条目，支持 `--dry-run`（预览将删除的内容）、`-y/--yes`（跳过确认）和 `-i/--interactive`（交互式选择删除项）等模式。适合清理不再维护的项目或回收磁盘空间。
 
 如果需要卸载：
 

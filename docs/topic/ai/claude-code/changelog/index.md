@@ -15,6 +15,54 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.126（2026-05-01）
+
+> 📝 **笔记定位**：[网关模型列表](../integrations/index.md#llm-gateway自定义代理) · [项目清理命令](../getting-started/index.md#更新与卸载) · [OAuth 终端粘贴](../getting-started/index.md#首次登录与认证) · [权限范围扩展](../configuration/index.md#配置文件有哪几层) · [PowerShell 增强](../platforms/index.md#windows-专属特性) · [OTel Skill 审计](../enterprise/index.md#otel-事件持续增强) · [托管安全修复](../enterprise/index.md#安全架构)
+
+### ✨ 新功能
+
+- **`/model` 网关模型列表**：当 `ANTHROPIC_BASE_URL` 指向 Anthropic 兼容网关时，模型选择器现在从网关的 `/v1/models` 端点列出可用模型
+- **`claude project purge` 命令**：新增 `claude project purge [path]` 删除项目所有 Claude Code 状态（transcripts、tasks、文件历史、配置条目），支持 `--dry-run`、`-y/--yes`、`-i/--interactive` 和 `--all`
+- **`--dangerously-skip-permissions` 范围扩展**：现在绕过对 `.claude/`、`.git/`、`.vscode/`、shell 配置文件等受保护路径的写入提示（灾难性删除命令仍会提示作为安全网）
+- **`claude auth login` 终端粘贴 OAuth code**：当浏览器回调无法到达 localhost（WSL2、SSH、容器）时，现在支持在终端中粘贴 OAuth code
+- **OpenTelemetry `skill_activated` 事件增强**：现在对用户输入的斜杠命令也触发，并新增 `invocation_trigger` 属性（`"user-slash"`、`"claude-proactive"` 或 `"nested-skill"`）
+- **Auto mode 权限检查指示**：spinner 在权限检查阻塞时变为红色，而非看起来像工具正在运行
+- **主机托管部署分析保留**：`CLAUDE_CODE_PROVIDER_MANAGED_BY_HOST` 不再在 Bedrock/Vertex/Foundry 上自动禁用分析
+- **Windows PowerShell 检测改进**：现在可检测通过 Microsoft Store、不带 PATH 的 MSI 或 `.NET global tool` 安装的 PowerShell 7
+- **Windows PowerShell 优先**：当 PowerShell 工具启用时，Claude 现在将 PowerShell 作为主 shell 而非默认 Bash
+- **Read tool 移除恶意软件评估提醒**：移除了可能导致旧模型误判的每文件恶意软件评估提示
+
+### 🔒 安全
+
+- 修复 `allowManagedDomainsOnly` / `allowManagedReadPathsOnly` 在更高优先级的托管设置源缺少 `sandbox` 块时被忽略
+
+### 🐛 修复
+
+- 修复粘贴超过 2000px 的图片导致会话中断——图片现在在粘贴时自动缩放，历史中的超大图片自动移除并重试
+- 修复"OAuth not allowed for organization"错误时显示登录页面——现在显示联系管理员指引
+- 修复 OAuth 登录在慢速或代理连接、仅 IPv6 开发容器以及浏览器回调无法到达 localhost 时超时
+- 修复并发凭证写入可能清除有效 OAuth refresh token 的罕见竞争条件
+- 修复 API 重试倒计时卡在"0s"而非在重试间正确倒数
+- 修复 Mac 从睡眠唤醒后请求中出现的"Stream idle timeout"错误
+- 修复后台和远程会话在长时间模型思考暂停期间错误中止"Stream idle timeout"
+- 修复助手完成思考但显示空白的连续空轮次后无输出
+- 修复 Cursor 和 VS Code 1.92–1.104 集成终端中触控板滚动过快
+- 修复 claude.ai MCP 连接器被卡在 needs-auth 状态的手动服务器抑制
+- 修复 Windows 无闪烁模式下日语/韩语/中文字符渲染为乱码
+- 修复 `Ctrl+L` 清空 prompt 输入——现在仅强制屏幕重绘，匹配 readline 行为
+- 修复延迟工具（WebSearch、WebFetch 等）在 `context: fork` 的 skill 和其他子代理首轮不可用
+- 修复 plan-mode 工具在通过 `--channels` 启动的交互式会话中不可用
+- 修复某些消息工具不可用时远程会话 transcript 为空白
+- 修复 `/plugin` Uninstall 显示"Enabled"而非"Uninstalled"
+- 修复 linter 同时修改多文件时文件修改提醒总量过大
+- 修复 `/remote-control` 重试卡在"connecting…"——每次重试现在显示结果，未注册可信设备失败提前捕获
+- 修复 Remote Control 初始连接失败通知不显示错误原因
+- Windows：剪贴板写入不再在 EDR/SIEM 遥测可见的进程命令行参数中暴露复制内容；同时修复超过 22KB 的选区无法到达剪贴板
+- PowerShell 工具：裸 `--`（如 `git diff -- file`）不再被误标记为 `--%` stop-parsing token
+- 修复 Agent SDK 在模型在并行工具调用批次中发出格式错误的工具名时挂起
+
+---
+
 ## 📦 2.1.123（2026-04-29）
 
 ### 🐛 修复

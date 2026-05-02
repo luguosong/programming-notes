@@ -41,6 +41,7 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 - Auto mode `$defaults`（v2.1.118 新增）：在 `autoMode.allow`、`autoMode.soft_deny` 或 `autoMode.environment` 中使用 `"$defaults"` 可以在内置默认列表旁添加自定义规则，而不必全部手动重写
 - Auto mode "Don't ask again"（v2.1.118 新增）：在 auto mode 选择加入提示中新增"不再询问"选项，确认后不再每次弹出
 - `--dangerously-skip-permissions` 写入放宽（v2.1.121 改进）：不再提示对 `.claude/skills/`、`.claude/agents/` 和 `.claude/commands/` 目录的写入——这些目录本身就是 Claude 工作空间的组成部分
+- `--dangerously-skip-permissions` 受保护路径范围扩展（v2.1.126 改进）：现在绕过对 `.claude/`、`.git/`、`.vscode/`、shell 配置文件等受保护路径的写入提示。不过灾难性删除命令仍会提示作为安全网，防止意外损坏关键文件
 
 ### 配置文件位置
 
