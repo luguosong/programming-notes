@@ -6,6 +6,43 @@ title: 更新日志
 
 本文记录 Zensical 每个版本的变更内容，按发布时间倒序排列。数据来源于 [GitHub Releases](https://github.com/zensical/zensical/releases)。
 
+## v0.0.39（2026-05-01）
+
+### Bug 修复
+
+- 修复 `__compat__` shim 中 MkDocs 验证语法覆盖 Zensical 验证配置的问题（#607）
+- 修复验证未正确映射 percent-encoded 链接的问题（#598）
+- 修复 `$...$` 和 `$$...$$` 数学公式块内的链接被错误验证的问题（#599）
+- 修复从组合的 anchor-text-fragment 中未正确提取锚点的问题
+- 修复自动主题画廊优先于显式分组的问题
+- 修复 `glightbox` 扩展设置 `caption_position` 时报错的问题（#604）
+- Markdown 渲染错误时添加 Python 回溯信息，便于调试
+
+### 重构
+
+- 将 `glightbox` 配置选项迁移到 dataclass
+
+---
+
+## v0.0.38（2026-04-30）
+
+> 📝 **笔记定位**：[链接验证](../basic/index.md#链接与脚注验证)
+
+### 新功能
+
+- 添加链接和脚注验证（link and footnote validation），在构建时检查所有内部引用并报告问题，包含精确的源码位置信息。与 MkDocs 仅验证最终渲染链接不同，Zensical 还会检查未解析的引用、未使用的定义和被遮蔽的定义
+- 添加 `--strict` 命令行标志，使构建在任何启用的验证检查触发时失败，适用于 CI 流水线中强制执行链接完整性
+- 支持的验证检查项（均默认启用）：`unresolved_references`、`unresolved_footnotes`、`unused_definitions`、`unused_footnotes`、`shadowed_definitions`、`shadowed_footnotes`、`invalid_links`、`invalid_link_anchors`
+
+### 重构
+
+- 添加自定义 Markdown 子类
+- 简化 `zrx` 升级后的函数定义
+
+> 升级无需修改配置。如需禁用验证，可在 `zensical.toml` 中设置 `[project] validation = false`。
+
+---
+
 ## v0.0.37（2026-04-27）
 
 > 📝 **笔记定位**：[主题扩展](../basic/index.md#可安装的主题扩展)
