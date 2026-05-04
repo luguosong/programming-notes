@@ -251,12 +251,14 @@ graph LR
     A[攻击者] -->|修改密文块| B[服务器]
     B -->|填充有效/无效| A
     A -->|调整最后字节| B
-    Note right of A: 重复 256 次<br/>还原一个字节
+    N["🔁 重复 256 次<br/>还原一个字节"]
 
     classDef atk fill:transparent,stroke:#d32f2f,color:#adbac7,stroke-width:1px
     classDef srv fill:transparent,stroke:#0288d1,color:#adbac7,stroke-width:1px
+    classDef note fill:transparent,stroke:#f57c00,color:#f57c00,stroke-width:1px,stroke-dasharray: 5 5
     class A atk
     class B srv
+    class N note
 ```
 
 攻击原理：攻击者修改密文的某个块，如果服务器返回"填充错误"（`BadPaddingException`），攻击者就知道最后一块的填充值不正确；如果返回"解密成功"，就知道填充值正确。通过二分法，每字节只需 256 次尝试就能还原。
