@@ -82,18 +82,9 @@
     }
 
     function captureSources() {
-        // 先尝试从 DOM 中获取（SPA 导航后可能 bundle 尚未处理）
-        var preElements = document.querySelectorAll("pre.mermaid code");
-        if (preElements.length > 0) {
-            sources = [];
-            preElements.forEach(function (code) {
-                sources.push(code.textContent);
-            });
-            return Promise.resolve(sources.length);
-        }
-
-        // DOM 中已无 pre.mermaid，从服务器获取原始 HTML
-        return fetch(window.location.href)
+        // 从服务器获取原始静态 HTML（避免 SPA 路由返回已处理的内容）
+        var url = window.location.href.replace(/\/?$/, "/index.html");
+        return fetch(url)
             .then(function (r) { return r.text(); })
             .then(function (html) {
                 return captureSourcesFromHTML(html);
@@ -132,9 +123,7 @@
         renderIndex++;
     }
 
-    // 立即同步尝试捕获源码
-    // 如果 DOM 中仍有 pre.mermaid（bundle 尚未处理），同步捕获成功
-    // 否则 captureSources 返回 Promise，需要异步处理
+    // 立即捕获源码（从服务器异步获取）
     captureSources().then(function () {
         // 延迟渲染：等待 bundle 处理完毕后再渲染空的 div.mermaid
         if (document.readyState === "loading") {
