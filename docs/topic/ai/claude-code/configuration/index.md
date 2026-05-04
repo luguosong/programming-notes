@@ -56,6 +56,31 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 
 ⚠️ 注意：`.claude/settings.local.json` 和 `.gitignore` 默认会忽略本地配置文件，所以你的个人偏好不会意外提交到仓库。
 
+💡 在 `settings.json` 文件头部添加 `"$schema": "https://json.schemastore.org/claude-code-settings.json"` 可以在 VS Code、Cursor 等编辑器中获得**自动补全和内联验证**。
+
+!!! tip "自动备份"
+
+    Claude Code 会自动创建配置文件的时间戳备份，保留最近五个备份以防止数据丢失。如果你意外修改了配置文件，可以在同目录下找到 `.backup.*` 后缀的备份文件。
+
+### 全局配置（~/.claude.json）
+
+部分设置存储在 `~/.claude.json` 中（不是 `settings.json`），添加到 `settings.json` 会触发架构验证错误：
+
+| 配置项 | 说明 | 默认值 |
+|--------|------|--------|
+| `autoConnectIde` | 从外部终端启动时自动连接 IDE | `false` |
+| `autoInstallIdeExtension` | 从 VS Code 终端运行时自动安装 IDE 扩展 | `true` |
+| `externalEditorContext` | 用 `Ctrl+G` 打开外部编辑器时附带 Claude 上次响应 | `false` |
+
+### Worktree 设置
+
+通过 `worktree.*` 配置 `--worktree` 如何创建和管理 git worktree，适用于大型 monorepo：
+
+| 配置项 | 说明 | 示例 |
+|--------|------|------|
+| `worktree.symlinkDirectories` | 从主仓库符号链接到每个 worktree 的目录 | `["node_modules", ".cache"]` |
+| `worktree.sparsePaths` | 通过 sparse-checkout 只检出指定目录 | `["packages/my-app"]` |
+
 ### 冲突解决规则
 
 当多个层级对同一个配置项设置了不同的值时，**高优先级覆盖低优先级**。但有一个重要的例外：**权限规则（permissions）是追加的，不是覆盖的**。所有层级的 `allow` 规则会合并，而 `deny` 规则会从最严格的层级生效。v2.1.0 新增了通配符权限匹配（如 `Bash(npm *)`、`Bash(* install)`），让权限规则更灵活。
