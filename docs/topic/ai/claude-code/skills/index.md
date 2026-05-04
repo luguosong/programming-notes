@@ -472,7 +472,7 @@ Anthropic 随 Claude Code 附带了 5 个开箱即用的内置 Skill（无需安
 | `simplify` | 审查改动后的代码，消除重复、改进质量和效率 |
 | `batch` | 在多个文件或 Git Worktree 上批量并行执行操作 |
 | `debug` | 系统化调试失败的命令或代码 |
-| `loop` | 按设定间隔反复执行某个 prompt 或斜杠命令（最长 3 天） |
+| `loop` | 按设定间隔反复执行某个 prompt 或斜杠命令（重复任务 7 天后自动过期） |
 | `claude-api` | 使用 Claude API 或 Anthropic SDK 构建应用（检测到 `anthropic` 或 `@anthropic-ai/sdk` 导入时自动触发） |
 
 💡 社区和官方维护的可安装 Skill 集合见 [Skills Repository](https://github.com/anthropics/skills)。

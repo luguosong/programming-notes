@@ -351,7 +351,7 @@ claude -p "为这个 API 写单元测试" --output-file tests/api.test.ts
 
 === "Agent SDK"
 
-Agent SDK（`@anthropic-ai/claude-code`）让你用 **JavaScript/TypeScript 编程调用** Claude Code，适合复杂的多步自动化工作流：
+Agent SDK 提供 Python 和 TypeScript 两个 SDK 包，让你用编程语言直接调用 Claude Code，适合复杂的多步自动化工作流。下面的示例使用 TypeScript SDK（`@anthropic-ai/claude-code`）：
 
 ``` typescript title="automate.ts"
 import { Claude } from "@anthropic-ai/claude-code";
@@ -376,24 +376,124 @@ console.log(result);
 |------|------|------|
 | `-p` | 传入 prompt（管道模式） | `claude -p "审查代码"` |
 | `--output-format` | 输出格式：`text` / `json` / `stream-json` | `--output-format json` |
+| `--json-schema` | 指定 JSON Schema，获取结构化输出 | `--json-schema '{"type":"object",...}'` |
 | `--output-file` | 将结果写入文件 | `--output-file result.md` |
-| `--bare` | 精简输出，只返回文本内容，去除对话元数据 | `claude -p "..." --bare` |
+| `--bare` | 跳过 Hooks、Skills、MCP 等初始化，适合 CI | `claude --bare -p "查询"` |
 | `--max-turns` | 限制 Agentic Loop 最大轮次 | `--max-turns 10` |
-| `--allowedTools` | 限制可使用的工具 | `--allowedTools Read Write` |
-| `--system-prompt` | 自定义系统提示 | `--system-prompt "用中文回答"` |
+| `--allowedTools` | 指定免确认的工具（支持权限规则语法） | `--allowedTools "Read,Bash(git diff *)"` |
+| `--permission-mode` | 权限模式：`dontAsk` / `acceptEdits` | `--permission-mode acceptEdits` |
+| `--append-system-prompt` | 追加自定义系统提示（不替换默认提示） | `--append-system-prompt "审查安全性"` |
+| `--continue` | 继续最近一次对话 | `claude -p "..." --continue` |
+| `--resume` | 恢复指定会话 ID 的对话 | `--resume "$session_id"` |
 
 ### `--bare` 模式
 
-`--bare` 是无头模式中非常实用的选项。普通模式下 Claude Code 的输出包含工具调用、思考过程等元数据；加上 `--bare` 后，输出就只剩下**纯净的文本结果**，适合作为其他程序的输入：
+当你需要在 CI 或脚本中获得**一致、可复现**的结果时，`--bare` 是首选。它跳过 Hooks、Skills、Plugins、MCP 服务器、自动记忆和 `CLAUDE.md` 的自动发现——只有你显式传入的标志才会生效。队友的 `~/.claude` 中的 Hook 或项目的 `.mcp.json` 中的 MCP 服务器都不会运行。
+
+`--bare` 模式下，Claude 仍可访问 Bash、文件读取和文件编辑这三个基础工具。如果需要额外上下文，通过标志显式传入：
+
+| 需要加载的内容 | 使用的标志 |
+|------------|---------|
+| 系统提示补充 | `--append-system-prompt` / `--append-system-prompt-file` |
+| 设置 | `--settings <file-or-json>` |
+| MCP 服务器 | `--mcp-config <file-or-json>` |
+| 自定义 Agent | `--agents <json>` |
+| 插件目录 | `--plugin-dir <path>` |
 
 ``` bash
-# 普通模式输出：包含工具调用过程
-claude -p "这个函数的时间复杂度是多少"
-# 输出：[读取文件 src/sort.ts] ... [分析中] ... 这个函数的时间复杂度是 O(n²) ...
+# 裸模式下运行一次性任务，预批准 Read 工具避免权限弹窗
+claude --bare -p "Summarize this file" --allowedTools "Read"
+```
 
-# --bare 模式输出：只有最终结果
-claude -p "这个函数的时间复杂度是多少" --bare
-# 输出：O(n²)
+⚠️ `--bare` 跳过 OAuth 和钥匙链读取。认证必须来自 `ANTHROPIC_API_KEY` 环境变量或 `--settings` 传入的 JSON 中的 `apiKeyHelper`。Bedrock、Vertex 和 Foundry 使用各自常规的提供商凭证。
+
+!!! tip "未来默认值"
+
+    `--bare` 是脚本和 SDK 调用的推荐模式，将在未来版本中成为 `-p` 的默认值。
+
+### 结构化输出
+
+使用 `--output-format json` 配合 `--json-schema` 可以让 Claude Code 返回符合特定 Schema 的结构化数据，适合在脚本中进一步处理：
+
+``` bash
+# 提取 auth.py 中的函数名称，返回字符串数组
+claude -p "Extract the main function names from auth.py" \
+  --output-format json \
+  --json-schema '{"type":"object","properties":{"functions":{"type":"array","items":{"type":"string"}}},"required":["functions"]}'
+```
+
+响应中结构化数据在 `structured_output` 字段，会话元数据（会话 ID、用量统计等）也在 JSON 中。配合 [jq](https://jqlang.github.io/jq/) 提取特定字段：
+
+``` bash
+# 提取文本结果
+claude -p "Summarize this project" --output-format json | jq -r '.result'
+
+# 提取结构化输出
+claude -p "Extract function names from auth.py" \
+  --output-format json \
+  --json-schema '{"type":"object","properties":{"functions":{"type":"array","items":{"type":"string"}}},"required":["functions"]}' \
+  | jq '.structured_output'
+```
+
+### 流式响应
+
+使用 `--output-format stream-json` 配合 `--verbose` 和 `--include-partial-messages` 可以实时接收生成的 token。每行是一个 JSON 事件对象：
+
+``` bash
+claude -p "Explain recursion" --output-format stream-json --verbose --include-partial-messages
+```
+
+用 `jq` 过滤文本增量，只显示流式文本：
+
+``` bash
+claude -p "Write a poem" --output-format stream-json --verbose --include-partial-messages | \
+  jq -rj 'select(.type == "stream_event" and .event.delta.type? == "text_delta") | .event.delta.text'
+```
+
+流式响应中包含多种系统事件，用于监控会话状态：
+
+| 事件类型 | subtype 值 | 用途 |
+|---------|-----------|------|
+| `system/init` | — | 会话元数据（模型、工具、MCP 服务器、加载的插件） |
+| `system/plugin_install` | `started` / `installed` / `failed` / `completed` | 市场插件安装进度（需 `CLAUDE_CODE_SYNC_PLUGIN_INSTALL` 环境变量） |
+| `system/api_retry` | `api_retry` | API 请求重试（含重试次数、延迟、错误类别） |
+
+`system/init` 是流中的第一个事件，包含 `plugins`（成功加载的插件）和 `plugin_errors`（加载失败）。用 `plugin_errors` 在 CI 中检测插件是否正确加载，失败时中止构建。
+
+### 自定义系统提示
+
+使用 `--append-system-prompt` 在保持 Claude Code 默认行为的同时追加指令，适合定制化的自动化任务：
+
+``` bash
+# 将 PR diff 传给 Claude，以安全工程师角色审查漏洞
+gh pr diff "$1" | claude -p \
+  --append-system-prompt "You are a security engineer. Review for vulnerabilities." \
+  --output-format json
+```
+
+如果需要完全替换默认系统提示（而非追加），使用 `--system-prompt`。
+
+### 会话延续
+
+无头模式支持跨调用延续对话，实现多步骤自动化：
+
+``` bash
+# 第一次请求
+claude -p "Review this codebase for performance issues"
+
+# 继续最近一次对话
+claude -p "Now focus on the database queries" --continue
+claude -p "Generate a summary of all issues found" --continue
+```
+
+运行多个对话时，捕获会话 ID 以恢复特定会话：
+
+``` bash
+# 捕获会话 ID
+session_id=$(claude -p "Start a review" --output-format json | jq -r '.session_id')
+
+# 恢复指定会话
+claude -p "Continue that review" --resume "$session_id"
 ```
 
 ### 典型自动化场景
@@ -408,13 +508,35 @@ claude -p "这个函数的时间复杂度是多少" --bare
 
 ### 权限处理
 
-无头模式下 Claude Code 无法弹出交互式权限确认，需要预先配置：
+无头模式下 Claude Code 无法弹出交互式权限确认，需要预先配置权限策略。
 
-- `--allowedTools`：明确指定允许使用的工具
-- 在 `CLAUDE.md` 或 settings 中预配置权限规则
-- 使用 `Bypass` 权限模式（仅限可信环境）
+**指定允许的工具**：
 
-⚠️ **安全提示**：在生产 CI 环境中使用无头模式时，务必通过 `--allowedTools` 限制工具范围，避免 Claude Code 意外执行破坏性操作。
+``` bash
+# 允许 Claude 使用 Bash 和文件操作，无需确认
+claude -p "Run the test suite and fix any failures" \
+  --allowedTools "Bash,Read,Edit"
+
+# 使用权限规则语法精确控制命令范围
+claude -p "Create an appropriate commit" \
+  --allowedTools "Bash(git diff *),Bash(git log *),Bash(git status *),Bash(git commit *)"
+```
+
+💡 `Bash(git diff *)` 中的尾部 ` *` 启用前缀匹配——空格在 `*` 之前很重要。没有空格的 `Bash(git diff*)` 也会匹配 `git diff-index` 等命令。
+
+**设置权限模式**：
+
+| 模式 | 行为 | 适用场景 |
+|------|------|---------|
+| `dontAsk` | 拒绝未在 `permissions.allow` 或只读命令集中明确允许的操作 | 锁定的 CI 环境 |
+| `acceptEdits` | 允许文件写入和常见文件系统命令（mkdir、touch、mv、cp），其他 shell 命令仍需 `--allowedTools` | 需要文件修改的自动化 |
+
+``` bash
+# 使用 acceptEdits 模式让 Claude 直接写入文件
+claude -p "Apply the lint fixes" --permission-mode acceptEdits
+```
+
+⚠️ **安全提示**：在生产 CI 环境中，务必通过 `--allowedTools` 或 `--permission-mode dontAsk` 限制工具范围，避免 Claude Code 意外执行破坏性操作。
 
 ## 📝 平台选择指南
 
