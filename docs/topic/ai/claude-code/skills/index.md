@@ -114,7 +114,8 @@ shell: bash
 | `description` | **推荐** | 描述 Skill 的功能和适用场景。Claude 根据它判断是否自动加载。与 `when_to_use` 共享 1,536 字符预算（2.1.105 起） |
 | `when_to_use` | 否 | 补充说明"何时触发"——列举触发短语和示例请求。与 `description` 拼接后共享 1,536 字符预算 |
 | `argument-hint` | 否 | 自动补全时显示的参数提示，如 `[issue-number]` 或 `[filename] [format]` |
-| `disable-model-invocation` | 否 | 设为 `true` 禁止 Claude 自动触发，只能手动 `/命令` 调用 |
+| `arguments` | 否 | 命名参数列表，用于 `$name` 替换。接受空格分隔的字符串或 YAML 列表，名称按顺序映射到参数位置 |
+| `disable-model-invocation` | 否 | 设为 `true` 禁止 Claude 自动触发，只能手动 `/命令` 调用。同时阻止 Skill 被预加载到子代理中 |
 | `user-invocable` | 否 | 设为 `false` 将 Skill 从 `/` 菜单隐藏（仅 Claude 可自动调用） |
 | `allowed-tools` | 否 | Skill 激活时 Claude 可免确认使用的工具列表 |
 | `model` | 否 | 指定 Skill 使用的模型 |
@@ -218,11 +219,27 @@ disable-model-invocation: true
 | `$ARGUMENTS` | 所有参数（整体） | `/deploy staging` → `staging` |
 | `$ARGUMENTS[N]` | 第 N 个参数（从 0 开始） | `$ARGUMENTS[0]` |
 | `$N` | 上面语法简写 | `$0`、`$1` |
+| `$name` | 命名参数，在 `arguments` 中声明后使用 | `arguments: [issue, branch]` → `$issue`、`$branch` |
 
-此外还有两个有用的内置变量：
+命名参数通过 `arguments` 字段声明，名称按顺序映射到位置参数：
 
-- `${CLAUDE_SESSION_ID}` — 当前会话 ID
-- `${CLAUDE_SKILL_DIR}` — Skill 所在目录的绝对路径（v2.1.69 新增）
+```yaml
+---
+name: migrate-component
+description: 将组件从一个框架迁移到另一个
+arguments: [component, from, to]
+---
+
+将 $component 组件从 $from 迁移到 $to，保留所有现有行为和测试。
+```
+
+调用 `/migrate-component SearchBar React Vue`，`$component` → `SearchBar`，`$from` → `React`，`$to` → `Vue`。
+
+此外还有三个有用的内置变量：
+
+- `${CLAUDE_SESSION_ID}` — 当前会话 ID（适合日志记录和会话关联）
+- `${CLAUDE_SKILL_DIR}` — Skill 所在目录的绝对路径（v2.1.69 新增，用于引用捆绑脚本）
+- `${CLAUDE_EFFORT}` — 当前思考力度：`low` / `medium` / `high` / `xhigh` / `max`（v2.1.111 新增）
 
 ### 动态上下文注入
 
@@ -247,6 +264,21 @@ description: 总结 Pull Request 的变更
 
 运行时，Claude 看到的是命令的**输出结果**，而不是命令本身。
 
+对于多行命令，使用以 ` ```! ` 开头的围栏代码块：
+
+````
+## 环境信息
+```!
+node --version
+npm --version
+git status --short
+```
+````
+
+⚠️ 要禁用来自用户、项目、插件或 `--add-dir` 目录源的 Skill 中的 shell 命令执行，在[设置](/zh-CN/settings)中添加 `"disableSkillShellExecution": true`。启用后，每个命令被替换为 `[shell command execution disabled by policy]`，不再执行。**捆绑和托管 Skill 不受影响**——此设置在[托管设置](/zh-CN/permissions#managed-settings)中最有用。
+
+💡 要在 Skill 中启用[扩展思考](/zh-CN/common-workflows#use-extended-thinking-thinking-mode)，在 Skill 内容的任意位置包含单词 `ultrathink` 即可。
+
 ## 🔧 自定义命令（Commands）
 
 Claude Code 还有一个更早的机制叫 **Commands**，存放在 `.claude/commands/` 目录下。好消息是——**Commands 已经合并到 Skills 体系中**。
@@ -260,6 +292,42 @@ Claude Code 还有一个更早的机制叫 **Commands**，存放在 `.claude/com
 ✅ 如果你已经有 `.claude/commands/` 目录下的文件，它们**继续有效**，无需迁移。但新建 Skill 时推荐使用 `.claude/skills/` 目录，因为 Skills 支持更多功能（辅助文件、Front matter 配置等）。
 
 ⚠️ 如果同名 Skill 和 Command 都存在，**Skill 优先**。
+
+## ⏳ Skill 内容生命周期
+
+当你或 Claude 调用一个 Skill 时，`SKILL.md` 的内容作为单条消息进入对话，并在会话剩余部分一直存在。Claude Code **不会**在后续轮次重新读取 Skill 文件——因此，需要贯穿整个任务的指导应该写成**常设指令**，而不是一次性步骤。
+
+**自动压缩行为**：当对话被压缩以释放上下文时，Claude Code 会保留每个已调用 Skill 的前 5,000 个 token，从最近调用的 Skill 开始填充（总预算 25,000 token）。如果你在一个会话中调用了多个 Skill，较旧的 Skill 可能在压缩后完全丢失。
+
+💡 如果 Skill 似乎在第一个响应后就不再影响行为，内容通常还在，只是模型选择了其他方法。加强 Skill 的 `description` 和指令可以让模型持续偏好它。如果 Skill 很大或之后又调用了其他 Skill，在压缩后**重新调用**它以恢复完整内容。
+
+## 🔒 限制 Claude 的 Skill 访问
+
+默认情况下，Claude 可以调用任何没有设置 `disable-model-invocation: true` 的 Skill。有三种方式可以精确控制 Claude 的 Skill 访问：
+
+**通过 `/permissions` 拒绝 Skill 工具（禁用所有 Skill）**：
+
+```text
+# 添加到拒绝规则：
+Skill
+```
+
+**使用权限规则允许或拒绝特定 Skill**：
+
+```text
+# 只允许特定 Skill
+Skill(commit)
+Skill(review-pr *)
+
+# 拒绝特定 Skill
+Skill(deploy *)
+```
+
+权限语法：`Skill(name)` 精确匹配，`Skill(name *)` 前缀匹配（带任意参数）。
+
+**在 Front matter 中隐藏单个 Skill**：添加 `disable-model-invocation: true` 会从 Claude 的上下文中完全删除该 Skill。
+
+⚠️ `user-invocable` 字段仅控制菜单可见性，不控制 Skill 工具访问。要用编程方式阻止调用，请使用 `disable-model-invocation: true`。
 
 ## ✅ Skill 最佳实践
 
@@ -373,11 +441,21 @@ agent: Explore
 
 | 存放位置 | 路径 | 作用范围 |
 |---------|------|---------|
+| 企业 | 参见[托管设置](/zh-CN/settings#settings-files) | 组织内所有用户 |
 | 个人全局 | `~/.claude/skills/<name>/SKILL.md` | 你所有项目 |
 | 项目级 | `.claude/skills/<name>/SKILL.md` | 仅当前项目 |
+| 插件 | `<plugin>/skills/<name>/SKILL.md` | 启用插件的地方 |
 | 子目录级 | `packages/frontend/.claude/skills/<name>/SKILL.md` | 操作该子目录文件时自动发现（monorepo 场景） |
 
-优先级：企业级 > 个人全局 > 项目级 > 子目录级。
+优先级：企业级 > 个人全局 > 项目级。插件 Skill 使用 `plugin-name:skill-name` 命名空间，因此不会与其他级别冲突。
+
+💡 **实时变更检测**：Claude Code 监视 Skill 目录的文件变更。在 `~/.claude/skills/`、项目 `.claude/skills/` 或 `--add-dir` 目录内的 `.claude/skills/` 中添加、编辑或删除 Skill，会在当前会话中**立即生效**，无需重启。但创建在会话启动时不存在的顶级 Skills 目录需要重启 Claude Code。
+
+### 📂 来自其他目录的 Skills
+
+`--add-dir` 标志主要用于授予文件访问权限，但 Skills 是一个例外：添加目录中的 `.claude/skills/` 会自动加载。其他 `.claude/` 配置（如 subagents、命令和输出样式）**不会**从其他目录加载。
+
+⚠️ 来自 `--add-dir` 目录的 `CLAUDE.md` 文件默认不加载。要加载它们，设置 `CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1`。
 
 ### 🔑 减少权限提示：`/less-permission-prompts`
 
@@ -398,3 +476,33 @@ Anthropic 随 Claude Code 附带了 5 个开箱即用的内置 Skill（无需安
 | `claude-api` | 使用 Claude API 或 Anthropic SDK 构建应用（检测到 `anthropic` 或 `@anthropic-ai/sdk` 导入时自动触发） |
 
 💡 社区和官方维护的可安装 Skill 集合见 [Skills Repository](https://github.com/anthropics/skills)。
+
+## 🔍 故障排除
+
+### Skill 未触发
+
+如果 Claude 在预期时不使用你的 Skill：
+
+1. 检查 `description` 是否包含用户会自然说的关键字
+2. 验证 Skill 是否出现在 `What skills are available?` 回答中
+3. 尝试重新表述你的请求，使其更接近 `description`
+4. 如果 Skill 是用户可调用的，使用 `/skill-name` 直接调用
+
+### Skill 触发过于频繁
+
+如果 Claude 在你不想要时使用了 Skill：
+
+1. 使 `description` 更具体，缩小触发范围
+2. 如果你只想手动调用，添加 `disable-model-invocation: true`
+
+### Skill 描述被截断
+
+Skill 描述被加载到上下文中，让 Claude 知道什么可用。如果你有很多 Skill，描述会被缩短以适应字符预算，这可能删除 Claude 需要匹配的关键字。
+
+- 预算在上下文窗口的 1% 处动态扩展，回退为 8,000 个字符
+- 要提高限制，设置 `SLASH_COMMAND_TOOL_CHAR_BUDGET` 环境变量
+- 或在源处修剪 `description` 和 `when_to_use`——前置关键用例，因为组合文本被限制为 1,536 字符
+
+### 调试配置
+
+使用 `/debug-config` 命令（参见「调试你的配置」）诊断为什么 Skill 没有出现或触发。

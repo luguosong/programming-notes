@@ -242,6 +242,7 @@ nav = [
                     { "Sub-agents" = "topic/ai/claude-code/sub-agents/index.md" },
                     { "MCP" = "topic/ai/claude-code/mcp/index.md" },
                     { "插件" = "topic/ai/claude-code/plugins/index.md" },
+                    { "Channels" = "topic/ai/claude-code/channels/index.md" },
                 ] },
                 { "自动化" = "topic/ai/claude-code/automation/index.md" },
                 { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
