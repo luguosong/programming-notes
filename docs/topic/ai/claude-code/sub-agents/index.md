@@ -1,4 +1,4 @@
-﻿---
+---
 title: Sub-agents
 description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Agent Teams 协调多个独立会话
 ---
@@ -9,7 +9,9 @@ description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Age
 
 - 🎯 Sub-agent 是什么，为什么需要它（类比：「派出去调研的实习生，回来只汇报结论」）
 - 🧱 Sub-agent 的上下文隔离机制和配置方式
-- 🔧 如何创建自定义 Sub-agent（工具限制、模型选择、权限控制）
+- 🔧 如何创建自定义 Sub-agent（工具限制、模型选择、权限控制、MCP/Skills/记忆）
+- 🎮 运行管理：前台/后台运行、恢复已完成的 Sub-agent
+- 🔀 Fork 模式：继承主对话上下文的轻量子代理（实验性）
 - 🤝 Agent Teams 的协调机制，以及它与 Sub-agent 的本质区别
 - 📊 通过对比表格，快速判断哪种方案适合你的场景
 - 🚀 三个典型实践场景：并行研究、独立代码审查、多假设调试
@@ -44,20 +46,20 @@ description: 通过 Sub-agents 实现上下文隔离的并行任务，通过 Age
 
 Sub-agent 最核心的特性就是**上下文隔离**。每次调用 Sub-agent 时，Claude Code 会为它创建一个全新的上下文窗口，和主对话完全独立。
 
-``` mermaid
+```mermaid
 graph TB
-    subgraph 主对话上下文
+    subgraph "主对话上下文"
         A[用户提问] --> B[Claude 判断需要调研]
         B --> C["派发任务给 Sub-agent"]
         C --> D["收到结论摘要"]
         D --> E[继续对话]
     end
 
-    subgraph Sub-agent 上下文（独立）
+    subgraph "Sub-agent 上下文 - 独立"
         F[接收任务] --> G[读文件 A]
         G --> H[读文件 B]
         H --> I[分析整理]
-        I --> J["返回结论（仅摘要）"]
+        I --> J["返回结论 - 仅摘要"]
     end
 
     C -.->|任务| F
@@ -90,23 +92,47 @@ graph TB
 
 Claude Code 内置了几个 Sub-agent（`Explore`（v2.0.17 引入）、`Plan`、`general-purpose`），但你也可以创建自己的。自定义 Sub-agent 本质上是一个 **Markdown 文件 + YAML 前置配置**。
 
+#### 管理命令：/agents
+
+`/agents` 命令打开交互式管理界面，包含两个选项卡：
+
+- **Running**：查看正在运行的 Sub-agent，可打开或停止
+- **Library**：查看所有可用 Sub-agent（内置、用户、项目、插件），创建/编辑/删除自定义 Sub-agent
+
+命令行方式列出所有已配置的 Sub-agent：
+
+```bash
+rtk claude agents
+```
+
 #### 存放位置与优先级
 
 Sub-agent 定义文件按优先级从高到低排列：
 
 | 位置 | 作用范围 | 说明 |
 |------|---------|------|
-| 托管设置 | 组织全局 | 由管理员部署 |
-| `--agents` CLI 参数 | 当前会话 | 启动时传入 JSON（v2.0.0 新增） |
+| 托管设置 | 组织全局 | 由管理员部署，优先级最高 |
+| `--agents` CLI 参数 | 当前会话 | 启动时传入 JSON，仅存在于该会话 |
 | `.claude/agents/` | 当前项目 | 可提交到 Git，团队共享 |
 | `~/.claude/agents/` | 所有项目 | 个人全局 |
 | 插件的 `agents/` 目录 | 插件启用范围 | 随插件安装 |
 
-同名时，高优先级覆盖低优先级。
+同名时，高优先级覆盖低优先级。`--agents` 支持在一次调用中定义多个 Sub-agent：
+
+```bash
+rtk claude --agents '{
+  "code-reviewer": {
+    "description": "Expert code reviewer. Use proactively after code changes.",
+    "prompt": "You are a senior code reviewer. Focus on code quality, security, and best practices.",
+    "tools": ["Read", "Grep", "Glob", "Bash"],
+    "model": "sonnet"
+  }
+}'
+```
 
 #### 定义文件格式
 
-``` yaml title=".claude/agents/code-reviewer.md"
+```yaml title=".claude/agents/code-reviewer.md"
 ---
 name: code-reviewer
 description: 代码审查专家。编写或修改代码后自动触发。
@@ -142,21 +168,25 @@ model: sonnet
 | 字段 | 必填 | 说明 |
 |------|------|------|
 | `name` | ✅ | 唯一标识符，使用小写字母和连字符 |
-| `description` | ✅ | 描述何时该委派给这个 Sub-agent。写 `"PROACTIVELY"` 可让 Claude 主动触发 |
+| `description` | ✅ | 描述何时该委派给这个 Sub-agent。Claude 根据此描述决定何时委派 |
 | `tools` | ❌ | 允许使用的工具（白名单）。省略则继承全部。支持 `Agent(agent_type)` 语法限制可生成的子代理类型 |
 | `disallowedTools` | ❌ | 禁止使用的工具（黑名单） |
-| `model` | ❌ | 使用的模型：`sonnet`、`opus`、`haiku`、完整模型 ID（如 `claude-opus-4-6`），或 `inherit`（默认） |
+| `model` | ❌ | 使用的模型：`sonnet`、`opus`、`haiku`、完整模型 ID（如 `claude-opus-4-7`），或 `inherit`（默认） |
 | `permissionMode` | ❌ | 权限模式：`default`、`acceptEdits`、`auto`、`dontAsk`、`bypassPermissions`、`plan` |
 | `maxTurns` | ❌ | 最大对话轮数限制 |
-| `skills` | ❌ | 预加载的 Skills 列表（完整内容直接注入，不只是让 Claude 知道有这个 Skill） |
-| `mcpServers` | ❌ | 此子代理专用的 MCP 服务器列表（服务器名字符串或内联 `{name: config}` 对象） |
+| `skills` | ❌ | 预加载的 Skills 列表（完整内容直接注入上下文） |
+| `mcpServers` | ❌ | 此子代理专用的 MCP 服务器（服务器名字符串引用或内联定义） |
 | `memory` | ❌ | 持久记忆范围：`user`、`project`、`local` |
-| `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行（无变更时自动清理，v2.1.49 新增） |
-| `background` | ❌ | 设为 `true` 时始终后台运行（v2.1.49 新增） |
-| `effort` | ❌ | 覆盖此子代理的思考力度：`low`、`medium`、`high`、`max`（Opus 4.6 限定）。默认继承会话设置 |
-| `initialPrompt` | ❌ | 当 Agent 作为主会话 agent 运行（通过 `--agent` 或 `agent` 设置）时，自动提交为第一轮用户输入。支持命令和 Skills 处理（v2.1.83 新增） |
+| `isolation` | ❌ | 设为 `worktree` 时在独立 git worktree 中运行（无变更时自动清理） |
+| `background` | ❌ | 设为 `true` 时始终后台运行 |
+| `effort` | ❌ | 覆盖此子代理的思考力度：`low`、`medium`、`high`、`xhigh`、`max`；可用级别取决于模型。默认继承会话设置 |
+| `initialPrompt` | ❌ | 作为主会话 agent 运行时，自动提交为第一轮用户输入（v2.1.83 新增） |
 | `color` | ❌ | 在任务列表和 transcript 中显示的颜色：`red`、`blue`、`green`、`yellow`、`purple`、`orange`、`pink`、`cyan` |
 | `hooks` | ❌ | 生命周期钩子配置（`PreToolUse`、`PostToolUse`、`Stop` 最常用） |
+
+!!! warning "插件 Sub-agent 限制"
+
+    来自插件的 Sub-agent 不支持 `hooks`、`mcpServers` 和 `permissionMode` 字段——加载时这些字段会被忽略。如果需要这些功能，将 agent 文件复制到 `.claude/agents/` 或 `~/.claude/agents/`。
 
 #### 工具限制：白名单 vs 黑名单
 
@@ -184,11 +214,106 @@ disallowedTools: Write, Edit
 
 ⚠️ 如果同时设置了 `tools` 和 `disallowedTools`，先应用黑名单移除，再从剩余工具中取白名单交集。
 
+**限制可生成的子代理类型**：当 agent 作为主线程运行时（`claude --agent`），可以用 `Agent(agent_type)` 语法限制它能生成哪些子代理：
+
+```yaml
+---
+name: coordinator
+description: 协调多个专业 agent
+tools: Agent(worker, researcher), Read, Bash
+---
+```
+
+这是白名单——只有 `worker` 和 `researcher` 可以被生成。省略括号的 `Agent` 允许生成任何子代理。
+
+#### 模型选择策略
+
+Claude Code 按以下顺序解析 Sub-agent 的模型：
+
+1. `CLAUDE_CODE_SUBAGENT_MODEL` 环境变量（如果设置）
+2. 每次调用时传入的 `model` 参数
+3. Sub-agent 定义文件中的 `model` frontmatter
+4. 主对话的模型
+
+💡 实用技巧：简单任务（如文件搜索）用 `haiku` 省 token；复杂分析用 `sonnet` 平衡性能和成本；需要最强推理时用 `opus`。
+
+#### 权限模式
+
+`permissionMode` 控制 Sub-agent 如何处理权限提示：
+
+| 模式 | 行为 |
+|------|------|
+| `default` | 标准权限检查，带提示 |
+| `acceptEdits` | 自动接受文件编辑和常见文件系统命令 |
+| `auto` | 后台分类器审查命令和受保护目录的写入 |
+| `dontAsk` | 自动拒绝权限提示（显式允许的工具仍然工作） |
+| `bypassPermissions` | 跳过权限提示（慎用） |
+| `plan` | Plan mode，只读探索 |
+
+⚠️ 如果父级使用 `bypassPermissions` 或 `acceptEdits`，这优先级更高，子代理无法覆盖。父级使用 `auto` 时，子代理继承 auto mode，其 frontmatter 中的 `permissionMode` 被忽略。
+
+#### MCP 服务器限定
+
+`mcpServers` 字段让 Sub-agent 可以使用主对话中没有的 MCP 服务器。每个条目可以是**内联定义**（仅该 Sub-agent 可用）或**字符串引用**（复用已配置的服务器）：
+
+```yaml
+---
+name: browser-tester
+description: 在真实浏览器中测试功能
+mcpServers:
+  # 内联定义：仅此 Sub-agent 可用
+  - playwright:
+      type: stdio
+      command: npx
+      args: ["-y", "@playwright/mcp@latest"]
+  # 字符串引用：复用已配置的服务器
+  - github
+---
+```
+
+💡 把 MCP 服务器定义在 Sub-agent 里而不是 `.mcp.json` 中，可以让工具描述只消耗 Sub-agent 的上下文，不挤占主对话。
+
+#### Skills 预加载
+
+`skills` 字段在 Sub-agent 启动时将 Skill 完整内容注入其上下文，而不是只让 Claude 知道有这个 Skill。Sub-agent **不会继承**主对话的 Skills，必须显式列出：
+
+```yaml
+---
+name: api-developer
+description: 按团队规范实现 API 端点
+skills:
+  - api-conventions
+  - error-handling-patterns
+---
+```
+
+#### 持久记忆
+
+`memory` 字段为 Sub-agent 提供跨会话的持久目录，用于积累知识（如代码库模式、调试经验、架构决策）：
+
+```yaml
+---
+name: code-reviewer
+description: 代码审查专家
+memory: project
+---
+```
+
+| 范围 | 存储位置 | 适用场景 |
+|------|---------|---------|
+| `user` | `~/.claude/agent-memory/<name>/` | 跨项目共享的知识 |
+| `project` | `.claude/agent-memory/<name>/` | 项目专属，可提交 Git（推荐默认） |
+| `local` | `.claude/agent-memory-local/<name>/` | 项目专属，不提交 Git |
+
+启用记忆后，Sub-agent 的系统提示会包含记忆目录中 `MEMORY.md` 的前 200 行（或 25KB），以及策划 `MEMORY.md` 的说明。`Read`、`Write`、`Edit` 工具会自动启用，以便 Sub-agent 管理其记忆文件。
+
+💡 使用建议：让 Sub-agent 在完成任务后更新记忆——"Now that you're done, save what you learned to your memory." 随着时间积累，Sub-agent 会越来越有效。
+
 #### 用 Hooks 做精细控制
 
 当简单的工具黑名单不够用的时候（比如你想允许 `Bash` 但只允许执行 `SELECT` 查询），可以用 `PreToolUse` Hook 做运行时校验：
 
-``` yaml title=".claude/agents/db-reader.md"
+```yaml title=".claude/agents/db-reader.md"
 ---
 name: db-reader
 description: 执行只读数据库查询
@@ -204,7 +329,7 @@ hooks:
 
 校验脚本通过 `exit 2` 阻止写入操作，错误信息会反馈给 Claude：
 
-``` bash title="scripts/validate-readonly-query.sh"
+```bash title="scripts/validate-readonly-query.sh"
 #!/bin/bash
 INPUT=$(cat)
 COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
@@ -217,17 +342,146 @@ fi
 exit 0
 ```
 
-#### 触发 Sub-agent 的三种方式
+**项目级 Hooks**：在 `settings.json` 中配置，响应 Sub-agent 的生命周期事件：
+
+| 事件 | 匹配器输入 | 触发时机 |
+|------|-----------|---------|
+| `SubagentStart` | Agent 类型名称 | Sub-agent 开始执行时 |
+| `SubagentStop` | Agent 类型名称 | Sub-agent 完成时 |
+
+```json title=".claude/settings.json"
+{
+  "hooks": {
+    "SubagentStart": [
+      {
+        "matcher": "db-agent",
+        "hooks": [
+          { "type": "command", "command": "./scripts/setup-db-connection.sh" }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "./scripts/cleanup.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+#### 禁用特定 Sub-agent
+
+通过 `settings.json` 中的 `permissions.deny` 阻止 Claude 使用特定 Sub-agent：
+
+```json title=".claude/settings.json"
+{
+  "permissions": {
+    "deny": ["Agent(Explore)", "Agent(my-custom-agent)"]
+  }
+}
+```
+
+或使用 CLI 标志：`claude --disallowedTools "Agent(Explore)"`。这对内置和自定义 Sub-agent 都有效。
+
+#### 触发方式
 
 | 方式 | 语法 | 特点 |
 |------|------|------|
 | 自然语言 | `用 code-reviewer 审查一下` | Claude 自行判断是否委派 |
 | @-mention | `@"code-reviewer (agent)" 审查一下` | 保证使用指定 Sub-agent |
-| 会话级 | `claude --agent code-reviewer` | 整个会话都使用该 Sub-agent 的配置 |
+| 会话级 | `claude --agent code-reviewer` | 整个会话使用该 Sub-agent 的系统提示和工具限制 |
+
+**@-mention** 会出现在输入框的类型提示中，插件提供的 Sub-agent 显示为 `<plugin-name>:<agent-name>`。也可以手动输入 `@agent-<name>` 而不使用选择器。
+
+**会话级**可以通过 `settings.json` 设为项目默认：
+
+```json title=".claude/settings.json"
+{
+  "agent": "code-reviewer"
+}
+```
+
+## 🎮 运行管理
+
+### 前台与后台运行
+
+Sub-agent 有两种运行模式：
+
+- **前台**（默认）：阻塞主对话直到完成。权限提示和澄清问题会传递给你
+- **后台**：并发运行，你可以继续工作。启动前 Claude Code 会预提示所需的工具权限，运行中自动拒绝未预先批准的操作。后台 Sub-agent 如果需要提问，该工具调用会失败但 Sub-agent 会继续
+
+你可以主动要求 Claude "run this in the background"，或按 **Ctrl+B** 将运行中的任务放到后台。
+
+⚠️ 后台 Sub-agent 因权限不足而失败时，可以启动一个前台 Sub-agent 执行相同任务，用交互式提示重试。
+
+设置 `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` 环境变量可以禁用所有后台任务功能。
+
+### 恢复 Sub-agent
+
+每个 Sub-agent 调用都创建一个全新实例。要继续已有 Sub-agent 的工作，可以要求 Claude 恢复它——恢复的 Sub-agent 保留完整的对话历史（工具调用、结果、推理），从上次停止的地方继续。
+
+```text
+让 code-reviewer 审查认证模块
+[Sub-agent 完成]
+
+继续那个审查，现在分析授权逻辑
+[Claude 恢复同一个 Sub-agent，带着之前的完整上下文]
+```
+
+Sub-agent 的转录独立于主对话持久化——即使主对话被压缩，Sub-agent 的转录不受影响。你可以通过恢复会话在重启 Claude Code 后继续之前的 Sub-agent。
+
+## 🔀 Fork 模式（实验性）
+
+Fork 是一种特殊的 Sub-agent，它**继承当前完整的对话历史**，而不是从头开始。这意味着 Fork 看到和你一样的上下文，你可以直接交给它一个辅助任务而不需要重新解释背景。
+
+Fork 模式需要 Claude Code v2.1.117+，通过环境变量启用：
+
+```json title="settings.json"
+{
+  "env": {
+    "CLAUDE_CODE_FORK_SUBAGENT": "1"
+  }
+}
+```
+
+启用后的三个关键变化：
+
+- Claude 在会使用 `general-purpose` Sub-agent 时改为生成 Fork
+- 所有 Sub-agent 生成（包括命名 Sub-agent）都在后台运行
+- `/fork` 命令生成 Fork 而不是 `branch` 的别名
+
+```text
+/fork draft unit tests for the parser changes so far
+```
+
+### Fork vs 命名 Sub-agent
+
+| 维度 | Fork | 命名 Sub-agent |
+|------|------|---------------|
+| **上下文** | 完整的对话历史 | 全新上下文，只有你传递的提示 |
+| **系统提示和工具** | 与主会话相同 | 来自定义文件 |
+| **模型** | 与主会话相同 | 来自 `model` 字段 |
+| **权限** | 提示在终端中出现 | 启动前预批准 |
+| **Prompt cache** | 与主会话共享（更省钱） | 独立缓存 |
+
+因为 Fork 的系统提示和工具与父级相同，它的第一个请求可以重用父级的 prompt cache，这比为相同上下文生成新 Sub-agent 更便宜。
+
+### 观察与引导
+
+运行中的 Fork 出现在输入框下方的面板中。使用以下快捷键管理：
+
+| 按键 | 操作 |
+|------|------|
+| `↑` / `↓` | 在行之间移动 |
+| `Enter` | 打开选中 Fork 的转录，发送后续消息 |
+| `x` | 关闭已完成的 Fork 或停止运行中的 Fork |
+| `Esc` | 返回输入框 |
+
+Fork 无法生成进一步的 Fork。设置 `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS=1` 可以保持生成同步。
 
 ## 🤝 Agent Teams
-
-### 与 Sub-agent 的区别
 
 如果说 Sub-agent 是「派出去调研的实习生」，那 Agent Team 就更像是「组建一个项目组」。
 
@@ -276,17 +530,13 @@ Agent Teams 最适合以下场景：
 - 🧪 **多假设调试**：Teammate 们同时测试不同的理论，更快收敛到答案
 - 🔗 **跨层协调**：前端、后端、测试分别由不同 Teammate 负责
 
-!!! warning "注意开销"
+Agent Teams 增加了协调开销，Token 用量随 Teammate 数量线性增长。当 Teammate 可以独立运作时效果最好；对于顺序任务、同文件编辑或强依赖任务，单会话或 Sub-agent 更有效。
 
-    Agent Teams 的 Token 消耗远高于单会话。每个 Teammate 都有独立的上下文窗口，Token 用量随 Teammate 数量线性增长。对于顺序任务、同文件编辑或强依赖任务，单会话或 Sub-agent 更合适。
-
-### Team 的协调机制
-
-#### 启用 Agent Teams
+### 启用 Agent Teams
 
 Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启用：
 
-``` json title="settings.json"
+```json title="settings.json"
 {
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
@@ -294,7 +544,9 @@ Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启
 }
 ```
 
-#### 核心架构
+启用后，你可以请求 Claude 创建团队，或者 Claude 在判断任务适合并行时主动提议。
+
+### 核心架构
 
 一个 Agent Team 由以下组件构成：
 
@@ -305,7 +557,37 @@ Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启
 | **Task List** | 共享任务列表，Teammate 认领和完成任务 |
 | **Mailbox** | Agent 之间的消息系统 |
 
-#### 共享任务列表
+团队和任务存储在本地：
+
+- **团队配置**：`~/.claude/teams/{team-name}/config.json`
+- **任务列表**：`~/.claude/tasks/{team-name}/`
+
+### 为队友使用 Sub-agent 定义
+
+生成 Teammate 时，可以引用任何 [Sub-agent 定义](#自定义-sub-agent)（项目、用户、插件或 CLI 定义）。这让你定义一个角色一次（如安全审查员），同时作为 Sub-agent 和 Teammate 复用：
+
+```
+使用 security-reviewer agent 类型生成一个 Teammate 来审计认证模块。
+```
+
+Teammate 遵守定义的 `tools` 和 `model`，定义的主体作为额外指示附加到 Teammate 的系统提示中。团队协调工具（`SendMessage`、任务管理）始终可用，不受 `tools` 限制。
+
+⚠️ Sub-agent 定义中的 `skills` 和 `mcpServers` 在作为 Teammate 运行时不被应用。Teammate 从项目和用户设置加载 Skills 和 MCP 服务器，与常规会话相同。
+
+### 上下文与通信
+
+每个 Teammate 有自己的上下文窗口。生成时加载与常规会话相同的项目上下文（`CLAUDE.md`、MCP 服务器、Skills），但**不继承 Lead 的对话历史**。
+
+**信息共享机制**：
+
+- 📨 **自动消息传递**：Teammate 发送的消息自动送达收件人，Lead 不需要轮询
+- 🔔 **空闲通知**：Teammate 完成并停止时自动通知 Lead
+- 📋 **共享任务列表**：所有 Agent 都可以看到任务状态并认领可用工作
+- 💬 **点对点消息**：按名称向特定 Teammate 发消息
+
+💡 给 Teammate 足够的上下文——在生成提示中包含具体的任务细节（文件路径、技术栈、关注点），不要假设它知道 Lead 之前讨论过什么。
+
+### 共享任务列表
 
 任务列表是 Team 协调的核心机制。每个任务有三种状态：
 
@@ -318,16 +600,26 @@ Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启
 - **Lead 指派**：你告诉 Lead 把哪个任务分给哪个 Teammate
 - **自主认领**：Teammate 完成当前任务后，自动认领下一个未分配、未阻塞的任务（通过文件锁防止竞争）
 
-#### 显示模式
+### 显示模式
 
 | 模式 | 说明 | 要求 |
 |------|------|------|
 | `in-process` | 所有 Teammate 在同一终端，用 `Shift+Down` 切换 | 任何终端 |
 | `split panes` | 每个 Teammate 独占一个面板，可同时查看所有输出 | tmux 或 iTerm2 |
 
-默认 `auto`：如果在 tmux 中则用分屏，否则用 in-process。
+默认 `auto`：如果在 tmux 中则用分屏，否则用 in-process。可以通过配置覆盖：
 
-#### 计划审批机制
+```json title="~/.claude/settings.json"
+{
+  "teammateMode": "in-process"
+}
+```
+
+或单次会话指定：`claude --teammate-mode in-process`
+
+分割窗格模式需要 [tmux](https://github.com/tmux/tmux/wiki) 或 iTerm2（需安装 [`it2` CLI](https://github.com/mkusaka/it2) 并启用 Python API）。VS Code 集成终端、Windows Terminal 不支持分割窗格。
+
+### 计划审批机制
 
 对于复杂或高风险任务，可以让 Teammate 先出方案，审批后再动手：
 
@@ -337,7 +629,25 @@ Agent Teams 默认关闭（v2.1.32 作为研究预览引入），需要手动启
 
 Teammate 在只读的 plan mode 下工作，方案完成后提交给 Lead 审批。Lead 批准后，Teammate 退出 plan mode 开始实施。如果被拒绝，Teammate 根据反馈修改方案后重新提交。
 
-#### 质量门控
+### 关闭与清理
+
+**关闭 Teammate**：
+
+```
+让 researcher Teammate 关闭
+```
+
+Lead 发送关闭请求，Teammate 可以批准并优雅退出，或拒绝并给出解释。
+
+**清理团队**：
+
+```
+清理团队
+```
+
+⚠️ 始终通过 Lead 清理。Teammate 不应该运行清理操作。清理前需先关闭所有活跃的 Teammate——如果有仍在运行的 Teammate，清理会失败。
+
+### 质量门控
 
 通过 Hooks 在关键节点强制质量检查：
 
@@ -346,6 +656,34 @@ Teammate 在只读的 plan mode 下工作，方案完成后提交给 Lead 审批
 | `TeammateIdle` | Teammate 即将空闲 | `exit 2` 发送反馈让它继续工作 |
 | `TaskCreated` | 任务被创建 | `exit 2` 阻止创建并发送反馈 |
 | `TaskCompleted` | 任务被标记完成 | `exit 2` 阻止完成并发送反馈 |
+
+### 最佳实践
+
+**团队规模**：从 3-5 个 Teammate 开始。每个 Teammate 分配 5-6 个任务能让所有人保持生产力而不过度上下文切换。3 个专注的 Teammate 通常胜过 5 个分散的。
+
+**任务大小**：
+
+- 太小：协调开销超过收益
+- 太大：Teammate 长时间工作不检查，增加浪费风险
+- 恰好：自包含的单位，产出清晰的交付物（一个函数、一个测试文件、一份审查）
+
+**避免文件冲突**：两个 Teammate 编辑同一文件会导致覆盖。拆分工作让每个 Teammate 拥有不同的文件集。
+
+**监控与引导**：定期检查 Teammate 进度，重定向无效方法。无人值守运行太久会增加浪费风险。
+
+**从研究开始**：如果你是 Agent Teams 新手，先从不需要写代码的任务开始（审查 PR、调研库、调查 Bug），再尝试并行实施。
+
+### 已知限制
+
+Agent Teams 是实验性功能，当前有以下限制：
+
+- ❌ **In-process Teammate 无会话恢复**：`/resume` 和 `/rewind` 不会恢复 in-process Teammate。恢复会话后 Lead 可能向不存在的 Teammate 发消息——需重新生成
+- ❌ **任务状态可能滞后**：Teammate 有时未能标记任务为已完成，阻塞依赖任务。需手动检查并更新
+- ❌ **关闭可能较慢**：Teammate 关闭前会完成当前请求或工具调用
+- ❌ **每个会话一个团队**：Lead 同时只能管理一个团队
+- ❌ **无嵌套团队**：Teammate 无法生成自己的团队
+- ❌ **Lead 固定**：创建团队的会话是 Lead，无法转移领导权
+- ❌ **权限在生成时设置**：所有 Teammate 从 Lead 的权限模式开始，可以在生成后单独更改
 
 ## 📦 官方内置 Agent
 
@@ -392,7 +730,7 @@ Claude Code 随附了 5 个官方内置 Agent，可直接通过 `@"agent-name (a
 
 如果不需要 Teammate 之间的协作，用 Sub-agent 也能做代码审查，而且 Token 成本更低：
 
-``` yaml title=".claude/agents/code-reviewer.md"
+```yaml title=".claude/agents/code-reviewer.md"
 ---
 name: code-reviewer
 description: 代码审查专家，代码变更后主动触发
@@ -431,14 +769,8 @@ model: inherit
 | 子代理输出格式不固定 | 在定义文件中明确输出格式要求 | 主线程拿到没法用的结果等于白跑 |
 | 用 Subagent 做只需要简单搜索的事 | 用 Glob/Grep 直接搜索 | 派子代理有启动开销，简单搜索不值得 |
 
-v2.0.60 新增 Background Agents，支持后台运行并发送消息唤醒主 Agent。v2.1.0 进一步新增了 `Task(AgentName)` 语法用于禁用特定 Agent，以及 Ctrl+B 统一后台化操作。v2.1.83 为 Agent 定义新增了 `initialPrompt` 字段，支持自动提交首轮对话。
+!!! warning "卡死的 Sub-agent 会自动失败"
 
-### SDK 中的 Forked Subagent
+    从 v2.1.113 起，Sub-agent 在 mid-stream 卡死超过 10 分钟后会**明确报错**而非静默挂起，避免你长时间等待一个永远不会回来的子任务。如果你查看一个正在运行的 subagent 时输入消息，消息现在会正确归属于这个 subagent，不会被误送给父 AI（v2.1.113 修复）。Agent Teams 队友请求工具权限时不再触发权限对话框崩溃（v2.1.114 修复）。
 
-在非交互式会话（SDK、headless）中，子代理默认以独立进程方式运行。v2.1.121 新增 `CLAUDE_CODE_FORK_SUBAGENT=1` 环境变量，让 SDK 模式下也可以使用 forked subagent（共享进程的轻量子代理），减少进程创建开销。这与 v2.1.117 为外部构建提供的 forked subagent 支持一脉相承。
-
-!!! warning "卡死的 Subagent 会自动失败"
-
-    从 v2.1.113 起，Subagent 在 mid-stream 卡死超过 10 分钟后会**明确报错**而非静默挂起，避免你长时间等待一个永远不会回来的子任务。如果你查看一个正在运行的 subagent 时输入消息，消息现在会正确归属于这个 subagent，不会被误送给父 AI（v2.1.113 修复）。Agent Teams 队友请求工具权限时不再触发权限对话框崩溃（v2.1.114 修复）。
-
-📝 **小结**：本节学习了三个典型的并行工作场景。核心思路是：**Sub-agent 适合「给我结果就行」的任务，Agent Team 适合「你们讨论一下再给我结论」的任务。** 选择哪种方式，取决于你的 Teammate 之间是否需要互相通信。
+📝 **小结**：Sub-agent 的核心价值是**上下文隔离**——把大量中间输出挡在主对话之外，只拿回精炼的结论。需要协作就用 Agent Team，只需要结果就用 Sub-agent，需要主对话上下文就用 Fork。
