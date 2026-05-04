@@ -338,9 +338,14 @@ description: 向用户打招呼，接受一个名字参数
 # 使用 --plugin-dir 加载本地插件进行测试
 claude --plugin-dir ./my-plugin
 
+# 一次加载多个插件
+claude --plugin-dir ./plugin-one --plugin-dir ./plugin-two
+
 # 测试技能
 /my-plugin:hello Claude
 ```
+
+💡 `--plugin-dir` 加载的本地插件与已安装的市场插件同名时，本地副本在该会话中优先（托管设置强制启用的市场插件除外）。修改插件后运行 `/reload-plugins` 即可热重载。
 
 ### 完整的插件目录结构
 
@@ -467,6 +472,52 @@ Claude Code 为插件提供了两个特殊的环境变量，在 Hook 命令、MC
   }
 }
 ```
+
+### 给插件添加 LSP 服务器
+
+对于官方市场没有覆盖的语言，可以通过 `.lsp.json` 添加自定义语言服务器配置：
+
+``` json title=".lsp.json"
+{
+  "go": {
+    "command": "gopls",
+    "args": ["serve"],
+    "extensionToLanguage": {
+      ".go": "go"
+    }
+  }
+}
+```
+
+⚠️ 安装插件的用户需要在其机器上安装对应的语言服务器二进制文件。
+
+### 给插件添加后台监视器
+
+后台监视器让插件在后台持续监控日志、文件或外部状态，当事件到达时通知 Claude。Claude Code 在插件激活时自动启动每个监视器。
+
+``` json title="monitors/monitors.json"
+[
+  {
+    "name": "error-log",
+    "command": "tail -F ./logs/error.log",
+    "description": "Application error log"
+  }
+]
+```
+
+`command` 的每行 stdout 输出在会话期间作为通知传递给 Claude。
+
+### 插件默认设置
+
+在插件根目录放置 `settings.json` 可以在插件启用时应用默认配置。目前支持 `agent` 和 `subagentStatusLine` 键：
+
+``` json title="settings.json"
+{
+  "agent": "security-reviewer"
+}
+```
+
+这会激活插件 `agents/` 目录中定义的 `security-reviewer` agent 作为主线程，应用其系统提示、工具限制和模型。`settings.json` 中的设置优先于 `plugin.json` 中声明的 `settings`。
 
 ### 发布到官方市场
 
