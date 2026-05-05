@@ -1,8 +1,8 @@
 ---
-title: Servlet/Tomcat 中的设计模式
+title: Servlet/Tomcat
 ---
 
-# Servlet/Tomcat 中的设计模式
+# Servlet/Tomcat
 
 Tomcat 是 Java Web 应用最主流的 Servlet 容器，负责从接收 TCP 连接到最终调用你写的 `doGet()` 方法之间的一切工作。这个复杂的运行时被设计得高度可扩展：可以在不修改容器代码的前提下部署任意 Servlet、定制拦截逻辑、托管多个独立应用——这些能力全部由设计模式支撑。
 

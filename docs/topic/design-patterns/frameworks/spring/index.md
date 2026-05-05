@@ -1,8 +1,8 @@
 ---
-title: Spring 框架中的设计模式
+title: Spring 框架
 ---
 
-# Spring 框架中的设计模式
+# Spring 框架
 
 Spring 是 Java 生态中设计模式应用密度最高的框架之一。它的核心模块——IoC 容器、AOP、Spring MVC、Spring Cache——几乎每个都能找到多种经典模式的影子。这些模式不是刻意堆砌，而是在解决「多实现统一接口」「扩展点设计」「功能增强」等具体工程问题时自然涌现的。
 

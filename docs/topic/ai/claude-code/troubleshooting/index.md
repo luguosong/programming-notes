@@ -1,7 +1,6 @@
 ---
 title: 故障排除
 description: Claude Code 常见问题诊断与解决指南
-icon: lucide/search
 ---
 
 当你使用 Claude Code 遇到问题时，快速定位根因比盲目尝试修复更高效。本页提供一套通用的诊断方法论，并按**症状分类**引导你找到对应的解决方案。

@@ -1,8 +1,8 @@
 ---
-title: JDK 源码中的设计模式
+title: JDK 源码
 ---
 
-# JDK 源码中的设计模式
+# JDK 源码
 
 JDK 是 Java 生态中设计模式应用密度最高的代码库，但它与框架源码有一个本质区别：JDK 里的模式经过数十年演化，许多已经**内化为语言惯用法**——你每天写的 `list.sort(Comparator.comparing(User::getAge))` 就是策略模式，只是不需要显式地声明策略接口和实现类。
 

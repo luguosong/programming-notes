@@ -1,8 +1,8 @@
 ---
-title: 文件共享：NFS 与 Samba
+title: NFS 与 Samba
 ---
 
-# 文件共享：NFS 与 Samba
+# NFS 与 Samba
 
 **本文你会学到**：
 

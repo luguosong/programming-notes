@@ -1,8 +1,8 @@
 ---
-title: MyBatis 框架中的设计模式
+title: MyBatis 框架
 ---
 
-# MyBatis 框架中的设计模式
+# MyBatis 框架
 
 MyBatis 是一个"半自动" ORM 框架，它让 SQL 与 Java 代码保持适度距离——开发者写 SQL，MyBatis 负责参数映射、结果集转换、Session 管理、缓存等基础设施。这些基础设施的实现代码里密集地应用了设计模式，而且有不少是「非教科书式」的灵活应用，更值得深入分析。
 

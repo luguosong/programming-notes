@@ -1,7 +1,6 @@
 ---
 title: Agent SDK
 description: 使用 Anthropic Agent SDK 构建自定义 AI Agent 应用
-icon: lucide/bot
 ---
 
 # Agent SDK
