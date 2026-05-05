@@ -114,7 +114,7 @@ programming-notes/
 ├── docs/                    # 文档内容（Markdown），站点导航由 zensical.toml 的 nav 配置控制
 │   ├── custom/              # 自定义资源（不参与 nav 路由）
 │   │   ├── css/             # 自定义样式（custom.css、font.css、sidebar-width.css 等）
-│   │   └── js/              # 自定义脚本（mathjax.js、viewer-js-init.js 等）
+│   │   └── js/              # 自定义脚本（mathjax.js、mermaid.js 等）
 │   ├── assert/              # 静态资源（logo、favicon 等）
 │   ├── frontend/            # 前端相关笔记（HTML、CSS、React）
 │   ├── java/                # Java 笔记
