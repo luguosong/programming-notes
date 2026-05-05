@@ -234,6 +234,7 @@ nav = [
                     { "Settings 与权限" = "topic/ai/claude-code/configuration/settings-permissions/index.md" },
                     { "模型与输出风格" = "topic/ai/claude-code/configuration/model-output/index.md" },
                     { "高级配置" = "topic/ai/claude-code/configuration/advanced/index.md" },
+                    { "环境变量参考" = "topic/ai/claude-code/configuration/environment-variables/index.md" },
                 ] },
                 { "扩展体系" = [
                     "topic/ai/claude-code/extensions/index.md",
