@@ -248,6 +248,12 @@ nav = [
                 { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
                 { "企业管理" = "topic/ai/claude-code/enterprise/index.md" },
                 { "最佳实践" = "topic/ai/claude-code/best-practices/index.md" },
+                { "故障排除" = [
+                    "topic/ai/claude-code/troubleshooting/index.md",
+                    { "安装问题" = "topic/ai/claude-code/troubleshooting/installation/index.md" },
+                    { "配置调试" = "topic/ai/claude-code/troubleshooting/configuration/index.md" },
+                    { "常见错误" = "topic/ai/claude-code/troubleshooting/errors/index.md" }
+                ] },
                 { "相关资源" = [
                     "topic/ai/claude-code/resources/index.md",
                     { "官方插件目录" = "topic/ai/claude-code/resources/claude-plugins-official/index.md" }
