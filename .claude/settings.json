@@ -1,15 +1,27 @@
 {
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node -e \"const p = process.env.CLAUDE_FILE_PATHS || ''; if (p.includes('changelog/index.md')) { console.log('💡 检测到 changelog 文件更新。建议使用 sync-changelog Skill 将变更同步到对应主题笔记页面。'); }\""
-          }
-        ]
-      }
+  "permissions": {
+    "allow": [
+      "Bash(rtk *)",
+      "Bash(git push *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(node *)",
+      "Bash(docker compose *)",
+      "Bash(mvn *)",
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(start *)",
+      "Bash(zensical *)",
+      "Bash(powershell *)",
+      "Bash(ls *)",
+      "Bash(which *)",
+      "Bash(rtk curl:*)",
+      "Bash(rtk git *)",
+      "Bash(rtk zensical *)",
+      "mcp__plugin_context7_context7__*",
+      "mcp__web_reader__*",
+      "mcp__web-search-prime__*",
+      "mcp__zread__*"
     ]
   }
 }
