@@ -7,10 +7,11 @@ description: 企业和组织管理员如何管控 Copilot CLI 的使用
 
 > 如果把 GitHub Copilot 想象成公司统一采购的办公软件套件，那么企业版管理就是 IT 部门负责的**软件分发与权限管控**——决定谁可以用、能用哪些功能、在哪些部门开放。Copilot CLI 作为套件中的一个"客户端"，同样服从这套管控体系。本文面向企业所有者（Enterprise Owner）和组织管理员，讲解如何对 Copilot CLI 进行集中管控。
 
-**学习目标：**
+**本文你会学到**：
 
 - 掌握在企业或组织级别启用/禁用 Copilot CLI 的方法
 - 了解哪些 AI 控制策略对 CLI 生效、哪些不生效
+- 了解组织级自定义 Agent 的管理方式
 - 能够排查开发者无法访问 Copilot CLI 的常见原因
 
 ## 启用或禁用 Copilot CLI
@@ -72,13 +73,14 @@ graph TD
 
 ```bash
 # 用户在本地 shell 配置文件（如 .bashrc / .zshrc）中设置自有模型提供商
-export COPILOT_MODEL_PROVIDER=anthropic
-export ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxx
+export COPILOT_PROVIDER_TYPE=anthropic
+export COPILOT_PROVIDER_API_KEY=sk-ant-xxxxxxxxxxxx
+export COPILOT_PROVIDER_BASE_URL=https://api.anthropic.com
 
 # 或使用 OpenAI 兼容的提供商
-export COPILOT_MODEL_PROVIDER=openai-compatible
-export OPENAI_API_KEY=sk-xxxxxxxxxxxx
-export OPENAI_BASE_URL=https://your-custom-endpoint.com/v1
+export COPILOT_PROVIDER_TYPE=openai
+export COPILOT_PROVIDER_API_KEY=sk-xxxxxxxxxxxx
+export COPILOT_PROVIDER_BASE_URL=https://your-custom-endpoint.com/v1
 ```
 
 上述配置完全在用户本地完成，企业策略无法感知或阻止。

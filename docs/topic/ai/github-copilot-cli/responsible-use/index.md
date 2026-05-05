@@ -7,6 +7,13 @@ description: 了解 Copilot CLI 的安全考量、数据处理和局限性
 
 GitHub Copilot CLI 是一个强大的终端 AI 助手，能够自主创建和修改文件、执行命令。理解它的工作原理、能力边界和安全考量，是高效、安全使用它的前提。本文将帮助你充分了解 Copilot CLI 的运行机制、最佳实践以及需要注意的局限性。
 
+**本文你会学到**：
+
+- 理解 Copilot CLI 的工作原理和能力边界
+- 掌握安全使用 Copilot CLI 的最佳实践
+- 了解 BYOK 模式下的数据流向和处理方式
+- 识别 Copilot CLI 的关键局限性及应对策略
+
 ## 工作原理
 
 Copilot CLI 的核心流程可以拆解为四个阶段：

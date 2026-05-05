@@ -3,6 +3,8 @@ title: 自带模型（BYOK）
 description: 配置 Copilot CLI 使用自有 LLM 提供商的模型
 ---
 
+# 自带模型（BYOK）
+
 **本文你会学到**：
 
 - 🔑 BYOK 模式的概念与适用场景
@@ -112,10 +114,10 @@ export COPILOT_MODEL=YOUR-DEPLOYMENT-NAME
 export COPILOT_PROVIDER_TYPE=anthropic
 export COPILOT_PROVIDER_BASE_URL=https://api.anthropic.com
 export COPILOT_PROVIDER_API_KEY=YOUR-ANTHROPIC-API-KEY
-export COPILOT_MODEL=claude-opus-4-5
+export COPILOT_MODEL=claude-opus-4-7
 ```
 
-将 `YOUR-ANTHROPIC-API-KEY` 替换为你的 Anthropic API Key，`claude-opus-4-5` 替换为你要使用的 Claude 模型。
+将 `YOUR-ANTHROPIC-API-KEY` 替换为你的 Anthropic API Key，`claude-opus-4-7` 替换为你要使用的 Claude 模型。
 
 ## 离线模式
 
