@@ -270,6 +270,20 @@ nav = [
                 { "更新日志" = "topic/ai/claude-code/changelog/index.md" },
                 { "更新日志（≤2.1.98）" = "topic/ai/claude-code/changelog-archive/index.md" },
                 { "更新日志（1.x 及更早）" = "topic/ai/claude-code/changelog-v1/index.md" }
+            ] },
+            { "Agent SDK" = [
+                "topic/ai/agent-sdk/index.md",
+                { "快速开始" = "topic/ai/agent-sdk/quickstart/index.md" },
+                { "Agent 循环" = "topic/ai/agent-sdk/agent-loop/index.md" },
+                { "工具与 MCP" = "topic/ai/agent-sdk/tools/index.md" },
+                { "配置与权限" = "topic/ai/agent-sdk/configuration/index.md" },
+                { "会话管理" = "topic/ai/agent-sdk/sessions/index.md" },
+                { "流式与结构化输出" = "topic/ai/agent-sdk/streaming/index.md" },
+                { "扩展机制" = "topic/ai/agent-sdk/extensions/index.md" },
+                { "监控与成本" = "topic/ai/agent-sdk/observability/index.md" },
+                { "部署与安全" = "topic/ai/agent-sdk/deployment/index.md" },
+                { "API 参考" = "topic/ai/agent-sdk/api-reference/index.md" },
+                { "迁移指南" = "topic/ai/agent-sdk/migration/index.md" }
             ] }
         ] },
         { "Linux" = [
