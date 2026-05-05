@@ -50,6 +50,41 @@ description: 从安装认证到快捷键命令，快速上手 GitHub Copilot CLI
     irm https://cli.github.com/copilot/install.ps1 | iex
     ```
 
+### 安装补充
+
+除了上述包管理器，Copilot CLI 还提供以下安装方式：
+
+=== "GitHub Releases 下载"
+
+    直接从 [copilot-cli Releases](https://github.com/github/copilot-cli/releases/) 下载对应平台的可执行文件，解压后即可运行，无需安装 Node.js 或其他依赖。
+
+=== "安装脚本进阶用法"
+
+    一键安装脚本支持通过环境变量自定义行为：
+
+    ``` bash
+    # VERSION 指定安装版本，PREFIX 自定义安装目录
+    curl -fsSL https://gh.io/copilot-install | VERSION="v0.0.369" PREFIX="$HOME/custom" bash
+
+    # 以 root 身份安装到 /usr/local/bin
+    curl -fsSL https://gh.io/copilot-install | sudo bash
+    ```
+
+    - `VERSION`：指定安装版本，默认为最新版本
+    - `PREFIX`：自定义安装目录，默认为 `/usr/local`（root 用户）或 `$HOME/.local`（非 root 用户）
+
+!!! warning "Windows PowerShell 版本要求"
+
+    Windows 下使用 WinGet 或一键安装脚本（PowerShell）需要 **PowerShell v6 或更高版本**。可通过 `$PSVersionTable.PSVersion` 检查当前版本。
+
+!!! tip "npm ignore-scripts 配置"
+
+    如果你的 `~/.npmrc` 中设置了 `ignore-scripts=true`，需要临时覆盖该配置才能正常安装：
+
+    ``` bash
+    npm_config_ignore_scripts=false npm install -g @github/copilot
+    ```
+
 ### 更新
 
 ``` bash
@@ -99,6 +134,116 @@ copilot auth status
 
     - `COPILOT_DISABLE_TERMINAL_TITLE=1`（1.0.28 新增）：设置后 Copilot CLI 不再修改终端标题栏。适用于终端管理工具自行控制标题的场景，避免 Copilot 覆盖你的自定义标题。
     - `COPILOT_GH_HOST`（1.0.35 新增）：指定 GitHub 主机名，优先于 `GH_HOST`。适合 GitHub Enterprise 用户需要固定连接特定 GitHub 实例的场景。
+
+### 认证方式详解
+
+Copilot CLI 支持三种认证方式，按优先级从高到低排列：
+
+**OAuth 设备流（默认，推荐交互式使用）**
+
+在 CLI 中执行 `/login` 或在终端执行 `copilot login`，CLI 生成一次性验证码并自动复制到剪贴板、打开浏览器：
+
+```text
+Waiting for authorization...
+Enter one-time code: 1234-5678 at https://github.com/login/device
+Press any key to copy to clipboard and open browser...
+```
+
+1. 在浏览器中访问 `https://github.com/login/device`
+2. 输入终端显示的一次性验证码
+3. 如组织使用 SAML SSO，点击对应组织的 **Authorize**
+4. 审查权限请求后点击 **Authorize GitHub Copilot CLI**
+5. 返回终端，CLI 显示 `Signed in successfully as <username>`
+
+!!! tip "GitHub Enterprise Cloud 用户"
+
+    使用 GitHub Enterprise Cloud 时，可在登录时指定主机名：
+
+    ``` bash
+    copilot login --host HOSTNAME
+    ```
+
+**环境变量（推荐 CI/CD 和非交互式环境）**
+
+通过环境变量传入支持的 Token，CLI 按以下优先级查找：
+
+| 优先级 | 环境变量 | 说明 |
+|--------|---------|------|
+| 最高 | `COPILOT_GITHUB_TOKEN` | Copilot CLI 专用 |
+| 中 | `GH_TOKEN` | GitHub CLI 通用 |
+| 最低 | `GITHUB_TOKEN` | GitHub 通用 |
+
+支持 Fine-grained PAT（`github_pat_` 前缀）和 GitHub App user-to-server Token（`ghu_` 前缀）。Fine-grained PAT 需要在个人账户下创建（不能选择组织），并开启 **Account → Copilot Requests** 权限。
+
+!!! warning "环境变量会静默覆盖已存储的 OAuth Token"
+
+    如果你为其他工具设置了 `GH_TOKEN`，Copilot CLI 会优先使用该 Token 而非 `copilot login` 存储的 OAuth Token。建议仅设置你希望 CLI 使用的环境变量。
+
+**GitHub CLI 回退认证**
+
+如果已安装并认证了 GitHub CLI（`gh`），Copilot CLI 在未找到其他凭据时会自动使用 `gh auth token` 作为回退。这是最低优先级的认证方式。
+
+### 多账户管理
+
+Copilot CLI 支持同时登录多个账户并自由切换：
+
+``` bash
+# 在 CLI 内查看当前账户
+/user
+
+# 列出所有已登录账户
+/user list
+
+# 切换到其他账户
+/user switch
+```
+
+添加新账户可通过在终端执行 `copilot login` 或在 CLI 内执行 `/login` 并使用另一个账户授权。CLI 会记住最后使用的账户，下次启动时自动切换。
+
+### Token 存储
+
+认证成功后，Token 默认存储在操作系统的安全存储中：
+
+| 平台 | 存储方式 | 服务名称 |
+|------|---------|---------|
+| macOS | Keychain Access | `copilot-cli` |
+| Windows | Credential Manager | `copilot-cli` |
+| Linux | libsecret（GNOME Keyring / KWallet） | `copilot-cli` |
+
+如果系统密钥链不可用（如无 `libsecret` 的无头 Linux 服务器），CLI 会提示将 Token 存储到明文文件 `~/.copilot/config.json`。
+
+| Token 类型 | 前缀 | 是否支持 |
+|-----------|------|---------|
+| OAuth Token（设备流） | `gho_` | 支持 |
+| Fine-grained PAT | `github_pat_` | 支持 |
+| GitHub App user-to-server | `ghu_` | 支持 |
+| Classic PAT | `ghp_` | 不支持 |
+
+注销和撤销：
+
+- `/logout`：移除本地存储的 Token，但不会在 GitHub 端撤销
+- 彻底撤销：前往 GitHub **Settings → Applications → Authorized OAuth Apps**，找到 Copilot CLI 并点击 **Revoke**
+
+### 配置目录
+
+Copilot CLI 的配置文件存放在以下目录：
+
+- **macOS / Linux**：`~/.copilot/`
+- **Windows**：`$HOME\.copilot\`
+
+可通过 `COPILOT_HOME` 环境变量改变配置目录的位置。
+
+### 未认证使用
+
+如果使用自带 LLM API Key（BYOK 模式），GitHub 认证**不是必需的**——Copilot CLI 可以直接连接你配置的 LLM 提供商，无需 GitHub 账号或 Token。
+
+但未认证时以下功能不可用：`/delegate`（需要 Copilot 云端 Agent）、GitHub MCP 服务器、GitHub Code Search。
+
+你也可以混合使用 BYOK 和 GitHub 认证，同时享受自定义模型和 GitHub 托管功能。
+
+!!! info "离线模式"
+
+    设置 `COPILOT_OFFLINE=true` 后，Copilot CLI 不会尝试联系 GitHub 服务器，遥测完全禁用，仅向 BYOK 提供商发送请求。详见 BYOK 笔记。
 
 ---
 

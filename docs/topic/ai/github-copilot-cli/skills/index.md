@@ -45,6 +45,33 @@ Skill 的核心特性是`自动触发`——你不需要手动激活它，Copilo
 
     Skill 是否被触发完全取决于 `description` 字段的描述质量。写清楚 Skill 的功能和适用场景，能显著提高自动匹配的准确性。
 
+### 匹配原理
+
+自动触发基于**关键词语义匹配**：Copilot 将用户 prompt 与所有 Skill 的 `description` 进行比对，找出语义最相关的 Skill 加载到上下文中。匹配过程是异步的，不会显著增加响应延迟。
+
+``` text
+# 匹配流程
+
+用户输入 prompt
+  → Copilot 提取 prompt 的核心意图
+  → 将意图与所有 Skill 的 description 进行语义匹配
+  → 匹配得分最高的 Skill（超过阈值）被自动加载
+  → Skill 指令注入到当前对话上下文中
+```
+
+### 手动调用 vs 自动触发
+
+| 场景 | 推荐方式 | 说明 |
+|------|---------|------|
+| prompt 中包含明确的任务关键词（如"生成测试""代码审查"） | 自动触发 | description 中包含对应关键词即可 |
+| prompt 意图模糊但你想使用特定 Skill | 手动调用 `/skill-name` | 通过斜杠语法显式指定 |
+| Skill 内容超大超过 token 限制 | 手动调用 | 不参与自动触发，但仍可显式调用 |
+| 同一 prompt 可能匹配多个 Skill | 自动触发 | Copilot 选择最相关的一个；也可手动叠加 |
+
+!!! warning "description 避免过于宽泛"
+
+    如果 description 写成"帮助开发者提高代码质量"，几乎所有 prompt 都会匹配，导致不相关的 Skill 被频繁加载，浪费上下文空间。应明确限定适用场景，如"审查 Python 代码的类型安全性和错误处理"。
+
 ---
 
 ## 🛠️ 创建 Skill
@@ -225,6 +252,38 @@ description: API 文档生成器。当用户要求生成 API 文档、写 README
 - 代码示例使用代码块并标注语言
 - 参数说明使用表格
 ```
+
+---
+
+## 🔗 在 Agent 中预加载 Skills
+
+Agent 可以通过 frontmatter 中的 `skills` 字段**预加载**指定的 Skills 到上下文。这意味着当该 Agent 被激活时，列出的 Skills 会自动注入，无需依赖 prompt 匹配。
+
+``` yaml title=".github/agents/code-reviewer.agent.md"
+---
+name: code-reviewer
+description: 专业的代码审查 Agent，审查代码质量、安全性和可维护性
+skills:
+  - python-review
+  - security-audit
+---
+
+# 代码审查 Agent
+
+你是一位资深代码审查专家。在审查代码时，严格按照预加载的 Skill 规范执行。
+```
+
+### 适用场景
+
+| 场景 | 说明 |
+|------|------|
+| Agent 职责与特定 Skill 强绑定 | 如安全审计 Agent 必须加载安全检查 Skill |
+| 确保 Agent 始终遵循特定工作流 | 不依赖 prompt 匹配的不确定性 |
+| 组合多个互补 Skill | 一个 Agent 可以预加载多个 Skill 形成完整工具链 |
+
+!!! tip "与自动触发不冲突"
+
+    `skills` 字段是**预加载**机制，与基于 description 的自动触发并行工作。即使 Agent 没有在 `skills` 中列出某个 Skill，该 Skill 仍然可以通过 prompt 匹配被自动触发。
 
 ---
 
