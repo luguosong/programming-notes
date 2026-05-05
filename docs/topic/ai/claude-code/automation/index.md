@@ -144,11 +144,17 @@ cancel the deploy check job
 
 | 工具 | 用途 |
 |------|------|
-| `CronCreate` | 计划新任务（5 字段 cron 表达式 + 提示词 + 重复/单次） |
-| `CronList` | 列出所有计划任务（ID、计划、提示词） |
+| `CronCreate` | 计划新任务。接受 5 字段 cron 表达式、要运行的提示词、是否重复（`recurring`），以及是否持久化（`durable`） |
+| `CronList` | 列出所有计划任务（ID、计划、提示词），包括持久化和会话内的 |
 | `CronDelete` | 按 ID 取消任务 |
 
 每个任务有一个 8 字符 ID，一个会话最多同时保存 50 个计划任务。
+
+!!! info "`CronCreate` 的 `durable` 参数"
+
+    默认情况下（`durable: false`），任务只存在于当前会话的内存中——退出 Claude Code 后就消失了。设置 `durable: true` 后，任务会写入 `.claude/scheduled_tasks.json` 文件，即使你重启 Claude Code 甚至重启电脑，任务依然存在。
+
+    一次性 `durable` 任务如果在会话关闭期间被错过，会在下次启动时补触发。重复 `durable` 任务同样遵循[七天过期](#七天过期)规则。
 
 ### 计划任务的运行机制
 
@@ -168,6 +174,17 @@ cancel the deploy check job
 #### 七天过期
 
 重复任务在创建后 **7 天自动过期**——任务最后触发一次，然后自行删除。如果需要更长时间的调度，请在过期前取消并重新创建，或使用云端定时任务 / Desktop 计划任务。
+
+#### 动态间隔的技术细节
+
+省略间隔的 `/loop` 底层使用的是 `ScheduleWakeup` 工具而非 `CronCreate`。`ScheduleWakeup` 的设计理念与 cron 不同：
+
+- **延迟范围**：60 秒到 3600 秒（1 分钟到 1 小时），由 Claude 根据当前情况动态选择
+- **缓存感知**：Anthropic 提示缓存有 5 分钟 TTL。延迟选在 270 秒以内可以保持缓存命中；选在 1200 秒以上则需要重新加载完整上下文
+- **无 cron 表达式**：`ScheduleWakeup` 不接受 cron，只接受下一次唤醒的延迟秒数
+- **会话内专用**：`ScheduleWakeup` 创建的任务不会出现在 `CronList` 中
+
+当你请求动态间隔时，Claude 内部使用哨兵值 `<<autonomous-loop-dynamic>>` 来标识这是一个自主循环——它在每次唤醒时重新评估应该等待多久。
 
 ### Cron 表达式参考
 
@@ -224,70 +241,278 @@ cancel the deploy check job
 3. **目标仓库与分支**：通过 Connector 关联到你的代码仓库
 4. **权限范围**：控制在仓库中可执行的操作
 
-## 🎮 远程控制
+## Routines：云端自动化
 
-Remote Control 让你从外部**操控一个正在运行的 Claude Code 会话**——就像远程桌面一样，只不过你控制的是一个 AI 助手的对话。
+`/loop` 和 Desktop 计划任务都依赖你的本机——关机就停了。如果你想让 Claude Code 在你睡觉的时候也在干活（比如每天凌晨审查 PR、每周扫描依赖安全），就需要 **Routines**。Routines 运行在 Anthropic 管理的云基础设施上，跟你的电脑完全无关。
 
-### Server Mode
+!!! info "研究预览"
 
-Server Mode 把 Claude Code 变成一个「服务端」，监听来自客户端的连接请求：
+    Routines 目前处于**研究预览**阶段，行为、限制和 API 可能发生变化。需要开启 Claude Code on the Web 的 Pro、Max、Team 或 Enterprise 计划才能使用。
+
+### Routines vs 本地调度
+
+Routines 和前面介绍的 `/loop`、Desktop 计划任务相比，最大的区别在于**运行位置**和**自主性**：
+
+| 维度 | `/loop` | Desktop 计划任务 | Routines |
+|------|---------|----------------|----------|
+| 运行位置 | 你的电脑 | 你的电脑 | Anthropic 云端 |
+| 需要本机在线 | 是 | 是 | 否 |
+| 需要会话打开 | 是 | 否 | 否 |
+| 跨重启持久化 | `--resume` 恢复 | 是 | 是 |
+| 访问本地文件 | 是 | 是 | 否（全新 clone） |
+| MCP 服务器 | 继承会话 | 配置文件 + Connector | 按任务配置 Connector |
+| 权限提示 | 继承会话 | 按任务配置 | 无（完全自主） |
+| 最小间隔 | 1 分钟 | 1 分钟 | 1 小时 |
+
+Routines 作为完整的 Claude Code 云会话自主运行——没有权限模式选择器，运行期间也没有批准提示。Claude 可以执行 shell 命令、提交代码、调用你配置的 Connector。它的操作都以你的身份执行：Git 提交和 PR 显示你的用户名，Slack 消息使用你的账户。
+
+### 三种触发器类型
+
+每个 Routine 可以附加一种或多种触发器，灵活组合不同的自动化场景。
+
+#### 计划触发器
+
+计划触发器按固定节奏运行 Routine，支持预设频率和自定义 cron：
+
+| 预设频率 | 说明 |
+|---------|------|
+| 每小时 | 适合高频检查任务 |
+| 每天 | 适合日常维护 |
+| 工作日 | 只在周一到周五运行 |
+| 每周 | 适合周期性报告 |
+
+时间使用你的本地时区输入，自动转换。实际运行时间可能有几分钟的交错偏移（每个 Routine 的偏移是一致的）。最小间隔为 1 小时，更频繁的表达式会被拒绝。
+
+对于自定义间隔（如每两小时、每月第一天），先在 Web 上选最近的预设创建 Routine，然后在 CLI 中运行 `/schedule update` 设置特定的 cron 表达式。
+
+#### API 触发器
+
+API 触发器为每个 Routine 提供一个专用的 HTTP 端点。向端点发送 POST 请求就能启动一次运行——适合把 Claude Code 接入你的告警系统、部署管道或内部工具。
+
+设置 API 触发器的步骤：
+
+1. 在 [claude.ai/code/routines](https://claude.ai/code/routines) 打开 Routine 编辑页面
+2. 在 **Select a trigger** 部分添加 **API** 触发器
+3. 复制生成的 URL，点击 **Generate token** 生成 Bearer 令牌（**令牌只显示一次**，务必保存）
+4. 使用令牌调用 `/fire` 端点
 
 ```bash
-# 启动 server mode
-claude --server
+curl -X POST https://api.anthropic.com/v1/claude_code/routines/trig_01ABCDEFGHJKLMNOPQRSTUVW/fire \
+  -H "Authorization: Bearer sk-ant-oat01-xxxxx" \
+  -H "anthropic-beta: experimental-cc-routine-2026-04-01" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Sentry alert SEN-4521 fired in prod. Stack trace attached."}'
 ```
 
-启动后，Claude Code 会在后台运行，等待外部连接。
+请求正文中的 `text` 字段是可选的，可以传入告警内容、日志片段等上下文，Claude 会将其与 Routine 的预设提示词一起处理。`text` 是自由格式文本，不会被解析——如果你发送 JSON，Claude 会把它当作字面字符串接收。
 
-### Interactive Mode
+成功调用后返回新会话的 ID 和 URL，你可以在浏览器中打开 URL 实时查看运行过程。
 
-Interactive Mode 是更完整的交互体验——它不仅允许远程控制，还提供了完整的终端界面：
+!!! warning "Beta API 标识"
+
+    `/fire` 端点在 `experimental-cc-routine-2026-04-01` beta 标识下发布，属于研究预览。请求/响应格式、速率限制和令牌语义可能变化。破坏性变更会在新的 beta 标识版本后发布，最近的两个旧版本会继续工作一段时间。
+
+#### GitHub 事件触发器
+
+GitHub 事件触发器让 Routine 自动响应仓库事件——PR 创建、Release 发布等。每个匹配事件都会启动一个独立的会话。
+
+!!! info "每小时上限"
+
+    研究预览期间，GitHub webhook 事件受每个 Routine 和每个账户的每小时上限限制。超出上限的事件会被丢弃，直到窗口重置。
+
+设置 GitHub 事件触发器需要先安装 **Claude GitHub App**。在触发器设置中，如果你尚未安装，系统会提示你授权安装。
+
+!!! note "CLI 的 `/web-setup` 不够"
+
+    在 CLI 中运行 `/web-setup` 只是授权仓库克隆访问权限，它不会安装 Claude GitHub App，也不启用 webhook 传递。GitHub 事件触发器需要单独安装 Claude GitHub App。
+
+**支持的事件**：
+
+| 事件 | 触发时机 |
+|------|---------|
+| Pull request | PR 被打开、关闭、分配、标记、同步或以其他方式更新 |
+| Release | Release 被创建、发布、编辑或删除 |
+
+你可以选择特定操作（如 `pull_request.opened`），也可以对类别中的所有操作做出反应。
+
+**PR 过滤条件**：
+
+| 过滤字段 | 匹配内容 |
+|---------|---------|
+| Author | PR 作者的 GitHub 用户名 |
+| Title | PR 标题文本 |
+| Body | PR 描述文本 |
+| Base branch | PR 的目标分支 |
+| Head branch | PR 的来源分支 |
+| Labels | 应用于 PR 的标签 |
+| Is draft | PR 是否处于草稿状态 |
+| Is merged | PR 是否已合并 |
+| From fork | PR 是否来自 fork |
+
+每个过滤器将字段与运算符配对：`equals`、`contains`、`starts with`、`is one of`、`is not one of` 或 `matches regex`。所有过滤条件必须全部匹配才会触发 Routine。
+
+`matches regex` 测试整个字段值，不是子字符串匹配。要匹配标题中包含 `hotfix` 的 PR，需要写 `.*hotfix.*`，而不是只写 `hotfix`。如果只需要简单的子字符串匹配，用 `contains` 运算符更直观。
+
+一些实用的过滤组合：
+
+- **只审查认证模块 PR**：base branch `main` + head branch contains `auth-provider`
+- **外部贡献者 PR**：from fork is `true`——为 fork PR 路由额外的安全和风格审查
+- **只审查非草稿 PR**：is draft is `false`——跳过还在编辑中的 PR
+- **标签触发的移植**：labels include `needs-backport`——只在维护者打标签时触发移植 Routine
+
+### 创建和管理 Routines
+
+你可以通过三种方式创建 Routines——所有方式都写入同一个云账户，互相同步：
+
+**Web**：访问 [claude.ai/code/routines](https://claude.ai/code/routines)，点击 **New routine**，填写提示、仓库、环境、Connector 和触发器。
+
+**CLI**：在任何会话中运行 `/schedule` 以对话方式创建计划 Routine。也可以直接描述，如 `/schedule daily PR review at 9am`。注意 CLI 的 `/schedule` 目前只能创建计划触发器，API 和 GitHub 触发器需要在 Web 上编辑 Routine 来添加。管理命令：`/schedule list`（查看所有）、`/schedule update`（修改）、`/schedule run`（立即触发）。
+
+**Desktop 应用**：在 Schedule 页面点击 **New task**，选择 **New remote task**。
+
+在 Routine 详情页，你可以点击 **Run now** 立即启动一次运行（不等下一个计划时间），也可以暂停/恢复计划、编辑配置或删除 Routine。
+
+### 仓库和分支权限
+
+每个添加的仓库在每次运行时都会被克隆，默认从主分支开始。默认情况下，Claude 只能推送到以 `claude/` 为前缀的分支——这防止 Routine 意外修改受保护分支。如果你需要 Routine 推送到任意分支，可以为特定仓库启用 **Allow unrestricted branch pushes**。
+
+### 每日运行上限
+
+Routines 的运行消耗和交互式会话相同。除了标准订阅限制外，每个账户每天还有**运行次数上限**。你可以在 [claude.ai/code/routines](https://claude.ai/code/routines) 或 `claude.ai/settings/usage` 查看当前消耗和剩余次数。开启了额外使用（Extra usage）的组织可以在超出上限后继续按量计费运行。
+
+## 远程控制
+
+Remote Control 让你从手机、平板或任何浏览器**操控一个正在运行的 Claude Code 会话**。Claude 始终在你的机器上运行，所有文件、MCP 服务器、工具和项目配置都保持可用——手机或浏览器只是一个远程窗口。
+
+!!! info "研究预览与版本要求"
+
+    Remote Control 需要 Claude Code v2.1.51 或更高版本。它在所有计划中都可用（Pro、Max、Team、Enterprise），但在 Team 和 Enterprise 上需要管理员在 [Claude Code 管理员设置](https://claude.ai/admin-settings/claude-code) 中启用。
+
+### 启动 Remote Control 会话
+
+Claude Code 提供四种启动方式，各有不同的使用场景。
+
+#### 服务器模式
+
+服务器模式是功能最完整的方式——它会启动一个持续运行的服务进程，等待远程连接，并支持多个并发会话：
 
 ```bash
-# 启动 interactive mode（默认监听本机）
-claude -i
-
-# 指定监听地址
-claude -i --host 0.0.0.0 --port 8080
+claude remote-control
 ```
 
-### 连接到已有会话
+启动后终端会显示会话 URL，按空格键可以显示 QR 码方便手机扫码。当远程会话活跃时，终端会实时显示连接状态和工具活动。
 
-如果你已经有一个 Claude Code 会话在运行，可以通过 `/rc`（Remote Control）命令从另一个终端连接过去：
+服务器模式支持的完整标志列表：
 
-```
-> /rc
-```
-
-Claude Code 会显示可连接的会话列表，选择后即可在新终端中操控原有会话。
-
-⚠️ **安全提醒**：Remote Control 会暴露你的 Claude Code 会话给网络上的其他客户端。在生产环境中使用时，务必配合网络隔离和认证机制，避免未授权访问。
-
-### Remote Control 命令扩展
-
-Remote Control 的可用命令持续扩展中（v2.1.110 改进）。除了基本的对话交互，以下命令现在也可以在 Remote Control 客户端（移动端/Web）中使用：
-
-- `/autocompact`：自动压缩上下文
-- `/context`：查看当前上下文
-- `/exit`：退出会话
-- `/reload-plugins`：重新加载插件
-- `/extra-usage`：从远程客户端管理额外用量额度（v2.1.113 新增）
-
-从 v2.1.113 起，Remote Control 客户端还可以查询 `@`-file 自动补全建议，并能正常流式接收 subagent 的 transcript（之前会丢失）；会话在 Claude Code 退出时也会被正确归档。
-
-这意味着你通过手机远程控制 Claude Code 时，能做的事和坐在电脑前几乎一样了。
-
-### 推送通知
-
-Claude Code 支持发送移动端推送通知（v2.1.110 新增）。当 Remote Control 配置启用时，Claude 可以在需要你关注时（比如任务完成、等待权限确认）向手机发送推送通知。你不需要一直盯着屏幕——去做别的事，Claude 会主动通知你。
-
-### 适用场景
-
-| 场景 | 说明 |
+| 标志 | 说明 |
 |------|------|
-| 多终端协作 | 在办公室电脑启动会话，回家后从笔记本连接继续 |
-| 团队协作 | 多人连接同一个 Claude Code 会话，协同处理任务 |
-| 无头环境 | 在服务器上以 server mode 运行，从本地客户端操控 |
+| `--name "My Project"` | 设置自定义会话标题，在 claude.ai/code 的会话列表中可见 |
+| `--remote-control-session-name-prefix <prefix>` | 自动生成会话名称的前缀，默认为主机名。也可通过环境变量 `CLAUDE_REMOTE_CONTROL_SESSION_NAME_PREFIX` 设置 |
+| `--spawn <mode>` | 会话创建模式：<br/>`same-dir`（默认）——所有会话共享当前工作目录<br/>`worktree`——每个会话获得独立的 git worktree<br/>`session`——单会话模式，只提供一个会话。运行时按 `w` 可在 `same-dir` 和 `worktree` 之间切换 |
+| `--capacity <N>` | 最大并发会话数，默认 32。不能与 `--spawn=session` 一起使用 |
+| `--verbose` | 显示详细的连接和会话日志 |
+| `--sandbox` / `--no-sandbox` | 启用或禁用沙箱（文件系统和网络隔离），默认关闭 |
+
+#### 交互式会话模式
+
+在启动普通交互式会话的同时启用 Remote Control：
+
+```bash
+# 基本用法
+claude --remote-control
+
+# 带自定义名称
+claude --remote-control "My Project"
+```
+
+这给你一个完整的终端交互式会话，同时也可以从 claude.ai 或 Claude 应用远程控制。与服务器模式不同，你可以在本地输入消息的同时远程控制会话。`--remote-control` 可缩写为 `--rc`。
+
+#### 从已有会话启用
+
+如果你已经在 Claude Code 会话中，可以用斜杠命令启用：
+
+```
+/remote-control
+```
+
+传递名称可设置自定义标题：`/remote-control My Project`。这会继承你当前的对话历史记录，并显示会话 URL 和 QR 码。`--verbose`、`--sandbox` 和 `--no-sandbox` 标志不适用于此命令。`/remote-control` 可缩写为 `/rc`。
+
+#### VS Code 扩展集成
+
+在 Claude Code VS Code 扩展中（v2.1.79 或更高版本），在提示框中输入 `/remote-control` 或 `/rc`。提示框上方会出现一个横幅显示连接状态，连接后点击横幅中的**在浏览器中打开**即可跳转到会话。
+
+!!! note "VS Code 限制"
+
+    VS Code 命令不接受名称参数，也不显示 QR 码。会话标题从对话历史或第一条提示自动派生。
+
+### 从另一个设备连接
+
+Remote Control 会话激活后，有三种连接方式：
+
+- **打开会话 URL**：在浏览器中直接访问 [claude.ai/code](https://claude.ai/code) 上的会话
+- **扫描 QR 码**：在服务器模式下按空格键显示 QR 码，用 Claude 应用扫码直接打开
+- **在会话列表中查找**：打开 claude.ai/code 或 Claude 应用，Remote Control 会话显示带绿色状态点的计算机图标
+
+远程会话标题的选择优先级：你通过 `--name`/`--rc`/`/rc` 传入的名称 > 你用 `/rename` 设置的标题 > 对话历史中最后一条有意义的消息 > 自动生成的名称（如 `myhost-graceful-unicorn`）。
+
+如果你还没有 Claude 移动应用，在 Claude Code 中运行 `/mobile` 命令可以显示下载二维码。
+
+### 为所有会话启用 Remote Control
+
+默认情况下，Remote Control 只在你显式启动时激活。要为每个交互式会话自动启用，在 Claude Code 中运行 `/config`，将**为所有会话启用 Remote Control** 设置为 `true`。
+
+启用后，每个交互式 Claude Code 进程都会注册一个远程会话。如果你运行多个实例，每个实例获得自己的环境。要从单个进程运行多个并发会话，使用[服务器模式](#启动-remote-control-会话)。
+
+### 连接与安全
+
+Remote Control **不会在你的机器上打开任何入站端口**。本地会话只发出出站 HTTPS 请求到 Anthropic API 进行注册和轮询。远程设备连接时，消息通过 Anthropic API 的流连接在设备和本地会话之间路由。所有流量通过 TLS 加密传输，连接使用多个短期凭证，每个凭证限定于单一用途并独立过期。
+
+### 移动推送通知
+
+当 Remote Control 处于活动状态时，Claude 可以向你的手机发送推送通知（v2.1.110 或更高版本）。Claude 自行决定何时推送——通常在长时间运行的任务完成或需要你做出决定时。你也可以在提示中主动请求，比如 `notify me when the tests finish`。
+
+**启用推送通知的完整步骤**：
+
+1. **安装 Claude 移动应用**：下载 [iOS](https://apps.apple.com/us/app/claude-by-anthropic/id6473753684) 或 [Android](https://play.google.com/store/apps/details?id=com.anthropic.claude) 版本
+2. **登录**：使用你终端中 Claude Code 的**同一个账户和组织**登录
+3. **允许通知**：接受操作系统弹出的通知权限提示
+4. **在 Claude Code 中启用**：在终端中运行 `/config`，启用**当 Claude 决定时推送**
+
+如果通知没有到达，可以检查以下几点：
+
+- 如果 `/config` 显示"未注册移动设备"，打开手机上的 Claude 应用让它刷新推送令牌
+- iOS 上，焦点模式和通知摘要可能抑制推送——检查 设置 -> 通知 -> Claude
+- Android 上，激进的电池优化可能延迟传递——在系统设置中将 Claude 应用从电池优化中豁免
+
+### 远程可用的命令
+
+Remote Control 客户端（移动端/Web）可以使用大部分文本输出类命令，但涉及交互式选择器的命令仅限本地使用：
+
+| 可远程使用 | 仅限本地 |
+|-----------|---------|
+| `/compact`、`/clear`、`/context`、`/usage`、`/exit`、`/extra-usage`、`/recap`、`/reload-plugins` | `/mcp`、`/plugin`、`/resume` |
+
+从 v2.1.113 起，Remote Control 客户端还可以查询 `@`-file 自动补全建议，并能正常接收 subagent 的 transcript（之前会丢失）；会话在 Claude Code 退出时也会被正确归档。
+
+### 已知限制
+
+- **每个交互式进程一个远程会话**：服务器模式之外，每个 Claude Code 实例一次只支持一个远程会话
+- **本地进程必须保持运行**：关闭终端、退出 VS Code 或停止 `claude` 进程都会结束会话
+- **网络中断超时**：如果机器唤醒但无法在大约 10 分钟内访问网络，会话会超时退出
+- **Ultraplan 互斥**：启动 Ultraplan 会话会断开活动的 Remote Control 会话——两个功能都占据 claude.ai/code 界面，一次只能连接一个
+
+### 故障排除
+
+如果遇到 "Remote Control 需要 claude.ai 订阅" 错误，说明你未使用 claude.ai 账户登录。运行 `claude auth login` 并选择 claude.ai 选项，同时取消环境中的 `ANTHROPIC_API_KEY`。
+
+如果遇到 "Remote Control 需要完整范围的登录令牌" 错误，说明你使用的是 `claude setup-token` 或 `CLAUDE_CODE_OAUTH_TOKEN` 的长期令牌——这些令牌仅限推理，无法建立 Remote Control 会话。需要运行 `claude auth login` 使用完整范围的会话令牌。
+
+如果连接失败，使用 `--verbose` 重新运行以查看完整错误信息：
+
+```bash
+claude remote-control --verbose
+```
 
 ## 📡 Channels 消息通道
 

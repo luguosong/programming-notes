@@ -7,19 +7,20 @@ description: 将 Claude Code 连接到第三方 LLM 提供商、Slack、Channel 
 
 **本文你会学到**：
 
-- 🎯 理解 Claude Code 的第三方集成体系——换了 LLM 提供商，工具链和使用体验不变
-- 🔧 接入 Amazon Bedrock、Google Vertex AI、Microsoft Foundry 三大云平台
-- 🚀 通过 LLM Gateway 实现统一代理和灵活的认证方案
-- 💬 在 Slack 中用 `@Claude` 触发编码会话，团队协作无缝衔接
-- 📡 理解 Channel、远程控制等集成方式与 Slack 的区别，按需选择
-- 🗂️ 掌握 Claude Directory 的文件结构与诊断命令
-- 🖥️ 了解 Computer Use 的能力边界与平台限制
+- 理解 Claude Code 的第三方集成体系——换了 LLM 提供商，工具链和使用体验不变
+- 接入 Amazon Bedrock、Google Vertex AI、Microsoft Foundry 三大云平台
+- 通过 LLM Gateway 实现统一代理和灵活的认证方案
+- 在 Slack 中用 `@Claude` 触发编码会话，团队协作无缝衔接
+- 通过 Chrome 扩展在浏览器中测试应用、读取控制台、自动填充表单
+- 理解 Channel、远程控制等集成方式与 Slack 的区别，按需选择
+- 掌握 Claude Directory 的文件结构与诊断命令
+- 了解 Computer Use 的应用分级控制、安全机制与工作流程
 
 ## ⚙️ 概览
 
 Claude Code 本质上是一个**智能编码助手外壳**——它负责代码理解、文件操作、终端交互等能力，而「思考的大脑」可以选择不同的 LLM 提供商。就像同一辆车可以换不同的引擎，驾驶体验基本一致，但动力来源可以灵活切换。
 
-除了 LLM 提供商，Claude Code 还支持与 Slack 集成实现团队协作，通过 Channel 将外部事件推送到运行中的会话，以及通过 Claude Directory 管理项目级和全局级的配置体系。
+除了 LLM 提供商，Claude Code 还支持与 Slack 集成实现团队协作，通过 Chrome 扩展进行浏览器自动化测试，通过 Channel 将外部事件推送到运行中的会话，以及通过 Claude Directory 管理项目级和全局级的配置体系。
 
 ## 🔌 第三方 LLM 提供商
 
@@ -316,11 +317,73 @@ sequenceDiagram
 4. **进度同步**：Claude 的工作进度实时更新到 Slack 消息中
 5. **结果交付**：完成后提供「View Session」查看详情，或「Create PR」直接创建 Pull Request
 
+### 路由模式
+
+Slack 集成支持两种路由模式，控制 Claude 如何处理你在 Slack 中发送的消息：
+
+| 模式 | 行为 |
+|------|------|
+| **仅代码** | 所有 `@Claude` 消息都路由到 Claude Code 会话，适合只将 Claude 用于编码任务的团队 |
+| **代码 + 聊天** | Claude 分析每条消息，在 Claude Code（编码任务）和 Claude Chat（写作、分析、常见问题）之间智能路由，适合希望一个 `@Claude` 入口点处理所有类型工作的团队 |
+
+在「代码 + 聊天」模式下，如果 Claude 将消息路由到聊天但你想要编码会话，可以点击 `Retry as Code` 按钮。反过来也一样——如果路由到了代码但你想要聊天，可以在该线程中选择切换选项。
+
+!!! tip "如何配置"
+
+    导航到 Slack 中的 Claude 应用程序主页，找到「路由模式」设置进行切换。
+
+### 智能路由机制
+
+当你在 Slack 频道或线程中 `@Claude` 时，Claude 会自动分析你的消息来判断是否涉及编码任务。如果检测到编码意图，请求会被路由到 Web 上的 Claude Code 而非常规聊天助手。你也可以在消息中明确说明需要编码会话，即使自动检测没有触发。
+
+!!! note "仅在频道中工作"
+
+    Slack 中的 Claude Code 仅在频道（公开或私有）中工作，在直接消息（DM）中不起作用。
+
+### 会话上下文收集
+
+Claude 会从 Slack 对话中收集上下文来理解完整背景：
+
+- **线程中**：当你在回复线程中 `@Claude` 时，它会收集该线程中的所有消息
+- **频道中**：当直接在频道中 `@Claude` 时，它会查看最近的频道消息
+
+!!! warning "上下文安全提醒"
+
+    当 `@Claude` 被调用时，Claude 可以访问对话上下文。Claude 可能会遵循上下文中其他消息的指示，因此应确保仅在受信任的 Slack 对话中使用 Claude。
+
+### 应用主页与操作按钮
+
+Claude 应用程序的主页选项卡显示你的连接状态，并允许连接或断开 Claude 账户与 Slack 的关联。会话完成后，你会在 Slack 线程中看到以下操作按钮：
+
+| 按钮 | 用途 |
+|------|------|
+| **View Session** | 在浏览器中打开完整的 Claude Code 会话，查看所有执行的工作、继续会话或提出其他请求 |
+| **Create PR** | 直接从会话的代码变更创建 Pull Request |
+| **Retry as Code** | 如果 Claude 最初作为聊天助手响应但你想要编码会话，点击此按钮将请求重试为 Claude Code 任务 |
+| **Change Repo** | 如果 Claude 自动选择的仓库不正确，允许你选择不同的仓库 |
+
+### 存储库选择
+
+Claude 会根据 Slack 对话中的上下文自动选择存储库。如果多个仓库可能适用，Claude 会显示一个下拉菜单让你手动选择。你也可以在请求中直接提及仓库名称来提高选择准确率。
+
+### 管理员权限与用户级访问
+
+Slack 工作区管理员控制 Claude 应用程序是否可以在工作区中安装。安装后，各个用户使用自己的 Claude 账户进行认证。关键访问规则：
+
+| 访问类型 | 说明 |
+|---------|------|
+| Claude Code 会话 | 每个用户在自己名下的 Claude 账户下运行会话 |
+| 使用量和速率限制 | 会话计入个人用户的计划限制 |
+| 存储库访问 | 用户只能访问自己个人连接的存储库 |
+| 会话历史 | 会话出现在你 [claude.ai/code](https://claude.ai/code) 上的 Claude Code 历史中 |
+
 ### 关键限制
 
-- ⚠️ 目前仅支持 **GitHub** 仓库，不支持 GitLab、Bitbucket 等
-- ⚠️ 频道级别的访问控制——只有在被授权的频道中才能使用
-- ⚠️ 编码会话运行在 Anthropic 的 Web 环境中，不是在你的本地机器上
+- 目前仅支持 **GitHub** 仓库，不支持 GitLab、Bitbucket 等
+- 每个会话只能创建一个 Pull Request
+- 会话使用你个人 Claude 计划的速率限制
+- 需要启用 Web 上的 Claude Code 访问权限，否则只会获得标准 Claude 聊天响应
+- 编码会话运行在 Anthropic 的 Web 环境中，不是在你的本地机器上
 
 ## 📡 Channel 与其他集成方式的对比
 
@@ -415,10 +478,286 @@ Computer Use 默认关闭，需要手动启用：
 
     Computer Use 目前仅在使用 Anthropic 直连时可用。通过 Bedrock、Vertex AI 或自定义 Gateway 接入时，此功能不可用。
 
+### 应用分级控制
+
+启用 `computer-use` 并不意味着 Claude 可以随意操控你机器上的所有应用。Claude 的控制级别因应用类别而异：
+
+| 控制级别 | 适用场景 | 说明 |
+|---------|---------|------|
+| **仅查看** | 浏览器、交易平台 | Claude 可以截取屏幕内容，但无法点击或输入 |
+| **仅点击** | 终端（Terminal、iTerm）、IDE（VS Code） | Claude 可以点击按钮，但无法在输入框中输入文字 |
+| **完全控制** | 其他所有桌面应用 | Claude 可以点击、输入、滚动、拖拽 |
+
+在会话中，Claude 第一次需要操控某个应用时，终端中会出现一个授权提示，显示 Claude 想要控制哪些应用以及将隐藏多少其他应用。批准持续当前会话，会话结束后需要重新授权。
+
+### 广泛影响应用警告
+
+某些应用被授权后等同于授予了 Claude 非常高的权限级别。在授权提示中，这些应用会显示额外的警告标签：
+
+| 警告 | 适用应用 | 风险说明 |
+|------|---------|---------|
+| 等同于 shell 访问 | Terminal、iTerm、VS Code、Warp 等终端和 IDE | Claude 可以通过终端执行任意命令 |
+| 可以读取或写入任何文件 | Finder | Claude 可以浏览和操作系统中的所有文件 |
+| 可以更改系统设置 | System Settings | Claude 可以修改操作系统级别的配置 |
+
+这些应用不会被阻止使用，警告的目的只是让你在批准前明确知道对应的权限级别。例如，你让 Claude 通过终端编译一个 Swift 项目时，需要接受「等同 shell 访问」的警告——这是合理的权衡。
+
+!!! warning "安全提示"
+
+    Computer Use 与 [Sandboxed Bash](https://docs.anthropic.com/en/docs/claude-code/sandboxing) 不同，它运行在你的实际桌面上，可以访问你批准的应用。Claude 会检查每个操作并标记来自屏幕内容的潜在提示注入，但信任边界不同于沙箱环境。
+
+### 安全哨兵机制
+
+Claude Code 内置了多项安全护栏来降低 Computer Use 的风险，无需额外配置：
+
+- **按应用授权**：Claude 只能操控你在当前会话中明确批准的应用
+- **哨兵警告**：授予 shell、文件系统或系统设置访问权限的应用在批准前会被高亮标记
+- **终端排除在屏幕截图之外**：Claude 永远看不到你的终端窗口，因此会话中的提示内容不会反馈到模型中
+- **全局 Esc 中止**：在任何地方按 `Esc` 键立即中止 Computer Use，且按键事件被消耗掉不会被应用接收，防止提示注入利用 Esc 关闭对话框
+- **锁文件机制**：同一时间只有一个 Claude Code 会话可以控制你的机器
+
+### 全局 Esc 中止
+
+当 Claude 开始使用 Computer Use 时，macOS 会发送通知「Claude is using your computer · press Esc to stop」。此时：
+
+- 在任何地方按 `Esc` 立即中止当前操作
+- 或在终端中按 `Ctrl+C`
+
+无论哪种方式，Claude 都会释放锁文件、恢复被隐藏的应用窗口，并将控制权交还给你。Claude 完成任务后也会自动发送第二个通知。
+
+### 工作流程示例
+
+以下是 Computer Use 与编码任务结合的典型场景：
+
+#### 验证原生构建
+
+对 macOS 或 iOS 应用进行更改后，让 Claude 在一次通过中编译和验证：
+
+```text
+构建 MenuBarStats 目标、启动它、打开首选项窗口，
+并验证间隔滑块更新标签。完成后截图首选项窗口。
+```
+
+Claude 会运行 `xcodebuild`、启动应用、与 UI 交互，并报告它观察到的结果。
+
+#### 重现布局错误
+
+当视觉错误仅在某些窗口大小下出现时，让 Claude 找到它：
+
+```text
+设置模态框在窄窗口上裁剪其页脚。调整应用窗口大小
+直到您可以重现它、截图裁剪状态，然后检查模态框容器的 CSS。
+```
+
+Claude 会调整窗口大小、捕获损坏的状态，并读取相关的样式表来定位问题。
+
+#### 测试模拟器流程
+
+无需编写 XCTest 就能驱动 iOS 模拟器：
+
+```text
+打开 iOS 模拟器、启动应用、点击入门屏幕，
+并告诉我是否有任何屏幕加载时间超过一秒。
+```
+
+Claude 会像你使用鼠标一样控制模拟器，逐步执行操作并记录观察结果。
+
 ### 使用技巧
 
-- ⚠️ 随时按 `Esc` 键可以紧急停止正在进行的操控操作
-- 💡 对于 GUI 测试、表单填写、截图分析等场景特别有用
-- ⚠️ 操控操作是不可逆的——如果 Claude 错误地点击了「删除」按钮，后果需要你自己承担
+- 随时按 `Esc` 键可以紧急停止正在进行的操控操作
+- 对于 GUI 测试、表单填写、截图分析等场景特别有用
+- 操控操作是不可逆的——如果 Claude 错误地点击了「删除」按钮，后果需要你自己承担
+- Claude 工作时其他应用会被隐藏，终端窗口保持可见但排除在屏幕截图之外，你可以观察 Claude 的操作过程
 
-📝 小结：Claude Code 的第三方集成体系让「换个大脑」变得简单——无论是 AWS、GCP、Azure 还是你自建的代理，配置几个环境变量就能无缝切换。而 Slack 集成和 Computer Use 则分别拓展了团队协作和人机交互的边界，让 Claude Code 不仅仅是一个终端工具。
+## 🌐 Chrome 扩展
+
+当你需要在浏览器中测试 Web 应用、读取控制台日志、自动填充表单或提取网页数据时，Claude Code 可以通过 Chrome 扩展直接控制你的浏览器——不需要切换到独立的浏览器工具。
+
+### 为什么需要 Chrome 扩展？
+
+假设你刚修改了登录表单的验证逻辑，想确认浏览器中的表现是否符合预期。传统做法是手动打开浏览器、刷新页面、填写表单，然后回到终端继续改代码。有了 Chrome 扩展，你可以直接在 Claude Code 会话中完成这一切——构建代码、打开浏览器、测试交互、读取控制台错误，全部在同一个对话中进行。
+
+### 它与 Computer Use 的区别
+
+| 维度 | Chrome 扩展 | Computer Use |
+|------|------------|-------------|
+| 控制对象 | 浏览器中的 Web 页面 | 桌面原生应用和整个操作系统 |
+| 工具精度 | 结构化 DOM 访问、网络请求、控制台日志 | 基于屏幕截图的视觉识别 |
+| 适用平台 | macOS、Windows、Linux | 仅 macOS |
+| 典型场景 | Web 应用测试、表单填充、数据提取 | 原生应用 UI 测试、模拟器操控 |
+
+如果你只需要操控浏览器，Chrome 扩展是更精确、更快速的选择。Computer Use 适用于浏览器无法覆盖的场景（如原生 macOS 应用）。
+
+### 前置条件
+
+| 要求 | 说明 |
+|------|------|
+| 浏览器 | Google Chrome 或 Microsoft Edge（不支持 Brave、Arc 等其他 Chromium 浏览器） |
+| 扩展 | [Claude in Chrome 扩展](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) 1.0.36 或更高版本 |
+| Claude Code | 版本 2.0.73 或更高版本 |
+| 计划 | 直接 Anthropic 计划（Pro、Max、Team 或 Enterprise） |
+
+!!! note "第三方提供商不支持"
+
+    Chrome 集成不可通过 Amazon Bedrock、Google Cloud Vertex AI 或 Microsoft Foundry 等第三方提供商获得。如果你仅通过第三方提供商访问 Claude，需要单独的 claude.ai 账户来使用此功能。
+
+### 启用方式
+
+**方式一：命令行标志**
+
+```bash
+claude --chrome
+```
+
+**方式二：会话内命令**
+
+在已有的 Claude Code 会话中运行：
+
+```text
+/chrome
+```
+
+运行 `/chrome` 还可以检查连接状态、管理网站权限或重新连接扩展程序。
+
+**默认启用 Chrome**：为了避免每次都传递 `--chrome`，可以在 `/chrome` 菜单中选择「默认启用」。注意这会增加上下文消耗，因为浏览器工具始终被加载——如果不需要常驻，建议在需要时才使用 `--chrome`。
+
+### 网站权限管理
+
+网站级权限从 Chrome 扩展程序继承。在 Chrome 扩展程序设置中管理权限，以控制 Claude 可以浏览、点击和输入的网站。
+
+### 可用浏览器工具
+
+连接 Chrome 后，Claude Code 可以使用一组浏览器专用工具。运行 `/mcp` 并选择 `claude-in-chrome` 即可查看完整列表。核心能力包括：
+
+- **页面导航**：打开 URL、前进后退、刷新页面
+- **元素交互**：点击、悬停、输入文本、选择下拉选项
+- **页面快照**：获取基于可访问性树的文本快照，用于理解页面结构
+- **截图**：截取页面或特定元素的截图
+- **控制台日志**：读取浏览器的控制台消息，支持按类型过滤
+- **网络请求**：列出和检查页面发出的网络请求
+- **脚本执行**：在页面上下文中执行 JavaScript 代码
+- **Lighthouse 审计**：运行无障碍、SEO、最佳实践等审计
+
+### 示例工作流
+
+#### 测试本地 Web 应用
+
+开发 Web 应用时，直接让 Claude 验证你的更改是否正常工作：
+
+```text
+I just updated the login form validation. Can you open localhost:3000,
+try submitting the form with invalid data, and check if the error
+messages appear correctly?
+```
+
+Claude 会导航到你的本地服务器、与表单交互并报告它观察到的情况。
+
+#### 使用控制台日志调试
+
+Claude 可以读取控制台输出来帮助诊断问题。建议告诉 Claude 要查找的模式，而不是要求所有日志（日志可能很冗长）：
+
+```text
+Open the dashboard page and check the console for any errors when
+the page loads.
+```
+
+#### 自动填充表单
+
+加速重复的数据录入任务：
+
+```text
+I have a spreadsheet of customer contacts in contacts.csv. For each row,
+go to the CRM at crm.example.com, click "Add Contact", and fill in the
+name, email, and phone fields.
+```
+
+Claude 会读取你的本地文件、导航 Web 界面并逐条录入数据。
+
+#### 在 Google Docs 中起草内容
+
+直接在已登录的文档中写入内容，无需 API 设置：
+
+```text
+Draft a project update based on the recent commits and add it to my
+Google Doc at docs.google.com/document/d/abc123
+```
+
+这适用于你已登录的任何 Web 应用——Gmail、Notion、Sheets 等。Claude 会共享你浏览器的登录状态。
+
+#### 从网页提取数据
+
+从网站中提取结构化信息：
+
+```text
+Go to the product listings page and extract the name, price, and
+availability for each item. Save the results as a CSV file.
+```
+
+#### 运行多站点工作流
+
+协调多个网站之间的任务：
+
+```text
+Check my calendar for meetings tomorrow, then for each meeting with
+an external attendee, look up their company website and add a note
+about what they do.
+```
+
+Claude 可以跨标签页工作来收集信息并完成整个工作流。
+
+#### 录制演示 GIF
+
+创建浏览器交互的可共享录制：
+
+```text
+Record a GIF showing how to complete the checkout flow, from adding
+an item to the cart through to the confirmation page.
+```
+
+Claude 会录制交互序列并保存为 GIF 文件。
+
+### 故障排除
+
+#### 未检测到扩展程序
+
+Claude Code 显示「未检测到 Chrome 扩展程序」时：
+
+1. 在 `chrome://extensions` 中确认扩展已安装并启用
+2. 运行 `claude --version` 确认 Claude Code 是最新版本
+3. 检查 Chrome 是否正在运行
+4. 运行 `/chrome` 并选择「重新连接扩展程序」
+5. 如果问题持续，重启 Claude Code 和 Chrome
+
+第一次启用时，Claude Code 会安装原生消息传递主机配置文件。Chrome 在启动时读取此文件，如果首次尝试未检测到扩展，重启 Chrome 即可。
+
+#### 浏览器无响应
+
+Claude 的浏览器命令停止工作时：
+
+1. 检查是否有模态对话框（`alert`、`confirm`、`prompt`）阻塞了页面——JavaScript 对话框会阻止浏览器事件，手动关闭后告诉 Claude 继续
+2. 要求 Claude 创建新标签页并重试
+3. 在 `chrome://extensions` 中禁用并重新启用扩展来重启它
+
+#### 长会话期间连接断开
+
+Chrome 扩展的 service worker 在不活动时可能进入空闲状态，导致连接断开。运行 `/chrome` 并选择「重新连接扩展程序」即可恢复。
+
+#### Windows 特定问题
+
+| 问题 | 解决方案 |
+|------|---------|
+| 命名管道冲突（`EADDRINUSE`） | 重启 Claude Code，关闭可能使用 Chrome 的其他 Claude Code 会话 |
+| 原生消息传递主机崩溃 | 重新安装 Claude Code 以重新生成主机配置 |
+
+#### 常见错误速查
+
+| 错误信息 | 原因 | 修复 |
+|---------|------|------|
+| 浏览器扩展程序未连接 | 原生消息传递主机无法到达扩展 | 重启 Chrome 和 Claude Code，运行 `/chrome` 重新连接 |
+| 未检测到扩展程序 | 扩展未安装或已禁用 | 在 `chrome://extensions` 中安装或启用 |
+| 没有可用的标签页 | Claude 在标签页准备好之前尝试操作 | 要求 Claude 创建新标签页并重试 |
+| 接收端不存在 | 扩展 service worker 进入空闲状态 | 运行 `/chrome` 并选择「重新连接扩展程序」 |
+
+---
+
+Claude Code 的第三方集成体系让「换个大脑」变得简单——无论是 AWS、GCP、Azure 还是你自建的代理，配置几个环境变量就能无缝切换。而 Slack 集成、Chrome 扩展和 Computer Use 则分别拓展了团队协作、浏览器自动化和桌面操控的边界，让 Claude Code 不仅仅是一个终端工具。

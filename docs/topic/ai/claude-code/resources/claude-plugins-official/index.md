@@ -3,7 +3,7 @@ title: 官方插件目录
 description: claude-plugins-official 市场全部插件分类速查
 ---
 
-Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](https://github.com/anthropics/claude-plugins-official)）提供了 **33 个内部插件** 和 **15 个外部集成**。本页按功能分类列出所有插件，方便快速查找和安装。
+Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](https://github.com/anthropics/claude-plugins-official) | [在线目录](https://claude.com/plugins)）提供了 **33 个内部插件** 和 **15 个外部集成**。本页按功能分类列出所有插件，方便快速查找和安装。
 
 💡 安装任意插件：
 

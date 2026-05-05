@@ -139,6 +139,18 @@ Remove-Item -Path "$env:USERPROFILE\.local\bin\claude.exe" -Force
 Remove-Item -Path "$env:USERPROFILE\.local\share\claude" -Recurse -Force
 ```
 
+### 常见安装问题
+
+| 问题 | 原因 | 解决方案 |
+|------|------|---------|
+| 安装后 `claude` 命令找不到 | PATH 未包含安装目录，或 npm 版本过低 | 确认 Node.js 18+ 已安装，运行 `node -v` 检查版本；手动将 `~/.local/bin` 加入 PATH |
+| WSL 中安装成功但无法启动 | WSL 缺少必要依赖或 Git 未安装 | 安装 Git for WSL：`sudo apt install git`；推荐使用 WSL 2 以获得完整的沙箱支持 |
+| 安装脚本下载超时 | 网络代理或公司防火墙拦截 | 配置 HTTP 代理：`export HTTPS_PROXY=http://proxy:port`；或手动下载安装脚本后本地执行 |
+| 登录回调失败 | 浏览器无法访问 localhost（常见于 WSL2、SSH 远程会话） | 使用 `claude auth login` 的终端粘贴模式完成认证，无需端口转发 |
+| `npm install -g` 权限错误 | npm 全局目录权限不足 | 不要用 `sudo`，改用 npm 推荐的方式修改全局目录权限，或使用原生安装方式（不依赖 npm） |
+
+如果以上方法无法解决问题，运行 `claude doctor` 获取完整的诊断报告。
+
 ## 💬 怎么跟 Claude Code 对话？——交互模式
 
 ### REPL 对话模式——像聊天一样写代码

@@ -507,14 +507,14 @@ ENABLE_CLAUDEAI_MCP_SERVERS=false claude
 
 ## 🙋 Elicitation：服务器请求用户输入
 
-MCP 服务器可以在任务中途**请求你的结构化输入**。当服务器需要无法自行获取的信息时，Claude Code 会显示交互式对话框。
+MCP 服务器可以在任务中途**请求你的结构化输入**。当服务器需要无法自行获取的信息时，Claude Code 会显示交互式对话框，无需额外配置——服务器发起请求时对话框会自动出现。
 
 两种请求模式：
 
-- **表单模式**：显示服务器定义的表单字段（如用户名、密码）
-- **URL 模式**：打开浏览器 URL 进行认证或批准
+- **表单模式**：Claude Code 显示一个对话框，其中包含服务器定义的表单字段（如用户名、密码提示），填写后提交即可
+- **URL 模式**：Claude Code 打开浏览器 URL 进行认证或批准，在浏览器中完成流程后在 CLI 中确认
 
-要自动响应 Elicitation 请求而不显示对话框，可以使用 `Elicitation` hook。
+要自动响应 Elicitation 请求而不显示对话框，可以使用 `Elicitation` hook。如果你正在构建使用 Elicitation 的 MCP 服务器，参阅 [MCP Elicitation 规范](https://modelcontextprotocol.io/docs/learn/client-concepts#elicitation) 了解协议细节和架构示例。
 
 ## 🏢 托管 MCP 配置
 
@@ -578,6 +578,19 @@ MCP 服务器可以在任务中途**请求你的结构化输入**。当服务器
     需要部署固定服务器集（不允许用户自定义）→ 方案一。需要允许用户在策略约束内添加自己的服务器 → 方案二。两者可以组合使用。
 
 ## 📦 常见 MCP 服务器示例
+
+### GitLab CI/CD 内置 MCP 服务器
+
+在 GitLab CI/CD 环境中，Claude Code 可以使用内置的 `/bin/gitlab-mcp-server`，它通过 `mcp__gitlab` 命名空间提供 GitLab 项目管理能力（如读取 MR、写入评论、创建分支等）：
+
+``` yaml title=".gitlab-ci.yml（片段）"
+script:
+  - /bin/gitlab-mcp-server || true
+  - >
+    claude -p "Review this MR and implement the requested changes"
+    --permission-mode acceptEdits
+    --allowedTools "Bash Read Edit Write mcp__gitlab"
+```
 
 ### 连接 GitHub
 

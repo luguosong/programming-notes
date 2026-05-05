@@ -190,19 +190,81 @@ claude --permission-mode auto
 
 ## 🛡️ 怎么防止 Claude 执行危险命令？——沙箱安全
 
-### 什么是沙箱？
+### 为什么单纯靠权限提示不够？
 
-沙箱（Sandbox）就像给 Claude Code 套了一个「隔离舱」——它在里面可以正常工作，但无法触碰隔离舱外面的东西。即使 Claude 执行了恶意命令，影响范围也被限制在沙箱内。
+权限系统虽然能控制 Claude 可以做什么，但它有一个根本问题——每个 Bash 命令都需要你逐条确认。当你在做自动化任务时，这种「逐条审批」的模式会带来三个痛点：
+
+- **审批疲劳**：反复点击「允许」后，你会不自觉地放松警惕
+- **工作流中断**：每次确认都会打断开发节奏
+- **自主性受限**：Claude 在等待审批时无法高效推进
+
+沙箱（Sandbox）用另一种思路解决这个问题：与其逐条审批命令，不如预先划定一条明确的边界——边界内的操作自动放行，边界外的操作直接在操作系统层面被拦截。这样 Claude 可以在安全范围内自主工作，你也不用盯着每一条命令。
+
+!!! warning "文件系统与网络隔离缺一不可"
+
+    有效的沙箱必须**同时**启用文件系统隔离和网络隔离。如果没有网络隔离，被攻击的代理可能通过出站连接泄露你的 SSH 密钥等敏感文件；如果没有文件系统隔离，被攻击的代理可能通过修改系统文件来获得网络访问权限。配置沙箱时，务必确保不会在两个维度上留下绕过缺口。
 
 ### 工作原理
 
-Claude Code 使用操作系统级别的安全机制来实现沙箱：
+沙箱的核心思路是利用操作系统自带的安全原语，在内核层面限制进程的文件系统访问和网络连接。这意味着隔离不仅对 Claude 的直接操作生效，对它启动的所有子进程（如 `kubectl`、`terraform`、`npm` 等）同样有效。
+
+#### 文件系统隔离
+
+沙箱对文件系统的访问做了分层控制：
+
+- **默认写入范围**：仅允许读写当前工作目录及其子目录
+- **默认读取范围**：允许读取整个文件系统，少数敏感路径除外
+- **越界拦截**：在操作系统层面阻止对工作目录外文件的修改，且这一限制对所有子进程生效
+
+当子进程需要在项目目录外写入时（比如 `kubectl` 需要更新 `~/.kube/config`），你可以通过 `sandbox.filesystem.allowWrite` 显式授权——这比把整个命令排除出沙箱更安全。
+
+#### 网络隔离
+
+网络访问通过在沙箱外运行的代理服务器进行控制：
+
+- **域名白名单**：只能连接到明确允许的域名
+- **请求提示**：首次遇到新域名时会触发权限确认（除非启用了 `allowManagedDomainsOnly`，此时未允许的域名直接拦截）
+- **全面覆盖**：限制对所有子进程、脚本和网络调用生效
+
+#### 操作系统级强制
 
 | 操作系统 | 底层技术 | 隔离能力 |
 |---------|---------|---------|
 | macOS | Seatbelt（`sandbox-exec`） | 文件系统 + 网络 |
-| Linux | bubblewrap（容器级隔离） | 文件系统 + 网络 + 进程 |
-| Windows | ❌ 暂不支持 | — |
+| Linux | [bubblewrap](https://github.com/containers/bubblewrap)（容器级隔离） | 文件系统 + 网络 + 进程 |
+| WSL2 | bubblewrap（与 Linux 相同） | 文件系统 + 网络 + 进程 |
+| WSL1 | ❌ 不支持 | bubblewrap 需要仅在 WSL2 中可用的内核命名空间原语 |
+| Windows 原生 | ❌ 暂不支持 | 计划未来支持 |
+
+macOS 开箱即用（内置 Seatbelt 框架）。Linux 和 WSL2 需要手动安装依赖：
+
+``` bash title="Ubuntu/Debian 安装依赖"
+sudo apt-get install bubblewrap socat
+```
+
+``` bash title="Fedora 安装依赖"
+sudo dnf install bubblewrap socat
+```
+
+在 WSL2 上有一个额外限制：沙箱化的命令无法启动 Windows 二进制文件（如 `cmd.exe`、`powershell.exe` 或 `/mnt/c/` 下的任何程序）。原因是 WSL 通过 Unix Socket 将这些调用转发给 Windows 主机，而沙箱会阻止这类 Socket 连接。如果确实需要调用 Windows 二进制文件，请将其加入 `excludedCommands` 让它在沙箱外运行。
+
+### 启用沙箱
+
+在 Claude Code 中输入 `/sandbox` 命令即可打开沙箱配置菜单。菜单会根据当前平台显示可用选项，如果缺少依赖（如 Linux 上的 `bubblewrap`），会给出安装指引。
+
+默认情况下，如果沙箱无法启动（缺少依赖或不支持的平台），Claude Code 会显示警告并回退到无沙箱模式运行。如果你需要确保沙箱必须生效（例如企业托管环境），将 `sandbox.failIfUnavailable` 设为 `true`——此时沙箱启动失败会直接报错退出。
+
+### 沙箱模式
+
+沙箱提供两种运行模式，两种模式下文件系统和网络限制完全一致，区别只在于沙箱化命令是否需要权限确认：
+
+**自动允许模式**：在沙箱内运行的 Bash 命令自动放行，无需逐条确认。如果命令因沙箱限制无法执行（如需要访问未允许的网络域名），会回退到常规权限流程。显式的 `deny` 规则始终生效，对 `/`、主目录或关键系统路径执行 `rm`/`rmdir` 仍会触发权限提示。
+
+**常规权限模式**：所有 Bash 命令都走标准权限流程，即使已经沙箱化了。控制更精细，但需要更多确认操作。
+
+!!! info "自动允许与权限模式独立工作"
+
+    自动允许模式独立于你的权限模式（`default`、`acceptEdits` 等）。即使你不在 `acceptEdits` 模式下，启用自动允许后沙箱内的 Bash 命令也会自动运行。这意味着在沙箱边界内修改文件的 Bash 命令会直接执行而不提示，即使文件编辑工具（Edit）本身通常需要确认。
 
 ### 沙箱配置结构
 
@@ -213,10 +275,14 @@ Claude Code 使用操作系统级别的安全机制来实现沙箱：
   "sandbox": {
     "enabled": true,
     "autoAllowBashIfSandboxed": true,
+    "failIfUnavailable": false,
     "excludedCommands": ["docker *"],
+    "allowUnsandboxedCommands": true,
     "filesystem": {
       "allowWrite": ["/tmp/build", "~/.kube"],
-      "denyRead": ["~/.aws/credentials"]
+      "denyWrite": ["/etc", "/usr/local/bin"],
+      "denyRead": ["~/.aws/credentials", "~/.ssh"],
+      "allowRead": ["."]
     },
     "network": {
       "allowedDomains": ["github.com", "*.npmjs.org"],
@@ -226,36 +292,42 @@ Claude Code 使用操作系统级别的安全机制来实现沙箱：
 }
 ```
 
-各配置项说明：
+各顶层配置项说明：
 
 | 字段 | 说明 | 默认值 |
 |------|------|--------|
 | `sandbox.enabled` | 启用沙箱 | `false` |
 | `sandbox.autoAllowBashIfSandboxed` | 沙箱内自动批准 Bash 命令 | `true` |
-| `sandbox.failIfUnavailable` | 沙箱无法启动时报错退出 | `false` |
-| `sandbox.excludedCommands` | 不在沙箱内运行的命令 | `[]` |
-| `sandbox.allowUnsandboxedCommands` | 允许命令通过 `dangerouslyDisableSandbox` 跳过沙箱 | `true` |
+| `sandbox.failIfUnavailable` | 沙箱无法启动时报错退出（而非警告后回退） | `false` |
+| `sandbox.excludedCommands` | 不在沙箱内运行的命令（在沙箱外以常规权限流程执行） | `[]` |
+| `sandbox.allowUnsandboxedCommands` | 是否允许命令通过 `dangerouslyDisableSandbox` 参数跳过沙箱 | `true` |
 
-💡 `autoAllowBashIfSandboxed` 默认为 `true`——因为沙箱本身已经提供了隔离，所以命令不需要再逐条确认。企业环境可以设为 `false` 以获得更严格的控制。
+`autoAllowBashIfSandboxed` 默认为 `true`，因为沙箱本身已经提供了隔离，命令不需要再逐条确认。企业环境可以设为 `false` 以获得更严格的审批控制。
 
 ### 文件系统限制
 
-沙箱可以精细控制 Claude 的文件读写权限：
+沙箱可以精细控制 Claude 及其子进程的文件读写权限：
 
 | 字段 | 说明 |
 |------|------|
-| `filesystem.allowWrite` | 允许写入的额外路径（追加合并） |
+| `filesystem.allowWrite` | 允许写入的额外路径（追加合并到项目目录之上） |
 | `filesystem.denyWrite` | 禁止写入的路径（追加合并） |
 | `filesystem.denyRead` | 禁止读取的路径（追加合并） |
 | `filesystem.allowRead` | 在 `denyRead` 区域内重新允许读取的路径（优先于 `denyRead`） |
 
-路径支持以下前缀：
+路径前缀决定了路径的解析方式：
 
 | 前缀 | 含义 | 示例 |
 |------|------|------|
-| `/` | 绝对路径 | `/tmp/build` |
-| `~/` | 相对于主目录 | `~/.kube` 变为 `$HOME/.kube` |
-| `./` 或无前缀 | 相对于项目根目录 | `./output` |
+| `/` | 从文件系统根目录的绝对路径 | `/tmp/build` 保持为 `/tmp/build` |
+| `~/` | 相对于主目录 | `~/.kube` 解析为 `$HOME/.kube` |
+| `./` 或无前缀 | 相对于项目根目录（项目设置）或 `~/.claude`（用户设置） | 项目设置中 `./output` 解析为 `<project-root>/output` |
+
+注意沙箱路径与权限规则路径的语法差异：沙箱文件系统路径使用标准约定——`/tmp/build` 是绝对路径，`./output` 是项目相对路径；而 `Read`/`Edit` 权限规则中 `//path` 表示绝对路径，`/path` 表示项目相对路径。如果你之前在沙箱中使用单斜杠 `/path` 期望项目相对解析，请改为 `./path`。
+
+#### 多层级路径合并
+
+当 `allowWrite`、`denyWrite`、`denyRead`、`allowRead` 在多个设置层级（托管设置、用户设置、项目设置）中同时定义时，数组会被**合并**而非替换。例如托管设置允许写入 `/opt/company-tools`，你在个人设置中添加 `~/.kube`，最终两个路径都生效。这意味着用户和项目可以在不覆盖上级配置的前提下扩展路径列表。
 
 ``` json title="文件系统限制示例"
 {
@@ -271,6 +343,16 @@ Claude Code 使用操作系统级别的安全机制来实现沙箱：
 }
 ```
 
+这个示例中 `allowRead` 的 `.` 解析为项目根目录（因为配置位于项目设置中）。如果把同样的配置放在 `~/.claude/settings.json` 中，`.` 会解析为 `~/.claude`，项目文件仍会被 `denyRead` 规则阻止。
+
+!!! tip "不兼容沙箱的工具"
+
+    并非所有命令都与沙箱开箱兼容：
+
+    - `watchman` 与沙箱不兼容。如果你运行 `jest`，请使用 `jest --no-watchman`
+    - `docker` 与沙箱不兼容。在 `excludedCommands` 中指定 `docker *` 让它在沙箱外运行
+    - 许多 CLI 工具需要访问特定主机，首次使用时会请求权限，授予权限后即可在沙箱内安全执行
+
 ### 网络限制
 
 沙箱可以限制 Claude 的网络访问：
@@ -279,6 +361,8 @@ Claude Code 使用操作系统级别的安全机制来实现沙箱：
 |------|------|
 | `network.allowedDomains` | 允许出站流量的域名（支持通配符，如 `*.example.com`） |
 | `network.deniedDomains` | 阻止出站流量的域名（优先于 `allowedDomains`） |
+| `network.httpProxyPort` | 自定义 HTTP 代理端口（高级网络安全场景） |
+| `network.socksProxyPort` | 自定义 SOCKS 代理端口（高级网络安全场景） |
 
 ``` json title="网络限制示例"
 {
@@ -292,6 +376,98 @@ Claude Code 使用操作系统级别的安全机制来实现沙箱：
 }
 ```
 
-💡 `deniedDomains` 的优先级高于 `allowedDomains`。例如允许 `*.example.com` 的同时禁止 `internal.example.com`，两者同时生效。
+`deniedDomains` 的优先级高于 `allowedDomains`。例如允许 `*.example.com` 的同时禁止 `internal.example.com`，两者同时生效。
 
-⚠️ 目前 Windows 暂不支持沙箱。如果你使用 WSL 2（Ubuntu），则可以使用 Linux 的 bubblewrap 沙箱。
+对于需要高级网络安全的组织，可以配置自定义代理来解密检查 HTTPS 流量、应用自定义过滤规则、记录所有网络请求：
+
+``` json title="自定义代理配置"
+{
+  "sandbox": {
+    "network": {
+      "httpProxyPort": 8080,
+      "socksProxyPort": 8081
+    }
+  }
+}
+```
+
+!!! warning "域名的安全边界"
+
+    网络过滤系统通过限制进程可以连接的域名来工作，但不会以其他方式检查通过代理的流量。用户需要确保只允许受信任的域名。此外，允许过于宽泛的域名（如 `github.com`）可能存在数据泄露风险，且在特定条件下可能通过 [domain fronting](https://en.wikipedia.org/wiki/Domain_fronting) 绕过网络过滤。
+
+### 沙箱逃生舱：`dangerouslyDisableSandbox`
+
+Claude Code 内置了一个有意的逃生舱机制。当命令因沙箱限制失败时（例如网络连接问题或不兼容的工具），Claude 会分析失败原因，并可能使用 `dangerouslyDisableSandbox` 参数重试命令。使用此参数的命令会脱离沙箱，走常规权限流程（需要用户确认）。
+
+这个设计是为了处理某些工具或网络操作确实无法在沙箱约束内运行的边界情况。如果你需要完全禁止这种逃生行为，将 `allowUnsandboxedCommands` 设为 `false`——此时 `dangerouslyDisableSandbox` 参数会被完全忽略，所有命令必须在沙箱内运行或通过 `excludedCommands` 明确排除。
+
+### 沙箱与权限的协同关系
+
+沙箱和权限系统是互补的两个安全层，它们各自在不同维度发挥作用：
+
+| 维度 | 权限系统 | 沙箱 |
+|------|---------|------|
+| **控制对象** | 所有工具（Bash、Read、Edit、WebFetch、MCP 等） | 仅 Bash 命令及其子进程 |
+| **评估时机** | 工具执行之前 | 操作系统级别实时拦截 |
+| **生效层级** | Claude Code 应用层 | 操作系统内核层 |
+| **绕过难度** | 权限漏洞可能导致绕过 | 需要内核级漏洞才能绕过 |
+
+来自 `sandbox.filesystem` 的路径和权限规则中的路径会被**合并**到最终的沙箱配置中。例如 `Read`/`Edit` 的 `deny` 规则会被合并到 `denyRead` 中，`WebFetch` 的域名规则与沙箱的 `allowedDomains`/`deniedDomains` 共同决定网络访问权限。
+
+### 安全优势
+
+即使攻击者通过提示注入成功操控了 Claude 的行为，沙箱也能确保系统安全：
+
+**文件系统保护**：无法修改 `~/.bashrc` 等关键配置文件；无法修改 `/bin/` 中的系统文件；无法读取被权限设置拒绝的文件。
+
+**网络保护**：无法向攻击者控制的服务器泄露数据；无法从未授权的域名下载恶意脚本；无法向未批准的服务发起 API 调用。
+
+**透明监控**：所有越界访问尝试在操作系统级别被拦截；当边界被试探时会立即通知你；你可以选择拒绝、允许一次或永久更新配置以放行。
+
+### 沙箱不涵盖的内容
+
+沙箱只隔离 Bash 子进程。其他 Claude Code 工具在不同的安全边界下运行：
+
+- **内置文件工具**（`Read`、`Edit`、`Write`）：直接使用权限系统控制，不经过沙箱
+- **计算机使用**（Computer Use）：当 Claude 打开应用并操控屏幕时，它在你的真实桌面上运行，而非隔离环境中。每个应用有自己的权限提示机制
+
+### 安全限制与注意事项
+
+除了前面提到的域名过滤边界和 domain fronting 风险，还有几点需要关注：
+
+- **Unix Socket 权限提升**：`allowUnixSockets` 配置可能无意中授予对强大系统服务的访问。例如允许 `/var/run/docker.sock` 实际上通过 Docker Socket 授予了对主机系统的完全访问权，这等同于沙箱绕过。使用此配置时务必审慎评估每个 Socket 的安全影响。
+
+- **文件系统权限提升**：过于宽泛的写入权限可能导致提权攻击。允许写入包含 `$PATH` 中可执行文件的目录、系统配置目录或用户 shell 配置文件（`.bashrc`、`.zshrc`）可能导致在其他用户或系统进程的安全上下文中执行恶意代码。
+
+- **Linux 嵌套沙箱**：Linux 实现提供了一个 `enableWeakerNestedSandbox` 模式，使其能在 Docker 容器内运行而无需特权命名空间。但此选项会显著削弱安全性，仅在已有其他隔离措施时才应使用。
+
+- **性能开销**：沙箱的性能开销很小，但某些文件系统操作可能略慢。
+
+### 环境变量补充
+
+#### `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB`
+
+Claude Code 的子进程默认不会继承所有父进程环境变量。`CLAUDE_CODE_SUBPROCESS_ENV_SCRUB` 环境变量控制哪些环境变量会被从子进程环境中清除，防止子进程（如被注入的恶意脚本）读取到凭证等敏感信息。
+
+#### `CLAUDE_CODE_SCRIPT_CAPS`
+
+`CLAUDE_CODE_SCRIPT_CAPS` 环境变量用于限制脚本调用的次数，防止失控的脚本通过无限循环或大量子进程消耗系统资源。
+
+### 开源沙箱运行时
+
+沙箱运行时作为开源 npm 包发布，你可以在自己的 AI 代理项目中复用它。例如，要沙箱化一个 MCP 服务器：
+
+``` bash
+npx @anthropic-ai/sandbox-runtime <command-to-sandbox>
+```
+
+实现细节和源代码参见 [GitHub 仓库](https://github.com/anthropic-experimental/sandbox-runtime)。
+
+### 最佳实践
+
+- **从最小权限开始**：先用最严格的配置，根据实际需求逐步放宽
+- **监控违规尝试**：查看沙箱拦截记录，了解 Claude 尝试访问哪些被限制的资源
+- **区分环境**：开发环境和生产环境使用不同的沙箱规则
+- **与权限配合**：将沙箱与 IAM 策略、权限规则结合，构建纵深防御
+- **验证配置**：确认沙箱设置不会阻止合法的工作流程
+- **优先用 `allowWrite` 而非 `excludedCommands`**：前者只放开文件写入权限，后者让整个命令脱离沙箱保护

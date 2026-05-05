@@ -773,4 +773,6 @@ model: inherit
 
     从 v2.1.113 起，Sub-agent 在 mid-stream 卡死超过 10 分钟后会**明确报错**而非静默挂起，避免你长时间等待一个永远不会回来的子任务。如果你查看一个正在运行的 subagent 时输入消息，消息现在会正确归属于这个 subagent，不会被误送给父 AI（v2.1.113 修复）。Agent Teams 队友请求工具权限时不再触发权限对话框崩溃（v2.1.114 修复）。
 
+Agent Teams 与自动化也有密切关联——通过 [Routines](../automation/index.md) 可以预设团队的工作流程，让 Agent Team 在无人值守时自动执行重复性任务（如定时代码审查、批量 PR 处理等）。
+
 📝 **小结**：Sub-agent 的核心价值是**上下文隔离**——把大量中间输出挡在主对话之外，只拿回精炼的结论。需要协作就用 Agent Team，只需要结果就用 Sub-agent，需要主对话上下文就用 Fork。

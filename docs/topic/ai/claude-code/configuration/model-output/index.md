@@ -155,12 +155,46 @@ Fast Mode 是 Claude Opus 4.6 的高速度配置——**不是换了模型，而
 
 ### 成本对比
 
-| 模式 | 输入价格（百万 token） | 输出价格（百万 token） |
-|------|----------------------|----------------------|
-| 标准模式 | 更低 | 更低 |
-| Fast Mode | $30 | $150 |
+Fast Mode 的每 token 定价高于标准 Opus 4.6，并且根据上下文长度分为两个档位：
 
-⚠️ Fast Mode 仅通过 Extra Usage（额外用量）计费，不包含在订阅套餐内。适合速度优先的场景，不适合成本敏感的任务。
+| 模式 | 上下文范围 | 输入价格（百万 token） | 输出价格（百万 token） |
+|------|-----------|----------------------|----------------------|
+| 标准 Opus 4.6 | — | 更低 | 更低 |
+| Fast Mode | < 200K tokens | $30 | $150 |
+| Fast Mode | > 200K tokens | $60 | $225 |
+
+⚠️ Fast Mode 仅通过 Extra Usage（额外用量）计费，不包含在订阅套餐内。即使你的套餐还有剩余用量，Fast Mode 也会从第一个 token 开始按 Fast Mode 费率单独收费。
+
+💡 如果你计划使用 Fast Mode，**在会话开始时启用**比在对话中途切换更划算——中途切换时，整个对话上下文都需要按 Fast Mode 的未缓存输入 token 价格重新计费。
+
+### 可用性与限制
+
+Fast Mode 目前的可用范围有限制：
+
+- **需要 Extra Usage**：个人账户在控制台计费设置中启用，团队和企业由管理员统一启用
+- **第三方云提供商不可用**：Fast Mode 不支持 Amazon Bedrock、Google Vertex AI、Microsoft Azure Foundry，仅通过 Anthropic 控制台 API 和订阅计划的 Extra Usage 提供
+- **团队和企业默认禁用**：管理员需要手动启用后，用户才能使用 `/fast` 命令。未启用时 `/fast` 会提示 "Fast mode has been disabled by your organization."
+- **与扩展上下文兼容**：Fast Mode 支持 1M tokens 的扩展上下文窗口
+
+管理员可以在以下位置启用 Fast Mode：
+- **控制台**（API 客户）：Claude Code 偏好设置页面
+- **Claude AI**（团队和企业）：管理员设置 > Claude Code
+
+### 环境变量与组织级控制
+
+除了在会话中用 `/fast` 或在 `settings.json` 中设置 `"fastMode": true` 之外，还有两种机制可以控制 Fast Mode：
+
+**完全禁用 Fast Mode**：设置环境变量 `CLAUDE_CODE_DISABLE_FAST_MODE=1`，这将彻底关闭 Fast Mode 功能。详见环境变量文档。
+
+**要求每会话手动启用**：团队和企业管理员可以在[托管设置](/zh-CN/settings#settings-files)或服务器托管设置中将 `fastModePerSessionOptIn` 设为 `true`：
+
+``` json title="托管设置"
+{
+  "fastModePerSessionOptIn": true
+}
+```
+
+启用后，每个新会话都以 Fast Mode 关闭状态开始，用户需要用 `/fast` 手动开启。这在用户运行多个并发会话的组织中有助于控制成本。删除该设置后，用户的偏好会恢复为默认的跨会话持久行为。
 
 ### 什么时候用 Fast Mode？
 
@@ -176,7 +210,16 @@ Fast Mode 是 Claude Opus 4.6 的高速度配置——**不是换了模型，而
 - 批量处理 / CI/CD
 - 成本敏感的工作负载
 
-💡 你还可以同时降低思考强度（Effort Level）来进一步加速——「Fast Mode + 低思考强度」组合适合简单的、快速的任务。
+### Fast Mode 与思考强度（Effort Level）
+
+Fast Mode 和 Effort Level 都能影响响应速度，但作用机制完全不同：
+
+| 设置 | 效果 |
+|------|------|
+| **Fast Mode** | 相同的模型质量，更低的延迟，更高的成本 |
+| **较低的 Effort Level** | 更少的思考时间，更快的响应，复杂任务上可能质量下降 |
+
+两者可以叠加使用——对于简单的直接任务，「Fast Mode + 低 Effort Level」组合能获得最大速度。
 
 ### 速率限制与回退
 

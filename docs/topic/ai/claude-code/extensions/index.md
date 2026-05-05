@@ -259,4 +259,8 @@ timeline
 
 Plugin 安装的 Skill 自带命名空间（如 `/my-plugin:review`），不会和你自己的 `/review` Skill 冲突。这是唯一自带命名冲突保护的机制。
 
+### 环境变量：更底层的精细控制
+
+除了上述扩展机制，Claude Code 还提供了 **230+ 个环境变量**用于精细控制行为（如 `MCP_TIMEOUT`、`MAX_MCP_OUTPUT_TOKENS`、`ENABLE_TOOL_SEARCH` 等）。完整列表详见「环境变量参考」。
+
 📝 **小结**：扩展体系的本质是**在正确的时机，用正确的方式，把正确的知识交给 Claude**。`CLAUDE.md` 管始终在场的规则，`Skill` 管按需加载的知识和工作流，`MCP` 管外部连接能力，`Subagent` 管隔离执行，`Hook` 管确定性自动化，`Plugin` 管打包分发。理解它们的分工和组合方式，你就能为项目量身定制一套高效的 Claude Code 工作流。
