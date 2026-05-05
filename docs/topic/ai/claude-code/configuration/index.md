@@ -9,7 +9,8 @@ description: 理解 Claude Code 的配置层级、权限系统、沙箱安全、
 
 - 🏗️ 理解 Claude Code 五层配置优先级的含义和作用范围
 - 📝 配置文件的位置与冲突解决规则
-- ✅ 根据场景选择合适的配置层级与最佳实践
+- ✅ 根据场景选择合适的配置层级
+- 💡 配置最佳实践与常见陷阱
 
 → 更多内容请查看子页面：「CLAUDE.md 记忆文件」「Settings 与权限」「模型与输出风格」「高级配置」
 
@@ -20,13 +21,25 @@ description: 理解 Claude Code 的配置层级、权限系统、沙箱安全、
 Claude Code 的配置体系也是同样的道理——它有五层配置，从「管理员强制执行的安全策略」到「你个人的偏好」，层层叠加、逐级覆盖。理解这个体系，你就掌握了让 Claude Code 按你的意愿高效工作的钥匙。
 
 ``` mermaid
-graph LR
-    A[Managed<br/>管理员强制] --> B[CLI 参数<br/>单次会话]
-    B --> C[Local<br/>本地偏好]
-    C --> D[Project<br/>团队共享]
-    D --> E[User<br/>全局个人]
-    style A stroke:#d32f2f,stroke-width:2px
-    style E stroke:#768390,stroke-width:1px
+graph TD
+    A["🔴 Managed<br/>管理员强制"] --> B["🟠 CLI 参数<br/>单次会话"]
+    B --> C["🟡 Local<br/>本地偏好"]
+    C --> D["🔵 Project<br/>团队共享"]
+    D --> E["⚪ User<br/>全局个人"]
+
+    F["💡 实际场景"] --> A
+    F --> G["禁用 Fast Mode<br/>禁止 rm -rf<br/>API 端点锁定"]
+    F --> H["--model opus<br/>--permission-mode plan"]
+    F --> I["个人工具白名单<br/>本地路径配置"]
+    F --> J["团队编码规范<br/>共享 MCP 配置"]
+    F --> K["全局语言偏好<br/>默认权限"]
+
+    style A fill:transparent,stroke:#d32f2f,stroke-width:2px
+    style B fill:transparent,stroke:#f57c00,stroke-width:2px
+    style C fill:transparent,stroke:#fbc02d,stroke-width:1px
+    style D fill:transparent,stroke:#0288d1,stroke-width:1px
+    style E fill:transparent,stroke:#768390,stroke-width:1px
+    style F fill:transparent,stroke:#7b1fa2,stroke-width:1px
 ```
 
 数字越小优先级越高——左边的 Managed 像公司的「安全制度」，右边的 User 像你的「个人偏好」。当两层配置冲突时，高优先级覆盖低优先级。

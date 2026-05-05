@@ -26,7 +26,7 @@ description: 理解 Claude Code 的上下文成本构成、分层策略、噪声
 
 ### 上下文窗口大小
 
-Claude Code 目前支持最高 **100 万 tokens（1M）** 的上下文窗口（截至写作时，Opus 4.7、Sonnet 4.5 等新模型默认开启 1M，以官方文档为准），但这并非全部可用。在你的对话开始之前，大量空间就已经被占用了：
+Claude Code 目前支持最高 **100 万 tokens（1M）** 的上下文窗口（截至写作时，Opus 4.7、Sonnet 4.5 等新模型默认开启 1M；此数字随模型更新可能变化，以[官方文档](https://docs.anthropic.com/en/docs/about-claude/models)为准），但这并非全部可用。在你的对话开始之前，大量空间就已经被占用了：
 
 ```
 1M 总上下文

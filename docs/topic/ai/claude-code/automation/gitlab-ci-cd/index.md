@@ -7,7 +7,7 @@ description: 在 GitLab CI/CD 中集成 Claude Code 实现自动化工作流
 
 - 如何在 GitLab CI/CD 中快速集成 Claude Code
 - 使用 Amazon Bedrock 和 Google Vertex AI 的 OIDC 无密钥认证
-- 代码审查、Bug 修复和功能实现等场景的配置示例
+- 通过配置示例掌握代码审查、Bug 修复和功能实现等典型工作流
 - 安全治理和成本控制的实践建议
 
 ## 为什么在 GitLab 中用 Claude Code？

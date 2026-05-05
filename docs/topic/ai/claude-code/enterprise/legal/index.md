@@ -65,13 +65,13 @@ Claude Code 支持多种认证方式，但 Anthropic 对不同方式的适用场
 | OAuth（通过 Claude.ai 登录） | Free、Pro、Max、Team、Enterprise 订阅的普通使用 | 第三方开发者代理用户请求 |
 | API Key（通过 Claude Console） | 开发者构建产品或服务 | 个人日常使用的 Claude Code |
 
-### OAuth 认证适用范围
+### OAuth 认证
 
 OAuth 认证仅供 Claude 订阅计划的购买者直接使用 Claude Code 和其他 Anthropic 原生应用。如果你是个人用户，通过 Claude.ai 登录（OAuth）是最简单的认证方式，适用于 Free、Pro、Max、Team 和 Enterprise 订阅。
 
 Anthropic 不允许第三方开发者提供 Claude.ai 登录或代表其用户通过 Free、Pro 或 Max 计划凭证路由请求。Claude Code 和 Agent SDK 在 Pro 和 Max 计划下的普通个人使用受到使用限制的约束。
 
-### API Key 认证适用范围
+### API Key 认证
 
 如果你是开发者，正在构建与 Claude 交互的产品或服务（包括使用 Agent SDK 的产品），必须通过 Claude Console 或受支持的云提供商使用 API Key 认证。这是因为 OAuth 令牌绑定的是个人订阅，不适合程序化的服务调用场景。
 

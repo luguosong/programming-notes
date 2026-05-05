@@ -460,6 +460,8 @@ Claude Code 的子进程默认不会继承所有父进程环境变量。`CLAUDE_
 export CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1
 ```
 
+实际效果：启用后，Claude 启动的所有 Bash 子进程将无法读取 `ANTHROPIC_API_KEY`、`AWS_SECRET_ACCESS_KEY` 等敏感环境变量。在 Linux 上还会在隔离的 PID 命名空间中运行子进程，进一步增强安全性。
+
 ``` json title="或在 settings.json 中配置"
 {
   "env": {
