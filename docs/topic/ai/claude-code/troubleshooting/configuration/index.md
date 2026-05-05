@@ -11,6 +11,7 @@ description: Claude Code 配置问题的诊断与修复指南
 - `settings.json` 多层级冲突的排查思路
 - `CLAUDE.md` 加载顺序导致指令不生效的解决方案
 - 权限规则、MCP 服务器、环境变量不生效的常见原因
+- 通过具体案例掌握配置冲突的排查方法
 
 ## 为什么配置会"不生效"？
 
@@ -175,6 +176,17 @@ description: Claude Code 配置问题的诊断与修复指南
 - **JSON 文件**：在管理员指定的路径下放置 `managed-settings.json`
 - **分片配置目录**（v2.1.83 新增）：使用 `managed-settings.d/` 目录，将配置拆分成多个文件，便于管理和分发
 
+分片配置目录的结构示例：
+
+```
+/etc/claude-code/managed-settings.d/
+├── 01-permissions.json     # 权限策略
+├── 02-env.json             # 环境变量
+└── 03-mcp-servers.json     # MCP 服务器配置
+```
+
+每个 JSON 文件包含完整的 `managed-settings` 结构中对应的部分，Claude Code 会按文件名排序依次加载并合并。
+
 修改托管配置后，运行 `/doctor` 验证配置格式是否正确。
 
 ## 配置调试的方法论
@@ -201,3 +213,16 @@ description: Claude Code 配置问题的诊断与修复指南
 ### 子代理配置不继承项目记忆
 
 如果你发现子代理（sub-agent）忽略了 `CLAUDE.md` 中的某些指令，这是因为子代理不总是继承项目记忆。解决方法是将关键规则放在代理配置文件的文件体中，它会成为子代理的系统提示，确保每次调用都能读取到。
+
+例如，在 `.claude/commands/my-agent.md` 中：
+
+```markdown title=".claude/commands/my-agent.md"
+你是一个专注于代码审查的助手。
+
+规则：
+- 所有输出必须使用中文
+- 检查每个函数是否有 JSDoc 注释
+- 安全敏感代码必须标记提醒
+
+请审查以下代码变更。
+```

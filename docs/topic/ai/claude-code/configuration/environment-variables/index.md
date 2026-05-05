@@ -9,7 +9,6 @@ description: Claude Code 全部环境变量速查（按类别分组）
 
 - Claude Code 支持哪些环境变量
 - 如何按类别快速查找所需变量
-- 重点变量的详细说明与使用场景
 
 Claude Code 支持通过环境变量精细控制其行为。你可以：
 
@@ -259,7 +258,7 @@ Claude Code 支持通过环境变量精细控制其行为。你可以：
 | `CLAUDE_CODE_FORK_SUBAGENT` | — | 设为 `1` 启用分叉 subagent（继承完整对话上下文而非从头开始）。交互模式和 SDK 均支持 |
 | `CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS` | — | 设为 `1` 禁用所有内置 subagent 类型（Explore、Plan 等）。仅限非交互模式 |
 | `CLAUDE_AGENT_SDK_MCP_NO_PREFIX` | — | 设为 `1` 跳过 SDK 创建的 MCP 服务器工具名称上的 `mcp__` 前缀 |
-| `CLAUDE_CODE_SUBAGENT_MODEL` | — | Subagent 使用的模型，参见模型配置 |
+| `CLAUDE_CODE_SUBAGENT_MODEL` | — | Subagent 使用的模型，参见「模型与输出风格」 |
 | `CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY` | `10` | 可并行执行的只读工具和 subagent 最大数量 |
 | `TASK_MAX_OUTPUT_LENGTH` | `32000`（最大 160000） | Subagent 输出最大字符数，超过后截断（完整输出保存到磁盘） |
 | `SLASH_COMMAND_TOOL_CHAR_BUDGET` | 动态（回退 8000） | Skill 元数据的字符预算，动态扩展为上下文窗口的 1% |

@@ -787,3 +787,17 @@ validation = false
 > 📦 0.0.37 新增
 
 当你需要将项目中的主题覆盖（`overrides/` 目录中的模板、样式等）打包为可复用的主题包时，可以使用可安装主题扩展（installable themes）。将主题文件打包后通过 `pip` 安装，只需在 `mkdocs.themes` 入口点注册即可被 Zensical 识别。这样就能在多个项目间共享同一套主题定制，而不需要每次都复制 `overrides/` 目录。
+
+---
+
+## 🧩 Macros 插件
+
+> 📦 0.0.40 新增
+
+当你需要在多篇文档之间复用相同的变量值（如版本号、项目名称）或执行简单的计算逻辑时，反复手动维护既容易出错又难以保持同步。Macros 插件解决了这个问题——它覆盖了 `mkdocs-macros-plugin` 的功能，允许你在 Markdown 文件中定义自定义变量和函数，实现文档内容的动态生成与统一管理。
+
+作为 Python Markdown 扩展实现，macros 也可以在 Python docstrings 中与 `mkdocstrings` 配合使用。
+
+!!! tip "链接验证兼容"
+
+    如果你同时启用了链接验证（0.0.38 新增），宏块（macros blocks）中的内容会自动从验证中排除，不会产生误报。

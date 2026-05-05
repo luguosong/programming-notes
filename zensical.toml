@@ -79,7 +79,16 @@ nav = [
             "java/javase/index.md",
             { "Java 概述" = "java/javase/overview/index.md" },
             { "文件操作" = "java/javase/file/index.md" },
-            { "IO 流" = "java/javase/io/index.md" }
+            { "IO 流" = "java/javase/io/index.md" },
+            { "更新日志" = [
+                "java/javase/changelog/index.md",
+                { "JDK 26" = "java/javase/changelog/jdk26/index.md" },
+                { "JDK 25" = "java/javase/changelog/jdk25/index.md" },
+                { "JDK 21" = "java/javase/changelog/jdk21/index.md" },
+                { "JDK 17" = "java/javase/changelog/jdk17/index.md" },
+                { "JDK 11" = "java/javase/changelog/jdk11/index.md" },
+                { "JDK 8" = "java/javase/changelog/jdk8/index.md" }
+            ] }
         ] },
         { "日志框架" = [
             "java/logging/index.md",

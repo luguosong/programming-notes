@@ -9,7 +9,7 @@ description: Claude Code 安装过程中的常见问题与解决方案
 
 - 如何根据错误信息快速定位安装失败的原因
 - 解决 PATH 配置、权限、网络等常见安装障碍
-- 处理各平台（Windows、macOS、Linux、WSL）的特定安装问题
+- 处理各平台（Windows、macOS、Linux、WSL、npm）的特定安装问题
 - 排查登录和身份验证阶段的故障
 
 当你满怀期待地运行安装命令，终端却弹出一堆看不懂的错误信息时，别慌——大多数安装问题都有明确的对应方案。本文按照「症状 -> 原因 -> 解决方案」的结构组织，帮你快速找到对症的那一条。
@@ -338,7 +338,7 @@ sudo swapon /swapfile
 
 **症状：** 在 Docker 容器中安装 Claude Code 时进程无响应。
 
-**原因：** 以 root 身份从 `/` 运行时，安装程序会扫描整个文件系统，导致内存暴涨。
+**原因：** 以 root 身份从 `/` 运行时，安装程序会扫描整个文件系统，导致内存暴涨。这就像让一个快递员在整栋大楼里挨个房间找收件人——范围太大，效率极低。
 
 **解决方案：** 设置 `WORKDIR` 限制扫描范围，并增加 Docker 内存限制：
 
@@ -366,9 +366,11 @@ Remove-Item -Recurse -Force "$env:USERPROFILE\.claude\downloads"
 irm https://claude.ai/install.ps1 | iex
 ```
 
-## Linux 特定问题
+## 平台特定问题
 
-### Linux 二进制变体不匹配
+### Linux
+
+#### 二进制变体不匹配
 
 **症状：** 安装后出现共享库缺失错误：
 
@@ -396,7 +398,7 @@ ldd --version 2>&1 | head -1
 apk add libgcc libstdc++ ripgrep
 ```
 
-### CPU 指令集不兼容
+#### CPU 指令集不兼容
 
 **症状：** 运行 `claude` 或安装程序时出现 `Illegal instruction`。
 
@@ -413,7 +415,7 @@ grep -m1 -ow avx /proc/cpuinfo
 
 如果结果为空，说明 AVX 对客户机不可用。目前没有原生二进制文件的解决方法，请关注 [issue #50384](https://github.com/anthropics/claude-code/issues/50384) 获取更新。
 
-### 权限问题
+#### 权限问题
 
 **症状：** 原生安装程序因权限错误失败。
 
@@ -427,9 +429,9 @@ grep -m1 -ow avx /proc/cpuinfo
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-## macOS 特定问题
+### macOS
 
-### macOS 二进制不兼容
+#### macOS 二进制不兼容
 
 **症状：** 安装时出现以下任一错误：
 
@@ -444,9 +446,9 @@ Abort trap: 6
 
 **解决方案：** 打开 Apple 菜单，选择「About This Mac」查看版本号。如果低于 13.0，请更新 macOS。注意 Homebrew 等替代安装方式下载的是同一个二进制文件，不会解决此问题。
 
-## WSL 特定问题
+### WSL
 
-### WSL1 上的执行格式错误
+#### WSL1 上的执行格式错误
 
 **症状：** 在 WSL 中运行 `claude` 时出现：
 
@@ -472,7 +474,7 @@ claude() {
 
 然后执行 `source ~/.bashrc` 并重试 `claude`。
 
-### WSL 中 npm 安装错误
+#### WSL 中 npm 安装错误
 
 如果你在 WSL 内使用 `npm install -g` 安装了 Claude Code（而非原生安装程序），可能遇到以下问题：
 
@@ -511,7 +513,7 @@ export PATH="$HOME/.nvm/versions/node/$(node -v)/bin:$PATH"
 
     避免使用 `appendWindowsPath = false`，这会破坏从 WSL 调用 Windows 可执行文件的能力。
 
-### WSL2 中浏览器无法打开
+#### WSL2 中浏览器无法打开
 
 **症状：** 登录时浏览器无法从 WSL2 中自动打开。
 
@@ -526,9 +528,9 @@ claude
 
 或者在交互式登录提示处按 `c` 复制 OAuth URL，手动粘贴到本地浏览器中打开。
 
-## npm 安装特定问题
+### npm
 
-### 原生二进制包未找到
+#### 原生二进制包未找到
 
 **症状：** 通过 npm 安装后，运行 `claude` 时报 `Could not find native binary package`。
 

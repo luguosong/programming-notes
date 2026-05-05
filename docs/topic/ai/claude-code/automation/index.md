@@ -216,34 +216,13 @@ cancel the deploy check job
 - 启动新对话会清除所有会话范围的任务——使用 `--resume` 或 `--continue` 恢复会话可找回未过期的任务
 - 后台 Bash 和 Monitor 任务在恢复时不会被恢复
 
-需要无人值守的定时自动化，请使用云端定时任务、Desktop 计划任务或 [GitHub Actions](#github-actions-集成)。
-
-### 云端定时任务
-
-云端定时任务运行在 Anthropic 管理的云端基础设施上，**不依赖你的本机**——即使你关机了，任务依然准时执行。详细的三种调度方式对比见[上文](#三种调度方式对比)。
-
-#### 核心特性
-
-| 特性 | 说明 |
-|------|------|
-| 运行环境 | Anthropic 云端基础设施，无需本机在线 |
-| 任务持久性 | 即使你的电脑关机，任务依然按计划执行 |
-| 频率选项 | 每小时、每天、每周、自定义 cron |
-| 分支控制 | 可指定在哪个 Git 分支上执行 |
-| Connector 支持 | 任务可通过 Anthropic Connector 访问你的代码仓库 |
-
-#### 配置方式
-
-云端定时任务通过 Anthropic Console 的 Claude Code 页面进行管理。配置时需要指定：
-
-1. **任务描述**：告诉 Claude Code 每次要做什么
-2. **执行频率**：支持预置选项和自定义 cron
-3. **目标仓库与分支**：通过 Connector 关联到你的代码仓库
-4. **权限范围**：控制在仓库中可执行的操作
+需要无人值守的定时自动化，请使用 Routines、Desktop 计划任务或 [GitHub Actions](#github-actions-集成)。
 
 ## Routines：云端自动化
 
 `/loop` 和 Desktop 计划任务都依赖你的本机——关机就停了。如果你想让 Claude Code 在你睡觉的时候也在干活（比如每天凌晨审查 PR、每周扫描依赖安全），就需要 **Routines**。Routines 运行在 Anthropic 管理的云基础设施上，跟你的电脑完全无关。
+
+Routines 也称为「云端定时任务」——它和上文提到的本地 `/loop`、Desktop 计划任务构成完整的三层调度体系。详细的三种调度方式对比见[上文对比表](#三种调度方式对比)。
 
 !!! info "研究预览"
 
@@ -516,6 +495,8 @@ claude remote-control --verbose
 
 ## 📡 Channels 消息通道
 
+> 本节提供 Channel 的概览和基本工作原理。详细的安装配置步骤、安全机制和企业管控，参见 [Channel 专题](../channels/index.md)。
+
 想象 Claude Code 是你的私人助理。平时你只能亲自去他的办公室（终端）找他。但如果助理有一部手机（Channel），你就可以通过微信、钉钉等工具给他发消息，他收到后会直接处理并回复——你甚至不需要打开终端。
 
 **Channels 就是 Claude Code 的「通讯录」**——它让外部消息源能把事件推送到 Claude Code 的会话中，让 Claude 像处理普通对话一样处理这些外部输入。
@@ -531,6 +512,8 @@ Claude Code 目前支持以下消息源（v2.1.0 引入 Research Preview）：
 | iMessage | 通过 iMessage 接收消息（macOS 专属） |
 
 > 💡 **Research Preview**：Channels 目前处于研究预览阶段，API 可能发生变化。建议在非关键场景中使用，并关注官方更新。
+
+从 v2.1.128 起，`--channels` 也可用于控制台（API Key）认证——使用托管设置的控制台组织需要在托管设置中设置 `channelsEnabled: true` 以启用。
 
 ### Channel 的工作原理
 
@@ -566,7 +549,7 @@ graph LR
 
 ### 基本配置
 
-Claude Code 提供官方 Action：`anthropics/claude-code-action@v1`。以下是基本用法：
+Claude Code 提供官方 Action：`anthropics/claude-code-action@v1`（版本号以发布时最新为准）。以下是基本用法：
 
 ``` yaml title=".github/workflows/claude.yml"
 name: Claude Code

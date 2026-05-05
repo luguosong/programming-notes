@@ -118,6 +118,12 @@ npm install -g @anthropic-ai/claude-code
 
 安装完成后，在终端输入 `claude` 即可启动。
 
+!!! tip "如何选择安装方式？"
+
+    - **推荐**：平台官方安装脚本（Windows PowerShell / macOS Linux）——自动检测环境、处理路径，开箱即用
+    - **包管理器**（WinGet / Homebrew）：适合已有包管理器习惯的用户，后续升级方便（`winget upgrade` / `brew upgrade`）
+    - **npm**：适合 Node.js 开发者或需要在 CI 中安装的场景，但需要 Node.js 18+ 前置依赖
+
 ### Windows 专属特性
 
 Claude Code 在 Windows 上持续改进，以下是近期值得关注的平台增强：
@@ -263,6 +269,8 @@ Web 版的核心是 **Teleport 技术**（v2.0.24 新增）：你的代码会自
 - 你需要跑一个长时间任务，不想占用本地资源
 
 ## 🧩 Chrome 扩展
+
+> 本节从**平台视角**概述 Chrome 扩展的定位和核心能力。详细的安装步骤、可用工具列表、工作流示例和故障排除，参见 [第三方集成 — Chrome 扩展](../integrations/index.md) 章节。
 
 Chrome 扩展是一个**比较特殊的存在**（v2.0.72 推出 Beta 版） —— 它不是为了在浏览器里写代码，而是为了让 Claude Code 能够**控制和调试 Web 应用**。
 
@@ -423,6 +431,18 @@ Claude Code 能自动检测 DevContainer 环境，无需额外配置。
 - 多项目切换：不同项目的依赖互不干扰
 - CI/CD 对齐：本地环境和 CI 环境保持一致
 
+!!! tip "DevContainer 与 Docker Compose 的区别"
+
+    DevContainer 和 Docker Compose 都用 Docker，但定位不同：
+
+    | 维度 | DevContainer | Docker Compose |
+    |------|-------------|----------------|
+    | 目的 | **开发环境标准化**——代码编辑和构建都在容器内 | **服务编排**——启动数据库、缓存等运行时依赖 |
+    | 交互方式 | VS Code 直接在容器内打开工作区 | 容器在后台运行，你仍在本机编辑代码 |
+    | Claude Code 运行位置 | 容器内部 | 本机（通过 `localhost` 连接容器中的服务） |
+
+    两者可以组合使用：用 Docker Compose 启动依赖服务，用 DevContainer 提供开发环境。
+
 ## ⚙️ 无头模式（Headless）
 
 无头模式是 Claude Code 的**非交互运行方式**，主要用于自动化场景。你不会看到对话界面，Claude Code 直接接收指令、执行任务、返回结果。
@@ -452,24 +472,12 @@ claude -p "为这个 API 写单元测试" --output-file tests/api.test.ts
 
 === "Agent SDK"
 
-Agent SDK 提供 Python 和 TypeScript 两个 SDK 包，让你用编程语言直接调用 Claude Code，适合复杂的多步自动化工作流。下面的示例使用 TypeScript SDK（`@anthropic-ai/claude-code`）：
+Agent SDK 提供 Python 和 TypeScript 两个 SDK 包，让你用编程语言直接调用 Claude Code，适合复杂的多步自动化工作流。
 
-``` typescript title="automate.ts"
-import { Claude } from "@anthropic-ai/claude-code";
+- **TypeScript SDK**：`npm install @anthropic-ai/claude-code`，通过 `query()` 函数发起会话
+- **Python SDK**：`pip install claude-code-sdk`，同样提供 `query()` 函数
 
-const claude = new Claude();
-
-// 执行一个多步任务
-const result = await claude.messages.create({
-  prompt: "为 UserService 添加邮箱验证功能，并运行测试验证",
-  options: {
-    allowedTools: ["Read", "Write", "Bash", "MultiEdit"],
-    maxTurns: 20
-  }
-});
-
-console.log(result);
-```
+两个 SDK 均支持流式响应、权限控制、工具白名单等完整的无头模式能力。详细的 SDK API 用法参见 [Sub-agents 笔记](../sub-agents/index.md)。
 
 ### 关键参数
 

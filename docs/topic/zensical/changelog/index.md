@@ -6,6 +6,33 @@ title: 更新日志
 
 本文记录 Zensical 每个版本的变更内容，按发布时间倒序排列。数据来源于 [GitHub Releases](https://github.com/zensical/zensical/releases)。
 
+## v0.0.40（2026-05-04）
+
+> 📝 **笔记定位**：[Macros 插件](../basic/index.md#macros-插件)
+
+### 新功能
+
+- 支持 macros 插件（覆盖 `mkdocs-macros-plugin` 功能），可在 Markdown 文件中定义自定义变量和函数，便于管理和复用文档内容。实现为 Python Markdown 扩展，也可在 Python docstrings 中与 `mkdocstrings` 配合使用
+- `__compat__`：从链接验证中排除宏块（macros blocks）
+
+### Bug 修复
+
+- UI 更新至 v0.0.16
+- 修复链接验证在存在 `\r` 时无法捕获 MathJax 结尾的问题（#615）
+- 修复链接验证排除项无法捕获 `\r\n` 换行的问题
+- 修复链接验证排除项在代码块后需要空行的问题（#618）
+- 修复清空站点目录时删除目录而非仅清空内容的问题（#621）
+- 修复链接验证在 Windows 上产生误报的问题（#616）
+- 修复 `zensical serve` 在系统挂起恢复后返回 404 的问题（#574）
+- 修复 `mkdocs-glightbox` shim 在仅设置默认值时失败的问题（#611）
+
+### 重构
+
+- 合并扩展的文件监听逻辑
+- 将渲染上下文传递给预处理器
+
+---
+
 ## v0.0.39（2026-05-01）
 
 ### Bug 修复

@@ -15,6 +15,57 @@ npm update -g @anthropic-ai/claude-code
 
 ---
 
+## 📦 2.1.128（2026-05-04）
+
+> 📝 **笔记定位**：[/mcp 工具计数与保留名称](../mcp/index.md#管理-mcp-服务器) · [MCP 重连精简](../mcp/index.md#自动重连) · [zip 插件支持](../plugins/index.md#创建第一个插件) · [子代理摘要与 worktree](../sub-agents/index.md#运行管理) · [OTEL 隔离](../enterprise/index.md#otel-事件持续增强) · [Channels 控制台认证](../automation/index.md#channels-消息通道) · [Auto mode 提示](../configuration/index.md#配置文件有哪几层)
+
+### ✨ 新功能
+
+- **`/color` 随机颜色**：不带参数的 `/color` 现在随机选择一个会话颜色
+- **`/mcp` 工具计数显示**：`/mcp` 现在显示已连接服务器的工具数量，并标记连接但工具数为 0 的服务器
+- **`--plugin-dir` 支持 `.zip` 插件**：除目录外，现在也接受 `.zip` 格式的插件归档文件
+- **`--channels` 控制台认证支持**：`--channels` 现在可用于控制台（API Key）认证——使用托管设置的控制台组织需设置 `channelsEnabled: true` 以启用
+- **`/model` 选择器优化**：合并重复的 Opus 4.7 条目，当前 Opus 显示为 "Opus" 而非 "Opus 4.7"
+
+### 🔧 改进
+
+- **OTEL 环境变量隔离**：子进程（Bash、hooks、MCP、LSP）不再继承 `OTEL_*` 环境变量，通过 Bash 工具运行的 OTEL 仪表化应用不再误用 CLI 的 OTLP 端点
+- **MCP `workspace` 保留名称**：`workspace` 现在是 MCP 服务器保留名称——已存在同名服务器将被跳过并给出警告
+- **MCP 重连工具列表精简**：重连 MCP 服务器不再在每次重连时向会话注入完整工具列表——重宣告的工具按服务器前缀汇总
+- **SDK Bash 权限持久化**：SDK 宿主现在收到持久的 `localSettings` 建议用于 Bash 权限提示，"Always allow" 写入 `.claude/settings.local.json`
+- **`EnterWorktree` 从本地 HEAD 创建分支**：现在按文档从本地 HEAD 创建新分支，而非 `origin/<default-branch>`——未推送的提交不再丢失
+- **Auto mode 错误提示增强**：当分类器无法评估操作时，错误信息现在包含提示（重试、`/compact` 或使用 `--debug` 运行）
+- **子代理进度摘要优化**：修复子代理摘要缺少 prompt cache 的问题（约 3 倍 `cache_creation` 减少）；修复子代理 transcript 静态时摘要重复触发，限制空闲子代理的最坏 token 开销
+
+### 🐛 修复
+
+- 修复 focus mode 在提交新 prompt 时短暂暗化上一个响应
+- 修复 Kitty 等将 OSC 9 解析为通知的终端中，每次 `/exit` 时出现多余的 "4;0;" 桌面通知
+- 修复 Remote Control 在速率限制时显示空白 "Opening your options…" 而非可操作的升级选项
+- 修复图片拖放上传在图片读取失败时卡在 "Pasting text…"
+- 修复通过 stdin 向 `claude -p` 管道输入超大数据（>10 MB）时的崩溃循环
+- 修复全屏模式下长 URL 在换行时无法逐行点击
+- 修复 `/plugin` Components 面板对通过 `--plugin-dir` 加载的插件显示 "Marketplace 'inline' not found"
+- 修复 MCP 工具结果在服务器同时返回结构化内容和内容块时丢弃图片
+- 修复 fenced code blocks 在列表项内时复制粘贴携带前导空白
+- 修复 `/config` 中 tab 导航焦点丢失——tab 标题页保持焦点以便箭头键和 Esc 继续工作
+- 修复不支持 OSC 8 超链接的终端上 markdown 链接标签丢失——链接现在渲染为 `label (url)` 而非仅 URL
+- 修复使用 1M 上下文模型但 autocompact 窗口较小时在达到实际 API 限制前被错误阻止 "Prompt is too long"
+- 修复并行 shell 工具调用：失败的只读命令（grep、git diff、ls）不再取消同级调用
+- 修复在不支持 effort 的模型上 banner 显示 "with X effort"
+- 修复 `/fast` 在第三方 provider 上模糊匹配到无关 skill 而非显示 "not available"
+- 修复 Bedrock 默认模型解析为 `global.*` 而非区域适配的前缀
+- 修复 vim mode：NORMAL 模式下 `Space` 现在将光标右移，匹配标准 vi/vim 行为
+- 修复终端进度指示器（OSC 9;4）在工具调用间闪烁——现在在整个 turn 内保持可见
+- 修复不带参数的 `/rename` 在最后条目为 compact 边界的恢复会话上失败
+- 修复 `--resume`/`--continue` 后出现先前会话的残留 "remote-control is active" 状态行
+- 修复指向已删除缓存目录的过期 `installed_plugins.json` 条目污染 PATH
+- 修复设置 `CLAUDE_CODE_SHELL_PREFIX` 且参数包含空格或 shell 元字符时 MCP stdio 服务器收到损坏参数
+- 修复 `/plugin update` 从未检测到 npm 来源插件的新版本
+- 修复 Headless `--output-format stream-json`：`init.plugin_errors` 现在包含 `--plugin-dir` 加载失败，而不仅是依赖降级
+
+---
+
 ## 📦 2.1.126（2026-05-01）
 
 > 📝 **笔记定位**：[网关模型列表](../integrations/index.md#llm-gateway自定义代理) · [项目清理命令](../getting-started/index.md#更新与卸载) · [OAuth 终端粘贴](../getting-started/index.md#首次登录与认证) · [权限范围扩展](../configuration/index.md#配置文件有哪几层) · [PowerShell 增强](../platforms/index.md#windows-专属特性) · [OTel Skill 审计](../enterprise/index.md#otel-事件持续增强) · [托管安全修复](../enterprise/index.md#安全架构)

@@ -9,6 +9,7 @@ description: 理解 Claude Code 的配置层级、权限系统、沙箱安全、
 
 - 🏗️ 理解 Claude Code 五层配置优先级的含义和作用范围
 - 📝 配置文件的位置与冲突解决规则
+- ✅ 根据场景选择合适的配置层级与最佳实践
 
 → 更多内容请查看子页面：「CLAUDE.md 记忆文件」「Settings 与权限」「模型与输出风格」「高级配置」
 
@@ -17,6 +18,18 @@ description: 理解 Claude Code 的配置层级、权限系统、沙箱安全、
 想象一下：你刚入职一家公司，有公司制度（所有员工都要遵守）、部门规章（你所在部门的额外规则）、还有你个人的工作习惯。这三层规则共同决定了你「能做什么」和「该怎么做」。
 
 Claude Code 的配置体系也是同样的道理——它有五层配置，从「管理员强制执行的安全策略」到「你个人的偏好」，层层叠加、逐级覆盖。理解这个体系，你就掌握了让 Claude Code 按你的意愿高效工作的钥匙。
+
+``` mermaid
+graph LR
+    A[Managed<br/>管理员强制] --> B[CLI 参数<br/>单次会话]
+    B --> C[Local<br/>本地偏好]
+    C --> D[Project<br/>团队共享]
+    D --> E[User<br/>全局个人]
+    style A stroke:#d32f2f,stroke-width:2px
+    style E stroke:#768390,stroke-width:1px
+```
+
+数字越小优先级越高——左边的 Managed 像公司的「安全制度」，右边的 User 像你的「个人偏好」。当两层配置冲突时，高优先级覆盖低优先级。
 
 ## 📂 配置文件有哪几层？
 
@@ -42,6 +55,7 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 - Auto mode "Don't ask again"（v2.1.118 新增）：在 auto mode 选择加入提示中新增"不再询问"选项，确认后不再每次弹出
 - `--dangerously-skip-permissions` 写入放宽（v2.1.121 改进）：不再提示对 `.claude/skills/`、`.claude/agents/` 和 `.claude/commands/` 目录的写入——这些目录本身就是 Claude 工作空间的组成部分
 - `--dangerously-skip-permissions` 受保护路径范围扩展（v2.1.126 改进）：现在绕过对 `.claude/`、`.git/`、`.vscode/`、shell 配置文件等受保护路径的写入提示。不过灾难性删除命令仍会提示作为安全网，防止意外损坏关键文件
+- Auto mode 错误提示增强（v2.1.128 改进）：当 auto mode 的安全分类器无法评估操作时，错误信息现在包含具体提示——建议重试、运行 `/compact` 释放上下文、或使用 `--debug` 模式运行
 
 ### 配置文件位置
 
@@ -56,7 +70,7 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 
 ⚠️ 注意：`.claude/settings.local.json` 和 `.gitignore` 默认会忽略本地配置文件，所以你的个人偏好不会意外提交到仓库。
 
-💡 在 `settings.json` 文件头部添加 `"$schema": "https://json.schemastore.org/claude-code-settings.json"` 可以在 VS Code、Cursor 等编辑器中获得**自动补全和内联验证**。
+💡 在 `settings.json` 文件头部添加 `"$schema": "https://json.schemastore.org/claude-code-settings.json"` 可以在 VS Code、Cursor 等编辑器中获得`自动补全和内联验证`。
 
 !!! tip "自动备份"
 
@@ -71,6 +85,14 @@ Claude Code 的所有配置都遵循相同的优先级规则：**数字越小优
 | `autoConnectIde` | 从外部终端启动时自动连接 IDE | `false` |
 | `autoInstallIdeExtension` | 从 VS Code 终端运行时自动安装 IDE 扩展 | `true` |
 | `externalEditorContext` | 用 `Ctrl+G` 打开外部编辑器时附带 Claude 上次响应 | `false` |
+
+``` json title="~/.claude.json 示例"
+{
+  "autoConnectIde": true,
+  "autoInstallIdeExtension": true,
+  "externalEditorContext": false
+}
+```
 
 ### Worktree 设置
 

@@ -7,7 +7,7 @@ description: 在 GitLab CI/CD 中集成 Claude Code 实现自动化工作流
 
 - 如何在 GitLab CI/CD 中快速集成 Claude Code
 - 使用 Amazon Bedrock 和 Google Vertex AI 的 OIDC 无密钥认证
-- 常见用例的配置示例
+- 代码审查、Bug 修复和功能实现等场景的配置示例
 - 安全治理和成本控制的实践建议
 
 ## 为什么在 GitLab 中用 Claude Code？
@@ -33,7 +33,14 @@ description: 在 GitLab CI/CD 中集成 Claude Code 实现自动化工作流
 
 ## 工作原理
 
-Claude Code 使用 GitLab CI/CD 在隔离的容器中运行 AI 任务，结果通过 MR 提交回来。整个过程分为三个阶段：
+Claude Code 使用 GitLab CI/CD 在隔离的容器中运行 AI 任务，结果通过 MR 提交回来。整个过程可以简化为：触发事件 -> 收集上下文 -> 调用 AI -> 提交结果。
+
+```mermaid
+graph LR
+    A["触发器<br/>@claude / MR / 手动"] --> B["GitLab CI<br/>收集上下文"]
+    B --> C["Claude Code<br/>AI 处理"]
+    C --> D["MR 提交<br/>审查合并"]
+```
 
 ### 事件驱动的编排
 
@@ -149,6 +156,8 @@ claude:
 2. 当评论包含 `@claude` 时，让监听器使用 `AI_FLOW_INPUT` 和 `AI_FLOW_CONTEXT` 变量调用 Pipeline 触发 API
 
 ## 配置示例
+
+以下配置示例与「快速设置」使用相同的工作流结构，但提供了更多注释说明和完整参数。如果你已经通过快速设置成功运行，可以跳过 Claude API 基本配置，直接参考 Bedrock 或 Vertex AI 的企业配置。
 
 ### 基本 CI/CD 配置（Claude API）
 
@@ -288,6 +297,37 @@ claude-vertex:
 3. 创建由 GitLab OIDC 提供商信任的 IAM 角色，限制为你的项目和受保护的 refs
 4. 为 Bedrock API 调用附加最小权限策略
 
+IAM 角色的信任策略需要限定 GitLab 项目和分支：
+
+```json title="IAM 信任策略（示例）"
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Principal": { "Federated": "<OIDC_PROVIDER_ARN>" },
+    "Action": "sts:AssumeRoleWithWebIdentity",
+    "Condition": {
+      "StringEquals": {
+        "gitlab.com:sub": "project_path:<group>/<project>:ref_type:branch:ref:<branch>"
+      }
+    }
+  }]
+}
+```
+
+最小权限策略只需 Bedrock InvokeModel：
+
+```json title="IAM 权限策略（示例）"
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Effect": "Allow",
+    "Action": ["bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream"],
+    "Resource": "arn:aws:bedrock:*::foundation-model/*claude*"
+  }]
+}
+```
+
 存储为 CI/CD 变量：`AWS_ROLE_TO_ASSUME`、`AWS_REGION`
 
 ### Google Vertex AI OIDC 配置
@@ -298,6 +338,25 @@ claude-vertex:
 2. 为 GitLab OIDC 创建 Workload Identity Pool 和提供商
 3. 创建仅具有 Vertex AI 角色的专用服务账户
 4. 授予 WIF 主体权限以模拟服务账户
+
+服务账户只需 Vertex AI User 角色：
+
+```bash title="gcloud 最小权限配置（示例）"
+# 创建服务账户
+gcloud iam service-accounts create claude-code-ci \
+  --display-name="Claude Code CI/CD"
+
+# 授予 Vertex AI User 角色
+gcloud projects add-iam-policy-binding <PROJECT_ID> \
+  --member="serviceAccount:claude-code-ci@<PROJECT_ID>.iam.gserviceaccount.com" \
+  --role="roles/aiplatform.user"
+
+# 允许 WIF 主体模拟此服务账户
+gcloud iam service-accounts add-iam-policy-binding \
+  claude-code-ci@<PROJECT_ID>.iam.gserviceaccount.com \
+  --member="principalSet://iam.googleapis.com/<POOL_ID>/attribute.gitlab_project/<GROUP>/<PROJECT>" \
+  --role="roles/iam.workloadIdentityUser"
+```
 
 存储为 CI/CD 变量：`GCP_WORKLOAD_IDENTITY_PROVIDER`、`GCP_SERVICE_ACCOUNT`、`CLOUD_ML_REGION`
 
@@ -317,15 +376,13 @@ Claude Code 在 CI/CD 中支持以下常用输入：
 
 ## 自定义 Claude 的行为
 
-通过两种方式指导 Claude：
+通过两种方式指导 Claude 的行为：
 
-### CLAUDE.md
+### CLAUDE.md 与自定义提示
 
 在仓库根目录创建 `CLAUDE.md` 文件，定义编码标准、安全要求和项目约定。Claude 在运行期间读取此文件并遵循你的规则。
 
-### 自定义提示
-
-通过作业中的 `-p` 参数传递任务特定的指令。不同作业使用不同提示，例如：
+对于特定任务，通过作业中的 `-p` 参数传递指令。不同作业使用不同提示，例如：
 
 - 审查作业：`-p "Review this MR for security issues"`
 - 实现作业：`-p "Implement the feature described in the issue"`
@@ -351,10 +408,6 @@ Claude Code 在 CI/CD 中支持以下常用输入：
     - 优先使用提供商 OIDC 认证（无长期密钥）
     - 限制作业权限和网络出口
     - 像审查任何其他贡献者一样审查 Claude 的 MR
-
-### CLAUDE.md 配置
-
-在仓库根目录创建 `CLAUDE.md` 文件，定义编码标准和项目特定规则。Claude 在运行期间读取此文件，并在提议变更时遵循你的约定。
 
 ### 成本控制
 

@@ -3,7 +3,7 @@ title: 官方插件目录
 description: claude-plugins-official 市场全部插件分类速查
 ---
 
-Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](https://github.com/anthropics/claude-plugins-official) | [在线目录](https://claude.com/plugins)）提供了 **33 个内部插件** 和 **15 个外部集成**。本页按功能分类列出所有插件，方便快速查找和安装。
+Claude Code 内置的官方市场 `claude-plugins-official`（[GitHub 仓库](https://github.com/anthropics/claude-plugins-official) | [在线目录](https://claude.com/plugins)）提供了 **33 个内部插件** 和 **15 个外部集成**（截至 2025 年 5 月，数据可能随版本更新变动）。本页按功能分类列出所有插件，方便快速查找和安装。
 
 💡 安装任意插件：
 
@@ -53,10 +53,10 @@ typescript-language-server --version
 | `code-review` | Commands、Agents | 自动化代码审查，多个专用代理对 PR 审查并给出置信度评分 |
 | `feature-dev` | Commands、Agents | 结构化功能开发工作流，7 个阶段 + 专用代理，从需求到实现全覆盖 |
 | `pr-review-toolkit` | Agents | PR 审查工具集，6 个代理覆盖评论、测试、错误、类型和代码质量 |
-| `hookify` | Commands | 分析行为模式或显式指令，自动创建 Hooks 阻止不期望行为 |
-| `ralph-loop` | Commands、Hooks | Ralph Wiggum 技术——迭代式、自引用的 AI 开发循环方法 |
-| `code-simplifier` | — | 代码简化工具 |
-| `security-guidance` | — | 安全指导，帮助识别和修复代码中的安全隐患 |
+| `hookify` | Commands | 分析你的行为模式或显式指令，自动生成 Hooks 来阻止不期望的操作（如防止 Claude 自动提交代码） |
+| `ralph-loop` | Commands、Hooks | 基于 Ralph Wiggum 技术的迭代式开发循环——让 Claude 反复自我检查和修正，直到输出质量达标 |
+| `code-simplifier` | Commands | 对修改过的代码进行复用、质量和效率三维检查，发现问题直接修复 |
+| `security-guidance` | Commands、Skills | 安全审查与修复建议，识别代码中的安全隐患并提供修复方案 |
 
 ## 🏗️ 插件与扩展开发
 
