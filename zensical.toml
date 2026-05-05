@@ -244,9 +244,17 @@ nav = [
                     { "插件" = "topic/ai/claude-code/plugins/index.md" },
                     { "Channels" = "topic/ai/claude-code/channels/index.md" },
                 ] },
-                { "自动化" = "topic/ai/claude-code/automation/index.md" },
+                { "自动化" = [
+                    "topic/ai/claude-code/automation/index.md",
+                    { "GitHub Actions" = "topic/ai/claude-code/automation/github-actions/index.md" },
+                    { "GitLab CI/CD" = "topic/ai/claude-code/automation/gitlab-ci-cd/index.md" }
+                ] },
                 { "第三方集成" = "topic/ai/claude-code/integrations/index.md" },
-                { "企业管理" = "topic/ai/claude-code/enterprise/index.md" },
+                { "企业管理" = [
+                    "topic/ai/claude-code/enterprise/index.md",
+                    { "开发容器（DevContainer）" = "topic/ai/claude-code/enterprise/devcontainer/index.md" },
+                    { "法律合规与零数据保留" = "topic/ai/claude-code/enterprise/legal/index.md" }
+                ] },
                 { "最佳实践" = "topic/ai/claude-code/best-practices/index.md" },
                 { "故障排除" = [
                     "topic/ai/claude-code/troubleshooting/index.md",
