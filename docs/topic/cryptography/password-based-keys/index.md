@@ -203,7 +203,7 @@ PBKDF2 的安全目标可以形式化为：**对任何概率多项式时间（PP
 
 形式化地说，定义攻击者 A 的优势为：
 
-$$\text{Adv}_{\text{PBKDF2}}^{\text{prf}}(A) = \left| \Pr[A^{\text{PBKDF2}(\cdot,\cdot)}(1^\lambda) = 1] - \Pr[A^{\mathcal{R}(\cdot,\cdot)}(1^\lambda) = 1] \right|$$
+$$\text{Adv}_{\text{PBKDF2}}^{\text{prf}}(A) = \left| \Pr\left[A^{\text{PBKDF2}(\cdot,\cdot)}(1^\lambda) = 1\right] - \Pr\left[A^{\mathcal{R}(\cdot,\cdot)}(1^\lambda) = 1\right] \right|$$
 
 其中 $A^{F(\cdot,\cdot)}$ 表示攻击者 A 可以向函数 F 提交查询并获取响应，$1^\lambda$ 是安全参数。在实际场景中，攻击者已知盐值（公开），只能对固定盐值查询随机选择的密码输入——这更准确地对应 `弱 PRF`（weak PRF）安全目标。如果对于所有 PPT 攻击者 A，这个优势都是 $\text{negl}(\lambda)$，就说 PBKDF2 是一个 `伪随机函数`（PRF）。
 

@@ -27,4 +27,3 @@ graph LR
 - [Java 概述](overview/index.md)
 - [文件操作](file/index.md)
 - [IO 流](io/index.md)
-- [日志框架](logging/index.md)

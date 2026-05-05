@@ -36,7 +36,7 @@ Claude Code 提供三种调度方式，适用于不同场景：
 
 ### `/loop` 命令详解
 
-`/loop` 是一个[内置 Skill](../skills/index.md#官方内置-skills)，让 Claude Code 在当前会话中周期性重复执行任务（v2.1.71 新增）。`/proactive` 是 `/loop` 的别名（v2.1.105 新增），效果完全相同。从 v2.1.113 起，按 `Esc` 可取消待执行的唤醒；唤醒触发时会清晰显示为 "Claude resuming /loop wakeup"，便于识别是定时任务还是普通对话。
+`/loop` 是一个[内置 Skill](../skills/index.md)，让 Claude Code 在当前会话中周期性重复执行任务（v2.1.71 新增）。`/proactive` 是 `/loop` 的别名（v2.1.105 新增），效果完全相同。从 v2.1.113 起，按 `Esc` 可取消待执行的唤醒；唤醒触发时会清晰显示为 "Claude resuming /loop wakeup"，便于识别是定时任务还是普通对话。
 
 你提供给 `/loop` 的内容决定了它的行为模式：
 
@@ -70,7 +70,7 @@ Claude Code 提供三种调度方式，适用于不同场景：
 
 选择的延迟和原因会在每次迭代结束时打印。这种模式比固定间隔更节省 token——Claude 会在任务变得安静后自动降低检查频率。
 
-动态计划的循环也出现在[计划任务列表](#管理计划任务)中，可以像其他任务一样列出或取消。[七天过期](#七天过期)同样适用。
+动态计划的循环也出现在[计划任务列表](#管理计划任务)中，可以像其他任务一样列出或取消。重复任务七天自动过期（详见下方「七天过期」折叠说明）。同样适用。
 
 !!! info "Monitor tool"
 
@@ -154,7 +154,7 @@ cancel the deploy check job
 
     默认情况下（`durable: false`），任务只存在于当前会话的内存中——退出 Claude Code 后就消失了。设置 `durable: true` 后，任务会写入 `.claude/scheduled_tasks.json` 文件，即使你重启 Claude Code 甚至重启电脑，任务依然存在。
 
-    一次性 `durable` 任务如果在会话关闭期间被错过，会在下次启动时补触发。重复 `durable` 任务同样遵循[七天过期](#七天过期)规则。
+    一次性 `durable` 任务如果在会话关闭期间被错过，会在下次启动时补触发。重复 `durable` 任务同样遵循七天自动过期规则（详见上方「七天过期」折叠说明）。
 
 ### 计划任务的运行机制
 
@@ -216,7 +216,7 @@ cancel the deploy check job
 - 启动新对话会清除所有会话范围的任务——使用 `--resume` 或 `--continue` 恢复会话可找回未过期的任务
 - 后台 Bash 和 Monitor 任务在恢复时不会被恢复
 
-需要无人值守的定时自动化，请使用 Routines、Desktop 计划任务或 [GitHub Actions](#github-actions-集成)。
+需要无人值守的定时自动化，请使用 Routines、Desktop 计划任务或 GitHub Actions（详见下方「GitHub Actions 集成」章节）。
 
 ## Routines：云端自动化
 

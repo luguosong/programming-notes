@@ -29,7 +29,7 @@ description: 在 GitLab CI/CD 中集成 Claude Code 实现自动化工作流
 
 !!! note "底层技术"
 
-    此集成基于 [Claude Code CLI and Agent SDK](../agent-sdk/index.md) 构建，可以在 CI/CD 作业和自定义自动化工作流中以编程方式使用 Claude。
+    此集成基于 [Claude Code CLI and Agent SDK](../../../agent-sdk/index.md) 构建，可以在 CI/CD 作业和自定义自动化工作流中以编程方式使用 Claude。
 
 ## 工作原理
 

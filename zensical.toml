@@ -1,4 +1,4 @@
-# Zensical版本 0.0.28
+# Zensical版本 0.0.40
 [project]
 site_name = "陆国松的编程笔记"
 site_description = "学习编程过程中整理的笔记集合"
@@ -22,7 +22,6 @@ extra_css = [
     "custom/css/toc.css",
     "custom/css/enhancement.css",
     "custom/css/pronunciation.css",
-    "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.css",
     "https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css"
 ]
 extra_javascript = [
@@ -30,8 +29,6 @@ extra_javascript = [
     "custom/js/mermaid.js",
     "custom/js/mathjax.js",
     "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.7/viewer.min.js",
-    "custom/js/viewer-js-init.js",
     "custom/js/pronunciation.js"
 ]
 nav = [
@@ -714,5 +711,8 @@ alternate_style = true
 [project.markdown_extensions.pymdownx.tasklist]
 custom_checkbox = true
 [project.markdown_extensions.pymdownx.tilde]
+
+# 图片缩放与画廊（v0.0.35 原生支持）
+[project.markdown_extensions.zensical.extensions.glightbox]
 
 

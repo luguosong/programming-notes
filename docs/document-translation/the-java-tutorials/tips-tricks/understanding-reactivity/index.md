@@ -359,7 +359,7 @@ extendObservable(message.author, {
 属性做出响应。如果把这两条语句对调，或者有任何其他可观察 (observable) 数据导致 `autorun` 重新执行，那么 `autorun` 也会开始追踪
 `age`。
 
-[无 Proxy 支持] 正确做法：使用 MobX 工具函数来读取/写入对象
+`[无 Proxy 支持]` 正确做法：使用 MobX 工具函数来读取/写入对象
 
 如果你所处的环境不支持 Proxy，但仍希望把可观察 (observable) 对象当作动态集合来使用，可以通过 MobX 的 `get` 和 `set` API
 来处理它们。

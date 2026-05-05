@@ -347,8 +347,7 @@ fail2ban-client set sshd banip 1.2.3.4
 
 SELinux 和 AppArmor 是 Linux 的强制访问控制（MAC）机制，用于限制已入侵进程的破坏范围。详细原理与配置参见专题页面：
 
-- [SELinux 详解](../process/selinux/index.md)
-- [AppArmor 详解](../process/apparmor/index.md)
+- [SELinux 详解](../../process/selinux/index.md)
 
 ## 用户账号安全
 

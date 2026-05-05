@@ -35,7 +35,7 @@ title: 对称加密
 
 完善安全的精确定义是：对任意两条消息 $m_0$ 和 $m_1$，以及任意密文 $c$，看到密文 $c$ 后猜中"密文对应的是 $m_0$ 还是 $m_1$"的概率完全相等：
 
-$$\Pr[\mathcal{E}(k, m_0) = c] = \Pr[\mathcal{E}(k, m_1) = c]$$
+$$\Pr\left[\mathcal{E}(k, m_0) = c\right] = \Pr\left[\mathcal{E}(k, m_1) = c\right]$$
 
 其中 $k$ 是均匀随机选择的密钥。
 
@@ -65,7 +65,7 @@ $$\Pr[\mathcal{E}(k, m_0) = c] = \Pr[\mathcal{E}(k, m_1) = c]$$
 
 安全优势定义为：
 
-$$\text{SSadv}[A, \mathcal{E}] = |\Pr[W_0] - \Pr[W_1]|$$
+$$\text{SSadv}\left[A, \mathcal{E}\right] = \left|\Pr\left[W_0\right] - \Pr\left[W_1\right]\right|$$
 
 当所有高效攻击者的优势都可忽略时（比如不超过 $2^{-100}$），密码系统就是语义安全的。可忽略函数的增长速度比任何多项式的倒数都快——在实际中就等于"零"。
 
@@ -404,7 +404,7 @@ graph TD
 
 **Encrypt-then-MAC（EtM）** 的构造：$c \leftarrow E(k_e, m)$，$t \leftarrow S(k_m, c)$，发送 $(c, t)$。验证时先检查 MAC，再解密。它的安全性归约为：
 
-$$\text{CIadv}[A, E_\text{EtM}] = \text{MACadv}[B, I]$$
+$$\text{CIadv}\left[A, E_\text{EtM}\right] = \text{MACadv}\left[B, I\right]$$
 
 密文完整性直接等价于底层 MAC 的安全性——非常干净的安全归约。
 

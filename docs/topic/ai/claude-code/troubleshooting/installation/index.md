@@ -26,7 +26,7 @@ description: Claude Code 安装过程中的常见问题与解决方案
 | `Failed to fetch version` | [无法访问下载服务器](#无法访问下载服务器) |
 | `irm is not recognized` 或 `&& is not valid` | [Windows 上使用了错误的安装命令](#windows-上使用了错误的安装命令) |
 | Linux 安装期间 `Killed` | [低内存服务器安装被杀死](#低内存服务器上安装被杀死) |
-| `Error loading shared library` | [Linux 二进制变体不匹配](#linux-二进制变体不匹配) |
+| `Error loading shared library` | [Linux 二进制变体不匹配](#二进制变体不匹配) |
 | `Illegal instruction` | [CPU 指令集不兼容](#cpu-指令集不兼容) |
 | WSL 中 `Exec format error` | [WSL1 上的执行格式错误](#wsl1-上的执行格式错误) |
 | macOS 上 `dyld: cannot load` | [macOS 二进制不兼容](#macos-二进制不兼容) |

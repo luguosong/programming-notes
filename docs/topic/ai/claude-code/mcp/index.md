@@ -497,7 +497,7 @@ ENABLE_CLAUDEAI_MCP_SERVERS=false claude
 
 ### 插件 MCP 服务器
 
-[插件](plugins.md)可以捆绑 MCP 服务器，启用插件时自动提供工具和集成。插件 MCP 服务器的工作方式与手动配置的服务器相同。
+[插件](../plugins/index.md)可以捆绑 MCP 服务器，启用插件时自动提供工具和集成。插件 MCP 服务器的工作方式与手动配置的服务器相同。
 
 **工作原理**：
 
@@ -560,7 +560,7 @@ MCP 服务器可以在任务中途**请求你的结构化输入**。当服务器
 
 ### 方案二：Allow/Deny 策略控制
 
-允许用户配置自己的服务器，但限制允许的服务器。在[托管设置文件](configuration/settings-permissions.md)中配置 `allowedMcpServers` 和 `deniedMcpServers`。
+允许用户配置自己的服务器，但限制允许的服务器。在[托管设置文件](../configuration/settings-permissions/index.md)中配置 `allowedMcpServers` 和 `deniedMcpServers`。
 
 每条规则通过 `serverName`、`serverCommand` 或 `serverUrl` 之一匹配：
 

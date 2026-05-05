@@ -494,3 +494,5 @@ public class JwtTokenCustomizerConfig {
 
 无论你是直接自定义 user info 响应，还是基于这个示例并进一步自定义 access token，都可以通过查询数据库、执行 LDAP
 查询、请求其他服务，或采用任何其他方式来获取你希望在 user info 响应中呈现的信息。
+
+[RFC6750]: https://datatracker.ietf.org/doc/html/rfc6750

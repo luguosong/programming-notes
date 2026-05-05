@@ -465,3 +465,5 @@ https://oauthapi.com/data/feed/api/user.html?access_token=2YotnFZFEjr1zCsicMWp
 - 如果能避免，就不要把 `access_token` 作为 `URI` 参数传递。
 
 现在我们已经把客户端加固好了，接下来看看有哪些方式可以保护我们的受保护资源（`protected resources`）。
+
+[RFC 2616]: https://datatracker.ietf.org/doc/html/rfc2616

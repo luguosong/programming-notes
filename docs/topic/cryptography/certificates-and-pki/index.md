@@ -47,7 +47,7 @@ graph LR
 
 形式化地说，信任链的安全性依赖于以下**递归假设**：
 
-$$\forall i \in [1, n] : \text{签名验证通过}(cert_{i-1}, cert_i) \land \text{信任}(cert_0) \implies \text{信任}(cert_n)$$
+$$\forall i \in \left[1, n\right] : \text{签名验证通过}(cert_{i-1}, cert_i) \land \text{信任}(cert_0) \implies \text{信任}(cert_n)$$
 
 其中 `签名验证通过` 意味着使用 cert_{i-1} 的公钥验证 cert_i 的签名成功。这个递归的根基是根 CA（信任锚）——它的证书是自签名的，你选择信任它不是因为它有更高层的担保，而是因为你通过操作系统或浏览器预装的方式**预先决定了信任它**。
 
@@ -674,9 +674,9 @@ Java 提供了完整的 CertPath API 来执行 PKIX（RFC 5280）路径验证。
 
 形式化地说，设信任锚集合为 T，证书路径为 `[cert_n, cert_{n-1}, ..., cert_1, cert_0]`（cert_0 是信任锚），则路径验证成功意味着：
 
-$$\forall i \in [1, n] : \text{Verify}(\text{pubkey}(cert_{i-1}), \text{TBS}(cert_i), \text{sig}(cert_i)) = \text{true}$$
+$$\forall i \in \left[1, n\right] : \text{Verify}(\text{pubkey}(cert_{i-1}), \text{TBS}(cert_i), \text{sig}(cert_i)) = \text{true}$$
 
-$$\land \forall i \in [0, n] : \text{Constraints}(cert_i) = \text{satisfied}$$
+$$\land \forall i \in \left[0, n\right] : \text{Constraints}(cert_i) = \text{satisfied}$$
 
 其中 `Constraints` 包括有效期检查、BasicConstraints 检查、KeyUsage 兼容性检查、吊销状态检查等。
 

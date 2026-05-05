@@ -721,7 +721,7 @@ $$\text{sk}_i \perp \text{long\_term\_key} \quad \forall i$$
 
 等价地说，即使攻击者在会话期间截获了所有握手消息（transcript），之后服务端长期私钥被泄露，攻击者仍然无法从 `(transcript, long\_term\_key)` 计算出会话密钥：
 
-$$\text{Adv}^{\text{pfs}}(A) = \left| \Pr[A(\text{transcript}, \text{long\_term\_key}, \text{sk}_{\text{old}}) = 1] - \Pr[A(\text{transcript}, \text{long\_term\_key}, \$) = 1] \right| \leq \text{negl}(\lambda)$$
+$$\text{Adv}^{\text{pfs}}(A) = \left| \Pr\left[A(\text{transcript}, \text{long\_term\_key}, \text{sk}_{\text{old}}) = 1\right] - \Pr\left[A(\text{transcript}, \text{long\_term\_key}, \$) = 1\right] \right| \leq \text{negl}(\lambda)$$
 
 其中 \$ 表示与 sk_old 等长的真随机串，`transcript` 是攻击者在会话期间截获的所有握手消息。直觉上，PFS 的威胁场景正是"攻击者录下了所有流量，后来拿到了服务器私钥，但仍然无法解密录音"。
 

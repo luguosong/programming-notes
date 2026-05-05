@@ -382,7 +382,7 @@ const MyComponent = props => <div>hi</div>
 export default observer(MyComponent)
 ```
 
-- [破坏性方法] 显式的声明 displayName：
+- `[破坏性方法]` 显式的声明 displayName：
 
 ``` javascript
 export const MyComponent = observer(props => <div>hi</div>)
