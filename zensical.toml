@@ -686,6 +686,7 @@ case = "lower"
 [project.markdown_extensions.pymdownx.arithmatex]
 generic = true
 [project.markdown_extensions.pymdownx.betterem]
+smart_enable = "all"
 [project.markdown_extensions.pymdownx.caret]
 [project.markdown_extensions.pymdownx.details]
 [project.markdown_extensions.pymdownx.emoji]
@@ -709,6 +710,7 @@ custom_fences = [
 ]
 [project.markdown_extensions.pymdownx.tabbed]
 alternate_style = true
+combine_header_slug = true
 [project.markdown_extensions.pymdownx.tasklist]
 custom_checkbox = true
 [project.markdown_extensions.pymdownx.tilde]
