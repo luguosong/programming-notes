@@ -1,6 +1,7 @@
 # Zensical版本 0.0.40
 [project]
 site_name = "陆国松的编程笔记"
+validation = false
 site_description = "学习编程过程中整理的笔记集合"
 site_url = "https://luguosong.github.io/programming-notes"
 site_author = "陆国松"
