@@ -86,3 +86,5 @@ React 19.2 + Vite 7 + TypeScript · Ant Design 6 · MobX 6 · React Router 7
 - `writing-style.md` — 写作风格与标题架构
 - `doc-structure.md` — 文档结构与导航规则
 - `zensical.md` — Zensical 特有语法
+
+文档质量审查使用 `doc-quality-review` skill（触发词：`审查文档`、`review doc`、`质量检查`），覆盖 7 个维度：技术准确性、内容清晰度、TOC 结构、学习目标完整性、代码引用有效性、格式与元数据合规、代码增强。

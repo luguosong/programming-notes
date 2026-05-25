@@ -70,13 +70,6 @@
 - **只有二级目录的 `index.md` 在左侧导航中展示图标**，一级目录和三级及以下不设置
 - front matter `icon:` 路径用 `/`（如 `lucide/database`），正文图标短码用 `-`（如 `:lucide-database:`）——勿混淆
 
-## 图片统一格式
+## 图片格式
 
-带图注统一用 `<figure>` 格式，图片托管在 `https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/`，图注格式为"图 章节号.图号 说明"。
-
-```markdown
-<figure markdown="span">
-  ![](https://cdn.jsdelivr.net/gh/luguosong/images@master/blog-img/xxx.png){ loading=lazy }
-  <figcaption>图 1.1 图注说明文字</figcaption>
-</figure>
-```
+统一使用 `<figure>` 格式，**禁止**裸 `![]()` 语法。具体格式和图注规则见 `.claude/rules/zensical.md` 的「图片统一格式」段。

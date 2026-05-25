@@ -1,9 +1,9 @@
-# Zensical版本 0.0.40
+# Zensical版本 0.0.43
 [project]
 site_name = "陆国松的编程笔记"
+site_url = "https://luguosong.github.io/programming-notes"
 validation = false
 site_description = "学习编程过程中整理的笔记集合"
-site_url = "https://luguosong.github.io/programming-notes"
 site_author = "陆国松"
 copyright = "Copyright &copy; 2025 陆国松"
 docs_dir = "docs"
@@ -45,10 +45,33 @@ nav = [
         "frontend/index.md"
     ] },
     { "Java" = [
-        "java/index.md"
+        "java/index.md",
+        { "JavaSE" = [
+            "java/javase/index.md",
+            { "概述" = "java/javase/01-overview/index.md" }
+        ] }
     ] },
     { "专题研究" = [
-        "topic/index.md"
+        "topic/index.md",
+        { "Git" = [
+            "topic/git/index.md",
+            { "概述" = "topic/git/01-overview/index.md" },
+            { "基本语法" = "topic/git/02-basic/index.md" },
+            { "分支" = "topic/git/03-branch/index.md" }
+        ] },
+        { "AI" = [
+            "topic/ai/index.md",
+            { "Claude Code" = [
+                "topic/ai/claude-code/index.md",
+                { "常用命令" = "topic/ai/claude-code/common-commands/index.md" },
+                { "最佳实践" = "topic/ai/claude-code/best-practices/index.md" }
+            ] },
+            { "扩展推荐" = [
+                "topic/ai/useful-extension/index.md",
+                { "Superpowers" = "topic/ai/useful-extension/superpowers/index.md" },
+                { "gstack" = "topic/ai/useful-extension/gstack/index.md" }
+            ] }
+        ] }
     ] },
     { "数学" = [
         "math/index.md",
