@@ -63,6 +63,19 @@ fabric.properties
 .vscode/
 .vscode-test
 
+### Eclipse IDE（Spring Tools Suite 等）
+# 参考: https://github.com/github/gitignore/blob/main/Global/Eclipse.gitignore
+
+# 项目元数据
+.project
+
+# 设置目录（随本机环境变化）
+.settings/
+
+# 类路径与工厂路径
+.classpath
+.factorypath
+
 # ============================================
 # 日志文件
 # ============================================
