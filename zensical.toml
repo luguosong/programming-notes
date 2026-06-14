@@ -65,7 +65,13 @@ nav = [
                 "topic/ai/claude-code/index.md",
                 { "常用命令" = "topic/ai/claude-code/common-commands/index.md" },
                 { "扩展推荐" = "topic/ai/claude-code/recommended-extensions/index.md" }
-            ] }
+            ] },
+            {
+                "Copilot Cli" = [
+                    "topic/ai/copilot-cli/index.md",
+                    { "扩展推荐" = "topic/ai/copilot-cli/recommended-extensions/index.md" }
+                ]
+            }
         ] }
     ] },
     { "数学" = [
