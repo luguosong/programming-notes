@@ -63,7 +63,8 @@ nav = [
             "topic/ai/index.md",
             { "Claude Code" = [
                 "topic/ai/claude-code/index.md",
-                { "常用命令" = "topic/ai/claude-code/common-commands/index.md" },
+                { "起步" = "topic/ai/claude-code/getting-started/index.md" },
+                { "基本操作" = "topic/ai/claude-code/common-commands/index.md" },
                 { "扩展推荐" = "topic/ai/claude-code/recommended-extensions/index.md" }
             ] },
             {

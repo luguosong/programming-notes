@@ -27,13 +27,25 @@ copilot plugin install java-development@awesome-copilot
 copilot plugin install testing-automation@awesome-copilot
 ```
 
-| Skill                                 | 功能说明                                     |
-|---------------------------------------|----------------------------------------------|
-| `java-junit`                          | JUnit 5 单元测试最佳实践（含数据驱动测试）   |
-| `csharp-nunit`                        | C# NUnit 测试最佳实践（含数据驱动测试）      |
-| `playwright-explore-website`          | 用 Playwright MCP 探索网站结构，辅助编写测试 |
-| `playwright-generate-test`            | 根据场景描述生成 Playwright 端到端测试       |
-| `ai-prompt-engineering-safety-review` | 对 AI Prompt 进行全面安全性审查              |
+#### 单元测试
+
+| Skill | 功能说明 |
+|-------|----------|
+| `java-junit` | JUnit 5 单元测试最佳实践（含数据驱动测试） |
+| `csharp-nunit` | C# NUnit 测试最佳实践（含数据驱动测试） |
+
+#### E2E 测试（Playwright）
+
+| Skill | 功能说明 |
+|-------|----------|
+| `playwright-explore-website` | 用 Playwright MCP 探索网站结构，辅助编写测试 |
+| `playwright-generate-test` | 根据场景描述生成 Playwright 端到端测试 |
+
+#### AI Prompt 安全审查
+
+| Skill | 功能说明 |
+|-------|----------|
+| `ai-prompt-engineering-safety-review` | 对 AI Prompt 进行全面安全性审查 |
 
 ---
 
@@ -76,12 +88,19 @@ copilot plugin install context-engineering@awesome-copilot
 copilot plugin install database-data-management@awesome-copilot
 ```
 
-| Skill                     | 功能说明                                    |
-|---------------------------|---------------------------------------------|
-| `sql-code-review`         | 通用 SQL 安全性、可维护性及代码质量审查     |
-| `sql-optimization`        | 通用 SQL 性能调优、索引策略优化             |
-| `postgresql-code-review`  | PostgreSQL 专项代码审查（反模式、最佳实践） |
-| `postgresql-optimization` | PostgreSQL 高级特性与查询性能优化           |
+#### 通用 SQL
+
+| Skill | 功能说明 |
+|-------|----------|
+| `sql-code-review` | 通用 SQL 安全性、可维护性及代码质量审查 |
+| `sql-optimization` | 通用 SQL 性能调优、索引策略优化 |
+
+#### PostgreSQL 专项
+
+| Skill | 功能说明 |
+|-------|----------|
+| `postgresql-code-review` | PostgreSQL 专项代码审查（反模式、最佳实践） |
+| `postgresql-optimization` | PostgreSQL 高级特性与查询性能优化 |
 
 ---
 
@@ -168,15 +187,27 @@ copilot plugin install structured-autonomy@awesome-copilot
 copilot plugin install software-engineering-team@awesome-copilot
 ```
 
-| Agent                             | 角色说明                                                                 |
-|-----------------------------------|--------------------------------------------------------------------------|
-| `se-ux-ui-designer`               | UX/UI 设计师：用户旅程映射、Jobs-to-be-Done 分析、Figma 设计产出         |
-| `se-technical-writer`             | 技术写作师：开发者文档、技术博客、教程与培训内容                         |
-| `se-gitops-ci-specialist`         | DevOps 专家：CI/CD 流水线、GitOps 工作流、部署问题排查                   |
-| `se-product-manager-advisor`      | 产品经理顾问：GitHub Issues 编写、业务价值对齐、数据驱动产品决策         |
-| `se-responsible-ai-code`          | 负责任 AI 专家：偏见预防、无障碍合规、伦理开发与包容性设计               |
+#### 产品与设计
+
+| Agent | 角色说明 |
+|-------|----------|
+| `se-product-manager-advisor` | 产品经理顾问：GitHub Issues 编写、业务价值对齐、数据驱动产品决策 |
+| `se-ux-ui-designer` | UX/UI 设计师：用户旅程映射、Jobs-to-be-Done 分析、Figma 设计产出 |
+
+#### 技术实现
+
+| Agent | 角色说明 |
+|-------|----------|
 | `se-system-architecture-reviewer` | 系统架构审查师：Well-Architected 框架、可扩展性分析、AI 与分布式系统设计 |
-| `se-security-reviewer`            | 安全审查专家：OWASP Top 10、Zero Trust、LLM 安全、企业安全标准           |
+| `se-gitops-ci-specialist` | DevOps 专家：CI/CD 流水线、GitOps 工作流、部署问题排查 |
+| `se-technical-writer` | 技术写作师：开发者文档、技术博客、教程与培训内容 |
+
+#### 质量与合规
+
+| Agent | 角色说明 |
+|-------|----------|
+| `se-security-reviewer` | 安全审查专家：OWASP Top 10、Zero Trust、LLM 安全、企业安全标准 |
+| `se-responsible-ai-code` | 负责任 AI 专家：偏见预防、无障碍合规、伦理开发与包容性设计 |
 
 ---
 
