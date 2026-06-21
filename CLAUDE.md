@@ -87,4 +87,6 @@ React 19.2 + Vite 7 + TypeScript · Ant Design 6 · MobX 6 · React Router 7
 - `doc-structure.md` — 文档结构与导航规则
 - `zensical.md` — Zensical 特有语法
 
+**强制约束**：每篇笔记正文必须有且仅有一个一级标题（`#`），其文本须与 `zensical.toml` nav 中对应条目的标题、front matter 的 `title:` 三者完全一致。详见 `.claude/rules/doc-structure.md` 的「文档标题一致性」。
+
 文档质量审查使用 `doc-quality-review` skill（触发词：`审查文档`、`review doc`、`质量检查`），覆盖 7 个维度：技术准确性、内容清晰度、TOC 结构、学习目标完整性、代码引用有效性、格式与元数据合规、代码增强。
